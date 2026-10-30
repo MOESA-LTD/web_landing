@@ -19,6 +19,10 @@
     "whoWeWorkWith": "Kimlerle Çalışıyoruz",
     "about": "MOESA Hakkında",
     "contact": "İletişim",
+    "header": {
+      "whoWeWorkWith": "Müşterilerimiz",
+      "about": "Hakkımızda"
+    },
     "allServices": "Tüm hizmetler",
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",

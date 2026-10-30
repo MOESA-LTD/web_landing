@@ -61,6 +61,12 @@ function onMousedown(e: MouseEvent) {
   if (!(e.target as Element | null)?.closest?.('[data-lang-dd]')) open.value = false
 }
 
+// Tabbing out of the dropdown closes it (a null relatedTarget is a click on non-focusable content: mousedown handles it).
+function onFocusout(e: FocusEvent) {
+  const next = e.relatedTarget as Node | null
+  if (open.value && next && !root.value?.contains(next)) open.value = false
+}
+
 onMounted(() => {
   mounted.value = true
   document.addEventListener('keydown', onKeydown)
@@ -84,6 +90,7 @@ watch(
     v-if="enableTr !== false"
     ref="root"
     data-lang-dd
+    @focusout="onFocusout"
     class="absolute top-0 right-[max(24px,calc((100%-1200px)/2+24px))] z-40 flex h-[76px] items-center @max-[959.98px]:right-[68px] @max-[959.98px]:h-16"
   >
     <button

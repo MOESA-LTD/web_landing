@@ -12,6 +12,9 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   // EN is the approved thank-you.md CTA; the TR thank-you.md has no counterpart.
   'cta.exploreServices',
   'nav.label',
+  // Short header-only labels (user decision 2026-10-31, from the canvas draft) so the TR nav fits the bar.
+  'nav.header.whoWeWorkWith',
+  'nav.header.about',
   'nav.allServices',
   'nav.openMenu',
   'nav.closeMenu',

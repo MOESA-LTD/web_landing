@@ -17,8 +17,8 @@ const NAV_LABEL_KEY: Partial<Record<RouteName, string>> = {
   home: 'nav.home',
   services: 'nav.services',
   'how-we-work': 'nav.howWeWork',
-  'who-we-work-with': 'nav.whoWeWorkWith',
-  about: 'nav.about',
+  'who-we-work-with': 'nav.header.whoWeWorkWith',
+  about: 'nav.header.about',
   contact: 'nav.contact',
 }
 
@@ -102,9 +102,8 @@ watch(
   },
 )
 
-// The 76px reserved for the language dropdown leaves the five TR labels (approved page titles, wider than the
-// canvas draft labels) about 0.4px short at the 1152px bar content width. From 1200px up keep them on one line
-// (they then overlap the 24px gap by under a pixel); below that the DS wrapping behaviour stays.
+// Keeps the labels on one line from 1200px up (the TR labels sit within a pixel of the bar width there); below
+// that the DS wrapping behaviour stays (one line needs ~1125px in TR, ~1148px in EN).
 const navLink =
   'relative inline-flex h-10 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-3 text-label text-navy no-underline hover:text-blue @min-[1200px]:whitespace-nowrap'
 const currentUnderline = 'after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:bg-blue after:content-[\'\']'
@@ -116,7 +115,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
     <div
       class="mx-auto box-border flex h-[76px] max-w-[1200px] items-center gap-6 px-6 @max-[959.98px]:h-16 @max-[959.98px]:px-4"
     >
-      <Logo href="/" class="shrink-0" />
+      <Logo href="/" class="@min-[1200px]:shrink-0" />
 
       <nav :aria-label="t('nav.label')" data-nav="desktop" class="flex-1 @max-[959.98px]:hidden">
         <ul class="m-0 flex list-none gap-1 p-0">
@@ -167,7 +166,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         </ul>
       </nav>
 
-      <div data-header-cta class="ml-auto mr-[76px] shrink-0 @max-[959.98px]:hidden">
+      <div data-header-cta class="ml-auto mr-[76px] @min-[1200px]:shrink-0 @max-[959.98px]:hidden">
         <Button to="/contact" size="sm">{{ t('cta.discussProject') }}</Button>
       </div>
 

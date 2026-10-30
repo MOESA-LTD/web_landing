@@ -106,4 +106,37 @@ test.describe('header language dropdown', () => {
     const last = await box(links.last())
     expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(22)
   })
+
+  // Measured: with the short TR header labels the five items plus logo, CTA and the 76px reserve need ~1125px (TR) /
+  // ~1148px (EN) to stay on one line, so one-line is asserted from 1160px; 1024 and 960 only assert that nothing
+  // overflows or breaks the 76px bar (the DS lets the labels wrap there, as before this task).
+  for (const width of [1200, 1160, 1024, 960]) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR']] as const) {
+      test(`${locale} nav is on fits at ${width}px: bar stays 76px, no horizontal overflow, dropdown clear`, async ({ page }) => {
+        test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
+        await page.setViewportSize({ width, height: 800 })
+        await page.goto(route)
+        const bar = await box(page.locator('header > div').first())
+        expect(Math.round(bar.height)).toBe(76)
+        const cta = await box(page.locator('[data-header-cta] a'))
+        const lines = await page.locator('[data-nav="desktop"] > ul > li > a, [data-nav="desktop"] > ul > li > button').evaluateAll((els) =>
+          els.map((e) => {
+            const range = document.createRange()
+            range.selectNodeContents([...e.childNodes].find((n) => n.nodeType === 3 && n.textContent!.trim())!)
+            return new Set([...range.getClientRects()].map((r) => Math.round(r.top))).size
+          }),
+        )
+        if (width >= 1160) {
+          expect(lines).toEqual([1, 1, 1, 1, 1])
+          expect(Math.round(cta.height)).toBe(40)
+        }
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0)
+        const last = await box(page.locator('[data-nav="desktop"] > ul > li').last())
+        if (width >= 1160) expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(0)
+        const lang = await box(page.locator('#lang-button'))
+        expect(lang.x - (cta.x + cta.width)).toBeGreaterThanOrEqual(10)
+        if (locale === 'TR') await page.screenshot({ path: `tests/e2e/__screens__/hdr-app-tr-${width}.png`, clip: { x: 0, y: 0, width, height: 140 } })
+      })
+    }
+  }
 })

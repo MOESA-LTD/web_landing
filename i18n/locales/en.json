@@ -19,6 +19,10 @@
     "whoWeWorkWith": "Who We Work With",
     "about": "About MOESA",
     "contact": "Contact",
+    "header": {
+      "whoWeWorkWith": "Who We Work With",
+      "about": "About MOESA"
+    },
     "allServices": "All services",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",

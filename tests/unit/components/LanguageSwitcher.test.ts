@@ -190,6 +190,18 @@ describe('LanguageSwitcher disclosure behaviour', () => {
     expect(button(w).attributes('aria-expanded')).toBe('false')
   })
 
+  it('closes when focus leaves the dropdown, and stays open while focus moves inside it', async () => {
+    const w = await open(await mount('/'))
+    const outside = document.createElement('button')
+    document.body.append(outside)
+    const [first, second] = links(w)
+    await first!.trigger('focusout', { relatedTarget: second!.element })
+    expect(button(w).attributes('aria-expanded')).toBe('true')
+    await first!.trigger('focusout', { relatedTarget: outside })
+    expect(button(w).attributes('aria-expanded')).toBe('false')
+    outside.remove()
+  })
+
   it('closes on a route change', async () => {
     const w = await open(await mount('/'))
     await useRouter().push('/contact')
