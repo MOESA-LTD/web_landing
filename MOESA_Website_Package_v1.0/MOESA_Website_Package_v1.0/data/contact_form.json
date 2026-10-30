@@ -1,0 +1,39 @@
+{
+  "endpoint_status": "OPEN / A\u00c7IK - select implementation",
+  "recipient": "info@moesaltd.com",
+  "required_fields": [
+    "name",
+    "company",
+    "work_email",
+    "country",
+    "service",
+    "project_brief",
+    "privacy_consent"
+  ],
+  "optional_fields": [
+    "product_category",
+    "target_market",
+    "estimated_volume",
+    "target_timeline",
+    "file_upload"
+  ],
+  "service_options": [
+    "Brand or Product Sourcing",
+    "Managed Procurement",
+    "Product & Private Label Development",
+    "Market Access",
+    "Commercial Representation",
+    "Operations & Supply Chain",
+    "Digital Commerce Operations",
+    "Integrated / Multiple Services",
+    "Not Sure Yet",
+    "Other"
+  ],
+  "rules": [
+    "Do not add users to marketing communications without separate consent.",
+    "Validate file type and size.",
+    "Use spam protection.",
+    "Show accessible success and error messages.",
+    "Do not expose form credentials in client-side code."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "MOESA LTD.",
+  "descriptor_en": "International Procurement, Product Development & Commercial Operations",
+  "descriptor_tr": "Uluslararas\u0131 Tedarik, \u00dcr\u00fcn Geli\u015ftirme ve Ticari Operasyonlar",
+  "domain": "https://www.moesaltd.com",
+  "email": "info@moesaltd.com",
+  "phone": "+359 88 501 661",
+  "address": "1 Petyofi Str., Plovdiv 4000, Bulgaria",
+  "company_id": "207200475",
+  "vat": "BG207200475",
+  "colors": {
+    "deep_navy": "#19324A",
+    "dark_navy": "#102C49",
+    "brand_dark_blue": "#003B72",
+    "primary_blue": "#0069B2",
+    "cyan_accent": "#14A3DB",
+    "slate_text": "#536B7D",
+    "pale_blue": "#EBF5FB",
+    "light_background": "#F7FAFC",
+    "divider": "#D5E3ED",
+    "white": "#FFFFFF"
+  }
+}

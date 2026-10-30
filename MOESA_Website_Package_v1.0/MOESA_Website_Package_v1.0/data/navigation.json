@@ -1,0 +1,64 @@
+{
+  "primary": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "How We Work",
+      "href": "/how-we-work"
+    },
+    {
+      "label": "Who We Work With",
+      "href": "/who-we-work-with"
+    },
+    {
+      "label": "About MOESA",
+      "href": "/about"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "services": [
+    {
+      "label": "Sourcing & Managed Procurement",
+      "href": "/services/sourcing-managed-procurement"
+    },
+    {
+      "label": "Product & Private Label Development",
+      "href": "/services/product-private-label-development"
+    },
+    {
+      "label": "Market Access & Commercial Representation",
+      "href": "/services/market-access-commercial-representation"
+    },
+    {
+      "label": "Operations & Supply Chain",
+      "href": "/services/operations-supply-chain"
+    },
+    {
+      "label": "Digital Commerce & Commercial Intelligence",
+      "href": "/services/digital-commerce-commercial-intelligence"
+    }
+  ],
+  "legal": [
+    {
+      "label": "Privacy Policy",
+      "href": "/privacy-policy"
+    },
+    {
+      "label": "Cookie Policy",
+      "href": "/cookie-policy"
+    },
+    {
+      "label": "Legal Notice",
+      "href": "/legal-notice"
+    }
+  ]
+}
