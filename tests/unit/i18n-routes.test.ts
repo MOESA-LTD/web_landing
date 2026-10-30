@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ROUTES, buildI18nPages, localizeHref, type RouteName } from '../../i18n/routes'
+import { ROUTES, buildI18nPages, localizeHref, routeNameForLocalePath, type RouteName } from '../../i18n/routes'
 import { useLocalizedHref } from '../../app/composables/useLocalizedHref'
 
 /** The TR routes table from the plan's Decisions section, copied independently of ROUTES. */
@@ -120,5 +120,21 @@ describe('buildI18nPages', () => {
 
   it('does not customise the home page (the prefix alone gives /tr)', () => {
     expect(pages['index']).toBeUndefined()
+  })
+})
+
+describe('routeNameForLocalePath', () => {
+  it('maps a path in either locale to its route name, ignoring a trailing slash', () => {
+    expect(routeNameForLocalePath('/')).toBe('home')
+    expect(routeNameForLocalePath('/tr')).toBe('home')
+    expect(routeNameForLocalePath('/tr/')).toBe('home')
+    expect(routeNameForLocalePath('/about')).toBe('about')
+    expect(routeNameForLocalePath('/tr/hakkimizda')).toBe('about')
+    expect(routeNameForLocalePath('/tr/hizmetler/operasyon-ve-tedarik-zinciri')).toBe('services/operations-supply-chain')
+  })
+
+  it('returns null for unknown paths', () => {
+    expect(routeNameForLocalePath('/nope')).toBeNull()
+    expect(routeNameForLocalePath('/tr/about')).toBeNull()
   })
 })

@@ -55,6 +55,19 @@ export function routeNameForPath(path: string): RouteName | null {
   return nameByEnPath.get(clean) ?? null
 }
 
+const nameByLocalePath = new Map<string, RouteName>(
+  (Object.entries(ROUTES) as [RouteName, { en: string; tr: string }][]).flatMap(([name, p]) => [
+    [p.en, name] as const,
+    [p.tr, name] as const,
+  ]),
+)
+
+/** The route that a path in either locale (no query, no hash) belongs to, or null. A trailing slash is ignored. */
+export function routeNameForLocalePath(path: string): RouteName | null {
+  const clean = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path
+  return nameByLocalePath.get(clean) ?? null
+}
+
 /**
  * Map an EN href (path, optional query and hash) to the same page in `locale`, keeping the query
  * and the hash. External URLs, `mailto:`/`tel:` links, in-page `#anchors` and unknown paths are

@@ -1,0 +1,80 @@
+import { flushPromises } from '@vue/test-utils'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { addPageStubs } from './helpers/page-stubs'
+import App from '~/app.vue'
+import DefaultLayout from '~/layouts/default.vue'
+
+beforeAll(addPageStubs)
+
+const mountLayout = async (route: string) => {
+  const w = await mountSuspended(DefaultLayout, { route, slots: { default: () => h('h1', { id: 'page-h1' }, 'Page') } })
+  await flushPromises()
+  return w
+}
+
+describe('default layout', () => {
+  it('starts with a skip link to #main, then the language bar, header, main and footer', async () => {
+    const w = await mountLayout('/')
+    const skip = w.find('a[href="#main"]')
+    expect(skip.exists()).toBe(true)
+    expect(skip.text()).toBe('Skip to content')
+    expect(w.element.querySelector('a')).toBe(skip.element)
+    const order = ['[role="group"]', 'header', 'main', 'footer'].map((sel) => w.find(sel).element)
+    for (let i = 1; i < order.length; i++) {
+      expect(order[i - 1]!.compareDocumentPosition(order[i]!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    }
+  })
+
+  it('wraps the slot in <main id="main"> with exactly one main landmark', async () => {
+    const w = await mountLayout('/')
+    expect(w.findAll('main')).toHaveLength(1)
+    expect(w.find('main#main #page-h1').exists()).toBe(true)
+    expect(w.find('main').attributes('tabindex')).toBe('-1')
+  })
+
+  it('translates the skip link in TR', async () => {
+    const w = await mountLayout('/tr')
+    expect(w.find('a[href="#main"]').text()).toBe('İçeriğe geç')
+  })
+
+  it.each(['/', '/tr', '/about', '/tr/hakkimizda'])('shows the footer CTA on %s', async (route) => {
+    const w = await mountLayout(route)
+    expect(w.find('[data-footer-cta]').exists()).toBe(true)
+  })
+
+  it.each(['/contact', '/tr/iletisim', '/services', '/tr/hizmetler/operasyon-ve-tedarik-zinciri', '/how-we-work'])(
+    'does not show the footer CTA on %s',
+    async (route) => {
+      const w = await mountLayout(route)
+      expect(w.find('[data-footer-cta]').exists()).toBe(false)
+    },
+  )
+})
+
+describe('<html lang>', () => {
+  const lang = () => document.documentElement.getAttribute('lang')
+  afterEach(() => document.documentElement.removeAttribute('lang'))
+
+  it('is "en" on EN pages', async () => {
+    await mountSuspended(App, { route: '/' })
+    await flushPromises()
+    expect(lang()).toBe('en')
+  })
+
+  it('is "tr" on TR pages, set globally by the app without any page calling usePageSeo', async () => {
+    await mountSuspended(App, { route: '/tr' })
+    await flushPromises()
+    expect(lang()).toBe('tr')
+  })
+
+  it('follows the locale when navigating between EN and TR', async () => {
+    await mountSuspended(App, { route: '/' })
+    await useRouter().push('/tr/iletisim')
+    await flushPromises()
+    expect(lang()).toBe('tr')
+    await useRouter().push('/contact')
+    await flushPromises()
+    expect(lang()).toBe('en')
+  })
+})
