@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { approvedStringsFor, findMissing, mdPath, readPageMeta } from './fidelity/extract'
 import { FIDELITY_ROUTES } from './fidelity/routes'
+import { switchLanguage } from './lang'
 
 /**
  * Every approved string of a page's md (headings, paragraphs, list items, CTA labels) must be visible text of
- * the page's own content: `<main id="main">` only, so the header, language bar and footer (nav labels, service
+ * the page's own content: `<main id="main">` only, so the header (with the language dropdown) and footer (nav labels, service
  * links, header CTA) cannot stand in for a missing section. Case-insensitive, because eyebrows are uppercased
  * by CSS (innerText reflects that); TR is case-folded with Turkish rules (see `findMissing`).
  * Title and meta description must equal the md values.
@@ -33,7 +34,7 @@ for (const { route, md, locale } of FIDELITY_ROUTES) {
 
 test('switching EN → TR on Home updates lang, title and canonical without a reload', async ({ page }) => {
   await page.goto('/')
-  await page.locator('a[hreflang="tr"]').first().click()
+  await switchLanguage(page, 'tr')
   await expect(page).toHaveURL(/\/tr$/)
   const tr = readPageMeta(mdPath('tr', 'home.md'))
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr')

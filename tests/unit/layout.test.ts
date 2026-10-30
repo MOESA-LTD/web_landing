@@ -14,16 +14,24 @@ const mountLayout = async (route: string) => {
 }
 
 describe('default layout', () => {
-  it('starts with a skip link to #main, then the language bar, header, main and footer', async () => {
+  it('starts with a skip link to #main, then the header (language dropdown inside it), main and footer', async () => {
     const w = await mountLayout('/')
     const skip = w.find('a[href="#main"]')
     expect(skip.exists()).toBe(true)
     expect(skip.text()).toBe('Skip to content')
     expect(w.element.querySelector('a')).toBe(skip.element)
-    const order = ['[role="group"]', 'header', 'main', 'footer'].map((sel) => w.find(sel).element)
+    const order = ['header', 'main', 'footer'].map((sel) => w.find(sel).element)
     for (let i = 1; i < order.length; i++) {
       expect(order[i - 1]!.compareDocumentPosition(order[i]!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     }
+    expect([...w.element.children].map((el) => el.tagName)).toEqual(['A', 'HEADER', 'MAIN', 'FOOTER'])
+  })
+
+  it('has no language bar above the header: the switcher lives in the header bar', async () => {
+    const w = await mountLayout('/')
+    expect(w.find('[role="group"]').exists()).toBe(false)
+    expect(w.find('header [data-lang-dd] button#lang-button').exists()).toBe(true)
+    expect(w.findAll('[data-lang-dd]')).toHaveLength(1)
   })
 
   it('wraps the slot in <main id="main"> with exactly one main landmark', async () => {

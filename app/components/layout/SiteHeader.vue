@@ -26,11 +26,12 @@ const trimSlash = (p: string) => (p.length > 1 && p.endsWith('/') ? p.slice(0, -
 const currentPath = computed(() => trimSlash(route.path))
 
 const items = computed(() =>
-  navigation.primary.map((item) => {
+  // Home is not a menu item (canvas v1793393437): the logo is the way home.
+  navigation.primary.filter((item) => item.href !== '/').map((item) => {
     const href = localizeHref(item.href, locale.value as 'en' | 'tr')
     const exact = currentPath.value === href
-    // `/services/*` marks Services; Home only matches `/` itself.
-    const ancestor = item.href !== '/' && currentPath.value.startsWith(href + '/')
+    // `/services/*` marks Services.
+    const ancestor = currentPath.value.startsWith(href + '/')
     return {
       href,
       label: t(NAV_LABEL_KEY[routeNameForPath(item.href)!]!),
@@ -54,7 +55,16 @@ const services = computed(() =>
 const allServicesHref = computed(() => localizeHref('/services', locale.value as 'en' | 'tr'))
 
 const servicesOpen = ref(false)
+const langOpen = ref(false)
 const menuOpen = ref(false)
+
+// One desktop menu at a time: opening the language menu closes Services, and vice versa.
+watch(servicesOpen, (v) => {
+  if (v) langOpen.value = false
+})
+watch(langOpen, (v) => {
+  if (v) servicesOpen.value = false
+})
 
 const focusById = (id: string) => (root.value?.querySelector(`#${id}`) as HTMLElement | null)?.focus()
 
@@ -92,18 +102,21 @@ watch(
   },
 )
 
+// The 76px reserved for the language dropdown leaves the five TR labels (approved page titles, wider than the
+// canvas draft labels) about 0.4px short at the 1152px bar content width. From 1200px up keep them on one line
+// (they then overlap the 24px gap by under a pixel); below that the DS wrapping behaviour stays.
 const navLink =
-  'relative inline-flex h-10 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-3 text-label text-navy no-underline hover:text-blue'
+  'relative inline-flex h-10 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-3 text-label text-navy no-underline hover:text-blue @min-[1200px]:whitespace-nowrap'
 const currentUnderline = 'after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:bg-blue after:content-[\'\']'
 const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-underline'
 </script>
 
 <template>
-  <header ref="root" class="@container relative z-10 border-b border-line bg-white font-sans">
+  <header ref="root" class="@container relative z-30 border-b border-line bg-white font-sans">
     <div
-      class="mx-auto box-border flex h-[76px] max-w-[1200px] items-center gap-8 px-6 @max-[959.98px]:h-16 @max-[959.98px]:px-4"
+      class="mx-auto box-border flex h-[76px] max-w-[1200px] items-center gap-6 px-6 @max-[959.98px]:h-16 @max-[959.98px]:px-4"
     >
-      <Logo href="/" />
+      <Logo href="/" class="shrink-0" />
 
       <nav :aria-label="t('nav.label')" data-nav="desktop" class="flex-1 @max-[959.98px]:hidden">
         <ul class="m-0 flex list-none gap-1 p-0">
@@ -154,7 +167,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         </ul>
       </nav>
 
-      <div data-header-cta class="ml-auto @max-[959.98px]:hidden">
+      <div data-header-cta class="ml-auto mr-[76px] shrink-0 @max-[959.98px]:hidden">
         <Button to="/contact" size="sm">{{ t('cta.discussProject') }}</Button>
       </div>
 
@@ -171,6 +184,9 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         <span class="sr-only">{{ menuOpen ? t('nav.closeMenu') : t('nav.openMenu') }}</span>
       </button>
     </div>
+
+    <!-- Over the right end of the bar (absolute, offsets from the canvas); owns its own open/close behaviour. -->
+    <LanguageSwitcher v-model:open="langOpen" />
 
     <!-- In the document flow below the bar: opening it pushes the page content down. -->
     <div

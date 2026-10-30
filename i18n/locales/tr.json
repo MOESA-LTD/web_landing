@@ -1,7 +1,11 @@
 {
   "skipLink": "İçeriğe geç",
   "language": {
-    "label": "Dil"
+    "label": "Dil",
+    "names": {
+      "en": "English",
+      "tr": "Türkçe"
+    }
   },
   "cta": {
     "discussProject": "Projeyi Görüşelim",

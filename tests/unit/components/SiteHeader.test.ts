@@ -23,11 +23,15 @@ afterEach(() => {
 })
 
 describe('SiteHeader', () => {
-  it('renders the 6 primary labels from navigation.json (EN)', async () => {
+  it('renders the 5 primary labels from navigation.json (EN), without Home: the logo is the way home', async () => {
     const w = await track()
     const items = desktopNav(w).findAll(':scope > ul > li')
-    expect(items.map((li) => li.find('a, button').text())).toEqual(navigation.primary.map((i) => i.label))
-    expect(items).toHaveLength(6)
+    const labels = navigation.primary.filter((i) => i.href !== '/').map((i) => i.label)
+    expect(items.map((li) => li.find('a, button').text())).toEqual(labels)
+    expect(labels).toEqual(['Services', 'How We Work', 'Who We Work With', 'About MOESA', 'Contact'])
+    expect(items).toHaveLength(5)
+    expect(desktopNav(w).find('a[href="/"]').exists()).toBe(false)
+    expect(desktopNav(w).text()).not.toContain('Home')
   })
 
   it('is a header with a labelled primary nav, and is not sticky', async () => {
@@ -42,7 +46,7 @@ describe('SiteHeader', () => {
     const hrefs = desktopNav(w)
       .findAll(':scope > ul > li > a')
       .map((a) => a.attributes('href'))
-    expect(hrefs).toEqual(['/', '/how-we-work', '/who-we-work-with', '/about', '/contact'])
+    expect(hrefs).toEqual(['/how-we-work', '/who-we-work-with', '/about', '/contact'])
     expect(w.find('a[aria-label="MOESA Ltd. home"]').attributes('href')).toBe('/')
     const cta = w.find('[data-header-cta] a')
     expect(cta.text()).toBe('Discuss a Project')
@@ -122,15 +126,15 @@ describe('SiteHeader', () => {
     expect(current.text()).toBe('Operations & Supply Chain')
   })
 
-  it('marks an exact match aria-current="page", and Home only on /', async () => {
+  it('marks an exact match aria-current="page", and nothing on Home (no menu item to highlight)', async () => {
     const w = await track('/about')
     const current = desktopNav(w).find('a[aria-current="page"]')
     expect(current.text()).toBe('About MOESA')
     expect(current.classes()).toContain('is-current')
     expect(desktopNav(w).findAll(':scope > ul > li > [aria-current]')).toHaveLength(1)
     const home = await track('/')
-    expect(desktopNav(home).find('a[aria-current="page"]').text()).toBe('Home')
-    expect(desktopNav(home).findAll(':scope > ul > li > [aria-current]')).toHaveLength(1)
+    expect(desktopNav(home).findAll('[aria-current]')).toHaveLength(0)
+    expect(desktopNav(home).findAll('.is-current')).toHaveLength(0)
   })
 
   it('closes both menus on a route change', async () => {
@@ -162,11 +166,12 @@ describe('SiteHeader mobile menu', () => {
     expect(w.find('#mobile-menu').attributes('hidden')).toBeUndefined()
   })
 
-  it('lists every item with the five services nested under Services, then a full-width CTA', async () => {
+  it('lists the 5 items (no Home, as in the canvas) with the five services nested under Services, then a full-width CTA', async () => {
     const w = await track()
     const panel = w.find('#mobile-menu')
     expect(panel.find('nav').attributes('aria-label')).toBe('Primary')
-    expect(panel.findAll('nav > ul > li')).toHaveLength(6)
+    expect(panel.findAll('nav > ul > li')).toHaveLength(5)
+    expect(panel.find('nav > ul > li > a[href="/"]').exists()).toBe(false)
     const sub = panel.find('ul ul')
     expect(sub.findAll('a')).toHaveLength(6)
     expect(sub.findAll('a').at(-1)!.text()).toBe('All services')
@@ -201,12 +206,12 @@ describe('SiteHeader (TR)', () => {
       desktopNav(w)
         .findAll(':scope > ul > li')
         .map((li) => li.find('a, button').text()),
-    ).toEqual(['Ana Sayfa', 'Hizmetler', 'Nasıl Çalışıyoruz', 'Kimlerle Çalışıyoruz', 'MOESA Hakkında', 'İletişim'])
+    ).toEqual(['Hizmetler', 'Nasıl Çalışıyoruz', 'Kimlerle Çalışıyoruz', 'MOESA Hakkında', 'İletişim'])
     expect(
       desktopNav(w)
         .findAll(':scope > ul > li > a')
         .map((a) => a.attributes('href')),
-    ).toEqual(['/tr', '/tr/nasil-calisiyoruz', '/tr/kimlerle-calisiyoruz', '/tr/hakkimizda', '/tr/iletisim'])
+    ).toEqual(['/tr/nasil-calisiyoruz', '/tr/kimlerle-calisiyoruz', '/tr/hakkimizda', '/tr/iletisim'])
     expect(w.find('[data-header-cta] a').attributes('href')).toBe('/tr/iletisim')
     expect(w.find('[data-header-cta] a').text()).toBe('Projeyi Görüşelim')
     await desktopNav(w).find('button').trigger('click')
@@ -221,5 +226,61 @@ describe('SiteHeader (TR)', () => {
     const w = await track('/tr/hizmetler/operasyon-ve-tedarik-zinciri')
     expect(desktopNav(w).find('button').classes()).toContain('is-current')
     expect(desktopNav(w).findAll(':scope > ul > li > [aria-current]')).toHaveLength(1)
+  })
+})
+
+describe('SiteHeader language dropdown', () => {
+  const langBtn = (w: Wrapper) => w.find('button#lang-button')
+  const servicesBtn = (w: Wrapper) => desktopNav(w).find('button#services-button')
+
+  it('puts the language dropdown inside the header bar and nothing above the header', async () => {
+    const w = await track()
+    expect(w.find('[data-lang-dd]').exists()).toBe(true)
+    expect(langBtn(w).text()).toBe('EN')
+    expect(w.find('[role="group"]').exists()).toBe(false)
+    // bar gap 24px (canvas .mo-hdr), CTA keeps 76px for the dropdown, hidden below 960px
+    const bar = w.find('header > div')
+    expect(bar.classes()).toContain('gap-6')
+    expect(bar.classes()).not.toContain('gap-8')
+    expect(w.find('[data-header-cta]').classes()).toEqual(expect.arrayContaining(['mr-[76px]', 'shrink-0', '@max-[959.98px]:hidden']))
+    // above page content (canvas .mo-hdr z-index 30)
+    expect(w.classes()).toContain('z-30')
+  })
+
+  it('opening the language menu closes the Services menu, and vice versa', async () => {
+    const w = await track()
+    await servicesBtn(w).trigger('click')
+    expect(servicesBtn(w).attributes('aria-expanded')).toBe('true')
+    await langBtn(w).trigger('click')
+    expect(langBtn(w).attributes('aria-expanded')).toBe('true')
+    expect(servicesBtn(w).attributes('aria-expanded')).toBe('false')
+    await servicesBtn(w).trigger('click')
+    expect(servicesBtn(w).attributes('aria-expanded')).toBe('true')
+    expect(langBtn(w).attributes('aria-expanded')).toBe('false')
+  })
+
+  it('Escape closes the language menu and returns focus to its button', async () => {
+    const w = await track()
+    await langBtn(w).trigger('click')
+    const link = w.find('#lang-menu a')
+    ;(link.element as HTMLElement).focus()
+    await link.trigger('keydown', { key: 'Escape' })
+    expect(langBtn(w).attributes('aria-expanded')).toBe('false')
+    expect(document.activeElement).toBe(langBtn(w).element)
+  })
+
+  it('a route change closes the language menu', async () => {
+    const w = await track()
+    await langBtn(w).trigger('click')
+    await useRouter().push('/contact')
+    await flushPromises()
+    expect(langBtn(w).attributes('aria-expanded')).toBe('false')
+  })
+
+  it('lists the TR counterpart of the current page, and is Turkish on /tr/*', async () => {
+    const w = await track('/about')
+    expect(w.findAll('#lang-menu a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda'])
+    const tr = await track('/tr/hakkimizda')
+    expect(langBtn(tr).attributes('aria-label')).toBe('Dil: Türkçe')
   })
 })

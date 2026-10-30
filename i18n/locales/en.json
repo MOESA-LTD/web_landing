@@ -1,7 +1,11 @@
 {
   "skipLink": "Skip to content",
   "language": {
-    "label": "Language"
+    "label": "Language",
+    "names": {
+      "en": "English",
+      "tr": "Türkçe"
+    }
   },
   "cta": {
     "discussProject": "Discuss a Project",

@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test'
+import { switchLanguage } from './lang'
 
 /**
  * Service URLs: Turkish slugs under /tr/hizmetler, 404 for unknown or wrong-locale slugs, and a language
- * switcher that links each service page to its counterpart. The switcher is rendered by the layout before the
- * page's setup runs, so the server-rendered HTML (read here without running any script) must already carry
+ * dropdown (in the header bar) that links each service page to its counterpart. The header is rendered by the
+ * layout before the page's setup runs, so the server-rendered HTML (read here without running any script) must already carry
  * the counterpart slug.
  */
 const PAIR = { en: '/services/operations-supply-chain', tr: '/tr/hizmetler/operasyon-ve-tedarik-zinciri' }
@@ -37,12 +38,12 @@ test.describe('service routing', () => {
 
   test('switching EN → TR on a service page lands on the TR slug with the TR h1', async ({ page }) => {
     await page.goto(PAIR.en)
-    await page.locator('a[hreflang="tr"]').first().click()
+    await switchLanguage(page, 'tr')
     await expect(page).toHaveURL(new RegExp(`${PAIR.tr}$`))
     await expect(page.locator('html')).toHaveAttribute('lang', 'tr')
     await expect(page.locator('h1')).toHaveText('Satın alma siparişinden varış noktasına.')
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.moesaltd.com${PAIR.tr}`)
-    await page.locator('a[hreflang="en"]').first().click()
+    await switchLanguage(page, 'en')
     await expect(page).toHaveURL(new RegExp(`${PAIR.en}$`))
     await expect(page.locator('h1')).toHaveText('From purchase order to destination.')
   })

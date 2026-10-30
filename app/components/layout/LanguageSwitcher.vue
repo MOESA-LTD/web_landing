@@ -2,57 +2,123 @@
 import { ROUTES, routeNameForLocalePath } from '~~/i18n/routes'
 
 /**
- * Language bar above the header on every page (CANVAS_UPDATE_NOTES "Update 1793392616", U1).
- * Canvas visual, but real links instead of the canvas's JS buttons: `useSwitchLocalePath()` keeps the
- * query and hash, the active locale is `aria-current="true"`. Hidden when TR is disabled.
+ * Language dropdown at the right end of the header bar (CANVAS_UPDATE_1793393437 §1; it replaces the grey
+ * "Language EN TR" bar above the header). The button shows the current code plus a chevron; the menu lists the
+ * native name and the code. Canvas visual, but real links instead of the canvas's JS buttons, and a disclosure:
+ * `aria-expanded` / `aria-controls`, Escape closes and returns focus to the button, a mousedown outside and a
+ * route change close it (all three are additions to the canvas, which lacks them). The current locale is
+ * `aria-current="true"`. Hidden when TR is disabled. The header owns the `open` state (v-model:open) so that
+ * opening this menu closes the Services menu and vice versa.
+ *
+ * Positioned over the header bar: the parent `<header>` is the (relative) positioning context and the
+ * `@container` the mobile variants query. Offsets are the canvas's `.mo-lang`.
  *
  * Pages in ROUTES (all of them, including the five service pages) get their counterpart from ROUTES, the single
- * source of page paths: the layout renders this bar before the page's setup runs, so on the server the
+ * source of page paths: the layout renders the header before the page's setup runs, so on the server the
  * service page's `useSetI18nParams` comes too late for `switchLocalePath` (the SSR HTML would keep the EN slug
  * under /tr/hizmetler/). Other paths fall back to `switchLocalePath`.
  */
+const open = defineModel<boolean>('open', { default: false })
 const { t, locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const route = useRoute()
 const { enableTr } = useRuntimeConfig().public
+const root = useTemplateRef<HTMLElement>('root')
 
 // A prerendered page is served for any query string, so the server-rendered hrefs cannot carry the query.
 // Render them without query/hash until mounted, then with, so hydration never disagrees with the markup.
 const mounted = ref(false)
-onMounted(() => {
-  mounted.value = true
-})
 
 const items = computed(() => {
   const page = routeNameForLocalePath(route.path)
   const suffix = route.fullPath.replace(/^[^?#]*/, '')
   return locales.value.map((l) => {
-    const code = typeof l === 'string' ? l : l.code
-    const name = typeof l === 'string' ? l.toUpperCase() : (l.name ?? code.toUpperCase())
-    const full = page ? ROUTES[page][code as 'en' | 'tr'] + suffix : switchLocalePath(code as 'en' | 'tr')
-    return { code, name, href: mounted.value ? full : full.replace(/[?#].*$/, ''), active: code === locale.value }
+    const code = (typeof l === 'string' ? l : l.code) as 'en' | 'tr'
+    const full = page ? ROUTES[page][code] + suffix : switchLocalePath(code)
+    return {
+      code,
+      label: code.toUpperCase(),
+      name: t(`language.names.${code}`),
+      href: mounted.value ? full : full.replace(/[?#].*$/, ''),
+      current: code === locale.value,
+    }
   })
 })
+const current = computed(() => items.value.find((i) => i.current) ?? items.value[0]!)
+
+function focusButton() {
+  ;(root.value?.querySelector('#lang-button') as HTMLElement | null)?.focus()
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key !== 'Escape' || !open.value) return
+  open.value = false
+  focusButton()
+}
+
+function onMousedown(e: MouseEvent) {
+  if (!open.value) return
+  if (!(e.target as Element | null)?.closest?.('[data-lang-dd]')) open.value = false
+}
+
+onMounted(() => {
+  mounted.value = true
+  document.addEventListener('keydown', onKeydown)
+  document.addEventListener('mousedown', onMousedown)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('mousedown', onMousedown)
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    open.value = false
+  },
+)
 </script>
 
 <template>
-  <div v-if="enableTr !== false" class="border-b border-line bg-mist">
-    <div
-      role="group"
-      :aria-label="t('language.label')"
-      class="mx-auto box-border flex max-w-[1200px] items-center justify-end gap-1 px-6"
+  <div
+    v-if="enableTr !== false"
+    ref="root"
+    data-lang-dd
+    class="absolute top-0 right-[max(24px,calc((100%-1200px)/2+24px))] z-40 flex h-[76px] items-center @max-[959.98px]:right-[68px] @max-[959.98px]:h-16"
+  >
+    <button
+      id="lang-button"
+      type="button"
+      class="box-border inline-flex h-11 min-w-16 cursor-pointer items-center gap-1.5 rounded-sm border border-line bg-white px-2.5 text-[13px] leading-[normal] font-bold tracking-[0.08em] text-navy hover:border-blue hover:text-blue"
+      :aria-expanded="open"
+      aria-controls="lang-menu"
+      :aria-label="`${t('language.label')}: ${current.name}`"
+      @click="open = !open"
     >
-      <span class="mr-2 text-caption text-slate">{{ t('language.label') }}</span>
-      <NuxtLink
-        v-for="item in items"
-        :key="item.code"
-        :to="item.href"
-        :lang="item.code"
-        :hreflang="item.code"
-        :aria-current="item.active ? 'true' : undefined"
-        class="box-border inline-flex h-11 min-w-11 items-center justify-center rounded-sm px-2 text-[13px] leading-[normal] font-bold tracking-[0.08em] no-underline transition-colors duration-150"
-        :class="item.active ? 'bg-blue text-white' : 'bg-transparent text-navy hover:bg-pale hover:text-blue'"
-      >{{ item.name }}</NuxtLink>
-    </div>
+      {{ current.label }}
+      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" class="flex-none">
+        <path d="M6 9 L12 15 L18 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" />
+      </svg>
+    </button>
+    <ul
+      id="lang-menu"
+      :hidden="!open"
+      class="absolute top-[calc(50%+28px)] right-0 z-40 m-0 box-content min-w-[168px] list-none rounded-sm border border-line bg-white p-1 shadow-menu"
+    >
+      <li v-for="item in items" :key="item.code">
+        <NuxtLink
+          :to="item.href"
+          :lang="item.code"
+          :hreflang="item.code"
+          :aria-current="item.current ? 'true' : undefined"
+          class="box-border flex h-11 w-full items-center justify-between gap-4 rounded-sm px-3 text-[15px] leading-[normal] no-underline"
+          :class="item.current ? 'bg-pale font-bold text-blue-dark' : 'bg-transparent font-medium text-navy hover:bg-pale hover:text-blue'"
+          @click="open = false"
+        >
+          <span>{{ item.name }}</span>
+          <span class="text-[13px] font-bold tracking-[0.08em] text-slate">{{ item.label }}</span>
+        </NuxtLink>
+      </li>
+    </ul>
   </div>
 </template>
