@@ -1,21 +1,22 @@
 import { expect, test } from '@playwright/test'
-import { approvedStringsFor, mdPath, readPageMeta } from './fidelity/extract'
+import { approvedStringsFor, findMissing, mdPath, readPageMeta } from './fidelity/extract'
 import { FIDELITY_ROUTES } from './fidelity/routes'
 
 /**
  * Every approved string of a page's md (headings, paragraphs, list items, CTA labels) must be visible text of
- * the rendered page. Case-insensitive, because eyebrows are uppercased by CSS (innerText reflects that); TR is
- * case-folded with Turkish rules (İ/i, I/ı). Title and meta description must equal the md values.
+ * the page's own content: `<main id="main">` only, so the header, language bar and footer (nav labels, service
+ * links, header CTA) cannot stand in for a missing section. Case-insensitive, because eyebrows are uppercased
+ * by CSS (innerText reflects that); TR is case-folded with Turkish rules (see `findMissing`).
+ * Title and meta description must equal the md values.
  */
-const normalise = (s: string) => s.replace(/\s+/g, ' ').trim()
-const fold = (s: string, locale: 'en' | 'tr') => normalise(s).toLocaleLowerCase(locale)
-
 for (const { route, md, locale } of FIDELITY_ROUTES) {
   test.describe(`content fidelity ${route} (${locale}/${md})`, () => {
-    test('shows every approved string', async ({ page }) => {
+    test('shows every approved string inside <main>', async ({ page }) => {
+      const strings = approvedStringsFor(locale, md)
+      expect(strings.length, `no approved strings extracted from ${locale}/${md}`).toBeGreaterThan(0)
       await page.goto(route)
-      const text = fold(await page.evaluate(() => document.body.innerText), locale)
-      const missing = approvedStringsFor(locale, md).filter((s) => !text.includes(fold(s, locale)))
+      const text = await page.locator('#main').innerText()
+      const missing = findMissing(text, strings, locale)
       expect(missing, `approved strings missing on ${route}`).toEqual([])
     })
 

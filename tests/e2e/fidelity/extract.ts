@@ -155,3 +155,14 @@ export function approvedStringsFor(locale: FidelityLocale, file: string): string
   const kept = extractApprovedStrings(mdPath(locale, file)).filter((s) => !excluded.has(s))
   return [...kept, ...exclusions.flatMap((e) => e.renderedAs ?? [])]
 }
+
+/**
+ * The strings of `strings` that `pageText` does not contain. Both sides are whitespace-normalised and
+ * case-folded with the page locale's rules (eyebrows are uppercased by CSS and innerText reflects that;
+ * Turkish folds İ→i and I→ı).
+ */
+export function findMissing(pageText: string, strings: string[], locale: FidelityLocale): string[] {
+  const fold = (s: string) => normalise(s).toLocaleLowerCase(locale)
+  const text = fold(pageText)
+  return strings.filter((s) => !text.includes(fold(s)))
+}

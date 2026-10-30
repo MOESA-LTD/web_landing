@@ -65,8 +65,9 @@ describe('<html lang>', () => {
     await expectLang('en')
   })
 
+  // /tr/iletisim has no real page yet (a stub route), so only app.vue sets the lang here.
   it('is "tr" on TR pages, set globally by the app without any page calling usePageSeo', async () => {
-    await mountSuspended(App, { route: '/tr' })
+    await mountSuspended(App, { route: '/tr/iletisim' })
     await flushPromises()
     await expectLang('tr')
   })

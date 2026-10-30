@@ -1,8 +1,8 @@
 import { defineConfig } from '@playwright/test'
 
 /**
- * E2E runs against the production build (`nuxt build` + `nuxt preview`, node-server output) on its own port,
- * so a `nuxt dev` server on :3000 is never picked up by mistake (reuseExistingServer would test the dev build).
+ * E2E runs against the production build (`nuxt build` + `nuxt preview`, node-server output) on its own port.
+ * A server already on that port is never reused: the run fails instead of silently testing a stale or dev build.
  */
 const PORT = Number(process.env.E2E_PORT ?? 3100)
 const baseURL = `http://localhost:${PORT}`
@@ -19,7 +19,7 @@ export default defineConfig({
     url: baseURL,
     // Nitro's node-server output reads PORT; NITRO_PORT wins over it if set, so set both.
     env: { PORT: String(PORT), NITRO_PORT: String(PORT) },
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 300_000,
   },
   projects: [

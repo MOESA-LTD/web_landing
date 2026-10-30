@@ -2,6 +2,8 @@
 /**
  * EU base band (bundle.js `EUBaseSection`): text on white beside the tinted company-facts panel
  * (blue eyebrow labels, navy values, hairlines between rows). Stacks at a container width of 860px or less.
+ * The vertical padding sits on the inner wrapper: a container query cannot restyle the `@container` itself,
+ * so this is what lets the band drop from 96px to 64px at a container width of 860px or less.
  */
 const props = withDefaults(
   defineProps<{ eyebrow?: string; title: string; body: string; rows: { label: string; value: string }[] }>(),
@@ -10,9 +12,10 @@ const props = withDefaults(
 </script>
 
 <template>
-  <section class="@container relative overflow-hidden bg-white py-24 @max-[860.98px]:py-16">
+  <section data-band class="@container relative overflow-hidden bg-white">
     <div
-      class="mx-auto box-border grid max-w-[1200px] grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-stretch gap-16 px-6 @max-[860.98px]:grid-cols-1 @max-[860.98px]:gap-8 @max-[860.98px]:px-4"
+      data-band-content
+      class="mx-auto box-border grid max-w-[1200px] grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-stretch gap-16 px-6 py-24 @max-[860.98px]:grid-cols-1 @max-[860.98px]:gap-8 @max-[860.98px]:px-4 @max-[860.98px]:py-16"
     >
       <div class="self-center">
         <p v-if="props.eyebrow" class="text-eyebrow text-blue">{{ props.eyebrow }}</p>

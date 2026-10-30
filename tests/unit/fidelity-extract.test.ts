@@ -3,6 +3,7 @@ import {
   FIDELITY_EXCLUSIONS,
   approvedStringsFor,
   extractApprovedStrings,
+  findMissing,
   mdPath,
   readPageMeta,
 } from '../e2e/fidelity/extract'
@@ -94,5 +95,29 @@ describe('FIDELITY_EXCLUSIONS', () => {
     expect(home).not.toContain('Digital Commerce & Commercial Intelligence as a cross-functional capability')
     expect(home).toContain('Cross-functional capability')
     expect(home).toContain('Digital Commerce & Commercial Intelligence')
+  })
+})
+
+describe('findMissing', () => {
+  const strings = approvedStringsFor('en', 'home.md')
+  const page = strings.join('\n\n')
+
+  it('reports nothing when every string is in the page text, whatever the whitespace', () => {
+    expect(findMissing(page.replace(/ /g, '\n  '), strings, 'en')).toEqual([])
+  })
+
+  it('reports a string that the page does not show', () => {
+    const removed = 'One operating model across the commercial process.'
+    expect(findMissing(page.replace(removed, ''), strings, 'en')).toEqual([removed])
+  })
+
+  it('matches CSS-uppercased Turkish text with Turkish case folding (İ/i, I/ı)', () => {
+    const tr = ['Yatay yetkinlik', 'Dijital Ticaret ve Ticari İçgörü', 'Işık']
+    expect(findMissing('YATAY YETKİNLİK · DİJİTAL TİCARET VE TİCARİ İÇGÖRÜ · IŞIK', tr, 'tr')).toEqual([])
+    expect(findMissing('DIJITAL TICARET', ['Dijital Ticaret'], 'tr')).toEqual(['Dijital Ticaret'])
+  })
+
+  it('matches CSS-uppercased English text case-insensitively', () => {
+    expect(findMissing('CROSS-FUNCTIONAL CAPABILITY', ['Cross-functional capability'], 'en')).toEqual([])
   })
 })
