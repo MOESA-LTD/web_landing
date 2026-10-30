@@ -77,7 +77,7 @@ const content: ServicePageContent = {
   },
   technology: {
     title: 'Mevcut teknoloji durumu',
-    body: 'MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrıca teyit edilmedikçe, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez.',
+    body: 'MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrı bir teyit olmadıkça, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

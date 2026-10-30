@@ -11,8 +11,10 @@ export interface UnreviewedTr {
 }
 
 /**
- * Every TR page string that is NOT in MOESA_Website_Package_v1.0/content/tr/*.md: translated by us from the
- * approved EN and awaiting the user's review. Approved TR text is never listed here and never edited.
+ * Every TR page string that is not a whole approved unit of its page's MOESA_Website_Package_v1.0/content/tr md
+ * (heading, paragraph, list item, arrow step, CTA, metadata value): translated by us from the approved EN, or a
+ * fragment cut from an approved line (e.g. the 404 page names), awaiting the user's review. Approved TR text is
+ * never listed here and never edited.
  * A unit test checks each entry against content/tr and content/en; `npm run unreviewed:tr` renders
  * i18n/UNREVIEWED_TR.md from this list.
  */
@@ -107,6 +109,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'services/market-access-commercial-representation', path: 'typicalMandates.items[2]', en: 'Establish commercial representation', tr: 'Ticari temsil yapısı kurmak' },
   { page: 'services/market-access-commercial-representation', path: 'typicalMandates.items[3]', en: 'Source an international brand for a market', tr: 'Bir pazar için uluslararası bir marka tedarik etmek' },
   { page: 'services/market-access-commercial-representation', path: 'typicalMandates.items[4]', en: 'Build a new retail, wholesale or digital sales channel', tr: 'Yeni bir perakende, toptan veya dijital satış kanalı kurmak' },
+  { page: 'services/market-access-commercial-representation', path: 'manages.items[0]', en: 'Market assessment', tr: 'Pazar değerlendirmesi' },
   { page: 'services/market-access-commercial-representation', path: 'manages.items[1]', en: 'Product and portfolio preparation', tr: 'Ürün ve portföy hazırlığı' },
   { page: 'services/market-access-commercial-representation', path: 'manages.items[2]', en: 'Commercial positioning', tr: 'Ticari konumlandırma' },
   { page: 'services/market-access-commercial-representation', path: 'manages.items[3]', en: 'Partner and channel identification', tr: 'Partner ve kanal tespiti' },
@@ -128,6 +131,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'services/operations-supply-chain', path: 'typicalMandates.items[2]', en: 'Build an import and warehousing structure', tr: 'İthalat ve depolama yapısı kurmak' },
   { page: 'services/operations-supply-chain', path: 'typicalMandates.items[3]', en: 'Manage recurring supply operations', tr: 'Tekrarlayan tedarik operasyonlarını yönetmek' },
   { page: 'services/operations-supply-chain', path: 'typicalMandates.items[4]', en: 'Consolidate multiple suppliers', tr: 'Birden fazla tedarikçiyi konsolide etmek' },
+  { page: 'services/operations-supply-chain', path: 'manages.items[0]', en: 'Commercial handover', tr: 'Ticari devir' },
   { page: 'services/operations-supply-chain', path: 'manages.items[1]', en: 'Purchase-order coordination', tr: 'Satın alma siparişi koordinasyonu' },
   { page: 'services/operations-supply-chain', path: 'manages.items[2]', en: 'Production planning and follow-up', tr: 'Üretim planlama ve takibi' },
   { page: 'services/operations-supply-chain', path: 'manages.items[3]', en: 'Quality and documentation coordination', tr: 'Kalite ve dokümantasyon koordinasyonu' },
@@ -148,6 +152,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'services/operations-supply-chain', path: 'flow.steps[7]', en: 'Warehousing', tr: 'Depolama' },
   { page: 'services/operations-supply-chain', path: 'flow.steps[8]', en: 'Inventory', tr: 'Stok' },
   { page: 'services/operations-supply-chain', path: 'flow.steps[9]', en: 'Delivery', tr: 'Teslimat' },
+  { page: 'services/operations-supply-chain', path: 'visibility.items[0]', en: 'Current status', tr: 'Mevcut durum' },
   { page: 'services/operations-supply-chain', path: 'visibility.items[1]', en: 'Next milestone', tr: 'Sonraki kilometre taşı' },
   { page: 'services/operations-supply-chain', path: 'visibility.items[2]', en: 'Open decisions', tr: 'Açık kararlar' },
   { page: 'services/operations-supply-chain', path: 'visibility.items[3]', en: 'Required client action', tr: 'Müşteriden beklenen aksiyon' },
@@ -191,7 +196,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'services/digital-commerce-commercial-intelligence', path: 'managedModel.title', en: 'Managed commerce model', tr: 'Yönetilen ticaret modeli' },
   { page: 'services/digital-commerce-commercial-intelligence', path: 'managedModel.body', en: 'The client retains account ownership, brand strategy, budgets, pricing and final risk decisions. MOESA manages the agreed recurring commercial operation and cross-functional follow-up.', tr: 'Hesap sahipliği, marka stratejisi, bütçeler, fiyatlandırma ve final risk kararları müşteride kalır. MOESA kararlaştırılan tekrarlayan ticari operasyonu ve fonksiyonlar arası takibi yönetir.' },
   { page: 'services/digital-commerce-commercial-intelligence', path: 'technology.title', en: 'Current technology position', tr: 'Mevcut teknoloji durumu' },
-  { page: 'services/digital-commerce-commercial-intelligence', path: 'technology.body', en: 'MOESA is developing structured operating data and future workflow automation capabilities. A public software or AI platform is not claimed as currently available unless separately confirmed.', tr: 'MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrıca teyit edilmedikçe, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez.' },
+  { page: 'services/digital-commerce-commercial-intelligence', path: 'technology.body', en: 'MOESA is developing structured operating data and future workflow automation capabilities. A public software or AI platform is not claimed as currently available unless separately confirmed.', tr: 'MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrı bir teyit olmadıkça, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez.' },
   { page: 'how-we-work', path: 'intro.title', en: 'One operating model across different commercial needs.', tr: 'Farklı ticari ihtiyaçlar için tek çalışma modeli.' },
   { page: 'how-we-work', path: 'intro.body', en: 'A project may begin with a product, a brand, a supplier, a private-label concept, a new market or an operational challenge. The starting point may differ, but the decisions are connected.', tr: 'Bir proje bir ürün, bir marka, bir tedarikçi, bir private-label konsepti, yeni bir pazar veya operasyonel bir zorlukla başlayabilir. Başlangıç noktası farklı olabilir, ancak kararlar birbirine bağlıdır.' },
   { page: 'how-we-work', path: 'operatingFlow.items[0]', en: 'Define the commercial objective', tr: 'Ticari hedefi tanımlamak' },
@@ -204,6 +209,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'how-we-work', path: 'nonLinear.title', en: 'Not a linear process', tr: 'Doğrusal bir süreç değil' },
   { page: 'how-we-work', path: 'nonLinear.steps[0]', en: 'Commercial Objective', tr: 'Ticari Hedef' },
   { page: 'how-we-work', path: 'nonLinear.steps[1]', en: 'Source or Develop', tr: 'Tedarik Et veya Geliştir' },
+  { page: 'how-we-work', path: 'nonLinear.steps[6]', en: 'Measure', tr: 'Ölç' },
   { page: 'how-we-work', path: 'nonLinear.steps[7]', en: 'Improve, Reorder or Expand', tr: 'Geliştir, Yeniden Sipariş Ver veya Büyüt' },
   { page: 'how-we-work', path: 'nonLinear.body', en: 'Every completed project should improve the next one.', tr: 'Tamamlanan her proje bir sonrakini geliştirmelidir.' },
   { page: 'how-we-work', path: 'startAnywhere.items[0]', en: 'Commercial idea', tr: 'Ticari fikir' },
@@ -315,6 +321,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'about', path: 'isNot.items[2]', en: 'Not only a trading company', tr: 'Yalnızca bir ticaret şirketi değil' },
   { page: 'about', path: 'isNot.items[3]', en: 'Not a legal substitute for the economic operators assigned by law', tr: 'Mevzuatın belirlediği ekonomik operatörlerin hukuki ikamesi değil' },
   { page: 'about', path: 'isNot.items[4]', en: 'Not a software platform unless a separate technology service is confirmed', tr: 'Ayrı bir teknoloji hizmeti teyit edilmedikçe bir yazılım platformu değil' },
+  { page: 'contact', path: 'serviceOptions.items[0]', en: 'Brand or Product Sourcing', tr: 'Marka/ürün sourcing' },
   { page: 'contact', path: 'serviceOptions.items[1]', en: 'Managed Procurement', tr: 'Yönetilen satın alma' },
   { page: 'contact', path: 'serviceOptions.items[2]', en: 'Product & Private Label Development', tr: 'Ürün ve Private Label Geliştirme' },
   { page: 'contact', path: 'serviceOptions.items[3]', en: 'Market Access', tr: 'Pazara giriş' },
@@ -323,6 +330,12 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'contact', path: 'serviceOptions.items[6]', en: 'Digital Commerce Operations', tr: 'Digital commerce' },
   { page: 'contact', path: 'serviceOptions.items[7]', en: 'Integrated / Multiple Services', tr: 'Entegre hizmetler' },
   { page: 'contact', path: 'serviceOptions.items[8]', en: 'Not Sure Yet', tr: 'Emin değilim' },
+  { page: 'contact', path: 'formFields.items[0]', en: 'Name', tr: 'Ad' },
+  { page: 'contact', path: 'formFields.items[1]', en: 'Company', tr: 'Şirket' },
+  { page: 'contact', path: 'formFields.items[2]', en: 'Work Email', tr: 'İş e-postası' },
+  { page: 'contact', path: 'formFields.items[3]', en: 'Country', tr: 'Ülke' },
+  { page: 'contact', path: 'formFields.items[4]', en: 'How Can We Support You?', tr: 'Hizmet' },
+  { page: 'contact', path: 'formFields.items[5]', en: 'Short Project Brief', tr: 'Kısa proje briefi' },
   { page: 'contact', path: 'formFields.items[6]', en: 'Product Category - optional', tr: 'Ürün Kategorisi - opsiyonel' },
   { page: 'contact', path: 'formFields.items[7]', en: 'Target Market - optional', tr: 'Hedef Pazar - opsiyonel' },
   { page: 'contact', path: 'formFields.items[8]', en: 'Estimated Volume - optional', tr: 'Tahmini Hacim - opsiyonel' },
@@ -340,14 +353,24 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'contact', path: 'company.items[1]', en: 'VAT: BG207200475', tr: 'VAT: BG207200475' },
   { page: 'contact', path: 'privacyNote.title', en: 'Privacy note', tr: 'Gizlilik notu' },
   { page: 'contact', path: 'privacyNote.body', en: 'The form must include consent to process the submitted information for the purpose of responding to the enquiry. Users must not be added to marketing communications without separate consent.', tr: 'Form, talebe yanıt verilmesi amacıyla gönderilen bilgilerin işlenmesine yönelik onay içermelidir. Kullanıcılar ayrı bir onay olmadan pazarlama iletişimlerine eklenmemelidir.' },
+  { page: 'thank-you', path: 'next.items[0]', en: 'The enquiry is reviewed', tr: 'Talep incelenir' },
   { page: 'thank-you', path: 'next.items[1]', en: 'The relevant service area is identified', tr: 'İlgili hizmet alanı belirlenir' },
   { page: 'thank-you', path: 'next.items[2]', en: 'Missing information may be requested', tr: 'Eksik bilgi istenebilir' },
   { page: 'thank-you', path: 'next.items[3]', en: 'A discovery discussion may be proposed', tr: 'Bir discovery görüşmesi önerilebilir' },
   { page: 'thank-you', path: 'next.items[4]', en: 'No engagement begins until scope and commercial terms are agreed', tr: 'Kapsam ve ticari şartlar kararlaştırılmadan hiçbir çalışma başlamaz' },
   { page: 'thank-you', path: 'info.title', en: 'Need to add information?', tr: 'Bilgi eklemeniz mi gerekiyor?' },
   { page: 'thank-you', path: 'info.body', en: 'Email additional details to info@moesaltd.com and reference the company or project name used in the form.', tr: 'Ek ayrıntıları info@moesaltd.com adresine e-postayla gönderin ve formda kullandığınız şirket veya proje adını belirtin.' },
+  { page: '404', path: 'next.items[0]', en: 'Return to Home', tr: 'Ana Sayfa' },
+  { page: '404', path: 'next.items[1]', en: 'Explore Services', tr: 'Hizmetler' },
+  { page: '404', path: 'next.items[2]', en: 'How We Work', tr: 'Nasıl Çalışıyoruz' },
+  { page: '404', path: 'next.items[3]', en: 'Contact MOESA', tr: 'İletişim' },
+  { page: 'legal-notice', path: 'sections[operator].paragraphs[0]', en: 'MOESA LTD.', tr: 'MOESA LTD.' },
+  { page: 'legal-notice', path: 'sections[operator].paragraphs[1]', en: '1 Petyofi Str., Plovdiv 4000, Bulgaria', tr: '1 Petyofi Str., Plovdiv 4000, Bulgaria' },
+  { page: 'legal-notice', path: 'sections[operator].paragraphs[2]', en: 'Company ID: 207200475', tr: 'Company ID 207200475' },
+  { page: 'legal-notice', path: 'sections[operator].paragraphs[3]', en: 'VAT: BG207200475', tr: 'VAT BG207200475' },
   { page: 'legal-notice', path: 'sections[contact].paragraphs[0]', en: 'Email: info@moesaltd.com', tr: 'E-posta: info@moesaltd.com' },
   { page: 'legal-notice', path: 'sections[contact].paragraphs[1]', en: 'Phone: +359 88 501 661', tr: 'Telefon: +359 88 501 661' },
+  { page: 'legal-notice', path: 'sections[representative].title', en: 'Legal representative', tr: 'Yasal temsilci' },
   { page: 'legal-notice', path: 'sections[representative].paragraphs[0]', en: 'OPEN / AÇIK - Confirm the legal representative or managing director before publication.', tr: 'OPEN / AÇIK - Yayından önce yasal temsilciyi veya genel müdürü teyit edin.' },
   { page: 'legal-notice', path: 'sections[contentResponsibility].title', en: 'Content responsibility', tr: 'İçerik sorumluluğu' },
   { page: 'legal-notice', path: 'sections[contentResponsibility].paragraphs[0]', en: 'OPEN / AÇIK - Confirm the wording required for the publication countries and applicable law.', tr: 'OPEN / AÇIK - Yayın yapılan ülkeler ve uygulanacak hukuk için gerekli ifadeyi teyit edin.' },
@@ -392,6 +415,7 @@ export const UNREVIEWED_TR: UnreviewedTr[] = [
   { page: 'privacy-policy', path: 'sections[privacyContact].paragraphs[0]', en: 'info@moesaltd.com', tr: 'info@moesaltd.com' },
   { page: 'privacy-policy', path: 'sections[updates].title', en: 'Policy updates', tr: 'Politika güncellemeleri' },
   { page: 'privacy-policy', path: 'sections[updates].paragraphs[0]', en: 'State the effective date and explain that the policy may be updated when services or legal requirements change.', tr: 'Yürürlük tarihini belirtin ve hizmetler veya yasal gereklilikler değiştiğinde politikanın güncellenebileceğini açıklayın.' },
+  { page: 'cookie-policy', path: 'sections[categories].items[0]', en: 'Strictly necessary', tr: 'Zorunlu' },
   { page: 'cookie-policy', path: 'sections[categories].items[1]', en: 'Preferences', tr: 'Tercihler' },
   { page: 'cookie-policy', path: 'sections[categories].items[2]', en: 'Analytics', tr: 'Analitik' },
   { page: 'cookie-policy', path: 'sections[categories].items[3]', en: 'Marketing - only if implemented', tr: 'Pazarlama - yalnızca uygulanırsa' },

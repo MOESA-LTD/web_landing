@@ -62,6 +62,18 @@ function mdUnits(md: string): string[] {
   return units
 }
 
+/**
+ * Every whole string a page module may take from its md: the copy units (`mdUnits`), the metadata values
+ * (URL, Status, Page Title, Meta Description) and the CTA href. Compared by equality, never as a substring,
+ * so a fragment of an approved sentence ("Ölç" of "Ölç ve geliştir.") does not count as approved.
+ */
+function approvedStrings(md: string): Set<string> {
+  const set = new Set(mdUnits(md))
+  for (const label of ['URL', 'Status', 'Page Title', 'Meta Description']) set.add(norm(metaField(md, label).replace(/`/g, '')))
+  for (const m of md.matchAll(/^\*\*Primary CTA:\*\*\s*\[.+?\]\((.+?)\)\s*$/gm)) set.add(norm(m[1]!))
+  return set
+}
+
 /** Leaf strings of a content module, skipping keys that are structural ids rather than copy. */
 const NON_COPY_KEYS = new Set(['id', 'slug', 'service'])
 
@@ -126,7 +138,7 @@ describe('content is verbatim and complete against the md', () => {
       const rule = locale === 'en' ? 'is in the md' : 'is in the md or is a listed UNREVIEWED_TR translation'
       it(`${locale} ${key}: every md unit is in the content module, and every string in it ${rule}`, () => {
         const md = readMd(locale, key)
-        const mdText = norm(md)
+        const approved = approvedStrings(md)
         const units = mdUnits(md)
         expect(units.length).toBeGreaterThan(3)
         const own = leafPaths(useContent(key, locale))
@@ -136,7 +148,7 @@ describe('content is verbatim and complete against the md', () => {
         expect(missing, 'md units missing from the content module').toEqual([])
 
         const listed = (l: Leaf) => locale === 'tr' && unreviewedByKey.has(unreviewedKey(key, l.path))
-        const invented = own.filter((l) => !mdText.includes(l.value) && !listed(l)).map((l) => `${l.path}: ${l.value}`)
+        const invented = own.filter((l) => !approved.has(l.value) && !listed(l)).map((l) => `${l.path}: ${l.value}`)
         expect(invented, 'content strings that are neither in the md nor listed in UNREVIEWED_TR').toEqual([])
       })
     }
@@ -159,11 +171,11 @@ describe('UNREVIEWED_TR lists every translated TR string exactly', () => {
     it(`${key}: each entry is the TR string at its path, translates the EN string at the same path, and is not approved md text`, () => {
       const tr = useContent(key, 'tr')
       const en = useContent(key, 'en')
-      const mdText = norm(readMd('tr', key))
+      const approved = approvedStrings(readMd('tr', key))
       for (const e of UNREVIEWED_TR.filter((x) => x.page === key)) {
         expect(getAt(tr, e.path), `${key} ${e.path} TR`).toBe(e.tr)
         expect(getAt(en, e.path), `${key} ${e.path} EN`).toBe(e.en)
-        expect(mdText.includes(norm(e.tr)), `${key} ${e.path} is approved md text, do not list it`).toBe(false)
+        expect(approved.has(norm(e.tr)), `${key} ${e.path} is approved md text, do not list it`).toBe(false)
       }
     })
   }
@@ -218,12 +230,12 @@ describe('TR modules have the same shape as EN (no gaps)', () => {
       const diffs = shapeDiff(useContent(key, 'en'), tr)
       expect(diffs.filter((d) => d.kind !== 'TR only').map((d) => `${d.path}: ${d.kind}`)).toEqual([])
 
-      const mdText = norm(readMd('tr', key))
+      const approved = approvedStrings(readMd('tr', key))
       for (const d of diffs) {
         const lastKey = d.path.match(/([^.[\]]+)$/)?.[1] ?? ''
         for (const leaf of leafPaths(getAt(tr, d.path), d.path, lastKey)) {
           expect(unreviewedByKey.has(unreviewedKey(key, leaf.path)), `${leaf.path} is TR-only but translated`).toBe(false)
-          expect(mdText.includes(leaf.value), `${leaf.path} is TR-only but not approved md text`).toBe(true)
+          expect(approved.has(leaf.value), `${leaf.path} is TR-only but not approved md text`).toBe(true)
         }
       }
     })

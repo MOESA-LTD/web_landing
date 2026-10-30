@@ -4,9 +4,10 @@
 
 Every Turkish string below has **no source** in `MOESA_Website_Package_v1.0/content/tr`. We translated it from the
 approved English (formal Turkish, "siz" form, the terminology of the approved TR files). Please review it before launch.
-Approved TR text from the package is never changed and is not listed here.
+Approved TR text from the package is never changed and is not listed here. Fragments cut from an approved TR line
+(for example the page names in the 404 "Buradan devam edin" line) are listed, because they are not a whole approved string.
 
-## Page copy (388 strings)
+## Page copy (410 strings)
 
 Source: `content/tr/unreviewed.ts`; the strings are used verbatim in `content/tr/*.ts`. The path is the field in the
 page module (legal sections are addressed by id). Where the TR package condensed an EN list into one sentence, that
@@ -109,7 +110,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `responsibilities.title` | Client and MOESA responsibilities | Müşterinin ve MOESA’nın sorumlulukları |
 | `responsibilities.body` | The client retains brand strategy, budget, target-market decisions and final product, supplier, sample, packaging and production approvals. MOESA manages the development structure and cross-functional execution. | Marka stratejisi, bütçe, hedef pazar kararları ve ürün, tedarikçi, numune, ambalaj ve üretimle ilgili final onaylar müşteride kalır. MOESA geliştirme yapısını ve fonksiyonlar arası uygulamayı yönetir. |
 
-### services/market-access-commercial-representation (23)
+### services/market-access-commercial-representation (24)
 
 | Path | EN | TR |
 | --- | --- | --- |
@@ -122,6 +123,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `typicalMandates.items[2]` | Establish commercial representation | Ticari temsil yapısı kurmak |
 | `typicalMandates.items[3]` | Source an international brand for a market | Bir pazar için uluslararası bir marka tedarik etmek |
 | `typicalMandates.items[4]` | Build a new retail, wholesale or digital sales channel | Yeni bir perakende, toptan veya dijital satış kanalı kurmak |
+| `manages.items[0]` | Market assessment | Pazar değerlendirmesi |
 | `manages.items[1]` | Product and portfolio preparation | Ürün ve portföy hazırlığı |
 | `manages.items[2]` | Commercial positioning | Ticari konumlandırma |
 | `manages.items[3]` | Partner and channel identification | Partner ve kanal tespiti |
@@ -137,7 +139,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `europeanBase.title` | European operating base | Avrupa operasyon tabanı |
 | `europeanBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria. The exact scope and responsibilities are defined separately for each market, product and commercial relationship. | MOESA Ltd. Plovdiv, Bulgaristan merkezlidir. Kesin kapsam ve sorumluluklar her pazar, ürün ve ticari ilişki için ayrıca tanımlanır. |
 
-### services/operations-supply-chain (36)
+### services/operations-supply-chain (38)
 
 | Path | EN | TR |
 | --- | --- | --- |
@@ -148,6 +150,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `typicalMandates.items[2]` | Build an import and warehousing structure | İthalat ve depolama yapısı kurmak |
 | `typicalMandates.items[3]` | Manage recurring supply operations | Tekrarlayan tedarik operasyonlarını yönetmek |
 | `typicalMandates.items[4]` | Consolidate multiple suppliers | Birden fazla tedarikçiyi konsolide etmek |
+| `manages.items[0]` | Commercial handover | Ticari devir |
 | `manages.items[1]` | Purchase-order coordination | Satın alma siparişi koordinasyonu |
 | `manages.items[2]` | Production planning and follow-up | Üretim planlama ve takibi |
 | `manages.items[3]` | Quality and documentation coordination | Kalite ve dokümantasyon koordinasyonu |
@@ -168,6 +171,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `flow.steps[7]` | Warehousing | Depolama |
 | `flow.steps[8]` | Inventory | Stok |
 | `flow.steps[9]` | Delivery | Teslimat |
+| `visibility.items[0]` | Current status | Mevcut durum |
 | `visibility.items[1]` | Next milestone | Sonraki kilometre taşı |
 | `visibility.items[2]` | Open decisions | Açık kararlar |
 | `visibility.items[3]` | Required client action | Müşteriden beklenen aksiyon |
@@ -216,9 +220,9 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `managedModel.title` | Managed commerce model | Yönetilen ticaret modeli |
 | `managedModel.body` | The client retains account ownership, brand strategy, budgets, pricing and final risk decisions. MOESA manages the agreed recurring commercial operation and cross-functional follow-up. | Hesap sahipliği, marka stratejisi, bütçeler, fiyatlandırma ve final risk kararları müşteride kalır. MOESA kararlaştırılan tekrarlayan ticari operasyonu ve fonksiyonlar arası takibi yönetir. |
 | `technology.title` | Current technology position | Mevcut teknoloji durumu |
-| `technology.body` | MOESA is developing structured operating data and future workflow automation capabilities. A public software or AI platform is not claimed as currently available unless separately confirmed. | MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrıca teyit edilmedikçe, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez. |
+| `technology.body` | MOESA is developing structured operating data and future workflow automation capabilities. A public software or AI platform is not claimed as currently available unless separately confirmed. | MOESA yapılandırılmış operasyon verileri ve gelecekteki iş akışı otomasyonu yetkinlikleri geliştirmektedir. Ayrı bir teyit olmadıkça, herkese açık bir yazılım veya AI platformunun şu anda kullanıma hazır olduğu iddia edilmez. |
 
-### how-we-work (44)
+### how-we-work (45)
 
 | Path | EN | TR |
 | --- | --- | --- |
@@ -234,6 +238,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `nonLinear.title` | Not a linear process | Doğrusal bir süreç değil |
 | `nonLinear.steps[0]` | Commercial Objective | Ticari Hedef |
 | `nonLinear.steps[1]` | Source or Develop | Tedarik Et veya Geliştir |
+| `nonLinear.steps[6]` | Measure | Ölç |
 | `nonLinear.steps[7]` | Improve, Reorder or Expand | Geliştir, Yeniden Sipariş Ver veya Büyüt |
 | `nonLinear.body` | Every completed project should improve the next one. | Tamamlanan her proje bir sonrakini geliştirmelidir. |
 | `startAnywhere.items[0]` | Commercial idea | Ticari fikir |
@@ -356,10 +361,11 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `isNot.items[3]` | Not a legal substitute for the economic operators assigned by law | Mevzuatın belirlediği ekonomik operatörlerin hukuki ikamesi değil |
 | `isNot.items[4]` | Not a software platform unless a separate technology service is confirmed | Ayrı bir teknoloji hizmeti teyit edilmedikçe bir yazılım platformu değil |
 
-### contact (25)
+### contact (32)
 
 | Path | EN | TR |
 | --- | --- | --- |
+| `serviceOptions.items[0]` | Brand or Product Sourcing | Marka/ürün sourcing |
 | `serviceOptions.items[1]` | Managed Procurement | Yönetilen satın alma |
 | `serviceOptions.items[2]` | Product & Private Label Development | Ürün ve Private Label Geliştirme |
 | `serviceOptions.items[3]` | Market Access | Pazara giriş |
@@ -368,6 +374,12 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `serviceOptions.items[6]` | Digital Commerce Operations | Digital commerce |
 | `serviceOptions.items[7]` | Integrated / Multiple Services | Entegre hizmetler |
 | `serviceOptions.items[8]` | Not Sure Yet | Emin değilim |
+| `formFields.items[0]` | Name | Ad |
+| `formFields.items[1]` | Company | Şirket |
+| `formFields.items[2]` | Work Email | İş e-postası |
+| `formFields.items[3]` | Country | Ülke |
+| `formFields.items[4]` | How Can We Support You? | Hizmet |
+| `formFields.items[5]` | Short Project Brief | Kısa proje briefi |
 | `formFields.items[6]` | Product Category - optional | Ürün Kategorisi - opsiyonel |
 | `formFields.items[7]` | Target Market - optional | Hedef Pazar - opsiyonel |
 | `formFields.items[8]` | Estimated Volume - optional | Tahmini Hacim - opsiyonel |
@@ -386,10 +398,11 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `privacyNote.title` | Privacy note | Gizlilik notu |
 | `privacyNote.body` | The form must include consent to process the submitted information for the purpose of responding to the enquiry. Users must not be added to marketing communications without separate consent. | Form, talebe yanıt verilmesi amacıyla gönderilen bilgilerin işlenmesine yönelik onay içermelidir. Kullanıcılar ayrı bir onay olmadan pazarlama iletişimlerine eklenmemelidir. |
 
-### thank-you (6)
+### thank-you (7)
 
 | Path | EN | TR |
 | --- | --- | --- |
+| `next.items[0]` | The enquiry is reviewed | Talep incelenir |
 | `next.items[1]` | The relevant service area is identified | İlgili hizmet alanı belirlenir |
 | `next.items[2]` | Missing information may be requested | Eksik bilgi istenebilir |
 | `next.items[3]` | A discovery discussion may be proposed | Bir discovery görüşmesi önerilebilir |
@@ -397,12 +410,26 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `info.title` | Need to add information? | Bilgi eklemeniz mi gerekiyor? |
 | `info.body` | Email additional details to info@moesaltd.com and reference the company or project name used in the form. | Ek ayrıntıları info@moesaltd.com adresine e-postayla gönderin ve formda kullandığınız şirket veya proje adını belirtin. |
 
-### legal-notice (9)
+### 404 (4)
 
 | Path | EN | TR |
 | --- | --- | --- |
+| `next.items[0]` | Return to Home | Ana Sayfa |
+| `next.items[1]` | Explore Services | Hizmetler |
+| `next.items[2]` | How We Work | Nasıl Çalışıyoruz |
+| `next.items[3]` | Contact MOESA | İletişim |
+
+### legal-notice (14)
+
+| Path | EN | TR |
+| --- | --- | --- |
+| `sections[operator].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
+| `sections[operator].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
+| `sections[operator].paragraphs[2]` | Company ID: 207200475 | Company ID 207200475 |
+| `sections[operator].paragraphs[3]` | VAT: BG207200475 | VAT BG207200475 |
 | `sections[contact].paragraphs[0]` | Email: info@moesaltd.com | E-posta: info@moesaltd.com |
 | `sections[contact].paragraphs[1]` | Phone: +359 88 501 661 | Telefon: +359 88 501 661 |
+| `sections[representative].title` | Legal representative | Yasal temsilci |
 | `sections[representative].paragraphs[0]` | OPEN / AÇIK - Confirm the legal representative or managing director before publication. | OPEN / AÇIK - Yayından önce yasal temsilciyi veya genel müdürü teyit edin. |
 | `sections[contentResponsibility].title` | Content responsibility | İçerik sorumluluğu |
 | `sections[contentResponsibility].paragraphs[0]` | OPEN / AÇIK - Confirm the wording required for the publication countries and applicable law. | OPEN / AÇIK - Yayın yapılan ülkeler ve uygulanacak hukuk için gerekli ifadeyi teyit edin. |
@@ -453,10 +480,11 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[updates].title` | Policy updates | Politika güncellemeleri |
 | `sections[updates].paragraphs[0]` | State the effective date and explain that the policy may be updated when services or legal requirements change. | Yürürlük tarihini belirtin ve hizmetler veya yasal gereklilikler değiştiğinde politikanın güncellenebileceğini açıklayın. |
 
-### cookie-policy (13)
+### cookie-policy (14)
 
 | Path | EN | TR |
 | --- | --- | --- |
+| `sections[categories].items[0]` | Strictly necessary | Zorunlu |
 | `sections[categories].items[1]` | Preferences | Tercihler |
 | `sections[categories].items[2]` | Analytics | Analitik |
 | `sections[categories].items[3]` | Marketing - only if implemented | Pazarlama - yalnızca uygulanırsa |
