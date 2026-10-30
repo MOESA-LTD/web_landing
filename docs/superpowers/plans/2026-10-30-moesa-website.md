@@ -305,6 +305,30 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 - [ ] **Step 4:** Run the tests. Expected: PASS.
 - [ ] **Step 5:** Commit `feat: add site header, footer and layout`.
 
+### Task 4b: Header language dropdown (canvas v1793393437; added 2026-10-31, runs after Task 6)
+
+The user updated the canvas so that the grey language bar above the header is **replaced** by a language dropdown at the right end of the header bar, and **Home is removed from the header nav** (the logo is the home link). The spec is in `design-reference/CANVAS_UPDATE_1793393437.md`; the new artboards are in `design-reference/canvas-incoming/project/`, and the controller moves them into `design-reference/canvas/` before dispatch.
+
+**Files:**
+- Modify: `app/components/layout/LanguageSwitcher.vue`, which becomes the in-header dropdown; `app/components/layout/SiteHeader.vue`, to place the switcher and drop Home from the nav; the mobile menu; and the tests `LanguageSwitcher.test.ts` and `SiteHeader.test.ts`.
+
+**Requirements:**
+- Visual: match the canvas dropdown (button showing the current code plus a chevron; the menu lists native name plus code, "English EN" and "Türkçe TR"). Take the exact sizes and offsets from CANVAS_UPDATE_1793393437 §1, including the 76px CTA spacing and the 68px offset below 960px.
+- Behaviour:
+  - Disclosure button with `aria-expanded` and `aria-controls`. Escape closes it and returns focus to the button; an outside mousedown closes it; a route change closes it. **These close behaviours are added on top of the canvas, which lacks them.**
+  - The menu items are `<NuxtLink>`s from `useSwitchLocalePath()` with `lang`, `hreflang`, and `aria-current="true"` on the current one.
+  - EN and TR only.
+  - Keep the SSR/after-mount query handling from Task 4.
+  - The switcher is hidden when `enableTr` is false.
+- Opening the language menu closes the Services menu, and vice versa.
+- Header nav: Services, How We Work, Who We Work With, About MOESA and Contact (5 items, without Home). The mobile menu follows the canvas; if the canvas mobile panel still lists Home, keep it.
+- **TR nav labels stay as they are** (from the approved TR page titles). The canvas draft labels "Müşterilerimiz" and "Hakkımızda" are not used.
+- Update the Task 5 home and layout e2e tests that relied on the bar.
+
+- [ ] **Step 1:** Write the failing tests: the dropdown's ARIA attributes, Escape, outside click, hrefs (including the `/contact?service=` case), Home absent from the desktop nav, and the language bar no longer rendered.
+- [ ] **Step 2:** Implement. Run `npx vitest run` and `npx playwright test`. Compare screenshots at 1440 and 390 with the new canvas.
+- [ ] **Step 3:** Commit `feat: move language switcher into header dropdown`.
+
 ### Task 5: Home page and content-fidelity harness
 
 **Files:**
