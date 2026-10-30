@@ -201,6 +201,25 @@ vercel.json                          apex→www redirect
 - [ ] **Step 4:** Run `npx vitest run`. Expected: PASS.
 - [ ] **Step 5:** Commit `feat: add typed content layer from approved package`.
 
+### Task 2b: Complete the TR content where the package TR is thinner (added 2026-10-30, user decision)
+
+The PKG TR files are a condensed mirror: only `home.md` matches EN, and the others lack sections and lists. The user chose to have us **translate the missing parts from the approved EN**, flagged for approval.
+
+**Files:**
+- Modify: `content/tr/*.ts`, the content shape test (remove `KNOWN_TR_GAPS`; TR must now have the same shape as EN)
+- Create: `content/tr/unreviewed.ts`, exporting `UNREVIEWED_TR: { page: PageKey; path: string; en: string; tr: string }[]`. `path` is the dotted content path, for example `sections.projectVisibility.items[3]`. Create `i18n/UNREVIEWED_TR.md`, generated from it by `scripts/unreviewed-tr.ts` (committed; `npm run unreviewed:tr`), which lists the page copy and the UI microcopy for the user.
+
+**Rules:**
+- **Approved TR text from the md is never changed.** Translate only what is missing in TR relative to EN: whole sections, list items, and lists that TR collapsed into a sentence. When TR collapsed a list into a sentence, keep the approved sentence and add the translated list items only if the EN layout needs the list. Record the choice in the report.
+- Translate from the approved EN only. Use the TR terminology the approved TR files already use, for example "Partneri", "Private Label", "Ticari İçgörü", "Tedarik ve Yönetilen Satın Alma" and "Projeyi Görüşelim". Use the formal "siz" register. Never use the canvas `i18n.js` translations.
+- Every translated string has exactly one `UNREVIEWED_TR` entry. The test asserts that every TR content string is either found verbatim in `PKG/content/tr/*.md` or listed in `UNREVIEWED_TR`. Normalise the whitespace and the arrow lines before comparing.
+- Legal pages: translate the missing sections too, but they remain drafts under the same "DRAFT / TASLAK" status.
+
+- [ ] **Step 1:** Write the failing tests: the TR/EN shape is equal for all 16 pages (no gaps), and the provenance test above.
+- [ ] **Step 2:** Translate and add the `UNREVIEWED_TR` entries.
+- [ ] **Step 3:** Run `npx vitest run`. Expected: PASS. Run `npm run unreviewed:tr` and commit the generated md.
+- [ ] **Step 4:** Commit `feat: complete TR content with flagged translations`.
+
 ### Task 3: Brand, UI and section components (ported from newer DS)
 
 Port from `design-reference/design-system/project/components/bundle.js` and `bundle.css`, plus each component's `README.md`. Read `preview.html` where it exists. Keep the DS class semantics but express them as Tailwind utilities. Keep the DS accessibility attributes exactly (`aria-hidden`, `aria-current`, the sr-only texts).
