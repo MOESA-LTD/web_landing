@@ -5,7 +5,19 @@ import { addPageStubs } from './helpers/page-stubs'
 import App from '~/app.vue'
 import DefaultLayout from '~/layouts/default.vue'
 
-beforeAll(addPageStubs)
+/**
+ * Dedicated stub-only routes for the <html lang> tests: no real page exists at these paths, so only app.vue
+ * (not a page's usePageSeo) can set the lang. Named `<base>___<locale>` like the i18n module names routes.
+ */
+const LANG_STUB = { en: '/__lang-stub', tr: '/tr/__lang-stub' } as const
+
+beforeAll(() => {
+  addPageStubs()
+  const router = useRouter()
+  for (const locale of ['en', 'tr'] as const) {
+    router.addRoute({ name: `lang-stub___${locale}`, path: LANG_STUB[locale], component: { render: () => null } })
+  }
+})
 
 const mountLayout = async (route: string) => {
   const w = await mountSuspended(DefaultLayout, { route, slots: { default: () => h('h1', { id: 'page-h1' }, 'Page') } })
@@ -73,19 +85,19 @@ describe('<html lang>', () => {
     await expectLang('en')
   })
 
-  // /tr/iletisim has no real page yet (a stub route), so only app.vue sets the lang here.
   it('is "tr" on TR pages, set globally by the app without any page calling usePageSeo', async () => {
-    await mountSuspended(App, { route: '/tr/iletisim' })
+    expect(useRouter().resolve(LANG_STUB.tr).matched[0]?.name).toBe('lang-stub___tr')
+    await mountSuspended(App, { route: LANG_STUB.tr })
     await flushPromises()
     await expectLang('tr')
   })
 
   it('follows the locale when navigating between EN and TR', async () => {
     await mountSuspended(App, { route: '/' })
-    await useRouter().push('/tr/iletisim')
+    await useRouter().push(LANG_STUB.tr)
     await flushPromises()
     await expectLang('tr')
-    await useRouter().push('/contact')
+    await useRouter().push(LANG_STUB.en)
     await flushPromises()
     await expectLang('en')
   })

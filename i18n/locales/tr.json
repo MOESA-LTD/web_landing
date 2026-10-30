@@ -89,8 +89,11 @@
     "optional": "(opsiyonel)",
     "servicePlaceholder": "Bir hizmet seçin",
     "briefHelp": "İşletmenin neye ihtiyacı olduğunu, nelerin kesinleştiğini ve nelerin açık olduğunu anlatın.",
-    "consent": "Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. Gizlilik Politikası'na bakın.",
+    "consent": "Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. {link}'na bakın.",
     "submit": "Proje Briefini Gönder",
+    "disclaimer": "Gönderilen bir form sözleşmesel bir taahhüt oluşturmaz.",
+    "sending": "Gönderiliyor…",
+    "honeypot": "Bu alanı boş bırakın",
     "serviceOptions": {
       "sourcing": "Marka/ürün sourcing",
       "procurement": "Yönetilen satın alma",
@@ -112,7 +115,13 @@
       "country": "Ülkenizi girin.",
       "service": "Size nasıl destek olabileceğimizi seçin.",
       "projectBrief": "Projeyi kısaca anlatın.",
-      "consent": "Talebinize yanıt verebilmemiz için onay verin."
+      "consent": "Talebinize yanıt verebilmemiz için onay verin.",
+      "tooLong": "En fazla {max} karakter kullanın.",
+      "briefTooShort": "Projeyi en az {min} karakterle anlatın.",
+      "generic": "Bazı bilgiler kabul edilemedi. Lütfen formu kontrol edip yeniden gönderin.",
+      "rateLimited": "Bu bağlantıdan çok fazla gönderim yapıldı. Lütfen 10 dakika bekleyip yeniden deneyin veya bize doğrudan e-posta gönderin.",
+      "verificationFailed": "Spam kontrolü tamamlanamadı. Lütfen yeniden deneyin.",
+      "sendFailed": "Form gönderilemedi. Lütfen yeniden deneyin veya info{'@'}moesaltd.com adresine e-posta gönderin."
     }
   },
   "cookie": {

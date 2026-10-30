@@ -499,7 +499,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[effectiveDate].title` | Effective date | Yürürlük tarihi |
 | `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Yayın tarihini ekleyin. |
 
-## UI microcopy (50 strings)
+## UI microcopy (59 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -542,8 +542,11 @@ Not listed here, because they come from the package TR md:
 | `form.projectDetails` | Project details | Proje detayları |
 | `form.optional` | (optional) | (opsiyonel) |
 | `form.servicePlaceholder` | Select a service | Bir hizmet seçin |
-| `form.consent` | I agree that MOESA may process the information I submit to respond to this enquiry. See the Privacy Policy. | Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. Gizlilik Politikası'na bakın. |
+| `form.consent` | I agree that MOESA may process the information I submit to respond to this enquiry. See the {link}. | Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. {link}'na bakın. |
 | `form.submit` | Send Project Brief | Proje Briefini Gönder |
+| `form.disclaimer` | A submitted form does not create a contractual engagement. | Gönderilen bir form sözleşmesel bir taahhüt oluşturmaz. |
+| `form.sending` | Sending… | Gönderiliyor… |
+| `form.honeypot` | Leave this field empty | Bu alanı boş bırakın |
 | `form.serviceOptions.other` | Other | Diğer |
 | `form.errorSummaryOne` | Please check 1 field | Lütfen 1 alanı kontrol edin |
 | `form.errorSummaryMany` | Please check {count} fields | Lütfen {count} alanı kontrol edin |
@@ -554,6 +557,12 @@ Not listed here, because they come from the package TR md:
 | `form.errors.service` | Choose how we can support you. | Size nasıl destek olabileceğimizi seçin. |
 | `form.errors.projectBrief` | Describe the project briefly. | Projeyi kısaca anlatın. |
 | `form.errors.consent` | Confirm consent so we can respond to your enquiry. | Talebinize yanıt verebilmemiz için onay verin. |
+| `form.errors.tooLong` | Use {max} characters or fewer. | En fazla {max} karakter kullanın. |
+| `form.errors.briefTooShort` | Describe the project in at least {min} characters. | Projeyi en az {min} karakterle anlatın. |
+| `form.errors.generic` | Some details could not be accepted. Please check the form and send it again. | Bazı bilgiler kabul edilemedi. Lütfen formu kontrol edip yeniden gönderin. |
+| `form.errors.rateLimited` | Too many submissions from this connection. Please wait 10 minutes and try again, or email us directly. | Bu bağlantıdan çok fazla gönderim yapıldı. Lütfen 10 dakika bekleyip yeniden deneyin veya bize doğrudan e-posta gönderin. |
+| `form.errors.verificationFailed` | The spam check could not be completed. Please try again. | Spam kontrolü tamamlanamadı. Lütfen yeniden deneyin. |
+| `form.errors.sendFailed` | The form could not be sent. Please try again or email info{'@'}moesaltd.com. | Form gönderilemedi. Lütfen yeniden deneyin veya info{'@'}moesaltd.com adresine e-posta gönderin. |
 | `cookie.title` | Cookie preferences | Çerez tercihleri |
 | `cookie.alwaysOn` | (always on) | (her zaman açık) |
 | `cookie.preferences` | Preferences | Tercihler |

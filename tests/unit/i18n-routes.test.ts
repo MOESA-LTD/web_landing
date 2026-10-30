@@ -7,6 +7,7 @@ import {
   routeNameForLocalePath,
   serviceSlugFromLocaleSlug,
   servicePrerenderRoutes,
+  contactPrerenderRoutes,
   type RouteName,
 } from '../../i18n/routes'
 import { useLocalizedHref } from '../../app/composables/useLocalizedHref'
@@ -195,5 +196,12 @@ describe('servicePrerenderRoutes', () => {
     const routes = servicePrerenderRoutes({ enableTr: false })
     expect(routes).toHaveLength(6)
     expect(routes.some((r) => r.startsWith('/tr'))).toBe(false)
+  })
+})
+
+describe('contactPrerenderRoutes', () => {
+  it('lists the contact and thank-you pages in both locales, never the API route', () => {
+    expect(contactPrerenderRoutes({ enableTr: true })).toEqual(['/contact', '/tr/iletisim', '/thank-you', '/tr/tesekkurler'])
+    expect(contactPrerenderRoutes({ enableTr: false })).toEqual(['/contact', '/thank-you'])
   })
 })

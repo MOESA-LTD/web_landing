@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
-import { buildI18nPages, servicePrerenderRoutes } from './i18n/routes'
+import { buildI18nPages, contactPrerenderRoutes, servicePrerenderRoutes } from './i18n/routes'
 
 // NUXT_PUBLIC_ENABLE_TR=false hides TR (no TR routes prerendered, no switcher, not in the sitemap).
 const enableTr = process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
@@ -27,6 +27,11 @@ export default defineNuxtConfig({
   routeRules: {
     // `robots: false` is read by @nuxtjs/robots (added with the sitemap task); until then the header does the job.
     '/_dev/**': { prerender: false, robots: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+    // The form endpoint is a server function (Vercel function), never prerendered.
+    '/api/**': { prerender: false },
+    // The thank-you page is reached after a form post only: keep it out of search results (also <meta robots>).
+    '/thank-you': { robots: false, headers: { 'X-Robots-Tag': 'noindex' } },
+    '/tr/tesekkurler': { robots: false, headers: { 'X-Robots-Tag': 'noindex' } },
   },
   vite: {
     plugins: [tailwindcss()],
@@ -41,14 +46,19 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
+    // Server-only secrets (RESEND_API_KEY, CONTACT_TO, CONTACT_FROM, NUXT_TURNSTILE_SECRET_KEY) are read from
+    // process.env at request time by server/api/contact.post.ts; see .env.example.
     public: {
       enableTr,
+      // NUXT_PUBLIC_TURNSTILE_SITE_KEY. /contact is prerendered, so the key must be set at build time.
+      turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY ?? '',
     },
   },
   nitro: {
     prerender: {
-      // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled).
-      routes: servicePrerenderRoutes({ enableTr }),
+      // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled), plus the contact
+      // and thank-you pages (4 URLs; 2 with TR disabled). /api/contact stays a server route.
+      routes: [...servicePrerenderRoutes({ enableTr }), ...contactPrerenderRoutes({ enableTr })],
     },
   },
   i18n: {

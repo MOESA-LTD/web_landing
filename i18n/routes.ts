@@ -130,3 +130,9 @@ export function servicePrerenderRoutes(options: { enableTr: boolean }): string[]
   const names: RouteName[] = ['services', ...serviceRoutes.map(([name]) => name)]
   return names.flatMap((name) => (options.enableTr ? [ROUTES[name].en, ROUTES[name].tr] : [ROUTES[name].en]))
 }
+
+/** URLs prerendered for the contact form: the contact and thank-you pages, EN and, unless TR is disabled, TR. */
+export function contactPrerenderRoutes(options: { enableTr: boolean }): string[] {
+  const names: RouteName[] = ['contact', 'thank-you']
+  return names.flatMap((name) => (options.enableTr ? [ROUTES[name].en, ROUTES[name].tr] : [ROUTES[name].en]))
+}

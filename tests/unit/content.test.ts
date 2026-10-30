@@ -332,7 +332,24 @@ describe('UI microcopy json', () => {
     ]) {
       expect(en[k], k).toBeTruthy()
     }
-    expect(Object.keys(en).filter((k) => k.startsWith('form.errors.'))).toHaveLength(7)
+    // One "required" text per required field (DESIGN_NOTES §4 Contact), plus the texts for the server error codes.
+    expect(Object.keys(en).filter((k) => k.startsWith('form.errors.')).sort()).toEqual(
+      [
+        'briefTooShort',
+        'company',
+        'consent',
+        'country',
+        'generic',
+        'name',
+        'projectBrief',
+        'rateLimited',
+        'sendFailed',
+        'service',
+        'tooLong',
+        'verificationFailed',
+        'workEmail',
+      ].map((k) => `form.errors.${k}`),
+    )
   })
 
   it('EN nav labels equal navigation.json', () => {

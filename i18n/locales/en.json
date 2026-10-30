@@ -89,8 +89,11 @@
     "optional": "(optional)",
     "servicePlaceholder": "Select a service",
     "briefHelp": "What the business needs, what is already confirmed and what remains open.",
-    "consent": "I agree that MOESA may process the information I submit to respond to this enquiry. See the Privacy Policy.",
+    "consent": "I agree that MOESA may process the information I submit to respond to this enquiry. See the {link}.",
     "submit": "Send Project Brief",
+    "disclaimer": "A submitted form does not create a contractual engagement.",
+    "sending": "Sending…",
+    "honeypot": "Leave this field empty",
     "serviceOptions": {
       "sourcing": "Brand or Product Sourcing",
       "procurement": "Managed Procurement",
@@ -112,7 +115,13 @@
       "country": "Enter your country.",
       "service": "Choose how we can support you.",
       "projectBrief": "Describe the project briefly.",
-      "consent": "Confirm consent so we can respond to your enquiry."
+      "consent": "Confirm consent so we can respond to your enquiry.",
+      "tooLong": "Use {max} characters or fewer.",
+      "briefTooShort": "Describe the project in at least {min} characters.",
+      "generic": "Some details could not be accepted. Please check the form and send it again.",
+      "rateLimited": "Too many submissions from this connection. Please wait 10 minutes and try again, or email us directly.",
+      "verificationFailed": "The spam check could not be completed. Please try again.",
+      "sendFailed": "The form could not be sent. Please try again or email info{'@'}moesaltd.com."
     }
   },
   "cookie": {

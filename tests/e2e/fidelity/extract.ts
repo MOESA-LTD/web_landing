@@ -121,10 +121,49 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
       reason:
         'Project-form field list: rendered as form labels with the "(optional)" suffix instead of " - optional"; checked by the contact form test.',
     })),
+    {
+      text: 'Project form',
+      reason: 'Heading of the builder-instruction field list (not display copy); the section is the form itself.',
+    },
     { text: 'File Upload - optional', reason: 'File upload is disabled in v1 (decision 2026-10-30).' },
+    { text: 'Privacy note', reason: 'Heading of the builder instruction below; implemented as the consent checkbox.' },
     {
       text: 'The form must include consent to process the submitted information for the purpose of responding to the enquiry. Users must not be added to marketing communications without separate consent.',
       reason: 'Privacy note is an instruction to the builder, implemented as the consent checkbox.',
+    },
+  ],
+  'tr/contact.md': [
+    {
+      text: 'Hizmet seçimi',
+      reason:
+        'The service choice is the form select: label "Hizmet" (TR contact.md form list) with the TR contact.md service options as visible option labels.',
+      renderedAs: [
+        'Marka/ürün sourcing',
+        'Yönetilen satın alma',
+        'Ürün ve Private Label Geliştirme',
+        'Pazara giriş',
+        'Ticari temsil',
+        'Operasyon ve Tedarik Zinciri',
+        'Digital commerce',
+        'Entegre hizmetler',
+        'Emin değilim',
+      ],
+    },
+    {
+      text: 'Marka/ürün sourcing; yönetilen satın alma; private label; pazara giriş; ticari temsil; supply chain; digital commerce; entegre hizmetler; emin değilim.',
+      reason: 'The approved running sentence of the service list; the list is the select options (see "Hizmet seçimi").',
+    },
+    { text: 'Form', reason: 'Heading of the builder-instruction field list (not display copy); the section is the form itself.' },
+    {
+      text: 'Ad; Şirket; İş e-postası; Ülke; Hizmet; Kısa proje briefi; opsiyonel kategori/pazar/hacim/zaman/dosya.',
+      reason:
+        'Builder-instruction field list, rendered as the form labels (optional ones with "(opsiyonel)"); "dosya" (file upload) is disabled in v1.',
+    },
+    {
+      text: 'info@moesaltd.com | +359 88 501 661 | 1 Petyofi Str., Plovdiv 4000, Bulgaria',
+      reason:
+        'The one-line form of the direct contact details; the card shows the same three values as labelled rows (E-posta / Telefon / Kayıtlı adres), as in the canvas.',
+      renderedAs: ['info@moesaltd.com', '+359 88 501 661', '1 Petyofi Str., Plovdiv 4000, Bulgaria'],
     },
   ],
   'en/home.md': [

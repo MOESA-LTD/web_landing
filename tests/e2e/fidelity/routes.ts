@@ -32,4 +32,8 @@ export const FIDELITY_ROUTES: FidelityRoute[] = [
   { route: '/tr/kimlerle-calisiyoruz', md: 'who-we-work-with.md', locale: 'tr' },
   { route: '/about', md: 'about.md', locale: 'en' },
   { route: '/tr/hakkimizda', md: 'about.md', locale: 'tr' },
+  { route: '/contact', md: 'contact.md', locale: 'en' },
+  { route: '/tr/iletisim', md: 'contact.md', locale: 'tr' },
+  { route: '/thank-you', md: 'thank-you.md', locale: 'en' },
+  { route: '/tr/tesekkurler', md: 'thank-you.md', locale: 'tr' },
 ]
