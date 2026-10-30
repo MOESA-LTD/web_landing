@@ -29,7 +29,32 @@
 | Hosting | Vercel (`nitro.preset = 'vercel'`). |
 | Form delivery | Nitro route, then Resend, to `info@moesaltd.com`. Turnstile spam check. **File upload disabled in v1.** |
 | Styling | Tailwind v4. DS tokens live in `@theme`. Component-level CSS sits in `@layer components` only where Tailwind utilities would be unreadable (motif, ticks marker, timeline connectors). |
-| Language | English only in v1. Content files live under `content/en/` and the `Locale = 'en'` type is threaded through `useContent()`, so `tr` and `de` can be added later without touching components. |
+| Language (amended 2026-10-30) | **EN + TR**, URL-based, with `@nuxtjs/i18n` 10.6 (`strategy: 'prefix_except_default'`, `defaultLocale: 'en'`, `detectBrowserLanguage: false`, `customRoutes: 'config'`). EN lives at the root and TR under `/tr/` with **Turkish slugs** (table below). Page copy comes from `content/en/*.ts` and `content/tr/*.ts`, and the TR files are transcribed verbatim from `PKG/content/tr/*.md`. **The canvas's own TR/DE strings in `design-reference/canvas/project/i18n.js` are NOT copy sources**, because they are unapproved re-translations (CANVAS_UPDATE_NOTES §3). DE is not built: there is no approved source, though the setup allows adding it later. `NUXT_PUBLIC_ENABLE_TR=false` hides TR: no TR routes are prerendered, the switcher is hidden and TR is left out of the sitemap. |
+| Layout source (amended) | The canvas was updated to v1793392139 and now uses the newer DS. Page layouts follow the **current** `design-reference/canvas/project/*.dc.html`. Read `design-reference/CANVAS_UPDATE_NOTES.md` for what changed relative to DESIGN_NOTES: language bar above the header, Home services 4+1, navy "How we work" band, ruled partnership list, About Experience panel, round bullets. Where DESIGN_NOTES and CANVAS_UPDATE_NOTES disagree, CANVAS_UPDATE_NOTES wins. |
+| Language switcher | Use the canvas visual: a grey bar above the header, right-aligned, with the label "Language"/"Dil" and EN/TR buttons (44px; the active one blue, the others ink). Implement them as `<NuxtLink>`s from `useSwitchLocalePath()`, never as JS-only buttons. The links carry `hreflang` and `lang`, and the active one has `aria-current="true"`. |
+| UI microcopy | Text that is not page copy (nav labels, form labels and errors, "Skip to content", breadcrumbs "Home", "All services", the switcher label, cookie buttons) goes in `i18n/locales/{en,tr}.json`. TR values come from `PKG/content/tr` wherever a TR equivalent exists there, for example nav labels from the TR page titles and the form labels from TR `contact.md`. Strings with no package source are translated by us and listed in `i18n/UNREVIEWED_TR.md` for the user to review. |
+
+### TR routes (Turkish slugs, derived from the `PKG/content/tr` page titles)
+
+| EN | TR |
+|---|---|
+| `/` | `/tr` |
+| `/services` | `/tr/hizmetler` |
+| `/services/sourcing-managed-procurement` | `/tr/hizmetler/tedarik-ve-yonetilen-satin-alma` |
+| `/services/product-private-label-development` | `/tr/hizmetler/urun-ve-private-label-gelistirme` |
+| `/services/market-access-commercial-representation` | `/tr/hizmetler/pazara-giris-ve-ticari-temsil` |
+| `/services/operations-supply-chain` | `/tr/hizmetler/operasyon-ve-tedarik-zinciri` |
+| `/services/digital-commerce-commercial-intelligence` | `/tr/hizmetler/dijital-ticaret-ve-ticari-icgoru` |
+| `/how-we-work` | `/tr/nasil-calisiyoruz` |
+| `/who-we-work-with` | `/tr/kimlerle-calisiyoruz` |
+| `/about` | `/tr/hakkimizda` |
+| `/contact` | `/tr/iletisim` |
+| `/thank-you` | `/tr/tesekkurler` |
+| `/privacy-policy` | `/tr/gizlilik-politikasi` |
+| `/cookie-policy` | `/tr/cerez-politikasi` |
+| `/legal-notice` | `/tr/yasal-bildirim` |
+
+All TR slugs live in one map, `i18n/routes.ts` (`ROUTES: Record<RouteName, { en: string; tr: string }>`). Every internal link is built with `localePath()` from route names. Hard-coded paths in content files (`/contact`, `/contact?service=…`, `/services/...`) are stored as **EN paths** and localised at render time by `useLocalizedHref(href: string): string`, which maps EN path to route name to the current-locale path and keeps the query and hash. The service-slug query parameter (`?service=operations-supply-chain`) stays in English in both locales. The contact form always sends the **EN** service option value to the API, whatever the UI locale.
 
 ## Global Constraints
 
@@ -45,7 +70,10 @@
 - Secrets only via env: `RESEND_API_KEY`, `CONTACT_TO` (default `info@moesaltd.com`), `CONTACT_FROM`, `NUXT_TURNSTILE_SECRET_KEY`, `NUXT_PUBLIC_TURNSTILE_SITE_KEY`. Commit `.env.example`, never `.env`.
 - Accessibility: visible `:focus-visible` (2px `#0069B2`, offset 2; cyan `#14A3DB` on navy), `prefers-reduced-motion` disables transitions, decorative SVG is `aria-hidden="true"`, text contrast is ≥4.5:1.
 - Responsive breakpoints (container widths, from DESIGN_NOTES §1.5): 560, 720, 860, 960, 1000. Use Tailwind v4 `@container` variants on components that the DS marks as container-query based.
-- Commit after every task with Conventional Commits. End every commit message with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+- i18n: every page exists in EN and TR. `<html lang>` follows the locale (`en` / `tr`). Every page outputs `<link rel="alternate" hreflang="en|tr|x-default">` (x-default = EN) and a self-referencing canonical in its own locale. TR page titles and descriptions come from the TR md `**Page Title:**` and `**Meta Description:**`. No DE.
+- Commit after every task with Conventional Commits. End every commit message with these two lines:
+  `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`
+  `Claude-Session: https://claude.ai/code/session_01AmKGHA5GsJjQjAALbYrQDB`
 
 ## Review Focus
 
@@ -53,6 +81,7 @@
 2. **Contact form without JavaScript, or with a hostile payload** (oversized brief, missing consent, HTML in fields, invalid `service`, missing Turnstile token). Expect server-side rejection with field errors, no email sent, and HTML-escaped values in any email that is sent. Pinned in Task 8's `server/contact.test.ts`.
 3. **`/contact?service=<slug>` deep links from service CTAs.** Expect the matching option to be preselected, and an unknown slug to be ignored. Pinned in Task 8's `ContactForm.test.ts` and the e2e `forms.spec.ts`.
 4. **Keyboard and mobile navigation.** Expect the Services dropdown to open and close with click, Enter and Escape and on an outside click, the mobile menu to work at 390px, and focus to stay visible. Pinned in Task 4's `SiteHeader.test.ts` and the e2e `navigation.spec.ts`.
+6. **Switching language on a deep page with a query** (`/contact?service=operations-supply-chain` → TR). Expect to land on `/tr/iletisim?service=operations-supply-chain` with the same service preselected, and every internal link on TR pages to stay in TR. Pinned in Task 4's `LanguageSwitcher.test.ts` and the e2e `i18n.spec.ts` (Task 10), which crawls all TR pages and fails on any `href` to an EN content route.
 5. **Unknown URL.** Expect HTTP 404 with the designed 404 page, not a 200 soft-404 (prerendered SPA fallbacks on Vercel often return 200). Pinned in Task 9's e2e `not-found.spec.ts` against `nuxt preview` output.
 
 ---
@@ -127,11 +156,25 @@ vercel.json                          apex→www redirect
 - [ ] **Step 5:** Run `npx vitest run`. Expected: PASS. Run `npm run build`. Expected: build completes.
 - [ ] **Step 6:** Commit `feat: add MOESA design tokens, Manrope and test tooling`.
 
-### Task 2: Content layer (types, site data, `useContent`)
+### Task 2: Content layer and i18n foundation (types, site data, EN+TR content, routes, `useContent`)
 
 **Files:**
-- Create: `content/types.ts`, `content/site.ts`, `content/en/index.ts`, `app/composables/useContent.ts`, `app/composables/usePageSeo.ts`, `tests/unit/content.test.ts`
-- Modify: `nuxt.config.ts` (alias `#content` → `./content`, alias `#pkg` → `./MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0`)
+- Create: `content/types.ts`, `content/site.ts`, `content/en/index.ts`, `content/tr/index.ts`, `app/composables/useContent.ts`, `app/composables/usePageSeo.ts`, `app/composables/useLocalizedHref.ts`, `i18n/routes.ts`, `i18n/locales/en.json`, `i18n/locales/tr.json`, `i18n/UNREVIEWED_TR.md`, `tests/unit/content.test.ts`, `tests/unit/i18n-routes.test.ts`
+- Modify: `nuxt.config.ts` (alias `#content` → `./content`, alias `#pkg` → `./MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0`; the `@nuxtjs/i18n` module config from the Decisions table, with `pages` built from `i18n/routes.ts`; `runtimeConfig.public.enableTr` from `NUXT_PUBLIC_ENABLE_TR`, default `true`)
+
+**i18n additions (amended):**
+- Install `@nuxtjs/i18n@^10.6.0`. Locales: `{ code: 'en', language: 'en', name: 'EN' }` and `{ code: 'tr', language: 'tr', name: 'TR' }`.
+- `type Locale = 'en' | 'tr'`. `useContent(key, locale?)` defaults to the current i18n locale.
+- Write `content/tr/*.ts` for all 16 pages, verbatim from `PKG/content/tr/*.md`, with the same TS interfaces as EN. The test also asserts that each TR module has the same shape as its EN counterpart: identical key sets and equal array lengths. **If a TR md structurally differs from its EN md** (a missing section, or a different list length), do not invent text. Record the difference in the task report and make the field optional for that page.
+- `i18n/routes.ts` exports `ROUTES` (the TR routes table in Decisions) and `type RouteName`.
+- `useLocalizedHref(href: string): string` maps an EN path, with an optional query and hash, to the current locale's path. An unknown path or an external URL is returned unchanged.
+- `usePageSeo(meta)` additionally emits the hreflang alternates (en, tr, x-default) and uses the locale's canonical URL. You can use `useLocaleHead()` from @nuxtjs/i18n with `baseUrl` set to `https://www.moesaltd.com`.
+- Fill the UI-microcopy JSON files: nav, footer column titles, breadcrumbs "Home", "All services", the skip link, the switcher label, the form labels, help text and 7 error messages, the error-summary title, and the cookie panel strings. Every TR string that has no `PKG/content/tr` source gets a line in `UNREVIEWED_TR.md` in the form `key | EN | TR`.
+
+**Extra tests (amended):**
+- `i18n-routes.test.ts`: `ROUTES` has 15 entries; every TR path starts with `/tr` and is lowercase ASCII `[a-z0-9/-]`; the TR paths are unique.
+- `useLocalizedHref('/contact?service=operations-supply-chain#project-form')` in `tr` returns `'/tr/iletisim?service=operations-supply-chain#project-form'`. `useLocalizedHref('/services/operations-supply-chain')` in `tr` returns `'/tr/hizmetler/operasyon-ve-tedarik-zinciri'`. `useLocalizedHref('https://x.y/')` returns the input unchanged.
+- The content test covers TR as well: TR `meta.title` and `meta.description` must match the TR md.
 
 **Interfaces:**
 - Produces in `content/types.ts`:
@@ -219,6 +262,8 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
   - Below 960px the mobile panel pushes the content down and is not an overlay.
   - Route changes close both menus.
   - The header is not sticky.
+- `LanguageSwitcher` (amended, new file `app/components/layout/LanguageSwitcher.vue`): the bar above the header, styled per CANVAS_UPDATE_NOTES §2. It renders links from `useSwitchLocalePath()`, which keep the query and hash. It is hidden when `enableTr` is false. Test `LanguageSwitcher.test.ts`: on `/contact?service=operations-supply-chain` the TR link href is `/tr/iletisim?service=operations-supply-chain`; the active locale link has `aria-current="true"`; each link has a `hreflang` attribute.
+- All header and footer labels come from `i18n/locales/*.json`, and all links go through `localePath()`.
 - `SiteFooter { showCta?: boolean }`. The layout passes `true` on `/` and `/about` only, per DESIGN_NOTES §3.2. The bottom bar uses `navy-dark` with a 1px `navy-line` top border.
 
 - [ ] **Step 1: Write the failing tests** (`mountSuspended`):
@@ -250,10 +295,15 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
   - Add any further exclusions **only** with a reason string, and list them in the task report for user review.
 - The e2e spec runs per route: `page.goto(route)`, read `document.body.innerText` (normalised), and expect every approved string to be contained in it (case-insensitive, because eyebrows are CSS-uppercased). It also checks the `<title>` and the meta description against the md.
 
+- **i18n (amended):**
+  - The fidelity spec takes a list of `{ route: string; md: string; locale: 'en'|'tr' }` and checks EN pages against `PKG/content/en` and TR pages against `PKG/content/tr`. Exclusions are keyed by locale and file.
+  - Task 5 covers `/` and `/tr`.
+  - Implement the TR home with the same `index.vue` (the i18n module localises it). Section order follows the **current** `Main.dc.html` (CANVAS_UPDATE_NOTES).
+  - The footer CTA shows on `/`, `/tr`, `/about` and `/tr/hakkimizda`.
 - [ ] **Step 1: Write the failing unit test** `fidelity-extract.test.ts`. On `home.md` it should return "From commercial objective to market-ready delivery.", "One mandate. One coordinated operating partner.", "Retail Groups & Corporate Buyers" and "Discuss a Project" (if a CTA line exists), and should not return "Hero" or the meta description.
 - [ ] **Step 2:** Run it. Expected: FAIL. Implement `extract.ts`. Run it again. Expected: PASS.
 - [ ] **Step 3:** Write `content-fidelity.spec.ts` with the routes list `['/']`. Run `npx playwright test content-fidelity --project=desktop`. Expected: FAIL (home not built).
-- [ ] **Step 4:** Implement `index.vue`. Follow the section order of `Main.dc.html` (DESIGN_NOTES §4 Home) and add the approved sections the canvas dropped:
+- [ ] **Step 4:** Implement `index.vue`. Follow the section order of `Main.dc.html` (DESIGN_NOTES §4 Home, as updated by CANVAS_UPDATE_NOTES) and add the approved sections the canvas dropped:
   1. Display hero.
   2. "Your external product & procurement team." as a `StatementSplit`. The left side holds the approved text; the right side holds the You / MOESA cards, whose texts come only from the approved operating statement.
   3. Services (`ServiceCard` ×5, with titles and summaries from `services.md`) under the approved heading "One operating model across the commercial process."
@@ -278,6 +328,7 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 **Interfaces:**
 - Consumes: `useContent('services')` and `` useContent(`services/${slug}`) ``.
 - `[slug].vue` validates `slug` against `serviceSlugs` with `definePageMeta({ validate })`, so an unknown slug gives a 404.
+- **i18n (amended):** the TR path is `/tr/hizmetler/[slug]`, where the slug is the TR slug from `ROUTES`. Export `serviceSlugFromLocaleSlug(locale, slug): ServiceSlug | null` from `i18n/routes.ts`. The page resolves the slug through it, and an unknown slug gives a 404. Call `useSetI18nParams({ en: { slug: enSlug }, tr: { slug: trSlug } })` so the switcher links to the right counterpart. Prerender all 10 service URLs. Add the 6 TR routes to the fidelity spec.
 - Prerender all 5 slugs through `nitro.prerender.routes`.
 
 - [ ] **Step 1:** Add the routes to the fidelity spec. Run it. Expected: FAIL.
@@ -297,7 +348,7 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 - Create: `app/pages/how-we-work.vue`, `app/pages/who-we-work-with.vue`, `app/pages/about.vue`
 - Modify: the fidelity spec (3 routes)
 
-- [ ] **Step 1:** Add the routes to the fidelity spec. Run it. Expected: FAIL.
+- [ ] **Step 1:** Add the routes to the fidelity spec in both locales (`/tr/nasil-calisiyoruz`, `/tr/kimlerle-calisiyoruz`, `/tr/hakkimizda`). Run it. Expected: FAIL.
 - [ ] **Step 2:** Implement **How We Work**:
   - Use the canvas layout. The operating flow is a column `ProcessTimeline` with the 7 approved steps; "Not a linear process" is a `FlowLine` plus the loop sentence. Do **not** use the canvas text "Seven steps, one accountable team."
   - Decision governance uses the approved paragraph.
@@ -355,6 +406,13 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
   - The Resend error is logged server-side but never exposed to the client.
   - The user's email is used as `replyTo`, never as `from`.
 - Error messages use the canvas wording from DESIGN_NOTES §4 Contact (UI microcopy, not page copy), for example "Enter your name.".
+- **i18n (amended):**
+  - The form posts a hidden `locale` field (`en`|`tr`, validated). Non-JS success redirects to the locale's thank-you path (`/thank-you` or `/tr/tesekkurler`), and non-JS errors redirect to the locale's contact path.
+  - Client-side and server-side error texts come from `i18n/locales/*.json`. The server returns error **codes** (for example `required`, `invalid_email`), not texts, and the client maps them to texts.
+  - The service `<select>` shows the TR labels on TR pages, but every option `value` is the EN option string from `contact_form.json`. TR labels come from the TR `contact.md` list. "Other" has no TR source; record it in `UNREVIEWED_TR.md`.
+  - The email to MOESA is always in English and includes `Locale: tr` when the enquiry came from the TR site.
+  - Add tests: a TR JSON post with `service` set to a TR label returns 422 (only EN values are accepted); a non-JS post with `locale=tr` gets 303 to `/tr/tesekkurler`.
+  - The fidelity spec adds `/tr/iletisim` and `/tr/tesekkurler`.
 
 - [ ] **Step 1: Write the failing server tests**. Mock `resend` and `$fetch` for Turnstile.
   - A valid payload sends 1 email to `CONTACT_TO` with `replyTo` = the work email.
@@ -390,6 +448,10 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 **Interfaces:**
 - `useConsent(): { state: Ref<{ necessary: true; preferences: boolean; analytics: boolean } | null>; save(choice): void; reset(): void }`. It is stored in the `moesa_consent` cookie for 180 days, which is strictly necessary and is listed in the Cookie Policy inventory. `null` means no choice has been made yet.
 - The `CookieConsent` banner renders globally **only** when `runtimeConfig.public.analyticsId` is set and `state === null`. On `/cookie-policy` it always renders as the in-page settings panel.
+- **i18n (amended):**
+  - The TR legal pages come from `PKG/content/tr` (`/tr/gizlilik-politikasi`, `/tr/cerez-politikasi`, `/tr/yasal-bildirim`). The status chip text is the md `**Status:**` value, which is the same in both locales.
+  - `error.vue` renders the 404 copy in the locale of the requested path: `/tr/*` gives TR, everything else gives EN.
+  - Add the TR routes to fidelity, plus an e2e case: `GET /tr/olmayan-sayfa` returns 404 with the TR 404 heading.
 - `LegalPage` is centred inside `.container-site`, which fixes DESIGN_NOTES §7.5. Every `OPEN` marker in the md renders as `Chip kind="open"` with the md text, so it is never replaced by an assumption.
 
 - [ ] **Step 1: Write the failing tests**:
@@ -420,9 +482,17 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 - `vercel.json`: redirect host `moesaltd.com` → `https://www.moesaltd.com/:path*` (permanent). HTTP → HTTPS is Vercel's default.
 - `og-default.png`: 1200×630, navy `#102C49` ground with the `bars` motif and the typeset "MOESA LTD." name plus the descriptor. Generate it from an HTML template with a Playwright screenshot script `scripts/og-image.ts` (committed).
 
+- **i18n (amended):**
+  - The sitemap uses the i18n integration of `@nuxtjs/sitemap`. It lists 28 URLs (14 EN and 14 TR, all except the thank-you pages) with `xhtml:link` alternates.
+  - JSON-LD stays the same in both locales.
+  - Write a new e2e `tests/e2e/i18n.spec.ts`:
+    - On every TR route, `html[lang="tr"]` is set and the hreflang alternates en, tr and x-default are present and point to the correct counterpart.
+    - Crawl every TR page and collect all internal `a[href]`. None may point to an EN content route; links to `/api`, assets and `mailto:`/`tel:` are allowed.
+    - The switcher on `/services/operations-supply-chain` links to `/tr/hizmetler/operasyon-ve-tedarik-zinciri`.
+    - With `NUXT_PUBLIC_ENABLE_TR=false`, a build has no `/tr` routes and no switcher. This is a vitest test that reads the config and checks that the prerender route list excludes `/tr`. A second e2e build is not required.
 - [ ] **Step 1: Write the failing e2e `seo.spec.ts`**:
   - Every route has exactly one `h1`, `link[rel=canonical]` equal to `https://www.moesaltd.com{path}`, and `og:title`/`og:description`.
-  - `/sitemap.xml` lists the 15 public routes and not `/thank-you`.
+  - `/sitemap.xml` lists the 28 public URLs (14 EN + 14 TR) and neither thank-you page.
   - `/robots.txt` contains `Sitemap:`.
   - `/` contains `application/ld+json` with `"vatID":"BG207200475"`.
   - The response headers include `x-content-type-options: nosniff`.
@@ -442,5 +512,5 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
 - [ ] **Step 1:** Run a forbidden-claims scan as a vitest test, `tests/unit/claims.test.ts`. Grep the built `.output/public/**/*.html` for "full compliance guaranteed", "assume all legal responsibility", "every country", "Flexible on Details", "lorem", "MOESA OS is available" and "client portal". Expected: no matches. "client portal" may only appear if approved copy contains it; check the md first.
 - [ ] **Step 2:** Run a Lighthouse audit (chrome-devtools MCP `lighthouse_audit` or `npx lighthouse`) on `/`, `/contact` and one service page, both mobile and desktop. Target: Accessibility 100, SEO 100, Best Practices ≥95, Performance ≥90. Fix the regressions.
 - [ ] **Step 3:** Run a keyboard-only walkthrough of the header, dropdown, mobile menu and form at 390px and at 1440px.
-- [ ] **Step 4:** Take full-page screenshots of all 15 routes at 1440 and 390 and put them next to the canvas artboards. List any remaining deviations for the user, each with a reason (approved copy added, or the newer-DS style).
+- [ ] **Step 4:** Take full-page screenshots of all 30 URLs (15 EN + 15 TR) at 1440 and 390 and put them next to the canvas artboards. List any remaining deviations for the user, each with a reason (approved copy added, or the newer-DS style).
 - [ ] **Step 5:** Commit `test: add acceptance checks` and report the deviations list and the fidelity exclusions list to the user.
