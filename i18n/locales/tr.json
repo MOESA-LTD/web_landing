@@ -1,0 +1,109 @@
+{
+  "skipLink": "İçeriğe geç",
+  "language": {
+    "label": "Dil"
+  },
+  "cta": {
+    "discussProject": "Projeyi Görüşelim"
+  },
+  "nav": {
+    "label": "Ana gezinme",
+    "home": "Ana Sayfa",
+    "services": "Hizmetler",
+    "howWeWork": "Nasıl Çalışıyoruz",
+    "whoWeWorkWith": "Kimlerle Çalışıyoruz",
+    "about": "MOESA Hakkında",
+    "contact": "İletişim",
+    "allServices": "Tüm hizmetler",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "serviceLinks": {
+      "sourcing-managed-procurement": "Tedarik ve Yönetilen Satın Alma",
+      "product-private-label-development": "Ürün ve Private Label Geliştirme",
+      "market-access-commercial-representation": "Pazara Giriş ve Ticari Temsil",
+      "operations-supply-chain": "Operasyon ve Tedarik Zinciri",
+      "digital-commerce-commercial-intelligence": "Dijital Ticaret ve Ticari İçgörü"
+    }
+  },
+  "breadcrumbs": {
+    "label": "Gezinti yolu",
+    "home": "Ana Sayfa",
+    "services": "Hizmetler",
+    "allServices": "Tüm hizmetler"
+  },
+  "related": {
+    "services": "İlgili hizmetler"
+  },
+  "status": {
+    "draft": "Taslak",
+    "open": "Açık"
+  },
+  "footer": {
+    "servicesTitle": "Hizmetler",
+    "companyTitle": "Şirket",
+    "contactTitle": "İletişim",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "address": "Kayıtlı adres",
+    "companyLine": "MOESA Ltd. · Company ID {companyId} · VAT {vat}",
+    "legal": {
+      "privacyPolicy": "Gizlilik Politikası",
+      "cookiePolicy": "Çerez Politikası",
+      "legalNotice": "Yasal Bildirim"
+    }
+  },
+  "form": {
+    "labels": {
+      "name": "Ad",
+      "company": "Şirket",
+      "workEmail": "İş e-postası",
+      "country": "Ülke",
+      "service": "Hizmet",
+      "projectBrief": "Kısa proje briefi",
+      "productCategory": "Ürün Kategorisi",
+      "targetMarket": "Hedef Pazar",
+      "estimatedVolume": "Tahmini Hacim",
+      "targetTimeline": "Hedef Zaman Çizelgesi"
+    },
+    "projectDetails": "Proje detayları",
+    "optional": "(opsiyonel)",
+    "servicePlaceholder": "Bir hizmet seçin",
+    "briefHelp": "İşletmenin neye ihtiyacı olduğunu, nelerin kesinleştiğini ve nelerin açık olduğunu anlatın.",
+    "consent": "Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. Gizlilik Politikası'na bakın.",
+    "submit": "Proje Briefini Gönder",
+    "serviceOptions": {
+      "sourcing": "Marka/ürün sourcing",
+      "procurement": "Yönetilen satın alma",
+      "productPrivateLabel": "Ürün ve Private Label Geliştirme",
+      "marketAccess": "Pazara giriş",
+      "commercialRepresentation": "Ticari temsil",
+      "operations": "Operasyon ve Tedarik Zinciri",
+      "digitalCommerce": "Digital commerce",
+      "integrated": "Entegre hizmetler",
+      "notSure": "Emin değilim",
+      "other": "Diğer"
+    },
+    "errorSummaryOne": "Lütfen 1 alanı kontrol edin",
+    "errorSummaryMany": "Lütfen {count} alanı kontrol edin",
+    "errors": {
+      "name": "Adınızı girin.",
+      "company": "Şirket adınızı girin.",
+      "workEmail": "ad{'@'}sirket.com gibi bir iş e-postası adresi girin.",
+      "country": "Ülkenizi girin.",
+      "service": "Size nasıl destek olabileceğimizi seçin.",
+      "projectBrief": "Projeyi kısaca anlatın.",
+      "consent": "Talebinize yanıt verebilmemiz için onay verin."
+    }
+  },
+  "cookie": {
+    "title": "Çerez tercihleri",
+    "strictlyNecessary": "Zorunlu",
+    "alwaysOn": "(her zaman açık)",
+    "preferences": "Tercihler",
+    "analytics": "Analitik",
+    "rejectNonEssential": "Zorunlu olmayanları reddet",
+    "acceptAll": "Tümünü kabul et",
+    "saveChoices": "Seçimleri kaydet",
+    "chooseSettings": "Ayarları seç"
+  }
+}

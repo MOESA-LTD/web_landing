@@ -1,0 +1,109 @@
+{
+  "skipLink": "Skip to content",
+  "language": {
+    "label": "Language"
+  },
+  "cta": {
+    "discussProject": "Discuss a Project"
+  },
+  "nav": {
+    "label": "Primary",
+    "home": "Home",
+    "services": "Services",
+    "howWeWork": "How We Work",
+    "whoWeWorkWith": "Who We Work With",
+    "about": "About MOESA",
+    "contact": "Contact",
+    "allServices": "All services",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "serviceLinks": {
+      "sourcing-managed-procurement": "Sourcing & Managed Procurement",
+      "product-private-label-development": "Product & Private Label Development",
+      "market-access-commercial-representation": "Market Access & Commercial Representation",
+      "operations-supply-chain": "Operations & Supply Chain",
+      "digital-commerce-commercial-intelligence": "Digital Commerce & Commercial Intelligence"
+    }
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb",
+    "home": "Home",
+    "services": "Services",
+    "allServices": "All services"
+  },
+  "related": {
+    "services": "Related services"
+  },
+  "status": {
+    "draft": "Draft",
+    "open": "Open"
+  },
+  "footer": {
+    "servicesTitle": "Services",
+    "companyTitle": "Company",
+    "contactTitle": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Registered address",
+    "companyLine": "MOESA Ltd. · Company ID {companyId} · VAT {vat}",
+    "legal": {
+      "privacyPolicy": "Privacy Policy",
+      "cookiePolicy": "Cookie Policy",
+      "legalNotice": "Legal Notice"
+    }
+  },
+  "form": {
+    "labels": {
+      "name": "Name",
+      "company": "Company",
+      "workEmail": "Work Email",
+      "country": "Country",
+      "service": "How Can We Support You?",
+      "projectBrief": "Short Project Brief",
+      "productCategory": "Product Category",
+      "targetMarket": "Target Market",
+      "estimatedVolume": "Estimated Volume",
+      "targetTimeline": "Target Timeline"
+    },
+    "projectDetails": "Project details",
+    "optional": "(optional)",
+    "servicePlaceholder": "Select a service",
+    "briefHelp": "What the business needs, what is already confirmed and what remains open.",
+    "consent": "I agree that MOESA may process the information I submit to respond to this enquiry. See the Privacy Policy.",
+    "submit": "Send Project Brief",
+    "serviceOptions": {
+      "sourcing": "Brand or Product Sourcing",
+      "procurement": "Managed Procurement",
+      "productPrivateLabel": "Product & Private Label Development",
+      "marketAccess": "Market Access",
+      "commercialRepresentation": "Commercial Representation",
+      "operations": "Operations & Supply Chain",
+      "digitalCommerce": "Digital Commerce Operations",
+      "integrated": "Integrated / Multiple Services",
+      "notSure": "Not Sure Yet",
+      "other": "Other"
+    },
+    "errorSummaryOne": "Please check 1 field",
+    "errorSummaryMany": "Please check {count} fields",
+    "errors": {
+      "name": "Enter your name.",
+      "company": "Enter your company name.",
+      "workEmail": "Enter a work email address, like name{'@'}company.com.",
+      "country": "Enter your country.",
+      "service": "Choose how we can support you.",
+      "projectBrief": "Describe the project briefly.",
+      "consent": "Confirm consent so we can respond to your enquiry."
+    }
+  },
+  "cookie": {
+    "title": "Cookie preferences",
+    "strictlyNecessary": "Strictly necessary",
+    "alwaysOn": "(always on)",
+    "preferences": "Preferences",
+    "analytics": "Analytics",
+    "rejectNonEssential": "Reject non-essential",
+    "acceptAll": "Accept all",
+    "saveChoices": "Save choices",
+    "chooseSettings": "Choose settings"
+  }
+}
