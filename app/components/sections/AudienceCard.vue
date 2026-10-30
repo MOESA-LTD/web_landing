@@ -3,10 +3,11 @@
  * Audience card (bundle.js `AudienceCard`, newer DS): tinted, with a 4px top rule in the DS colour sequence
  * (`index`, default 1 = cyan), title in ink-strong, optional text and 2-column points under a hairline.
  * With `to` the whole card is a link (stretched title link) (as in the DS, the title keeps its colour on hover).
+ * `condensed` is the approved TR running sentence of the points (`Section.condensed`), shown above them.
  */
 const props = withDefaults(
-  defineProps<{ title: string; text?: string; points?: string[]; to?: string; index?: number | string }>(),
-  { text: undefined, points: () => [], to: undefined, index: 1 },
+  defineProps<{ title: string; text?: string; condensed?: string; points?: string[]; to?: string; index?: number | string }>(),
+  { text: undefined, condensed: undefined, points: () => [], to: undefined, index: 1 },
 )
 </script>
 
@@ -20,6 +21,7 @@ const props = withDefaults(
       <template v-else>{{ props.title }}</template>
     </h3>
     <p v-if="props.text" class="text-body-sm text-slate">{{ props.text }}</p>
+    <p v-if="props.condensed" data-condensed class="text-body-sm text-slate">{{ props.condensed }}</p>
     <TickList
       v-if="props.points.length"
       :items="props.points"

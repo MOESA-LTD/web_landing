@@ -56,4 +56,7 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   'cookie.acceptAll',
   'cookie.saveChoices',
   'cookie.chooseSettings',
+  // About Experience Stat labels, cut from the approved Experience sentence (TR: "... operasyonlarının" without its case ending).
+  'stats.digitalCommerce',
+  'stats.ecommerceOperations',
 ]

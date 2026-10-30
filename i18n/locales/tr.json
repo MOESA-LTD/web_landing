@@ -125,5 +125,9 @@
     "acceptAll": "Tümünü kabul et",
     "saveChoices": "Seçimleri kaydet",
     "chooseSettings": "Ayarları seç"
+  },
+  "stats": {
+    "digitalCommerce": "yıllık dijital ticaret",
+    "ecommerceOperations": "yıllık profesyonel e-ticaret operasyonları"
   }
 }

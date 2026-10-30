@@ -4,15 +4,16 @@
  * (blue eyebrow labels, navy values, hairlines between rows). Stacks at a container width of 860px or less.
  * The vertical padding sits on the inner wrapper: a container query cannot restyle the `@container` itself,
  * so this is what lets the band drop from 96px to 64px at a container width of 860px or less.
+ * `tone="mist"` sets the band on mist (About, where the white Experience section precedes it).
  */
 const props = withDefaults(
-  defineProps<{ eyebrow?: string; title: string; body: string; rows: { label: string; value: string }[] }>(),
-  { eyebrow: undefined },
+  defineProps<{ eyebrow?: string; title: string; body: string; rows: { label: string; value: string }[]; tone?: 'white' | 'mist' }>(),
+  { eyebrow: undefined, tone: 'white' },
 )
 </script>
 
 <template>
-  <section data-band class="@container relative overflow-hidden bg-white">
+  <section data-band class="@container relative overflow-hidden" :class="props.tone === 'mist' ? 'bg-mist' : 'bg-white'">
     <div
       data-band-content
       class="mx-auto box-border grid max-w-[1200px] grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-stretch gap-16 px-6 py-24 @max-[860.98px]:grid-cols-1 @max-[860.98px]:gap-8 @max-[860.98px]:px-4 @max-[860.98px]:py-16"

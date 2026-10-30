@@ -125,5 +125,9 @@
     "acceptAll": "Accept all",
     "saveChoices": "Save choices",
     "chooseSettings": "Choose settings"
+  },
+  "stats": {
+    "digitalCommerce": "years in digital commerce",
+    "ecommerceOperations": "years in professional e-commerce operations"
   }
 }
