@@ -1,27 +1,27 @@
 import type { FinalCtaContent, HeroContent, ListSection, PageMeta, Section, TextSection } from '../types'
 
 /**
- * Optional fields exist only in the EN md; the TR md is shorter (see the task 2 report).
- * Where EN has a bullet list and TR a running paragraph or an arrow line, the field is a `Section`.
+ * Where the TR md gives a list as a running sentence or an arrow line, the field is a `Section`: TR keeps
+ * the approved text in `condensed` / `steps` next to the translated `items` (see content/tr/unreviewed.ts).
  */
 export interface HowWeWorkContent {
   meta: PageMeta
   hero: HeroContent
   /** "One operating model across different commercial needs." */
-  intro?: TextSection
-  /** "The MOESA operating flow": EN `items` (7), TR `steps` (7, from an arrow line). */
+  intro: TextSection
+  /** "The MOESA operating flow": `items` (7). TR also keeps its approved arrow line in `steps` (7). */
   operatingFlow: Section
   /** "Not a linear process": `steps` (8) plus the closing line in `body`. */
-  nonLinear?: Section
+  nonLinear: Section
   startAnywhere: Section
   governance: TextSection
   productTruth: TextSection
-  openQuestions?: TextSection
-  visibility?: ListSection
+  openQuestions: TextSection
+  visibility: ListSection
   partnershipModels: Section
-  engagementLevels?: ListSection
-  responsibility?: TextSection
-  evolve?: TextSection
+  engagementLevels: ListSection
+  responsibility: TextSection
+  evolve: TextSection
   finalCta: FinalCtaContent
 }
 

@@ -6,7 +6,7 @@ export interface LegalContent {
   /** The md `**Status:**`, e.g. "DRAFT / TASLAK - LEGAL REVIEW REQUIRED". Shown in the Draft status chip. */
   status: string
   hero: HeroContent
-  /** In md order. Pair EN and TR sections by `id`; the TR md has fewer sections. */
+  /** In md order. Pair EN and TR sections by `id`; TR has every EN section plus its approved "Açık alanlar" (`openFields`). */
   sections: LegalSection[]
   finalCta: FinalCtaContent
 }

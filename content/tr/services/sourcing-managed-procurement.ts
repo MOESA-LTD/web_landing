@@ -1,6 +1,6 @@
 import type { ServicePageContent } from '../../en/service-page'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/services__sourcing-managed-procurement.md */
+/** Verbatim from MOESA_Website_Package_v1.0/content/tr/services__sourcing-managed-procurement.md, plus the translations listed in ../unreviewed.ts. */
 const content: ServicePageContent = {
   meta: {
     path: '/services/sourcing-managed-procurement',
@@ -12,21 +12,68 @@ const content: ServicePageContent = {
     title: 'Tedarik görevinden yönetilen satın almaya.',
     body: 'Belirli bir uluslararası marka, yeni tedarikçi veya tekrarlayan satın alma operasyonlarını yönetecek dış ekip ihtiyacını uygulanabilir bir satın alma sürecine dönüştürürüz.',
   },
+  intro: {
+    title: 'İşletmenin neye ihtiyacı olduğunu siz belirlersiniz. Nasıl tedarik edileceğini biz yönetiriz.',
+    body: 'Bir tedarik projesi belirli bir marka, bilinen bir ürün, hedef bir kategori veya ticari bir hedefle başlayabilir. Stratejik kararlar ve onaylar müşteride kalır. MOESA araştırmayı, iletişimi, görüşmeleri ve operasyonel takibi yönetir.',
+  },
   typicalMandates: {
     title: 'Tipik görevler',
-    body: 'Belirli marka tedariki; ürün/üretici bulma; alternatif tedarikçi; tekrarlayan satın alma; çoklu tedarikçi koordinasyonu.',
+    condensed: 'Belirli marka tedariki; ürün/üretici bulma; alternatif tedarikçi; tekrarlayan satın alma; çoklu tedarikçi koordinasyonu.',
+    items: [
+      'Belirli bir uluslararası markayı tedarik etmek',
+      'Bir ürün veya üretici bulmak',
+      'Bir tedarikçiyi değiştirmek veya tedarikçi yapısını çeşitlendirmek',
+      'Tekrarlayan satın alma operasyonlarını dış kaynakla yürütmek',
+      'Birden fazla tedarikçide satın almayı koordine etmek',
+    ],
   },
   manages: {
     title: 'MOESA neyi yönetir?',
-    body: 'Tedarik briefi; marka/ürün/üretici araştırması; tedarikçi değerlendirmesi; ticari görüşme; numune ve fizibilite; PO ve supplier koordinasyonu; tedarik zincirine devir.',
+    condensed: 'Tedarik briefi; marka/ürün/üretici araştırması; tedarikçi değerlendirmesi; ticari görüşme; numune ve fizibilite; PO ve supplier koordinasyonu; tedarik zincirine devir.',
+    items: [
+      'Tedarik briefi ve ihtiyaç yapısı',
+      'Marka, ürün, üretici ve tedarikçi araştırması',
+      'Tedarikçi değerlendirmesi',
+      'Ticari görüşme',
+      'Numuneler ve ticari fizibilite',
+      'Satın alma siparişi ve tedarikçi koordinasyonu',
+      'Tedarik zincirine devir',
+    ],
   },
   managedModel: {
     title: 'Yönetilen satın alma modeli',
     body: 'Müşteri strateji, bütçe ve final onayları elinde tutar; MOESA günlük supplier, satın alma ve takip operasyonunu yönetir.',
+    items: [
+      'Sürekli tedarikçi iletişimi',
+      'Satın alma siparişi takibi',
+      'Fiyat ve koşulların koordinasyonu',
+      'Üretim durumunun izlenmesi',
+      'Dokümantasyon takibi',
+      'Yeniden sipariş ve süreklilik planlaması',
+    ],
   },
   models: {
     title: 'Çalışma modelleri',
-    body: 'Proje bazlı sourcing; yönetilen satın alma hizmeti; trading düzeni; ticari temsil.',
+    condensed: 'Proje bazlı sourcing; yönetilen satın alma hizmeti; trading düzeni; ticari temsil.',
+    items: [
+      'Proje Bazlı Tedarik',
+      'Yönetilen Satın Alma Hizmeti',
+      'Ticaret (Trading) Düzenlemesi',
+      'Ticari Temsil',
+    ],
+  },
+  suitableFor: {
+    title: 'Kimler için uygun',
+    items: [
+      'Perakende grupları ve kurumsal alıcılar',
+      'Toptancılar ve distribütörler',
+      'Markalar ve üreticiler',
+      'Dijital ticaret işletmeleri',
+    ],
+  },
+  responsibilities: {
+    title: 'Net sorumluluklar',
+    body: 'Ayrı bir ticaret (trading) düzenlemesi kararlaştırılmadıkça final iş kararları, tedarikçi onayları ve satın alma yetkisi müşteride kalır. Teknik veya mevzuat gereklilikleri söz konusu olduğunda MOESA süreci ilgili taraflarla koordine eder.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

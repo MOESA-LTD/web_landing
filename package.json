@@ -10,7 +10,8 @@
     "typecheck": "nuxt typecheck",
     "postinstall": "nuxt prepare",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "unreviewed:tr": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-tr.ts"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",

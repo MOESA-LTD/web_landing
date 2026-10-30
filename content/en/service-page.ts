@@ -2,7 +2,8 @@ import type { FinalCtaContent, HeroContent, PageMeta, Section, ServiceSlug, Text
 
 /**
  * The five service pages share this interface but not their sections: each page has a few
- * page-specific ones. Fields are optional where only some pages (or only the EN md) have them.
+ * page-specific ones. Fields are optional where only some pages have them. EN and TR have the same fields;
+ * TR also keeps the approved running sentence of a list in `condensed` (see `Section`).
  * The keys of a page object are in md order.
  */
 export interface ServicePageContent {
@@ -10,8 +11,8 @@ export interface ServicePageContent {
   /** Structural: the service this page is about. */
   slug: ServiceSlug
   hero: HeroContent
-  /** The first section after the hero (EN only). */
-  intro?: TextSection
+  /** The first section after the hero. */
+  intro: TextSection
   /** Market access: "Two sides of international trade". */
   twoSides?: Section
   typicalMandates: Section
@@ -22,7 +23,7 @@ export interface ServicePageContent {
   models?: Section
   /** Sourcing: "Suitable for". */
   suitableFor?: Section
-  /** Product: "Product architecture". EN: `body` + `items`; TR: `steps` (arrow line). */
+  /** Product: "Product architecture": `body` + `items`. TR also keeps its approved arrow line in `steps`. */
   architecture?: Section
   /** Operations: "End-to-end operating flow" (`steps`). */
   flow?: Section

@@ -4,9 +4,9 @@ import type { FinalCtaContent, HeroContent, PageMeta, Section, TextSection } fro
 export interface MessageContent {
   meta: PageMeta
   hero: HeroContent
-  /** Thank-you "What happens next"; 404 "Continue from here". EN list; TR running text. */
+  /** Thank-you "What happens next"; 404 "Continue from here": `items`; TR also keeps its approved running sentence in `condensed`. */
   next: Section
-  /** Thank-you "Need to add information?" (EN only). */
+  /** Thank-you only: "Need to add information?". */
   info?: TextSection
   finalCta: FinalCtaContent
 }

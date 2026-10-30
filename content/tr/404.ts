@@ -1,6 +1,6 @@
 import type { MessageContent } from '../en/message'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/404.md */
+/** Verbatim from MOESA_Website_Package_v1.0/content/tr/404.md. `next.items` are the page names from its approved "Buradan devam edin" line. */
 const content: MessageContent = {
   meta: {
     path: '/404',
@@ -13,7 +13,13 @@ const content: MessageContent = {
   },
   next: {
     title: 'Buradan devam edin',
-    body: 'Ana Sayfa; Hizmetler; Nasıl Çalışıyoruz; İletişim.',
+    condensed: 'Ana Sayfa; Hizmetler; Nasıl Çalışıyoruz; İletişim.',
+    items: [
+      'Ana Sayfa',
+      'Hizmetler',
+      'Nasıl Çalışıyoruz',
+      'İletişim',
+    ],
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

@@ -4,8 +4,7 @@ export interface ServiceSummary {
   slug: ServiceSlug
   title: string
   summary: string
-  /** EN only: the TR md gives no bullet list per service. */
-  items?: string[]
+  items: string[]
 }
 
 export interface ServicesContent {
@@ -13,8 +12,8 @@ export interface ServicesContent {
   hero: HeroContent
   /** The five service sections, in navigation order. */
   services: ServiceSummary[]
-  /** "One service or an integrated mandate." EN only. */
-  integrated?: TextSection
+  /** "One service or an integrated mandate." */
+  integrated: TextSection
   finalCta: FinalCtaContent
 }
 

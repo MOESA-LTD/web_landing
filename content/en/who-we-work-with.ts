@@ -11,15 +11,15 @@ export interface GuideRow {
 export interface WhoWeWorkWithContent {
   meta: PageMeta
   hero: HeroContent
-  /** "Start with the business need, not a predefined package." EN only. */
-  intro?: TextSection
-  /** Five audiences. EN: `body` + `items`; TR: `body` only. */
+  /** "Start with the business need, not a predefined package." */
+  intro: TextSection
+  /** Five audiences: `body` + `items`. TR also keeps its approved running sentence in `condensed`. */
   audiences: Section[]
-  seekingBrands?: TextSection
+  seekingBrands: TextSection
   /** EN "Businesses without a full internal procurement team"; TR "Dış kaynaklı satın alma". */
   noInternalProcurement: TextSection
-  selectionGuide?: { title: string; rows: GuideRow[] }
-  notSure?: TextSection
+  selectionGuide: { title: string; rows: GuideRow[] }
+  notSure: TextSection
   finalCta: FinalCtaContent
 }
 

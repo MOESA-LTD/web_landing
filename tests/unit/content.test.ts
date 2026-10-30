@@ -2,8 +2,11 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { useContent } from '../../app/composables/useContent'
-import { brand, contactForm, navigation, serviceLabelBySlug, serviceSlugs, PAGE_KEYS } from '../../content/site'
+import { brand, contactForm, navigation, serviceLabelBySlug, serviceOptionKeys, serviceSlugs, PAGE_KEYS } from '../../content/site'
+import { UNREVIEWED_TR } from '../../content/tr/unreviewed'
 import type { Locale, PageKey } from '../../content/types'
+import { UNREVIEWED_UI_KEYS } from '../../i18n/unreviewed-ui'
+import { renderUnreviewedMd } from '../../scripts/unreviewed-tr'
 
 const root = resolve(__dirname, '../..')
 const PKG = resolve(root, 'MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0')
@@ -61,14 +64,42 @@ function mdUnits(md: string): string[] {
 
 /** Leaf strings of a content module, skipping keys that are structural ids rather than copy. */
 const NON_COPY_KEYS = new Set(['id', 'slug', 'service'])
-function leaves(value: unknown, key = ''): string[] {
-  if (typeof value === 'string') return NON_COPY_KEYS.has(key) ? [] : [norm(value)]
-  if (Array.isArray(value)) return value.flatMap((v) => leaves(v, key))
-  if (value && typeof value === 'object') {
-    return Object.entries(value).flatMap(([k, v]) => leaves(v, k))
+
+const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v)
+/** Arrays whose elements all carry a string `id` (legal sections) are addressed by id, other arrays by index. */
+const byId = (a: unknown[]) => a.length > 0 && a.every((x) => isObj(x) && typeof x.id === 'string')
+
+interface Leaf {
+  /** Dotted content path in the `UNREVIEWED_TR` format, e.g. `audiences[0].items[2]` or `sections[controller].paragraphs[0]`. */
+  path: string
+  value: string
+}
+
+function leafPaths(value: unknown, path = '', key = ''): Leaf[] {
+  if (typeof value === 'string') return NON_COPY_KEYS.has(key) ? [] : [{ path, value: norm(value) }]
+  if (Array.isArray(value)) {
+    const ids = byId(value)
+    return value.flatMap((v, i) => leafPaths(v, `${path}[${ids ? (v as { id: string }).id : i}]`, key))
   }
+  if (isObj(value)) return Object.entries(value).flatMap(([k, v]) => leafPaths(v, path ? `${path}.${k}` : k, k))
   return []
 }
+
+/** The value at a `Leaf` path (see `leafPaths`), or undefined. */
+function getAt(root: unknown, path: string): unknown {
+  let cur: unknown = root
+  for (const m of path.matchAll(/([^.[\]]+)|\[([^\]]+)\]/g)) {
+    if (m[1] !== undefined) cur = isObj(cur) ? cur[m[1]] : undefined
+    else if (Array.isArray(cur)) cur = byId(cur) ? cur.find((x) => (x as { id: string }).id === m[2]) : cur[Number(m[2])]
+    else cur = undefined
+  }
+  return cur
+}
+
+const leaves = (value: unknown) => leafPaths(value).map((l) => l.value)
+
+const unreviewedKey = (page: string, path: string) => `${page}|${path}`
+const unreviewedByKey = new Map(UNREVIEWED_TR.map((e) => [unreviewedKey(e.page, e.path), e]))
 
 describe('page meta comes straight from the package md', () => {
   for (const locale of locales) {
@@ -92,214 +123,109 @@ describe('page meta comes straight from the package md', () => {
 describe('content is verbatim and complete against the md', () => {
   for (const locale of locales) {
     for (const key of PAGE_KEYS) {
-      it(`${locale} ${key}: every md unit is in the content module, and every string in it is in the md`, () => {
+      const rule = locale === 'en' ? 'is in the md' : 'is in the md or is a listed UNREVIEWED_TR translation'
+      it(`${locale} ${key}: every md unit is in the content module, and every string in it ${rule}`, () => {
         const md = readMd(locale, key)
         const mdText = norm(md)
         const units = mdUnits(md)
         expect(units.length).toBeGreaterThan(3)
-        const own = leaves(useContent(key, locale))
+        const own = leafPaths(useContent(key, locale))
+        const values = own.map((l) => l.value)
 
-        const missing = units.filter((u) => !own.includes(u))
+        const missing = units.filter((u) => !values.includes(u))
         expect(missing, 'md units missing from the content module').toEqual([])
 
-        const invented = own.filter((s) => !mdText.includes(s))
-        expect(invented, 'content strings that are not in the md').toEqual([])
+        const listed = (l: Leaf) => locale === 'tr' && unreviewedByKey.has(unreviewedKey(key, l.path))
+        const invented = own.filter((l) => !mdText.includes(l.value) && !listed(l)).map((l) => `${l.path}: ${l.value}`)
+        expect(invented, 'content strings that are neither in the md nor listed in UNREVIEWED_TR').toEqual([])
       })
     }
   }
 })
 
-/**
- * Structural differences between a TR md and its EN md. The task rules say: do not invent text,
- * record the difference, make the field optional. This table pins the differences exactly, so
- * a new, unexpected divergence fails the test, and so does filling a gap without updating the list.
- */
-const KNOWN_TR_GAPS: Record<string, string[]> = {
-  '404': [
-    '.next.body: TR only',
-    '.next.items: EN only',
-  ],
-  'services': [
-    '.integrated: EN only',
-    '.services[].items: EN only',
-  ],
-  'services/sourcing-managed-procurement': [
-    '.intro: EN only',
-    '.managedModel.items: EN only',
-    '.manages.body: TR only',
-    '.manages.items: EN only',
-    '.models.body: TR only',
-    '.models.items: EN only',
-    '.responsibilities: EN only',
-    '.suitableFor: EN only',
-    '.typicalMandates.body: TR only',
-    '.typicalMandates.items: EN only',
-  ],
-  'services/product-private-label-development': [
-    '.architecture.body: EN only',
-    '.architecture.items: EN only',
-    '.architecture.steps: TR only',
-    '.intro: EN only',
-    '.manages.body: TR only',
-    '.manages.items: EN only',
-    '.models: EN only',
-    '.responsibilities: EN only',
-    '.typicalMandates.body: TR only',
-    '.typicalMandates.items: EN only',
-  ],
-  'services/market-access-commercial-representation': [
-    '.europeanBase: EN only',
-    '.intro: EN only',
-    '.manages.body: TR only',
-    '.manages.items: EN only',
-    '.models: EN only',
-    '.twoSides.body: TR only',
-    '.twoSides.items: EN only',
-    '.typicalMandates.body: TR only',
-    '.typicalMandates.items: EN only',
-  ],
-  'services/operations-supply-chain': [
-    '.exceptions: EN only',
-    '.flow: EN only',
-    '.intro: EN only',
-    '.manages.body: TR only',
-    '.manages.items: EN only',
-    '.typicalMandates.body: TR only',
-    '.typicalMandates.items: EN only',
-    '.visibility.body: TR only',
-    '.visibility.items: EN only',
-  ],
-  'services/digital-commerce-commercial-intelligence': [
-    '.framework: EN only',
-    '.intro: EN only',
-    '.managedModel: EN only',
-    '.manages.body: TR only',
-    '.manages.items: EN only',
-    '.technology: EN only',
-    '.typicalMandates.body: TR only',
-    '.typicalMandates.items: EN only',
-  ],
-  'how-we-work': [
-    '.engagementLevels: EN only',
-    '.evolve: EN only',
-    '.intro: EN only',
-    '.nonLinear: EN only',
-    '.openQuestions: EN only',
-    '.operatingFlow.items: EN only',
-    '.operatingFlow.steps: TR only',
-    '.partnershipModels.body: TR only',
-    '.partnershipModels.items: EN only',
-    '.responsibility: EN only',
-    '.startAnywhere.body: TR only',
-    '.startAnywhere.items: EN only',
-    '.visibility: EN only',
-  ],
-  'who-we-work-with': [
-    '.audiences[].items: EN only',
-    '.intro: EN only',
-    '.notSure: EN only',
-    '.seekingBrands: EN only',
-    '.selectionGuide: EN only',
-  ],
-  'about': [
-    '.europeanBase: EN only',
-    '.isNot.body: TR only',
-    '.isNot.items: EN only',
-    '.manages: EN only',
-    '.principles: EN only',
-    '.why.body: TR only',
-    '.why.items: EN only',
-  ],
-  'contact': [
-    '.company: EN only',
-    '.direct.body: TR only',
-    '.direct.items: EN only',
-    '.formFields.body: TR only',
-    '.formFields.items: EN only',
-    '.next.body: TR only',
-    '.next.items: EN only',
-    '.privacyNote: EN only',
-    '.serviceOptions.body: TR only',
-    '.serviceOptions.items: EN only',
-  ],
-  'thank-you': [
-    '.info: EN only',
-    '.next.body: TR only',
-    '.next.items: EN only',
-  ],
-  'legal-notice': [
-    '.sections[contact].paragraphs: length 2 != 1',
-    '.sections[contentResponsibility]: EN only',
-    '.sections[externalLinks]: EN only',
-    '.sections[intellectualProperty]: EN only',
-    '.sections[openFields]: TR only',
-    '.sections[operator].paragraphs: length 4 != 1',
-    '.sections[representative]: EN only',
-  ],
-  'privacy-policy': [
-    '.sections[controller]: EN only',
-    '.sections[dataCollected].items: EN only',
-    '.sections[dataCollected].paragraphs: TR only',
-    '.sections[legalBases]: EN only',
-    '.sections[openFields]: TR only',
-    '.sections[privacyContact]: EN only',
-    '.sections[purposes]: EN only',
-    '.sections[recipients]: EN only',
-    '.sections[retention]: EN only',
-    '.sections[rights]: EN only',
-    '.sections[security]: EN only',
-    '.sections[transfers]: EN only',
-    '.sections[updates]: EN only',
-  ],
-  'cookie-policy': [
-    '.sections[categories].items: EN only',
-    '.sections[categories].paragraphs: TR only',
-    '.sections[consentModel]: EN only',
-    '.sections[effectiveDate]: EN only',
-    '.sections[inventory]: EN only',
-    '.sections[managing]: EN only',
-    '.sections[openFields]: TR only',
-    '.sections[thirdParties]: EN only',
-  ],
+describe('UNREVIEWED_TR lists every translated TR string exactly', () => {
+  it('has unique (page, path) entries on known pages, with non-empty text and no exclamation marks', () => {
+    expect(UNREVIEWED_TR.length).toBeGreaterThan(0)
+    expect(unreviewedByKey.size, 'duplicate (page, path) entries').toBe(UNREVIEWED_TR.length)
+    for (const e of UNREVIEWED_TR) {
+      expect(PAGE_KEYS, e.page).toContain(e.page)
+      expect(e.en.trim(), `${e.page} ${e.path} en`).not.toBe('')
+      expect(e.tr.trim(), `${e.page} ${e.path} tr`).not.toBe('')
+      expect(e.tr, `${e.page} ${e.path} tr`).not.toContain('!')
+    }
+  })
+
+  for (const key of PAGE_KEYS) {
+    it(`${key}: each entry is the TR string at its path, translates the EN string at the same path, and is not approved md text`, () => {
+      const tr = useContent(key, 'tr')
+      const en = useContent(key, 'en')
+      const mdText = norm(readMd('tr', key))
+      for (const e of UNREVIEWED_TR.filter((x) => x.page === key)) {
+        expect(getAt(tr, e.path), `${key} ${e.path} TR`).toBe(e.tr)
+        expect(getAt(en, e.path), `${key} ${e.path} EN`).toBe(e.en)
+        expect(mdText.includes(norm(e.tr)), `${key} ${e.path} is approved md text, do not list it`).toBe(false)
+      }
+    })
+  }
+})
+
+interface ShapeDiff {
+  path: string
+  kind: 'EN only' | 'TR only' | 'length' | 'type'
 }
 
-function shapeDiff(en: unknown, tr: unknown, path: string, out: Set<string>) {
-  const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v)
+function shapeDiff(en: unknown, tr: unknown, path = '', out: ShapeDiff[] = []): ShapeDiff[] {
+  const join = (k: string) => (path ? `${path}.${k}` : k)
   if (Array.isArray(en) || Array.isArray(tr)) {
     if (!(Array.isArray(en) && Array.isArray(tr))) {
-      out.add(`${path}: ${Array.isArray(en) ? 'EN list, TR not' : 'TR list, EN not'}`)
-      return
+      out.push({ path, kind: 'type' })
+      return out
     }
-    const byId = (a: unknown[]) => a.every((x) => isObj(x) && typeof x.id === 'string') && a.length > 0
     if (byId(en) && byId(tr)) {
       const e = new Map((en as { id: string }[]).map((x) => [x.id, x]))
       const t = new Map((tr as { id: string }[]).map((x) => [x.id, x]))
-      for (const id of e.keys()) if (!t.has(id)) out.add(`${path}[${id}]: EN only`)
-      for (const id of t.keys()) if (!e.has(id)) out.add(`${path}[${id}]: TR only`)
+      for (const id of e.keys()) if (!t.has(id)) out.push({ path: `${path}[${id}]`, kind: 'EN only' })
+      for (const id of t.keys()) if (!e.has(id)) out.push({ path: `${path}[${id}]`, kind: 'TR only' })
       for (const [id, x] of e) if (t.has(id)) shapeDiff(x, t.get(id), `${path}[${id}]`, out)
-      return
+      return out
     }
-    if (en.length !== tr.length) out.add(`${path}: length ${en.length} != ${tr.length}`)
-    for (let i = 0; i < Math.min(en.length, tr.length); i++) shapeDiff(en[i], tr[i], `${path}[]`, out)
-    return
+    if (en.length !== tr.length) out.push({ path, kind: 'length' })
+    for (let i = 0; i < Math.min(en.length, tr.length); i++) shapeDiff(en[i], tr[i], `${path}[${i}]`, out)
+    return out
   }
   if (isObj(en) && isObj(tr)) {
     for (const k of Object.keys(en)) {
-      if (!(k in tr)) out.add(`${path}.${k}: EN only`)
-      else shapeDiff(en[k], tr[k], `${path}.${k}`, out)
+      if (!(k in tr)) out.push({ path: join(k), kind: 'EN only' })
+      else shapeDiff(en[k], tr[k], join(k), out)
     }
-    for (const k of Object.keys(tr)) if (!(k in en)) out.add(`${path}.${k}: TR only`)
-    return
+    for (const k of Object.keys(tr)) if (!(k in en)) out.push({ path: join(k), kind: 'TR only' })
+    return out
   }
-  if (typeof en !== typeof tr) out.add(`${path}: type ${typeof en} != ${typeof tr}`)
+  if (typeof en !== typeof tr) out.push({ path, kind: 'type' })
+  return out
 }
 
-describe('TR modules have the same shape as EN, apart from the recorded md differences', () => {
+/**
+ * TR has the same shape as EN: every EN section, field and list (with the same length) exists in TR.
+ * The only allowed difference is an extra TR-only field that holds approved TR md text the EN md has no
+ * slot for (the TR md's condensed sentence of a list in `condensed`, its arrow line in `steps`, the
+ * legal "Açık alanlar" section). A TR-only field may never hold a translation.
+ */
+describe('TR modules have the same shape as EN (no gaps)', () => {
   for (const key of PAGE_KEYS) {
     it(`${key}`, () => {
-      const out = new Set<string>()
-      shapeDiff(useContent(key, 'en'), useContent(key, 'tr'), '', out)
-      expect([...out].sort()).toEqual([...(KNOWN_TR_GAPS[key] ?? [])].sort())
+      const tr = useContent(key, 'tr')
+      const diffs = shapeDiff(useContent(key, 'en'), tr)
+      expect(diffs.filter((d) => d.kind !== 'TR only').map((d) => `${d.path}: ${d.kind}`)).toEqual([])
+
+      const mdText = norm(readMd('tr', key))
+      for (const d of diffs) {
+        const lastKey = d.path.match(/([^.[\]]+)$/)?.[1] ?? ''
+        for (const leaf of leafPaths(getAt(tr, d.path), d.path, lastKey)) {
+          expect(unreviewedByKey.has(unreviewedKey(key, leaf.path)), `${leaf.path} is TR-only but translated`).toBe(false)
+          expect(mdText.includes(leaf.value), `${leaf.path} is TR-only but not approved md text`).toBe(true)
+        }
+      }
     })
   }
 })
@@ -361,12 +287,7 @@ describe('UI microcopy json', () => {
   const en = flatten(JSON.parse(readFileSync(resolve(root, 'i18n/locales/en.json'), 'utf8')))
   const tr = flatten(JSON.parse(readFileSync(resolve(root, 'i18n/locales/tr.json'), 'utf8')))
 
-  const unreviewed = new Map<string, { en: string; tr: string }>()
-  for (const line of readFileSync(resolve(root, 'i18n/UNREVIEWED_TR.md'), 'utf8').split(/\r?\n/)) {
-    const parts = line.split(' | ')
-    if (parts.length !== 3 || parts[0] === 'key') continue
-    unreviewed.set(parts[0]!.trim(), { en: parts[1]!.trim(), tr: parts[2]!.trim() })
-  }
+  const unreviewed = new Set<string>(UNREVIEWED_UI_KEYS)
 
   const trCorpus = readdirSync(resolve(PKG, 'content/tr'))
     .map((f) => readFileSync(resolve(PKG, 'content/tr', f), 'utf8'))
@@ -418,13 +339,27 @@ describe('UI microcopy json', () => {
     for (const s of services) expect(tr[`nav.serviceLinks.${s.slug}`]).toBe(s.title)
   })
 
-  it('every UNREVIEWED_TR.md row matches the json values (no drift)', () => {
+  it('every UNREVIEWED_UI_KEYS key exists in both json files, once', () => {
     expect(unreviewed.size).toBeGreaterThan(20)
-    for (const [k, row] of unreviewed) {
-      expect(en[k], `${k} exists`).toBeDefined()
-      expect(row.en, `${k} EN column`).toBe(en[k])
-      expect(row.tr, `${k} TR column`).toBe(tr[k])
+    expect(unreviewed.size).toBe(UNREVIEWED_UI_KEYS.length)
+    for (const k of unreviewed) {
+      expect(en[k], `${k} EN`).toBeDefined()
+      expect(tr[k], `${k} TR`).toBeDefined()
     }
+  })
+
+  it('form.serviceOptions.<serviceOptionKeys[i]> (EN) is contact_form.json service_options[i]', () => {
+    expect(serviceOptionKeys).toHaveLength(contactForm.service_options.length)
+    serviceOptionKeys.forEach((key, i) => {
+      expect(en[`form.serviceOptions.${key}`], key).toBe(contactForm.service_options[i])
+    })
+  })
+
+  it('the contact page service list equals the form option labels (minus "Other"), in both locales', () => {
+    const labels = (msgs: Record<string, string>) =>
+      serviceOptionKeys.filter((k) => k !== 'other').map((k) => msgs[`form.serviceOptions.${k}`])
+    expect(useContent('contact', 'en').serviceOptions.items).toEqual(labels(en))
+    expect(useContent('contact', 'tr').serviceOptions.items).toEqual(labels(tr))
   })
 
   it('every TR value is either listed as unreviewed or found verbatim in the TR package md', () => {
@@ -434,5 +369,18 @@ describe('UI microcopy json', () => {
       if (!trCorpus.includes(v.toLowerCase())) offenders.push(`${k} = ${v}`)
     }
     expect(offenders).toEqual([])
+  })
+})
+
+describe('i18n/UNREVIEWED_TR.md', () => {
+  it('is the committed output of scripts/unreviewed-tr.ts (run `npm run unreviewed:tr` after changing a translation)', () => {
+    const committed = readFileSync(resolve(root, 'i18n/UNREVIEWED_TR.md'), 'utf8').replace(/\r\n/g, '\n')
+    expect(committed).toBe(renderUnreviewedMd())
+  })
+
+  it('lists every page-copy entry and every UI key', () => {
+    const md = renderUnreviewedMd()
+    for (const e of UNREVIEWED_TR) expect(md, `${e.page} ${e.path}`).toContain(`\`${e.path}\``)
+    for (const k of UNREVIEWED_UI_KEYS) expect(md, k).toContain(`\`${k}\``)
   })
 })

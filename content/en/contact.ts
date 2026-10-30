@@ -3,24 +3,24 @@ import type { FinalCtaContent, HeroContent, ListSection, PageMeta, Section, Text
 export interface ContactContent {
   meta: PageMeta
   hero: HeroContent
-  /** "How can we support you?": display copy for the service choice. EN list; TR running text. */
+  /** "How can we support you?": display copy for the service choice: `items` (the form option labels without "Other"); TR also keeps its approved running sentence in `condensed`. */
   serviceOptions: Section
   /**
    * BUILDER INSTRUCTION, not display copy: the md "Project form" field list. The form labels live in
    * i18n/locales/*.json. Do not render this section.
    */
   formFields: Section
-  /** "What happens next". EN list; TR running text. */
+  /** "What happens next": `items`; TR also keeps its approved running sentence in `condensed`. */
   next: Section
-  /** "Direct contact". EN: one line per item ("Email: ..."); TR: one running line in `body`. */
+  /** "Direct contact": one line per item ("Email: ..."); TR also keeps its approved one-line form in `condensed`. */
   direct: Section
-  /** "Company details". EN only: `Company ID: ...` and `VAT: ...`. */
-  company?: ListSection
+  /** "Company details": `Company ID: ...` and `VAT: ...`. */
+  company: ListSection
   /**
    * BUILDER INSTRUCTION, not display copy: the md "Privacy note". It is implemented as the consent
-   * checkbox. Do not render this section. EN only.
+   * checkbox. Do not render this section.
    */
-  privacyNote?: TextSection
+  privacyNote: TextSection
   finalCta: FinalCtaContent
 }
 

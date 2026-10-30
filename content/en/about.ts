@@ -4,13 +4,13 @@ export interface AboutContent {
   meta: PageMeta
   hero: HeroContent
   whoWeAre: TextSection
-  manages?: ListSection
-  /** EN: bullet list; TR: running text. */
+  manages: ListSection
+  /** `items`; TR also keeps its approved running sentence in `condensed`. */
   why: Section
-  principles?: ListSection
+  principles: ListSection
   experience: TextSection
-  europeanBase?: TextSection
-  /** "What MOESA is not": EN bullet list; TR running text. */
+  europeanBase: TextSection
+  /** "What MOESA is not": `items`; TR also keeps its approved running sentence in `condensed`. */
   isNot: Section
   direction: TextSection
   finalCta: FinalCtaContent

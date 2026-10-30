@@ -4,6 +4,8 @@
  *
  * Copy rule: strings in the page modules are transcribed verbatim from
  * MOESA_Website_Package_v1.0/content/<locale>/*.md. Never take copy from design-reference/.
+ * The only exception: TR strings the TR md lacks are translated from the approved EN and listed,
+ * one entry each, in content/tr/unreviewed.ts (rendered to i18n/UNREVIEWED_TR.md for review).
  */
 
 export type Locale = 'en' | 'tr'
@@ -79,6 +81,12 @@ export interface Section {
   body?: string
   items?: string[]
   steps?: string[]
+  /**
+   * TR only: the approved TR md gives the EN list of this section as one running sentence
+   * ("A; B; C."). The sentence is kept verbatim here; `items` holds the list translated from EN
+   * (listed in content/tr/unreviewed.ts). Pages decide whether to show it next to the list.
+   */
+  condensed?: string
 }
 
 /** A section of a legal page; legal pages vary a lot, so they are an ordered list keyed by `id`. */
@@ -88,4 +96,6 @@ export interface LegalSection {
   title: string
   paragraphs?: string[]
   items?: string[]
+  /** TR only: the approved TR md's one-line form of `items` / `paragraphs` (see `Section.condensed`). */
+  condensed?: string
 }
