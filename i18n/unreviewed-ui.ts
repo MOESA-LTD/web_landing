@@ -10,9 +10,13 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   'nav.allServices',
   'nav.openMenu',
   'nav.closeMenu',
+  'logo.homeLabel',
   'breadcrumbs.label',
   'breadcrumbs.allServices',
   'related.services',
+  'cards.exploreService',
+  // Cut from the approved TR home.md line "Yatay yetkinlik olarak Dijital Ticaret ve Ticari İçgörü".
+  'cards.capability',
   'footer.companyTitle',
   'footer.email',
   'footer.phone',

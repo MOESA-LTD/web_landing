@@ -25,6 +25,9 @@
       "digital-commerce-commercial-intelligence": "Digital Commerce & Commercial Intelligence"
     }
   },
+  "logo": {
+    "homeLabel": "MOESA Ltd. home"
+  },
   "breadcrumbs": {
     "label": "Breadcrumb",
     "home": "Home",
@@ -33,6 +36,10 @@
   },
   "related": {
     "services": "Related services"
+  },
+  "cards": {
+    "exploreService": "Explore service",
+    "capability": "Cross-functional capability"
   },
   "status": {
     "draft": "Draft",

@@ -499,7 +499,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[effectiveDate].title` | Effective date | Yürürlük tarihi |
 | `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Yayın tarihini ekleyin. |
 
-## UI microcopy (40 strings)
+## UI microcopy (43 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -520,9 +520,12 @@ Not listed here, because they come from the package TR md:
 | `nav.allServices` | All services | Tüm hizmetler |
 | `nav.openMenu` | Open menu | Menüyü aç |
 | `nav.closeMenu` | Close menu | Menüyü kapat |
+| `logo.homeLabel` | MOESA Ltd. home | MOESA Ltd. ana sayfa |
 | `breadcrumbs.label` | Breadcrumb | Gezinti yolu |
 | `breadcrumbs.allServices` | All services | Tüm hizmetler |
 | `related.services` | Related services | İlgili hizmetler |
+| `cards.exploreService` | Explore service | Hizmeti inceleyin |
+| `cards.capability` | Cross-functional capability | Yatay yetkinlik |
 | `footer.companyTitle` | Company | Şirket |
 | `footer.email` | Email | E-posta |
 | `footer.phone` | Phone | Telefon |

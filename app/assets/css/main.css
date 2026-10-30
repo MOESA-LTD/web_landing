@@ -188,3 +188,58 @@
     }
   }
 }
+
+/* ---- Component CSS that utilities would make unreadable (connectors with container queries) ---- */
+@layer components {
+  /* ProcessTimeline (bundle.css `.ms-process*`): a 2px blue connector from each disc to the next. */
+  .timeline-row {
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  }
+  .timeline-row > .timeline-step {
+    flex-direction: column;
+  }
+  .timeline-row > .timeline-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: 44px;
+    right: -24px;
+    height: 2px;
+    background: var(--color-blue);
+  }
+  .timeline-column > .timeline-step {
+    align-items: flex-start;
+  }
+  .timeline-column .timeline-text {
+    padding-top: 9px;
+  }
+  .timeline-column > .timeline-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    bottom: -24px;
+    width: 2px;
+    background: var(--color-blue);
+  }
+  /* A row timeline becomes a vertical list in narrow containers. */
+  @container (max-width: 720px) {
+    .timeline-row {
+      grid-template-columns: 1fr;
+    }
+    .timeline-row > .timeline-step {
+      flex-direction: row;
+    }
+    .timeline-row .timeline-text {
+      padding-top: 9px;
+    }
+    .timeline-row > .timeline-step:not(:last-child)::after {
+      left: 21px;
+      right: auto;
+      top: 44px;
+      bottom: -24px;
+      width: 2px;
+      height: auto;
+    }
+  }
+}

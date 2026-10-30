@@ -25,6 +25,9 @@
       "digital-commerce-commercial-intelligence": "Dijital Ticaret ve Ticari İçgörü"
     }
   },
+  "logo": {
+    "homeLabel": "MOESA Ltd. ana sayfa"
+  },
   "breadcrumbs": {
     "label": "Gezinti yolu",
     "home": "Ana Sayfa",
@@ -33,6 +36,10 @@
   },
   "related": {
     "services": "İlgili hizmetler"
+  },
+  "cards": {
+    "exploreService": "Hizmeti inceleyin",
+    "capability": "Yatay yetkinlik"
   },
   "status": {
     "draft": "Taslak",
