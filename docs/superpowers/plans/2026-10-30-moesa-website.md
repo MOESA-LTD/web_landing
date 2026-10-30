@@ -262,7 +262,16 @@ Port from `design-reference/design-system/project/components/bundle.js` and `bun
   - Below 960px the mobile panel pushes the content down and is not an overlay.
   - Route changes close both menus.
   - The header is not sticky.
-- `LanguageSwitcher` (amended, new file `app/components/layout/LanguageSwitcher.vue`): the bar above the header, styled per CANVAS_UPDATE_NOTES §2. It renders links from `useSwitchLocalePath()`, which keep the query and hash. It is hidden when `enableTr` is false. Test `LanguageSwitcher.test.ts`: on `/contact?service=operations-supply-chain` the TR link href is `/tr/iletisim?service=operations-supply-chain`; the active locale link has `aria-current="true"`; each link has a `hreflang` attribute.
+- `LanguageSwitcher` (amended, new file `app/components/layout/LanguageSwitcher.vue`): a full-width bar above the header on every page. Its visual spec is **CANVAS_UPDATE_NOTES "Update 1793392616 — language switcher"**:
+  - Bar: `#F7FAFC`, 1px `#D5E3ED` bottom border, height 44px. The container is 1200px wide with 24px padding, its items right-aligned with a 4px gap.
+  - Label: 13/20, weight 500, `#536B7D`, margin-right 8px. The text is "Language" in EN and "Dil" in TR.
+  - Items: min-width 44px, height 44px, padding 0 8px, radius 2px, 13px, weight 700, letter-spacing .08em. The active item has a `#0069B2` background and white text; inactive items are transparent with `#19324A` text.
+  - The group has `role="group"` and an `aria-label`.
+
+  Differences from the canvas, by ruling:
+  - Items are **links** with `lang`, `hreflang` and `aria-current="true"` on the active one, instead of the canvas's `aria-pressed` buttons and localStorage.
+  - Only EN and TR are offered, not DE.
+  - Inactive links get a hover style of `#EBF5FB` background and `#0069B2` text. It renders links from `useSwitchLocalePath()`, which keep the query and hash. It is hidden when `enableTr` is false. Test `LanguageSwitcher.test.ts`: on `/contact?service=operations-supply-chain` the TR link href is `/tr/iletisim?service=operations-supply-chain`; the active locale link has `aria-current="true"`; each link has a `hreflang` attribute.
 - All header and footer labels come from `i18n/locales/*.json`, and all links go through `localePath()`.
 - `SiteFooter { showCta?: boolean }`. The layout passes `true` on `/` and `/about` only, per DESIGN_NOTES §3.2. The bottom bar uses `navy-dark` with a 1px `navy-line` top border.
 
