@@ -4,7 +4,8 @@
     "label": "Language"
   },
   "cta": {
-    "discussProject": "Discuss a Project"
+    "discussProject": "Discuss a Project",
+    "exploreServices": "Explore Services"
   },
   "nav": {
     "label": "Primary",
@@ -58,6 +59,10 @@
       "cookiePolicy": "Cookie Policy",
       "legalNotice": "Legal Notice"
     }
+  },
+  "company": {
+    "companyId": "Company ID",
+    "vat": "VAT"
   },
   "form": {
     "labels": {

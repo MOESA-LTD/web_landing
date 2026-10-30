@@ -6,6 +6,8 @@
 export const UNREVIEWED_UI_KEYS: string[] = [
   'skipLink',
   'language.label',
+  // EN is the approved thank-you.md CTA; the TR thank-you.md has no counterpart.
+  'cta.exploreServices',
   'nav.label',
   'nav.allServices',
   'nav.openMenu',

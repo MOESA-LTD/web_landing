@@ -4,7 +4,8 @@
     "label": "Dil"
   },
   "cta": {
-    "discussProject": "Projeyi Görüşelim"
+    "discussProject": "Projeyi Görüşelim",
+    "exploreServices": "Hizmetleri İnceleyin"
   },
   "nav": {
     "label": "Ana gezinme",
@@ -58,6 +59,10 @@
       "cookiePolicy": "Çerez Politikası",
       "legalNotice": "Yasal Bildirim"
     }
+  },
+  "company": {
+    "companyId": "Company ID",
+    "vat": "VAT"
   },
   "form": {
     "labels": {

@@ -7,6 +7,7 @@ import type { Cta } from '#content/types'
  *   left edge; the panel stacks under the text at a container width of 860px or less.
  * - page: every other page. Text only, no panel and no motif (the newer DS draws the motif only in the panel).
  * Order: crumbs, eyebrow, title, intro, actions (first primary, the rest secondary), note.
+ * `panelLabel` (display only) sits at the bottom left of the navy panel (`.ms-hero-panel-label`; Home: "MOESA LTD.").
  */
 const props = withDefaults(
   defineProps<{
@@ -17,8 +18,17 @@ const props = withDefaults(
     note?: string
     crumbs?: Cta[]
     actions?: Cta[]
+    panelLabel?: string
   }>(),
-  { variant: 'page', eyebrow: undefined, intro: undefined, note: undefined, crumbs: undefined, actions: () => [] },
+  {
+    variant: 'page',
+    eyebrow: undefined,
+    intro: undefined,
+    note: undefined,
+    crumbs: undefined,
+    actions: () => [],
+    panelLabel: undefined,
+  },
 )
 
 const display = computed(() => props.variant === 'display')
@@ -72,6 +82,9 @@ const display = computed(() => props.variant === 'display')
         class="surface-inverse relative min-h-[520px] overflow-hidden bg-navy-dark @max-[860.98px]:min-h-[220px]"
       >
         <LineMotif variant="chevron" />
+        <p v-if="props.panelLabel" data-panel-label class="absolute bottom-8 left-8 m-0 text-label tracking-[.03em] text-mist-blue">
+          {{ props.panelLabel }}
+        </p>
       </div>
     </div>
   </section>

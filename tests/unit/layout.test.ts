@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { addPageStubs } from './helpers/page-stubs'
 import App from '~/app.vue'
 import DefaultLayout from '~/layouts/default.vue'
@@ -54,27 +54,30 @@ describe('default layout', () => {
 
 describe('<html lang>', () => {
   const lang = () => document.documentElement.getAttribute('lang')
+  // unhead writes <html lang> to the DOM asynchronously; with a real page (Home calls usePageSeo) the
+  // write lands after flushPromises, so wait for it.
+  const expectLang = (value: string) => vi.waitFor(() => expect(lang()).toBe(value))
   afterEach(() => document.documentElement.removeAttribute('lang'))
 
   it('is "en" on EN pages', async () => {
     await mountSuspended(App, { route: '/' })
     await flushPromises()
-    expect(lang()).toBe('en')
+    await expectLang('en')
   })
 
   it('is "tr" on TR pages, set globally by the app without any page calling usePageSeo', async () => {
     await mountSuspended(App, { route: '/tr' })
     await flushPromises()
-    expect(lang()).toBe('tr')
+    await expectLang('tr')
   })
 
   it('follows the locale when navigating between EN and TR', async () => {
     await mountSuspended(App, { route: '/' })
     await useRouter().push('/tr/iletisim')
     await flushPromises()
-    expect(lang()).toBe('tr')
+    await expectLang('tr')
     await useRouter().push('/contact')
     await flushPromises()
-    expect(lang()).toBe('en')
+    await expectLang('en')
   })
 })

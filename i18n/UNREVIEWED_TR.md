@@ -499,7 +499,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[effectiveDate].title` | Effective date | Yürürlük tarihi |
 | `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Yayın tarihini ekleyin. |
 
-## UI microcopy (43 strings)
+## UI microcopy (44 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -516,6 +516,7 @@ Not listed here, because they come from the package TR md:
 | --- | --- | --- |
 | `skipLink` | Skip to content | İçeriğe geç |
 | `language.label` | Language | Dil |
+| `cta.exploreServices` | Explore Services | Hizmetleri İnceleyin |
 | `nav.label` | Primary | Ana gezinme |
 | `nav.allServices` | All services | Tüm hizmetler |
 | `nav.openMenu` | Open menu | Menüyü aç |
