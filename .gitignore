@@ -18,3 +18,8 @@ dist/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Test output
+tests/e2e/__screens__/
+test-results/
+playwright-report/

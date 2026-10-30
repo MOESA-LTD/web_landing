@@ -1,1 +1,190 @@
 @import "tailwindcss";
+@import "@fontsource-variable/manrope";
+
+/*
+ * MOESA design tokens (Tailwind v4, CSS-first).
+ * Colour source: MOESA_Website_Package_v1.0/data/brand_tokens.json plus the newer design system
+ * (line-strong, danger, danger-tint, mist-blue, navy-line). Pinned by tests/unit/tokens.test.ts.
+ */
+@theme {
+  --color-white: #FFFFFF;
+  --color-navy: #19324A;
+  --color-navy-dark: #102C49;
+  --color-blue-dark: #003B72;
+  --color-blue: #0069B2;
+  --color-cyan: #14A3DB;
+  --color-slate: #536B7D;
+  --color-pale: #EBF5FB;
+  --color-mist: #F7FAFC;
+  --color-line: #D5E3ED;
+  --color-line-strong: #748CA0;
+  --color-mist-blue: #B4CFE0;
+  --color-navy-line: #1B4264;
+  --color-danger: #B42318;
+  --color-danger-tint: #FEF3F2;
+
+  --font-sans: "Manrope Variable", Manrope, Arial, "Segoe UI", sans-serif;
+
+  --radius-sm: 2px;
+  --shadow-menu: 0 12px 32px rgba(16,44,73,.14);
+}
+
+/* ---- Type roles (DESIGN_NOTES 1.3, newer-DS weights) ---- */
+@utility text-display {
+  font-size: 56px;
+  line-height: 60px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  @media (max-width: 719.98px) {
+    font-size: 38px;
+    line-height: 44px;
+  }
+}
+
+@utility text-h1 {
+  font-size: 44px;
+  line-height: 52px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  @media (max-width: 719.98px) {
+    font-size: 34px;
+    line-height: 40px;
+  }
+}
+
+@utility text-h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  @media (max-width: 719.98px) {
+    font-size: 26px;
+    line-height: 34px;
+  }
+}
+
+@utility text-h3 {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+@utility text-h4 {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+}
+
+@utility text-lead {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: 400;
+  @media (max-width: 719.98px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+@utility text-body {
+  font-size: 17px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+@utility text-body-sm {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+@utility text-label {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+@utility text-eyebrow {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility text-caption {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+@utility text-numeral {
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+@utility text-stat {
+  font-size: 72px;
+  line-height: 72px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Layout helpers ---- */
+@utility container-site {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  @media (max-width: 719.98px) {
+    padding-inline: 16px;
+  }
+}
+
+@utility section {
+  padding-block: 96px;
+  @media (max-width: 719.98px) {
+    padding-block: 64px;
+  }
+}
+
+/* ---- Base ---- */
+@layer base {
+  :root {
+    --focus-ring: var(--color-blue);
+  }
+
+  /* Inverse (navy) grounds switch the focus ring to cyan. */
+  .surface-inverse,
+  footer {
+    --focus-ring: var(--color-cyan);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
