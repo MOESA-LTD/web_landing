@@ -242,7 +242,7 @@ describe('SiteHeader language dropdown', () => {
     const bar = w.find('header > div')
     expect(bar.classes()).toContain('gap-6')
     expect(bar.classes()).not.toContain('gap-8')
-    expect(w.find('[data-header-cta]').classes()).toEqual(expect.arrayContaining(['mr-[76px]', '@min-[1200px]:shrink-0', '@max-[959.98px]:hidden']))
+    expect(w.find('[data-header-cta]').classes()).toEqual(expect.arrayContaining(['mr-[76px]', '@max-[1159.98px]:hidden']))
     // above page content (canvas .mo-hdr z-index 30)
     expect(w.classes()).toContain('z-30')
   })

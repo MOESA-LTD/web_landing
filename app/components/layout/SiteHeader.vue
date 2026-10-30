@@ -4,7 +4,7 @@ import { localizeHref, routeNameForPath, type RouteName } from '~~/i18n/routes'
 
 /**
  * Site header (bundle.js `Header`, DESIGN_NOTES §3.1): logo, primary nav with the Services disclosure,
- * "Discuss a Project" CTA; below 960px of its own width a menu button opens an in-flow panel that pushes the
+ * "Discuss a Project" CTA; below 1160px of its own width a menu button opens an in-flow panel that pushes the
  * content down (no overlay). Not sticky. Labels come from i18n/locales, links from navigation.json localised
  * to the current locale. Services is a disclosure button, not a link and not a hover menu: it closes on
  * Escape (focus returns to the button), on a mousedown outside and on route change.
@@ -102,10 +102,10 @@ watch(
   },
 )
 
-// Keeps the labels on one line from 1200px up (the TR labels sit within a pixel of the bar width there); below
-// that the DS wrapping behaviour stays (one line needs ~1125px in TR, ~1148px in EN).
+// The desktop nav needs about 1125px (TR) / 1148px (EN) to stay on one line next to the 76px language reserve,
+// so the mobile menu starts below 1160px of header width (the DS default is 960px; user ruling 2026-10-31).
 const navLink =
-  'relative inline-flex h-10 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-3 text-label text-navy no-underline hover:text-blue @min-[1200px]:whitespace-nowrap'
+  'relative inline-flex h-10 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-3 text-label text-navy no-underline hover:text-blue'
 const currentUnderline = 'after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:bg-blue after:content-[\'\']'
 const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-underline'
 </script>
@@ -113,11 +113,11 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
 <template>
   <header ref="root" class="@container relative z-30 border-b border-line bg-white font-sans">
     <div
-      class="mx-auto box-border flex h-[76px] max-w-[1200px] items-center gap-6 px-6 @max-[959.98px]:h-16 @max-[959.98px]:px-4"
+      class="mx-auto box-border flex h-[76px] max-w-[1200px] items-center gap-6 px-6 @max-[1159.98px]:h-16 @max-[1159.98px]:px-4"
     >
-      <Logo href="/" class="@min-[1200px]:shrink-0" />
+      <Logo href="/" />
 
-      <nav :aria-label="t('nav.label')" data-nav="desktop" class="flex-1 @max-[959.98px]:hidden">
+      <nav :aria-label="t('nav.label')" data-nav="desktop" class="flex-1 @max-[1159.98px]:hidden">
         <ul class="m-0 flex list-none gap-1 p-0">
           <li v-for="item in items" :key="item.href" :data-nav-dd="item.isServices ? '' : undefined" :class="item.isServices && 'relative'">
             <template v-if="item.isServices">
@@ -166,7 +166,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         </ul>
       </nav>
 
-      <div data-header-cta class="ml-auto mr-[76px] @min-[1200px]:shrink-0 @max-[959.98px]:hidden">
+      <div data-header-cta class="ml-auto mr-[76px] @max-[1159.98px]:hidden">
         <Button to="/contact" size="sm">{{ t('cta.discussProject') }}</Button>
       </div>
 
@@ -174,7 +174,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         id="menu-button"
         type="button"
         data-menu-button
-        class="ml-auto hidden h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-line bg-white text-navy @max-[959.98px]:inline-flex"
+        class="ml-auto hidden h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-line bg-white text-navy @max-[1159.98px]:inline-flex"
         :aria-expanded="menuOpen"
         aria-controls="mobile-menu"
         @click="menuOpen = !menuOpen"
@@ -192,7 +192,7 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
       id="mobile-menu"
       :hidden="!menuOpen"
       class="box-border border-t border-line bg-white px-4 pt-2 pb-6"
-      :class="menuOpen ? 'hidden @max-[959.98px]:block' : 'hidden'"
+      :class="menuOpen ? 'hidden @max-[1159.98px]:block' : 'hidden'"
     >
       <nav :aria-label="t('nav.label')">
         <ul class="m-0 mb-6 list-none p-0">

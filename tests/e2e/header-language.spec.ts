@@ -68,7 +68,7 @@ test.describe('header language dropdown', () => {
     const vw = page.viewportSize()!.width
     expect(Math.round(bb.height)).toBe(44)
     expect(bb.width).toBeGreaterThanOrEqual(64)
-    if (vw >= 960) {
+    if (vw >= 1160) {
       expect(Math.round(bb.y - hb.y)).toBe(16) // 76px bar
       expect(Math.round(vw - (bb.x + bb.width))).toBe(Math.max(24, (vw - 1200) / 2 + 24))
       const cta = await box(page.locator('[data-header-cta] a'))
@@ -107,17 +107,15 @@ test.describe('header language dropdown', () => {
     expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(22)
   })
 
-  // Measured: with the short TR header labels the five items plus logo, CTA and the 76px reserve need ~1125px (TR) /
-  // ~1148px (EN) to stay on one line, so one-line is asserted from 1160px; 1024 and 960 only assert that nothing
-  // overflows or breaks the 76px bar (the DS lets the labels wrap there, as before this task).
-  for (const width of [1200, 1160, 1024, 960]) {
+  // Measured: five items + logo + CTA + the 76px reserve need ~1125px (TR) / ~1148px (EN) on one line, so the
+  // header switches to the mobile menu below 1160px (user ruling 2026-10-31).
+  for (const width of [1440, 1200, 1160]) {
     for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR']] as const) {
-      test(`${locale} nav is on fits at ${width}px: bar stays 76px, no horizontal overflow, dropdown clear`, async ({ page }) => {
+      test(`${locale} desktop nav is on one line at ${width}px: bar 76px, no overflow, CTA and dropdown clear`, async ({ page }) => {
         test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
         await page.setViewportSize({ width, height: 800 })
         await page.goto(route)
-        const bar = await box(page.locator('header > div').first())
-        expect(Math.round(bar.height)).toBe(76)
+        expect(Math.round((await box(page.locator('header > div').first())).height)).toBe(76)
         const cta = await box(page.locator('[data-header-cta] a'))
         const lines = await page.locator('[data-nav="desktop"] > ul > li > a, [data-nav="desktop"] > ul > li > button').evaluateAll((els) =>
           els.map((e) => {
@@ -126,15 +124,33 @@ test.describe('header language dropdown', () => {
             return new Set([...range.getClientRects()].map((r) => Math.round(r.top))).size
           }),
         )
-        if (width >= 1160) {
-          expect(lines).toEqual([1, 1, 1, 1, 1])
-          expect(Math.round(cta.height)).toBe(40)
-        }
+        expect(lines).toEqual([1, 1, 1, 1, 1])
+        expect(Math.round(cta.height)).toBe(40)
         expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0)
         const last = await box(page.locator('[data-nav="desktop"] > ul > li').last())
-        if (width >= 1160) expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(0)
+        expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(0)
         const lang = await box(page.locator('#lang-button'))
         expect(lang.x - (cta.x + cta.width)).toBeGreaterThanOrEqual(10)
+        if (locale === 'TR') await page.screenshot({ path: `tests/e2e/__screens__/hdr-app-tr-${width}.png`, clip: { x: 0, y: 0, width, height: 140 } })
+      })
+    }
+  }
+
+  for (const width of [1159, 1024, 960]) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR']] as const) {
+      test(`${locale} shows the mobile menu at ${width}px: menu button visible, desktop nav and CTA hidden, bar 64px, no overflow`, async ({ page }) => {
+        test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
+        await page.setViewportSize({ width, height: 800 })
+        await page.goto(route)
+        await expect(page.locator('#menu-button')).toBeVisible()
+        await expect(page.locator('[data-nav="desktop"]')).toBeHidden()
+        await expect(page.locator('[data-header-cta]')).toBeHidden()
+        expect(Math.round((await box(page.locator('header > div').first())).height)).toBe(64)
+        const bb = await box(page.locator('#lang-button'))
+        const menu = await box(page.locator('#menu-button'))
+        expect(Math.round(width - (bb.x + bb.width))).toBe(68)
+        expect(Math.round(menu.x - (bb.x + bb.width))).toBe(8)
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0)
         if (locale === 'TR') await page.screenshot({ path: `tests/e2e/__screens__/hdr-app-tr-${width}.png`, clip: { x: 0, y: 0, width, height: 140 } })
       })
     }

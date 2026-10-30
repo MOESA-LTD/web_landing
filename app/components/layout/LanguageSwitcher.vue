@@ -91,7 +91,7 @@ watch(
     ref="root"
     data-lang-dd
     @focusout="onFocusout"
-    class="absolute top-0 right-[max(24px,calc((100%-1200px)/2+24px))] z-40 flex h-[76px] items-center @max-[959.98px]:right-[68px] @max-[959.98px]:h-16"
+    class="absolute top-0 right-[max(24px,calc((100%-1200px)/2+24px))] z-40 flex h-[76px] items-center @max-[1159.98px]:right-[68px] @max-[1159.98px]:h-16"
   >
     <button
       id="lang-button"

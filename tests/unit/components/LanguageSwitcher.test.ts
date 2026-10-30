@@ -68,8 +68,8 @@ describe('LanguageSwitcher dropdown button', () => {
         'z-40',
         'h-[76px]',
         'right-[max(24px,calc((100%-1200px)/2+24px))]',
-        '@max-[959.98px]:h-16',
-        '@max-[959.98px]:right-[68px]',
+        '@max-[1159.98px]:h-16',
+        '@max-[1159.98px]:right-[68px]',
       ]),
     )
   })
