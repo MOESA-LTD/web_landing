@@ -1,6 +1,9 @@
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
-import { buildI18nPages } from './i18n/routes'
+import { buildI18nPages, servicePrerenderRoutes } from './i18n/routes'
+
+// NUXT_PUBLIC_ENABLE_TR=false hides TR (no TR routes prerendered, no switcher, not in the sitemap).
+const enableTr = process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-30',
@@ -39,8 +42,13 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      // NUXT_PUBLIC_ENABLE_TR=false hides TR (no TR routes prerendered, no switcher, not in the sitemap).
-      enableTr: process.env.NUXT_PUBLIC_ENABLE_TR !== 'false',
+      enableTr,
+    },
+  },
+  nitro: {
+    prerender: {
+      // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled).
+      routes: servicePrerenderRoutes({ enableTr }),
     },
   },
   i18n: {

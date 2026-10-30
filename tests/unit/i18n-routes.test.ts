@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { ROUTES, buildI18nPages, localizeHref, routeNameForLocalePath, type RouteName } from '../../i18n/routes'
+import {
+  ROUTES,
+  buildI18nPages,
+  localeSlugForService,
+  localizeHref,
+  routeNameForLocalePath,
+  serviceSlugFromLocaleSlug,
+  servicePrerenderRoutes,
+  type RouteName,
+} from '../../i18n/routes'
 import { useLocalizedHref } from '../../app/composables/useLocalizedHref'
 
 /** The TR routes table from the plan's Decisions section, copied independently of ROUTES. */
@@ -136,5 +145,55 @@ describe('routeNameForLocalePath', () => {
   it('returns null for unknown paths', () => {
     expect(routeNameForLocalePath('/nope')).toBeNull()
     expect(routeNameForLocalePath('/tr/about')).toBeNull()
+  })
+})
+
+describe('serviceSlugFromLocaleSlug', () => {
+  const PAIRS: [string, string][] = [
+    ['sourcing-managed-procurement', 'tedarik-ve-yonetilen-satin-alma'],
+    ['product-private-label-development', 'urun-ve-private-label-gelistirme'],
+    ['market-access-commercial-representation', 'pazara-giris-ve-ticari-temsil'],
+    ['operations-supply-chain', 'operasyon-ve-tedarik-zinciri'],
+    ['digital-commerce-commercial-intelligence', 'dijital-ticaret-ve-ticari-icgoru'],
+  ]
+
+  it('maps each EN slug to itself and each TR slug to its EN service slug', () => {
+    for (const [en, tr] of PAIRS) {
+      expect(serviceSlugFromLocaleSlug('en', en)).toBe(en)
+      expect(serviceSlugFromLocaleSlug('tr', tr)).toBe(en)
+    }
+  })
+
+  it('returns null for a slug of the other locale, an unknown slug or an empty slug', () => {
+    expect(serviceSlugFromLocaleSlug('en', 'operasyon-ve-tedarik-zinciri')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('tr', 'operations-supply-chain')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('en', 'unknown')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('tr', '')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('en', 'services')).toBeNull()
+  })
+
+  it('localeSlugForService is its inverse', () => {
+    for (const [en, tr] of PAIRS) {
+      expect(localeSlugForService('en', en as never)).toBe(en)
+      expect(localeSlugForService('tr', en as never)).toBe(tr)
+    }
+  })
+})
+
+describe('servicePrerenderRoutes', () => {
+  it('lists the overview and the 5 service pages in both locales (12 URLs) when TR is enabled', () => {
+    const routes = servicePrerenderRoutes({ enableTr: true })
+    expect(routes).toHaveLength(12)
+    expect(routes).toEqual(expect.arrayContaining(['/services', '/tr/hizmetler']))
+    for (const [, p] of entries.filter(([n]) => n.startsWith('services/'))) {
+      expect(routes).toContain(p.en)
+      expect(routes).toContain(p.tr)
+    }
+  })
+
+  it('leaves out every /tr URL when TR is disabled', () => {
+    const routes = servicePrerenderRoutes({ enableTr: false })
+    expect(routes).toHaveLength(6)
+    expect(routes.some((r) => r.startsWith('/tr'))).toBe(false)
   })
 })

@@ -40,6 +40,20 @@ describe('LanguageSwitcher', () => {
     expect(w.findAll('a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda'])
   })
 
+  it('links a service page to its counterpart slug without any page having set i18n params', async () => {
+    // The layout renders the switcher before the page's setup (and its useSetI18nParams) runs on the server.
+    const en = await mount('/services/operations-supply-chain')
+    expect(en.findAll('a').map((a) => a.attributes('href'))).toEqual([
+      '/services/operations-supply-chain',
+      '/tr/hizmetler/operasyon-ve-tedarik-zinciri',
+    ])
+    const tr = await mount('/tr/hizmetler/dijital-ticaret-ve-ticari-icgoru')
+    expect(tr.findAll('a').map((a) => a.attributes('href'))).toEqual([
+      '/services/digital-commerce-commercial-intelligence',
+      '/tr/hizmetler/dijital-ticaret-ve-ticari-icgoru',
+    ])
+  })
+
   it('keeps the query on the TR link of /contact?service=...', async () => {
     const w = await mount('/contact?service=operations-supply-chain')
     const [en, tr] = w.findAll('a')

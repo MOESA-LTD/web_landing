@@ -3,13 +3,17 @@
  * Ruled numbered columns (DS README "Rules, not boxes"; same anatomy as the ruled ServiceCard without a link):
  * 4px top rule in the sequence cyan, blue, dark blue, navy, a decorative numeral, title and optional body.
  * For approved sections without a canvas layout: principles, engagement models, responsibilities.
- * The list is an <ol>, so the numerals are aria-hidden.
+ * The list is an <ol>, so the numerals are aria-hidden. `min` is the column minimum in px (default 300;
+ * 250 puts four short titles in one row of the 1200px container, as the canvas service grid does).
  */
-const props = defineProps<{ items: { title: string; body?: string }[] }>()
+const props = withDefaults(defineProps<{ items: { title: string; body?: string }[]; min?: number }>(), { min: 300 })
 </script>
 
 <template>
-  <ol class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-x-8 gap-y-12 p-0">
+  <ol
+    class="m-0 grid list-none gap-x-8 gap-y-12 p-0"
+    :style="{ gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${props.min}px), 1fr))` }"
+  >
     <li
       v-for="(item, i) in props.items"
       :key="i"

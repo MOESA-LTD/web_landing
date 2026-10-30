@@ -14,4 +14,16 @@ export interface FidelityRoute {
 export const FIDELITY_ROUTES: FidelityRoute[] = [
   { route: '/', md: 'home.md', locale: 'en' },
   { route: '/tr', md: 'home.md', locale: 'tr' },
+  { route: '/services', md: 'services.md', locale: 'en' },
+  { route: '/tr/hizmetler', md: 'services.md', locale: 'tr' },
+  { route: '/services/sourcing-managed-procurement', md: 'services__sourcing-managed-procurement.md', locale: 'en' },
+  { route: '/tr/hizmetler/tedarik-ve-yonetilen-satin-alma', md: 'services__sourcing-managed-procurement.md', locale: 'tr' },
+  { route: '/services/product-private-label-development', md: 'services__product-private-label-development.md', locale: 'en' },
+  { route: '/tr/hizmetler/urun-ve-private-label-gelistirme', md: 'services__product-private-label-development.md', locale: 'tr' },
+  { route: '/services/market-access-commercial-representation', md: 'services__market-access-commercial-representation.md', locale: 'en' },
+  { route: '/tr/hizmetler/pazara-giris-ve-ticari-temsil', md: 'services__market-access-commercial-representation.md', locale: 'tr' },
+  { route: '/services/operations-supply-chain', md: 'services__operations-supply-chain.md', locale: 'en' },
+  { route: '/tr/hizmetler/operasyon-ve-tedarik-zinciri', md: 'services__operations-supply-chain.md', locale: 'tr' },
+  { route: '/services/digital-commerce-commercial-intelligence', md: 'services__digital-commerce-commercial-intelligence.md', locale: 'en' },
+  { route: '/tr/hizmetler/dijital-ticaret-ve-ticari-icgoru', md: 'services__digital-commerce-commercial-intelligence.md', locale: 'tr' },
 ]

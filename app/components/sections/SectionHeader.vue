@@ -6,6 +6,7 @@ import type { Cta } from '#content/types'
  * (secondary or text button, default secondary) aligned to the bottom right ("header row with action").
  * On a navy band pass `inverse` (cyan eyebrow, white title, mist intro, inverse button).
  * `titleMax` caps the h2 width (e.g. "24ch"); `titleId` lets the section use aria-labelledby.
+ * `condensed` is the approved TR running sentence of the section's list (`Section.condensed`), shown below the intro.
  */
 const props = withDefaults(
   defineProps<{
@@ -16,8 +17,17 @@ const props = withDefaults(
     titleMax?: string
     titleId?: string
     inverse?: boolean
+    condensed?: string
   }>(),
-  { eyebrow: undefined, intro: undefined, action: undefined, titleMax: undefined, titleId: undefined, inverse: false },
+  {
+    eyebrow: undefined,
+    intro: undefined,
+    action: undefined,
+    titleMax: undefined,
+    titleId: undefined,
+    inverse: false,
+    condensed: undefined,
+  },
 )
 </script>
 
@@ -29,6 +39,9 @@ const props = withDefaults(
         {{ props.title }}
       </h2>
       <p v-if="props.intro" class="mt-3 max-w-[68ch] text-body" :class="props.inverse ? 'text-mist-blue' : 'text-slate'">{{ props.intro }}</p>
+      <p v-if="props.condensed" data-condensed class="mt-3 max-w-[68ch] text-body" :class="props.inverse ? 'text-mist-blue' : 'text-slate'">
+        {{ props.condensed }}
+      </p>
     </div>
     <Button v-if="props.action" :to="props.action.href" :variant="props.action.variant ?? 'secondary'" :inverse="props.inverse">
       {{ props.action.label }}

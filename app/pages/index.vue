@@ -15,8 +15,6 @@ const services = useContent('services')
 
 usePageSeo(home.meta)
 
-const serviceHref = (slug: ServiceSlug) => `/services/${slug}`
-
 const heroActions = computed(() => [
   { label: t('cta.discussProject'), href: '/contact' },
   { label: t('cta.exploreServices'), href: '/services' },
@@ -29,15 +27,8 @@ const heroActions = computed(() => [
  */
 const teamCards = computed(() => home.team.body.split(/(?<=\.)\s+(?=\S)/))
 
-/** Each business need points to the service that covers it (structure only; the label is the service title). */
-const NEED_SERVICES: ServiceSlug[] = [
-  'sourcing-managed-procurement',
-  'product-private-label-development',
-  'sourcing-managed-procurement',
-  'market-access-commercial-representation',
-  'digital-commerce-commercial-intelligence',
-]
 const serviceTitle = (slug: ServiceSlug) => services.services.find((s) => s.slug === slug)!.title
+/** Each business need points to the service that covers it (NEED_SERVICES, structure only; the label is the service title). */
 const needs = computed(() =>
   home.businessNeeds.items.map((text, i) => {
     const slug = NEED_SERVICES[i]!

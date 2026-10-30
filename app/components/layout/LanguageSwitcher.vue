@@ -1,11 +1,19 @@
 <script setup lang="ts">
+import { ROUTES, routeNameForLocalePath } from '~~/i18n/routes'
+
 /**
  * Language bar above the header on every page (CANVAS_UPDATE_NOTES "Update 1793392616", U1).
  * Canvas visual, but real links instead of the canvas's JS buttons: `useSwitchLocalePath()` keeps the
  * query and hash, the active locale is `aria-current="true"`. Hidden when TR is disabled.
+ *
+ * Pages in ROUTES (all of them, including the five service pages) get their counterpart from ROUTES, the single
+ * source of page paths: the layout renders this bar before the page's setup runs, so on the server the
+ * service page's `useSetI18nParams` comes too late for `switchLocalePath` (the SSR HTML would keep the EN slug
+ * under /tr/hizmetler/). Other paths fall back to `switchLocalePath`.
  */
 const { t, locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const route = useRoute()
 const { enableTr } = useRuntimeConfig().public
 
 // A prerendered page is served for any query string, so the server-rendered hrefs cannot carry the query.
@@ -15,14 +23,16 @@ onMounted(() => {
   mounted.value = true
 })
 
-const items = computed(() =>
-  locales.value.map((l) => {
+const items = computed(() => {
+  const page = routeNameForLocalePath(route.path)
+  const suffix = route.fullPath.replace(/^[^?#]*/, '')
+  return locales.value.map((l) => {
     const code = typeof l === 'string' ? l : l.code
     const name = typeof l === 'string' ? l.toUpperCase() : (l.name ?? code.toUpperCase())
-    const full = switchLocalePath(code as 'en' | 'tr')
+    const full = page ? ROUTES[page][code as 'en' | 'tr'] + suffix : switchLocalePath(code as 'en' | 'tr')
     return { code, name, href: mounted.value ? full : full.replace(/[?#].*$/, ''), active: code === locale.value }
-  }),
-)
+  })
+})
 </script>
 
 <template>

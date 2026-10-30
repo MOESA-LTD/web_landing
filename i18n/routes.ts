@@ -7,7 +7,7 @@
  * EN lives at the root, TR under /tr/ with Turkish slugs. Content files store EN paths;
  * `localizeHref` maps them to the current locale at render time.
  */
-import type { Locale, PageKey } from '../content/types'
+import type { Locale, PageKey, ServiceSlug } from '../content/types'
 
 /** Route names equal the page keys of the content layer, except for the 404 page, which is not a route. */
 export type RouteName = Exclude<PageKey, '404'>
@@ -96,4 +96,37 @@ export function buildI18nPages(): Record<string, { tr: string }> {
   }
   pages['services/[slug]'] = { tr: '/hizmetler/[slug]' }
   return pages
+}
+
+const SERVICE_PREFIX = 'services/'
+const lastSegment = (path: string) => path.slice(path.lastIndexOf('/') + 1)
+
+/** The five service routes, in ROUTES order. */
+const serviceRoutes = (Object.entries(ROUTES) as [RouteName, { en: string; tr: string }][]).filter(([name]) =>
+  name.startsWith(SERVICE_PREFIX),
+)
+
+/**
+ * The service that the `[slug]` of a service URL names in `locale`: an EN slug on an EN URL, a Turkish slug on
+ * a TR URL (`/tr/hizmetler/operasyon-ve-tedarik-zinciri` → `operations-supply-chain`). A slug of the other
+ * locale, an unknown slug or an empty slug gives null (the page answers 404).
+ */
+export function serviceSlugFromLocaleSlug(locale: Locale, slug: string): ServiceSlug | null {
+  if (!slug) return null
+  const hit = serviceRoutes.find(([, p]) => lastSegment(p[locale]) === slug)
+  return hit ? (hit[0].slice(SERVICE_PREFIX.length) as ServiceSlug) : null
+}
+
+/** The `[slug]` of a service in `locale` (the inverse of `serviceSlugFromLocaleSlug`). */
+export function localeSlugForService(locale: Locale, slug: ServiceSlug): string {
+  return lastSegment(ROUTES[`services/${slug}`][locale])
+}
+
+/**
+ * URLs prerendered for the services section (`nitro.prerender.routes`): the overview and the five service
+ * pages, EN and, unless TR is disabled, TR.
+ */
+export function servicePrerenderRoutes(options: { enableTr: boolean }): string[] {
+  const names: RouteName[] = ['services', ...serviceRoutes.map(([name]) => name)]
+  return names.flatMap((name) => (options.enableTr ? [ROUTES[name].en, ROUTES[name].tr] : [ROUTES[name].en]))
 }
