@@ -4,7 +4,8 @@ import type { Cta } from '#content/types'
 /**
  * Page hero (bundle.js `Hero`, bundle.css `.ms-hero*`), the page's single <h1>.
  * - display: the Home cover. Two columns (text | 37% navy panel with the chevron motif), an 8px cyan
- *   left edge; the panel stacks under the text at a container width of 860px or less.
+ *   left edge. At a viewport of 859px or less the panel is hidden and the hero is text only (canvas 1793402809);
+ *   it never stacks.
  * - page: every other page. Text only, no panel and no motif (the newer DS draws the motif only in the panel).
  * Order: crumbs, eyebrow, title, intro, actions (first primary, the rest secondary), note.
  * `panelLabel` (display only) sits at the bottom left of the navy panel (`.ms-hero-panel-label`; Home: "MOESA LTD.").
@@ -37,14 +38,14 @@ const display = computed(() => props.variant === 'display')
 <template>
   <section class="@container relative overflow-hidden bg-white" :class="!display && 'border-b border-line'">
     <!--
-      The grid sits one level inside the query container: a container query cannot restyle the container
-      itself, which is why the DS's own `.ms-hero-split` never stacks. Here the panel does stack (the
-      intent in CANVAS_UPDATE_NOTES §1.1).
+      Display: two columns down to 860px, as in the canvas (the DS's `.ms-hero-split` never stacks). At 859px or
+      less the panel is hidden (viewport query, as in Main.dc.html) and the text takes the full width; the canvas
+      keeps an empty 37% column there, which we do not reproduce.
     -->
     <div
       :class="
         display &&
-        'relative grid grid-cols-[minmax(0,1fr)_37%] before:absolute before:inset-y-0 before:left-0 before:z-[1] before:w-2 before:bg-cyan @max-[860.98px]:grid-cols-1'
+        'relative grid grid-cols-[minmax(0,1fr)_37%] before:absolute before:inset-y-0 before:left-0 before:z-[1] before:w-2 before:bg-cyan max-[859.98px]:grid-cols-1'
       "
     >
       <div
@@ -79,9 +80,15 @@ const display = computed(() => props.variant === 'display')
       </div>
       <div
         v-if="display"
-        class="surface-inverse relative min-h-[520px] overflow-hidden bg-navy-dark @max-[860.98px]:min-h-[220px]"
+        data-hero-panel
+        class="surface-inverse relative min-h-[520px] overflow-hidden bg-navy-dark max-[859.98px]:hidden"
       >
-        <LineMotif variant="chevron" />
+        <!--
+          Canvas 1793402809 (Main.dc.html): the chevron is nudged 13% of its width to the left and may overflow its own
+          SVG box (the panel still clips it); the whole panel, label included, is hidden at a viewport of 859px or less
+          (viewport query as in the canvas; the hero is full width, so it coincides with the DS container query).
+        -->
+        <LineMotif variant="chevron" class="overflow-visible [transform:translateX(-13%)]" />
         <p v-if="props.panelLabel" data-panel-label class="absolute bottom-8 left-8 m-0 text-label tracking-[.03em] text-mist-blue">
           {{ props.panelLabel }}
         </p>
