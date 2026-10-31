@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ServiceSlug } from '#content/types'
 import { brand } from '#content/site'
+import { organizationJsonLd } from '~~/i18n/seo'
 
 /**
  * Home (EN `/`, TR `/tr`). Section order follows the current canvas artboard Main.dc.html
@@ -14,6 +15,10 @@ const home = useContent('home')
 const services = useContent('services')
 
 usePageSeo(home.meta)
+// Organization structured data, identical in EN and TR.
+useHead({
+  script: [{ key: 'org-jsonld', type: 'application/ld+json', innerHTML: JSON.stringify(organizationJsonLd(brand)) }],
+})
 
 const heroActions = computed(() => [
   { label: t('cta.discussProject'), href: '/contact' },

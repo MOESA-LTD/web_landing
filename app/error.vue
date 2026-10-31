@@ -12,7 +12,8 @@ import { errorLocale } from '~/utils/error-locale'
  * - Any other status: a generic message (`error.*` microcopy) with a Home link; no internals are shown.
  * No canonical or hreflang alternates (404 is not a route, see buildPageSeo), and noindex.
  */
-const props = defineProps<{ error: NuxtError }>()
+// `url` (the requested path) is present on errors from the server render but is not in the NuxtError type.
+const props = defineProps<{ error: NuxtError & { url?: string } }>()
 
 const { t } = useI18n()
 const route = useRoute()
@@ -37,10 +38,13 @@ const links: Cta[] = (page.next.items ?? []).map((label, i) => ({ label, href: L
 const head = is404
   ? buildPageSeo(page.meta, locale, { enableTr: enableTr !== false })
   : { title: `${t('error.title')} | MOESA Ltd.`, htmlAttrs: { lang: locale }, meta: [], link: [] }
+// unhead types an `alternate` link as a feed and wants each meta keyed by one known name; the tags are valid.
 useHead({
-  ...(head as Parameters<typeof useHead>[0] & object),
+  ...head,
   meta: [...head.meta, { name: 'robots', content: 'noindex, follow' }],
-})
+} as Parameters<typeof useHead>[0])
+// The @nuxtjs/robots middleware has already set `X-Robots-Tag: index, follow` for the path: override it.
+if (import.meta.server) useResponseHeader('X-Robots-Tag').value = 'noindex, follow'
 </script>
 
 <template>

@@ -16,6 +16,12 @@ export interface Cta {
   href: string
 }
 
+/** A breadcrumb: the current page (the last one) carries no `href`. */
+export interface Crumb {
+  label: string
+  href?: string
+}
+
 export interface PageMeta {
   /** EN path of the page (the md `**URL:**`). */
   path: string

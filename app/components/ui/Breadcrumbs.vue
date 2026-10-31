@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Cta } from '#content/types'
+import type { Crumb } from '#content/types'
 
 /**
  * Breadcrumb trail (bundle.js `Breadcrumbs`, bundle.css `.ms-crumbs`). The last item is the current page:
  * `aria-current="page"`, no link. Separators are decorative.
  */
-const props = defineProps<{ items: Cta[] }>()
+const props = defineProps<{ items: Crumb[] }>()
 const { t } = useI18n()
 </script>
 

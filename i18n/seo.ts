@@ -69,3 +69,41 @@ export function buildPageSeo(
 
   return { title: meta.title, htmlAttrs: { lang: locale }, meta: tags, link }
 }
+
+/** The brand fields the Organization JSON-LD is built from (data/brand_tokens.json). */
+export interface OrganizationSource {
+  email: string
+  phone: string
+  vat: string
+}
+
+/**
+ * Organization JSON-LD for the home page (the same in both locales). Only facts from brand_tokens.json: the
+ * address "1 Petyofi Str., Plovdiv 4000, Bulgaria" split into PostalAddress fields, the VAT number, the
+ * email and phone (also as a sales ContactPoint), and the lockup PNG as the logo.
+ */
+export function organizationJsonLd(brand: OrganizationSource) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_ORIGIN,
+    logo: `${SITE_ORIGIN}/moesa_lockup.png`,
+    email: brand.email,
+    telephone: brand.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '1 Petyofi Str.',
+      addressLocality: 'Plovdiv',
+      postalCode: '4000',
+      addressCountry: 'BG',
+    },
+    vatID: brand.vat,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: brand.email,
+      telephone: brand.phone,
+    },
+  }
+}

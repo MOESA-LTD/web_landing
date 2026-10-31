@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Cta } from '#content/types'
+import type { Crumb, Cta } from '#content/types'
 
 /**
  * Page hero (bundle.js `Hero`, bundle.css `.ms-hero*`), the page's single <h1>.
@@ -17,7 +17,7 @@ const props = withDefaults(
     title: string
     intro?: string
     note?: string
-    crumbs?: Cta[]
+    crumbs?: Crumb[]
     actions?: Cta[]
     panelLabel?: string
   }>(),

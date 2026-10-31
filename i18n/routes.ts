@@ -88,11 +88,11 @@ export function localizeHref(href: string, locale: Locale): string {
  * prefix, which the `prefix_except_default` strategy adds. The home page needs no entry.
  * All five service pages share the one dynamic page `services/[slug]`.
  */
-export function buildI18nPages(): Record<string, { tr: string }> {
-  const pages: Record<string, { tr: string }> = {}
+export function buildI18nPages(): Record<string, { tr: `/${string}` }> {
+  const pages: Record<string, { tr: `/${string}` }> = {}
   for (const [name, p] of Object.entries(ROUTES)) {
     if (name === 'home' || name.startsWith('services/')) continue
-    pages[p.en.slice(1)] = { tr: p.tr.slice('/tr'.length) }
+    pages[p.en.slice(1)] = { tr: p.tr.slice('/tr'.length) as `/${string}` }
   }
   pages['services/[slug]'] = { tr: '/hizmetler/[slug]' }
   return pages
@@ -135,4 +135,32 @@ export function servicePrerenderRoutes(options: { enableTr: boolean }): string[]
 export function contactPrerenderRoutes(options: { enableTr: boolean }): string[] {
   const names: RouteName[] = ['contact', 'thank-you']
   return names.flatMap((name) => (options.enableTr ? [ROUTES[name].en, ROUTES[name].tr] : [ROUTES[name].en]))
+}
+
+/** One `<url>` of the sitemap: an absolute-path `loc` and its hreflang alternates (rendered as `xhtml:link`). */
+export interface SitemapUrl {
+  loc: string
+  alternatives: { hreflang: string; href: string }[]
+}
+
+/** Pages that are never listed in the sitemap: the thank-you page is reached after a form post only (noindex). */
+const SITEMAP_EXCLUDED: RouteName[] = ['thank-you']
+
+/**
+ * The sitemap entries (`sitemap.urls`): every page except the thank-you page, EN and, unless TR is disabled, TR
+ * (14 + 14 = 28 URLs), each with its alternates en, tr and x-default (= EN), the same set as the page's
+ * `<link rel="alternate">` tags. With TR disabled there are 14 EN URLs and no TR alternate.
+ */
+export function sitemapUrls(options: { enableTr: boolean }): SitemapUrl[] {
+  const names = (Object.keys(ROUTES) as RouteName[]).filter((name) => !SITEMAP_EXCLUDED.includes(name))
+  return names.flatMap((name) => {
+    const { en, tr } = ROUTES[name]
+    const alternatives = [
+      { hreflang: 'en', href: en },
+      ...(options.enableTr ? [{ hreflang: 'tr', href: tr }] : []),
+      { hreflang: 'x-default', href: en },
+    ]
+    const locs = options.enableTr ? [en, tr] : [en]
+    return locs.map((loc) => ({ loc, alternatives }))
+  })
 }

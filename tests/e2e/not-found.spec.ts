@@ -13,6 +13,15 @@ test.describe('404', () => {
     expect(body).toMatch(/<html[^>]*lang="en"/)
   })
 
+  test('the 404 response is noindex in the meta and the X-Robots-Tag header', async ({ request }) => {
+    for (const path of ['/this-does-not-exist', '/tr/olmayan-sayfa']) {
+      const res = await request.get(path, { headers: { accept: 'text/html' } })
+      expect(res.status()).toBe(404)
+      expect(res.headers()['x-robots-tag'], path).toMatch(/^noindex/)
+      expect(await res.text()).toContain('<meta name="robots" content="noindex, follow">')
+    }
+  })
+
   test('GET /tr/olmayan-sayfa returns 404 with the TR 404 heading', async ({ request }) => {
     const res = await request.get('/tr/olmayan-sayfa')
     expect(res.status()).toBe(404)
