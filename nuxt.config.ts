@@ -87,6 +87,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
+      // public/favicon.png (64x64). Without the link browsers request /favicon.ico, which renders the 404 page.
+      link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     },
   },
   runtimeConfig: {
@@ -97,6 +99,9 @@ export default defineNuxtConfig({
       enableDe,
       // NUXT_PUBLIC_TURNSTILE_SITE_KEY. /contact is prerendered, so the key must be set at build time.
       turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY ?? '',
+      // NUXT_PUBLIC_ANALYTICS_ID. Empty in v1: the cookie banner (layouts/default.vue) shows only when it is set and
+      // no choice is stored. No analytics script is loaded either way; a future loader must also check the consent.
+      analyticsId: process.env.NUXT_PUBLIC_ANALYTICS_ID ?? '',
     },
   },
   nitro: {

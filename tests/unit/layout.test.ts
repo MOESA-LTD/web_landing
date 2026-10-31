@@ -1,9 +1,10 @@
 import { flushPromises } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { addPageStubs } from './helpers/page-stubs'
 import App from '~/app.vue'
 import DefaultLayout from '~/layouts/default.vue'
+import { CONSENT_COOKIE, useConsent } from '~/composables/useConsent'
 
 /**
  * Dedicated stub-only routes for the <html lang> tests: no real page exists at these paths, so only app.vue
@@ -75,6 +76,44 @@ describe('default layout', () => {
       expect(w.find('[data-footer-cta]').exists()).toBe(false)
     },
   )
+})
+
+/**
+ * I3: the layout mounts the global cookie banner (CookieConsent mode="banner"). It renders only when
+ * runtimeConfig.public.analyticsId is set and no choice is stored, so v1 (no analytics id) shows no banner.
+ */
+describe('default layout cookie banner', () => {
+  const config = () => useRuntimeConfig().public as Record<string, unknown>
+  const clearConsent = () => {
+    document.cookie = `${CONSENT_COOKIE}=; Max-Age=0; Path=/`
+    useConsent().reset()
+  }
+  beforeEach(clearConsent)
+  afterEach(() => {
+    config().analyticsId = ''
+    clearConsent()
+  })
+
+  it('is absent by default (no analyticsId)', async () => {
+    expect(config().analyticsId).toBe('')
+    const w = await mountLayout('/')
+    expect(w.find('[data-cookie-consent]').exists()).toBe(false)
+  })
+
+  it('is present when analyticsId is set and no consent choice is stored, after the footer', async () => {
+    config().analyticsId = 'G-TEST'
+    const w = await mountLayout('/')
+    const banner = w.find('[data-cookie-consent]')
+    expect(banner.exists()).toBe(true)
+    expect(w.find('footer').element.compareDocumentPosition(banner.element) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('stays hidden once a choice is stored', async () => {
+    config().analyticsId = 'G-TEST'
+    useConsent().save('reject')
+    const w = await mountLayout('/')
+    expect(w.find('[data-cookie-consent]').exists()).toBe(false)
+  })
 })
 
 describe('<html lang>', () => {

@@ -2,9 +2,10 @@
 import { routeNameForLocalePath } from '~~/i18n/routes'
 
 /**
- * Default layout: skip link, header (with the language dropdown), `<main id="main">`, footer, and the global cookie
- * banner (CookieConsent `mode="banner"`: only with `runtimeConfig.public.analyticsId` set and no stored choice). The footer CTA shows on
- * Home and About only (DESIGN_NOTES §3.2), in both locales.
+ * Default layout: skip link, header (with the language dropdown), `<main id="main">`, footer, then the global cookie
+ * banner (`<CookieConsent mode="banner">`, fixed to the bottom of the viewport). The banner renders only when
+ * `runtimeConfig.public.analyticsId` (NUXT_PUBLIC_ANALYTICS_ID) is set and no choice is stored, so v1 shows none.
+ * The footer CTA shows on Home and About only (DESIGN_NOTES §3.2), in every locale.
  */
 const { t } = useI18n()
 const route = useRoute()
@@ -25,5 +26,6 @@ const showCta = computed(() => {
       <slot />
     </main>
     <SiteFooter :show-cta="showCta" />
+    <CookieConsent mode="banner" />
   </div>
 </template>

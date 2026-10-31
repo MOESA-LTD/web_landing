@@ -81,4 +81,15 @@ describe('nuxt.config', () => {
     expect(config.nitro.preset).toBeUndefined()
     expect(config.site.url).toBe('https://www.moesaltd.com')
   })
+
+  // No apple-touch-icon: public/favicon.png is 64x64 and iOS wants 180x180; add one when such an asset exists.
+  it('links the favicon (public/favicon.png) in every page head', async () => {
+    const config = await loadConfig({})
+    expect(config.app.head.link).toEqual(expect.arrayContaining([{ rel: 'icon', type: 'image/png', href: '/favicon.png' }]))
+  })
+
+  it('declares runtimeConfig.public.analyticsId from NUXT_PUBLIC_ANALYTICS_ID, empty by default', async () => {
+    expect((await loadConfig({ NUXT_PUBLIC_ANALYTICS_ID: undefined })).runtimeConfig.public.analyticsId).toBe('')
+    expect((await loadConfig({ NUXT_PUBLIC_ANALYTICS_ID: 'G-TEST' })).runtimeConfig.public.analyticsId).toBe('G-TEST')
+  })
 })

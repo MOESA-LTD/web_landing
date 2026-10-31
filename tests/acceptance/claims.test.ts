@@ -269,6 +269,13 @@ describe('forbidden claims (built site, EN + TR + DE)', () => {
     for (const p of PAGE_PATHS) expect(pages.has(`ssr:${p}`), p).toBe(true)
   })
 
+  it('every page links the favicon in its head (prerendered and server-rendered)', () => {
+    if (buildError) throw buildError
+    const icon = /<link[^>]*rel="icon"[^>]*href="\/favicon\.png"|<link[^>]*href="\/favicon\.png"[^>]*rel="icon"/
+    const missing = [...pages].filter(([, html]) => !icon.test(html.split('</head>')[0] ?? '')).map(([k]) => k)
+    expect(missing).toEqual([])
+  })
+
   it('the forbidden phrases are not approved copy (so zero matches is the expectation)', () => {
     const md = fold(
       walk(PKG_CONTENT, (f) => f.endsWith('.md'))
