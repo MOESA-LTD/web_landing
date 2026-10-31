@@ -76,6 +76,8 @@ beforeEach(() => {
   vi.stubEnv('NUXT_TURNSTILE_SECRET_KEY', 'secret-test')
   vi.stubEnv('CONTACT_DEV_BYPASS_TURNSTILE', '')
   vi.stubEnv('CONTACT_TRUST_XFF', '')
+  // The tests key requests on x-real-ip, which is only trusted on Vercel (VERCEL=1 is set by its runtime).
+  vi.stubEnv('VERCEL', '1')
   vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', '')
   vi.stubEnv('NUXT_PUBLIC_ENABLE_DE', '')
 })
@@ -297,6 +299,27 @@ describe('POST /api/contact hardening', () => {
     // x-vercel-forwarded-for wins over x-real-ip.
     for (let i = 0; i < 5; i++) await postJson(VALID, `192.0.2.${80 + i}`, { 'x-vercel-forwarded-for': '192.0.2.99' })
     expect((await postJson(VALID, '192.0.2.90', { 'x-vercel-forwarded-for': '192.0.2.99' })).status).toBe(429)
+  })
+
+  it('off Vercel ignores x-vercel-forwarded-for and x-real-ip (client-controlled there) and keys on the socket address', async () => {
+    vi.stubEnv('VERCEL', '')
+    // A plain h3 app has no socket: every request falls back to the same key, whatever headers the client sends.
+    for (let i = 0; i < 5; i++) {
+      const res = await postJson(VALID, `192.0.2.${100 + i}`, { 'x-vercel-forwarded-for': `198.51.100.${i}` })
+      expect(res.status).toBe(200)
+    }
+    expect((await postJson(VALID, '192.0.2.110', { 'x-vercel-forwarded-for': '198.51.100.50' })).status).toBe(429)
+  })
+
+  it('off Vercel trusts the first X-Forwarded-For entry only with CONTACT_TRUST_XFF=true', async () => {
+    vi.stubEnv('VERCEL', '')
+    vi.stubEnv('CONTACT_TRUST_XFF', 'true')
+    for (let i = 0; i < 6; i++) {
+      const res = await postJson(VALID, '192.0.2.120', { 'x-forwarded-for': `198.51.100.${i}, 10.0.0.1` })
+      expect(res.status, `request ${i}`).toBe(200)
+    }
+    for (let i = 0; i < 5; i++) await postJson(VALID, `192.0.2.${130 + i}`, { 'x-forwarded-for': '198.51.100.200' })
+    expect((await postJson(VALID, '192.0.2.140', { 'x-forwarded-for': '198.51.100.200' })).status).toBe(429)
   })
 
   it('rejects a display-name or multi-address work email (Reply-To injection) with 422', async () => {

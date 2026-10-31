@@ -8,12 +8,9 @@
  * h3 helpers are imported explicitly so the handler also runs in a plain h3 app (unit tests).
  */
 import { createError, defineEventHandler, getRequestURL } from 'h3'
-import { disabledLocaleOfPath } from '../../i18n/routes'
+import { disabledLocaleOfPath, localeOptionsFromEnv } from '../../i18n/routes'
 
 export default defineEventHandler((event) => {
-  const locale = disabledLocaleOfPath(getRequestURL(event).pathname, {
-    enableTr: process.env.NUXT_PUBLIC_ENABLE_TR !== 'false',
-    enableDe: process.env.NUXT_PUBLIC_ENABLE_DE !== 'false',
-  })
+  const locale = disabledLocaleOfPath(getRequestURL(event).pathname, localeOptionsFromEnv())
   if (locale) throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 })

@@ -168,8 +168,11 @@ test.describe('contact form', () => {
   })
 })
 
-/** A distinct client IP per direct API call, so reruns against one server never reach the rate limit. */
-const uniqueIp = () => ({ 'x-real-ip': `198.18.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}` })
+/**
+ * A distinct client IP per direct API call, so reruns against one server never reach the rate limit. Sent as
+ * X-Forwarded-For, which the e2e server trusts (CONTACT_TRUST_XFF=true in playwright.config.ts).
+ */
+const uniqueIp = () => ({ 'x-forwarded-for': `198.18.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}` })
 
 test.describe('POST /api/contact (server route in the build)', () => {
   test('is a live server route: an invalid JSON post gets 422 with error codes', async ({ request }) => {

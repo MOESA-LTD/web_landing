@@ -27,6 +27,17 @@ export interface LocaleOptions {
   enableDe?: boolean
 }
 
+/**
+ * The locale switches as read from the environment: a locale is off only for the exact value `"false"`. Used where
+ * the flags are read at request time (server/middleware/locale-guard.ts, server/api/contact.post.ts) and by
+ * nuxt.config.ts at build time (prerender list, sitemap, runtimeConfig.public defaults), so the parsing never drifts.
+ */
+export function localeOptionsFromEnv(
+  env: Record<string, string | undefined> = globalThis.process?.env ?? {},
+): Required<LocaleOptions> {
+  return { enableTr: env.NUXT_PUBLIC_ENABLE_TR !== 'false', enableDe: env.NUXT_PUBLIC_ENABLE_DE !== 'false' }
+}
+
 /** The locales that are switched on: EN always, then TR and DE unless disabled. */
 export function enabledLocales(options: LocaleOptions = {}): Locale[] {
   return LOCALES.filter((l) => (l === 'tr' ? options.enableTr !== false : l === 'de' ? options.enableDe !== false : true))

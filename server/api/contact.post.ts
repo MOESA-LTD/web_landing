@@ -12,7 +12,7 @@
  * Secrets come from env only (see .env.example). This route is never prerendered.
  */
 import { defineEventHandler, getRequestHeader, readBody, sendRedirect, setResponseStatus, type H3Event } from 'h3'
-import { ROUTES, localeOfPath } from '../../i18n/routes'
+import { ROUTES, enabledLocales, localeOfPath, localeOptionsFromEnv } from '../../i18n/routes'
 import { CONTACT_LOCALES, type ContactFailure, type ContactLocale } from '../../shared/contact'
 import { validateContact } from '../utils/contact-schema'
 import { mailConfig, sendContactEmail } from '../utils/email'
@@ -30,21 +30,22 @@ const isDev = () => import.meta.dev === true
  * Whether a locale is switched on (NUXT_PUBLIC_ENABLE_TR / NUXT_PUBLIC_ENABLE_DE, read at request time). A redirect
  * for a disabled locale goes to the EN path instead.
  */
-const localeEnabled = (l: Locale) =>
-  l === 'tr' ? process.env.NUXT_PUBLIC_ENABLE_TR !== 'false' : l === 'de' ? process.env.NUXT_PUBLIC_ENABLE_DE !== 'false' : true
+const localeEnabled = (l: Locale) => enabledLocales(localeOptionsFromEnv()).includes(l)
 
 /**
  * The client IP for the rate limit.
- * Trust: on Vercel the edge network sets `x-vercel-forwarded-for` and `x-real-ip` itself and overwrites any value the
- * client sent, so they identify the real client. The first `X-Forwarded-For` entry is client-controlled and is
- * only used when `CONTACT_TRUST_XFF=true`, i.e. behind another proxy that is documented to overwrite it.
- * Otherwise the socket address is used (direct `node .output/server` hosting).
+ * Trust: on Vercel (`VERCEL` is set by its runtime) the edge network sets `x-vercel-forwarded-for` and `x-real-ip`
+ * itself and overwrites any value the client sent, so they identify the real client. Anywhere else those headers are
+ * client-controlled and ignored. The first `X-Forwarded-For` entry is client-controlled too and is only used when
+ * `CONTACT_TRUST_XFF=true`, i.e. behind another proxy that is documented to overwrite it. Otherwise the socket
+ * address is used (direct `node .output/server` hosting).
  */
 function clientIp(event: H3Event): string {
   const first = (v: string | undefined) => v?.split(',')[0]?.trim() || undefined
+  const onVercel = !!process.env.VERCEL
   return (
-    first(getRequestHeader(event, 'x-vercel-forwarded-for')) ??
-    first(getRequestHeader(event, 'x-real-ip')) ??
+    (onVercel ? first(getRequestHeader(event, 'x-vercel-forwarded-for')) : undefined) ??
+    (onVercel ? first(getRequestHeader(event, 'x-real-ip')) : undefined) ??
     (process.env.CONTACT_TRUST_XFF === 'true' ? first(getRequestHeader(event, 'x-forwarded-for')) : undefined) ??
     event.node?.req?.socket?.remoteAddress ??
     'unknown'

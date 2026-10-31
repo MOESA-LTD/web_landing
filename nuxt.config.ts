@@ -1,12 +1,12 @@
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
-import { buildI18nPages, contactPrerenderRoutes, servicePrerenderRoutes, sitemapUrls } from './i18n/routes'
+import { buildI18nPages, contactPrerenderRoutes, localeOptionsFromEnv, servicePrerenderRoutes, sitemapUrls } from './i18n/routes'
 
 // NUXT_PUBLIC_ENABLE_TR=false hides TR and NUXT_PUBLIC_ENABLE_DE=false hides DE: no routes of that locale are
-// prerendered, the switcher leaves it out, and the sitemap and hreflang alternates do not list it.
-const enableTr = process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
-const enableDe = process.env.NUXT_PUBLIC_ENABLE_DE !== 'false'
-const locales = { enableTr, enableDe }
+// prerendered, the switcher leaves it out, and the sitemap and hreflang alternates do not list it. The same flags are
+// read again at runtime (locale guard, contact redirects), so set them for build and runtime alike.
+const locales = localeOptionsFromEnv(process.env)
+const { enableTr, enableDe } = locales
 
 const SITE_URL = 'https://www.moesaltd.com'
 

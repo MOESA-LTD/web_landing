@@ -5,7 +5,7 @@
  */
 import { createApp, eventHandler, toWebHandler } from 'h3'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { disabledLocaleOfPath } from '../../../i18n/routes'
+import { disabledLocaleOfPath, localeOptionsFromEnv } from '../../../i18n/routes'
 
 const { default: guard } = await import('../../../server/middleware/locale-guard')
 
@@ -26,6 +26,20 @@ describe('disabledLocaleOfPath', () => {
     expect(disabledLocaleOfPath('/tracking', { enableTr: false })).toBeNull()
     expect(disabledLocaleOfPath('/demo', { enableDe: false })).toBeNull()
     expect(disabledLocaleOfPath('/tr/hizmetler', {})).toBeNull()
+  })
+})
+
+describe('localeOptionsFromEnv (shared by the locale guard and the contact route)', () => {
+  it('turns a locale off only for the exact value "false"; both default to on', () => {
+    expect(localeOptionsFromEnv({})).toEqual({ enableTr: true, enableDe: true })
+    expect(localeOptionsFromEnv({ NUXT_PUBLIC_ENABLE_TR: 'false' })).toEqual({ enableTr: false, enableDe: true })
+    expect(localeOptionsFromEnv({ NUXT_PUBLIC_ENABLE_DE: 'false' })).toEqual({ enableTr: true, enableDe: false })
+    expect(localeOptionsFromEnv({ NUXT_PUBLIC_ENABLE_TR: '0', NUXT_PUBLIC_ENABLE_DE: '' })).toEqual({ enableTr: true, enableDe: true })
+  })
+
+  it('reads process.env by default, at call time', () => {
+    vi.stubEnv('NUXT_PUBLIC_ENABLE_DE', 'false')
+    expect(localeOptionsFromEnv()).toEqual({ enableTr: true, enableDe: false })
   })
 })
 
