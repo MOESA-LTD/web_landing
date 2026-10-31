@@ -566,3 +566,38 @@ The user updated the canvas so that the grey language bar above the header is **
 - [ ] **Step 3:** Run a keyboard-only walkthrough of the header, dropdown, mobile menu and form at 390px and at 1440px.
 - [ ] **Step 4:** Take full-page screenshots of all 30 URLs (15 EN + 15 TR) at 1440 and 390 and put them next to the canvas artboards. List any remaining deviations for the user, each with a reason (approved copy added, or the newer-DS style).
 - [ ] **Step 5:** Commit `test: add acceptance checks` and report the deviations list and the fidelity exclusions list to the user.
+
+### Task 12: German (DE) locale (added 2026-10-31, user request; runs after Task 11)
+
+User decisions: DE copy = **our translation of the approved EN** (formal "Sie"), every DE string flagged for review; URLs = `/de/` + **German slugs**.
+
+**Routes (add `de` to `ROUTES` in `i18n/routes.ts`):**
+
+| EN | DE |
+|---|---|
+| `/` | `/de` |
+| `/services` | `/de/leistungen` |
+| `/services/sourcing-managed-procurement` | `/de/leistungen/sourcing-und-beschaffungsmanagement` |
+| `/services/product-private-label-development` | `/de/leistungen/produkt-und-private-label-entwicklung` |
+| `/services/market-access-commercial-representation` | `/de/leistungen/marktzugang-und-handelsvertretung` |
+| `/services/operations-supply-chain` | `/de/leistungen/operations-und-lieferkette` |
+| `/services/digital-commerce-commercial-intelligence` | `/de/leistungen/digital-commerce-und-commercial-intelligence` |
+| `/how-we-work` | `/de/so-arbeiten-wir` |
+| `/who-we-work-with` | `/de/fuer-wen-wir-arbeiten` |
+| `/about` | `/de/ueber-uns` |
+| `/contact` | `/de/kontakt` |
+| `/thank-you` | `/de/danke` |
+| `/privacy-policy` | `/de/datenschutz` |
+| `/cookie-policy` | `/de/cookie-richtlinie` |
+| `/legal-notice` | `/de/impressum` |
+
+**Requirements:**
+- `Locale = 'en' | 'tr' | 'de'`; @nuxtjs/i18n locale `{ code: 'de', language: 'de', name: 'DE' }`; `NUXT_PUBLIC_ENABLE_DE` (default `true`) hides DE everywhere (routes not prerendered, switcher option hidden, sitemap/hreflang without de) like `enableTr`.
+- `content/de/*.ts` for all 16 pages with the **EN shape** (same interfaces; no `condensed`/TR-only fields). Translate from approved EN only — never from canvas `i18n.js` and never from TR. Keep claims/scope exactly (compliance sentence, roadmap wording, "cannot be guaranteed", legal-role boundary). Proper nouns/brand terms stay ("MOESA Ltd.", service names may keep established English terms like "Private Label", "Sourcing", "Digital Commerce" where German B2B usage does). Legal pages keep the draft status chip (status text: md value) and OPEN markers verbatim from EN.
+- Provenance: `content/de/unreviewed.ts` listing EVERY DE page string (`page`, `path`, `en`, `de`) — test: every DE leaf is listed and its `en` equals the EN leaf at the same path; `npm run unreviewed:de` generates `i18n/UNREVIEWED_DE.md` (page copy + DE UI microcopy). UI microcopy: `i18n/locales/de.json` with every key of en.json (test enforces key parity), all listed as unreviewed.
+- Header: language dropdown lists English EN / Türkçe TR / Deutsch DE (as in canvas). Verify desktop nav fits on one line at ≥1160px in DE; if not, add short DE header labels (`nav.header.*`) and record them; do not change the breakpoint without measuring.
+- SEO: `<html lang="de">`, hreflang en/tr/de/x-default on every page, DE titles/descriptions from `content/de` meta; sitemap = 42 URLs (14 per locale) with alternates; JSON-LD unchanged.
+- Contact form: DE labels/errors; still submits EN option values; email to MOESA notes `Locale: de`; non-JS redirects to `/de/danke` / `/de/kontakt`.
+- Legal: add a README "Before launch" item: German Impressum/Datenschutz must meet German requirements (legal review) before DE launch.
+- Tests: extend unit (routes, localizeHref for de, content shape parity, provenance, locale JSON parity), e2e (fidelity: DE pages must render every DE content leaf — use the DE module as the oracle since no md exists; i18n spec: lang/hreflang/no EN-route links on DE pages; switcher counterpart hrefs for all 5 services in de↔en↔tr; 404 for `/de/gibt-es-nicht` in DE; seo sitemap 42).
+- Commit `feat: add German locale with flagged translations`.
