@@ -73,6 +73,7 @@
     "vat": "VAT"
   },
   "form": {
+    "heading": "Form",
     "labels": {
       "name": "Ad",
       "company": "Şirket",

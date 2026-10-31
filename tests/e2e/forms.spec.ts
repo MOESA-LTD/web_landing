@@ -139,16 +139,19 @@ test.describe('contact form', () => {
   })
 })
 
+/** A distinct client IP per direct API call, so reruns against one server never reach the rate limit. */
+const uniqueIp = () => ({ 'x-real-ip': `198.18.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}` })
+
 test.describe('POST /api/contact (server route in the build)', () => {
   test('is a live server route: an invalid JSON post gets 422 with error codes', async ({ request }) => {
-    const res = await request.post('/api/contact', { data: { name: '', locale: 'en' } })
+    const res = await request.post('/api/contact', { data: { name: '', locale: 'en' }, headers: uniqueIp() })
     expect(res.status()).toBe(422)
     const body = await res.json()
     expect(body.errors).toMatchObject({ name: 'required', privacy_consent: 'required' })
   })
 
   test('an invalid non-JS form post is redirected (303) to the contact page with ?error=1', async ({ request }) => {
-    const res = await request.post('/api/contact', { form: { name: '', locale: 'tr' }, maxRedirects: 0 })
+    const res = await request.post('/api/contact', { form: { name: '', locale: 'tr' }, maxRedirects: 0, headers: uniqueIp() })
     expect(res.status()).toBe(303)
     expect(res.headers()['location']).toBe('/tr/iletisim?error=1')
   })

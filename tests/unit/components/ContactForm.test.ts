@@ -191,6 +191,16 @@ describe('ContactForm', () => {
     expect(summary.attributes('role')).toBe('alert')
   })
 
+  it.each(['constructor', 'toString', '__proto__', 'generic'])('?error=%s (not an own failure key) shows the generic summary', async (err) => {
+    const w = await mountAt(`/contact?error=${err}`)
+    expect(norm(w.find('[data-error-summary] p').text())).toBe('Some details could not be accepted. Please check the form and send it again.')
+  })
+
+  it('?error=rate_limited shows the rate-limit message', async () => {
+    const w = await mountAt('/contact?error=rate_limited')
+    expect(w.find('[data-error-summary]').text()).toContain('Too many submissions')
+  })
+
   it('maps server error codes (422) to the i18n texts', async () => {
     registerEndpoint('/api/contact', {
       method: 'POST',

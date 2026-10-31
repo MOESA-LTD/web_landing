@@ -160,7 +160,8 @@ onMounted(() => {
 
   const err = route.query.error
   if (typeof err === 'string' && err) {
-    failure.value = err in FAILURE_KEY ? (err as ContactFailure) : 'generic'
+    // Own keys only: `?error=constructor` must not hit Object.prototype.
+    failure.value = Object.hasOwn(FAILURE_KEY, err) && err !== 'generic' ? (err as ContactFailure) : 'generic'
     focusSummary()
   }
   if (siteKey) renderTurnstile()

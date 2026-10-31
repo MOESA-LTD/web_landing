@@ -59,6 +59,20 @@ describe('contact (EN /contact)', () => {
     expect(section.find('aside').exists()).toBe(true)
   })
 
+  it('labels the band with the form card visually hidden h2 (h1 → h2 → h3) and the aside with "Direct contact"', async () => {
+    const w = await mountAt(ContactPage, '/contact')
+    const section = w.find('[data-project-brief]')
+    const h2 = w.find('#contact-form-title')
+    expect(h2.element.tagName).toBe('H2')
+    expect(h2.classes()).toContain('sr-only')
+    expect(norm(h2.text())).toBe('Project form')
+    expect(section.attributes('aria-labelledby')).toBe('contact-form-title')
+    // The h2 precedes the form (whose group heading is an h3).
+    expect(h2.element.compareDocumentPosition(w.find('form h3').element) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(w.find('aside').attributes('aria-labelledby')).toBe('contact-direct')
+    expect(norm(w.find('#contact-direct').text())).toBe(c.direct.title)
+  })
+
   it('aside: "Direct contact" with mailto and tel links, the address and the company details', async () => {
     const w = await mountAt(ContactPage, '/contact')
     const direct = w.find('[data-direct-contact]')
@@ -89,7 +103,7 @@ describe('contact (EN /contact)', () => {
     const w = await mountAt(ContactPage, '/contact')
     expect(w.text()).not.toContain(c.privacyNote.body)
     expect(w.text()).not.toContain('File Upload')
-    expect(w.text()).not.toContain('Project form')
+    expect(w.text()).not.toContain('Product Category - optional')
   })
 })
 

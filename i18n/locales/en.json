@@ -73,6 +73,7 @@
     "vat": "VAT"
   },
   "form": {
+    "heading": "Project form",
     "labels": {
       "name": "Name",
       "company": "Company",

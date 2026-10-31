@@ -41,13 +41,15 @@ const directRows = (page.direct.items ?? []).map((line) => {
   <div>
     <PageHero :crumbs="crumbs" :title="page.hero.title" :intro="page.hero.body" />
 
-    <section data-project-brief class="section bg-mist" aria-labelledby="contact-direct">
+    <section data-project-brief class="section bg-mist" aria-labelledby="contact-form-title">
       <div class="container-site flex flex-wrap items-start gap-12">
         <div class="box-border min-w-0 flex-[999_1_560px] rounded-sm border border-line bg-white p-8">
+          <!-- Visually hidden: the form's section heading (approved md heading "Project form" / TR "Form"). -->
+          <h2 id="contact-form-title" class="sr-only">{{ t('form.heading') }}</h2>
           <ContactForm />
         </div>
 
-        <aside class="flex min-w-0 flex-[1_1_320px] flex-col gap-6">
+        <aside class="flex min-w-0 flex-[1_1_320px] flex-col gap-6" aria-labelledby="contact-direct">
           <div class="py-2">
             <Logo variant="stacked" :height="96" />
           </div>

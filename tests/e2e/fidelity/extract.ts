@@ -121,10 +121,6 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
       reason:
         'Project-form field list: rendered as form labels with the "(optional)" suffix instead of " - optional"; checked by the contact form test.',
     })),
-    {
-      text: 'Project form',
-      reason: 'Heading of the builder-instruction field list (not display copy); the section is the form itself.',
-    },
     { text: 'File Upload - optional', reason: 'File upload is disabled in v1 (decision 2026-10-30).' },
     { text: 'Privacy note', reason: 'Heading of the builder instruction below; implemented as the consent checkbox.' },
     {
@@ -153,7 +149,6 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
       text: 'Marka/ürün sourcing; yönetilen satın alma; private label; pazara giriş; ticari temsil; supply chain; digital commerce; entegre hizmetler; emin değilim.',
       reason: 'The approved running sentence of the service list; the list is the select options (see "Hizmet seçimi").',
     },
-    { text: 'Form', reason: 'Heading of the builder-instruction field list (not display copy); the section is the form itself.' },
     {
       text: 'Ad; Şirket; İş e-postası; Ülke; Hizmet; Kısa proje briefi; opsiyonel kategori/pazar/hacim/zaman/dosya.',
       reason:

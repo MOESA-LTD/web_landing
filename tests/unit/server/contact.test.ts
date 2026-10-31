@@ -43,21 +43,21 @@ let ip = 0
 /** A fresh client IP per request unless one is given, so the rate limit only bites where a test wants it. */
 const nextIp = () => `10.0.0.${++ip}`
 
-function postJson(body: unknown, clientIp = nextIp()) {
+function postJson(body: unknown, clientIp = nextIp(), headers: Record<string, string> = {}) {
   return call(
     new Request('http://localhost/api/contact', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-forwarded-for': clientIp },
-      body: JSON.stringify(body),
+      headers: { 'content-type': 'application/json', 'x-real-ip': clientIp, ...headers },
+      body: typeof body === 'string' ? body : JSON.stringify(body),
     }),
   )
 }
 
-function postForm(body: Record<string, string>, clientIp = nextIp()) {
+function postForm(body: Record<string, string>, clientIp = nextIp(), headers: Record<string, string> = {}) {
   return call(
     new Request('http://localhost/api/contact', {
       method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-forwarded-for': clientIp },
+      headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-real-ip': clientIp, ...headers },
       body: new URLSearchParams(body).toString(),
       redirect: 'manual',
     }),
@@ -75,6 +75,8 @@ beforeEach(() => {
   vi.stubEnv('CONTACT_FROM', 'MOESA Website <website@mail.example>')
   vi.stubEnv('NUXT_TURNSTILE_SECRET_KEY', 'secret-test')
   vi.stubEnv('CONTACT_DEV_BYPASS_TURNSTILE', '')
+  vi.stubEnv('CONTACT_TRUST_XFF', '')
+  vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', '')
 })
 afterEach(() => vi.unstubAllEnvs())
 
@@ -244,6 +246,54 @@ describe('POST /api/contact', () => {
   })
 })
 
+describe('POST /api/contact hardening', () => {
+  it('rejects a body over 32 KB with 413 before reading it', async () => {
+    const res = await postJson({ ...VALID, project_brief: 'x'.repeat(40_000) }, nextIp(), { 'content-length': String(40_100) })
+    expect(res.status).toBe(413)
+    expect(await res.json()).toEqual({ error: 'too_large' })
+    expect(send).not.toHaveBeenCalled()
+  })
+
+  it('applies the rate limit before the body is parsed (a malformed or oversized 6th request still gets 429)', async () => {
+    for (let i = 0; i < 5; i++) expect((await postJson(VALID, '192.0.2.50')).status).toBe(200)
+    expect((await postJson('{not json', '192.0.2.50')).status).toBe(429)
+    expect((await postJson('{}', '192.0.2.50', { 'content-length': '99999' })).status).toBe(429)
+  })
+
+  it('redirects an early 429 form post by the Referer locale', async () => {
+    for (let i = 0; i < 5; i++) await postForm({ ...VALID, name: '' }, '192.0.2.60')
+    const res = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/tr/iletisim' })
+    expect(res.status).toBe(303)
+    expect(res.headers.get('location')).toBe('/tr/iletisim?error=rate_limited')
+  })
+
+  it('keys the rate limit on x-vercel-forwarded-for / x-real-ip, not on a spoofable X-Forwarded-For', async () => {
+    const spoof = (i: number) => ({ 'x-forwarded-for': `203.0.113.${i}` })
+    for (let i = 0; i < 5; i++) expect((await postJson(VALID, '192.0.2.70', spoof(i))).status).toBe(200)
+    expect((await postJson(VALID, '192.0.2.70', spoof(99))).status).toBe(429)
+    // x-vercel-forwarded-for wins over x-real-ip.
+    for (let i = 0; i < 5; i++) await postJson(VALID, `192.0.2.${80 + i}`, { 'x-vercel-forwarded-for': '192.0.2.99' })
+    expect((await postJson(VALID, '192.0.2.90', { 'x-vercel-forwarded-for': '192.0.2.99' })).status).toBe(429)
+  })
+
+  it('rejects a display-name or multi-address work email (Reply-To injection) with 422', async () => {
+    for (const work_email of ['Evil <evil@x.example>', 'a@b.example, c@d.example', 'a@b.example;c@d.example', '"a"@b.example']) {
+      const res = await postJson({ ...VALID, work_email })
+      expect(res.status, work_email).toBe(422)
+      expect((await res.json()).errors.work_email).toBe('invalid_email')
+    }
+    expect(send).not.toHaveBeenCalled()
+  })
+
+  it('with TR disabled, a locale=tr form post is redirected to EN paths', async () => {
+    vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', 'false')
+    const ok = await postForm({ ...VALID, locale: 'tr' })
+    expect(ok.headers.get('location')).toBe('/thank-you')
+    const bad = await postForm({ ...VALID, name: '', locale: 'tr' })
+    expect(bad.headers.get('location')).toBe('/contact?error=1')
+  })
+})
+
 describe('rateLimit', () => {
   it('allows 5 hits per window, then blocks, then allows again after the window', () => {
     const opts = { limit: 5, windowMs: 600_000 } as const
@@ -267,6 +317,12 @@ describe('composeEmail', () => {
     const mail = composeEmail({ ...data, company: 'A & "B"', project_brief: "<b>bold</b> it's" })
     expect(mail.html).toContain('A &amp; &quot;B&quot;')
     expect(mail.html).toContain('&lt;b&gt;bold&lt;/b&gt; it&#39;s')
+  })
+
+  it('strips CR/LF from the subject (no header injection)', () => {
+    const mail = composeEmail({ ...data, company: 'Acme\r\nBcc: x@y.example' })
+    expect(mail.subject).not.toMatch(/[\r\n]/)
+    expect(mail.subject).toBe('Project brief: Acme Bcc: x@y.example – Operations & Supply Chain')
   })
 
   it('has the subject `Project brief: ${company} – ${service}`', () => {

@@ -2,15 +2,16 @@
  * POST /api/contact: the project-brief form.
  *
  * Accepts JSON (the enhanced form, `$fetch`) and `application/x-www-form-urlencoded` (the plain HTML form without JS).
- * Order: rate limit → honeypot (silent drop) → validation (422) → Turnstile (400) → Resend (500 on failure).
- * JSON answers: `{ ok: true }`, `422 { errors: { field: code } }`, `429/400/500 { error: code }`.
+ * Order: rate limit (429) → body size cap (413) → read body → honeypot (silent drop) → validation (422) →
+ * Turnstile (400) → Resend (500 on failure). The rate limit and the size cap run before the body is read.
+ * JSON answers: `{ ok: true }`, `422 { errors: { field: code } }`, `413/429/400/500 { error: code }`.
  * Form posts are answered with 303: success → the locale's thank-you page; any failure → the locale's contact page
  * with `?error=1` (validation) or `?error=<code>`. Error texts live in i18n/locales; the server only sends codes.
  *
  * h3 helpers are imported explicitly (not Nitro auto-imports) so the handler also runs in a plain h3 app (unit tests).
  * Secrets come from env only (see .env.example). This route is never prerendered.
  */
-import { defineEventHandler, getRequestHeader, getRequestIP, readBody, sendRedirect, setResponseStatus, type H3Event } from 'h3'
+import { defineEventHandler, getRequestHeader, readBody, sendRedirect, setResponseStatus, type H3Event } from 'h3'
 import { ROUTES } from '../../i18n/routes'
 import type { ContactFailure } from '../../shared/contact'
 import { validateContact } from '../utils/contact-schema'
@@ -20,22 +21,64 @@ import { shouldBypassTurnstile, verifyTurnstile } from '../utils/turnstile'
 
 type Locale = 'en' | 'tr'
 
+/** Largest accepted request body. The form's own limits (5000-char brief, 200-char fields) fit well inside it. */
+const MAX_BODY_BYTES = 32 * 1024
+
 const isDev = () => import.meta.dev === true
 
-function localeOf(body: unknown): Locale {
-  return (body as { locale?: unknown } | null)?.locale === 'tr' ? 'tr' : 'en'
+/** TR is disabled (NUXT_PUBLIC_ENABLE_TR=false, read at request time): every redirect then goes to EN paths. */
+const trEnabled = () => process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
+
+/**
+ * The client IP for the rate limit.
+ * Trust: on Vercel the edge network sets `x-vercel-forwarded-for` and `x-real-ip` itself and overwrites any value the
+ * client sent, so they identify the real client. The first `X-Forwarded-For` entry is client-controlled and is
+ * only used when `CONTACT_TRUST_XFF=true`, i.e. behind another proxy that is documented to overwrite it.
+ * Otherwise the socket address is used (direct `node .output/server` hosting).
+ */
+function clientIp(event: H3Event): string {
+  const first = (v: string | undefined) => v?.split(',')[0]?.trim() || undefined
+  return (
+    first(getRequestHeader(event, 'x-vercel-forwarded-for')) ??
+    first(getRequestHeader(event, 'x-real-ip')) ??
+    (process.env.CONTACT_TRUST_XFF === 'true' ? first(getRequestHeader(event, 'x-forwarded-for')) : undefined) ??
+    event.node?.req?.socket?.remoteAddress ??
+    'unknown'
+  )
+}
+
+/** Locale before the body is read (for an early 429/413 redirect): the Referer path, else EN. */
+function localeFromReferer(event: H3Event): Locale {
+  const ref = getRequestHeader(event, 'referer')
+  if (!ref) return 'en'
+  try {
+    const path = new URL(ref, 'http://x').pathname
+    return path === '/tr' || path.startsWith('/tr/') ? 'tr' : 'en'
+  } catch {
+    return 'en'
+  }
 }
 
 export default defineEventHandler(async (event: H3Event) => {
   const isJson = (getRequestHeader(event, 'content-type') ?? '').includes('application/json')
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
+  const ip = clientIp(event)
+  const pathLocale = (l: Locale): Locale => (trEnabled() ? l : 'en')
 
   const fail = (status: number, code: ContactFailure, locale: Locale) => {
-    if (!isJson) return sendRedirect(event, `${ROUTES.contact[locale]}?error=${code}`, 303)
+    if (!isJson) return sendRedirect(event, `${ROUTES.contact[pathLocale(locale)]}?error=${code}`, 303)
     setResponseStatus(event, status)
     return { error: code }
   }
-  const succeed = (locale: Locale) => (isJson ? { ok: true } : sendRedirect(event, ROUTES['thank-you'][locale], 303))
+  const succeed = (locale: Locale) =>
+    isJson ? { ok: true } : sendRedirect(event, ROUTES['thank-you'][pathLocale(locale)], 303)
+
+  // Before reading anything from the body: rate limit, then the size cap.
+  if (!rateLimit(`contact:${ip}`, { limit: 5, windowMs: 600_000 })) return fail(429, 'rate_limited', localeFromReferer(event))
+  const length = Number(getRequestHeader(event, 'content-length') ?? 0)
+  if (length > MAX_BODY_BYTES) {
+    setResponseStatus(event, 413)
+    return { error: 'too_large' }
+  }
 
   let body: unknown
   try {
@@ -43,9 +86,7 @@ export default defineEventHandler(async (event: H3Event) => {
   } catch {
     body = {}
   }
-  const locale = localeOf(body)
-
-  if (!rateLimit(`contact:${ip}`, { limit: 5, windowMs: 600_000 })) return fail(429, 'rate_limited', locale)
+  const locale: Locale = (body as { locale?: unknown } | null)?.locale === 'tr' ? 'tr' : 'en'
 
   // Honeypot: bots fill the hidden `website` field. Look like a success, send nothing.
   const honeypot = (body as { website?: unknown } | null)?.website
@@ -53,7 +94,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
   const result = validateContact(body)
   if (!result.ok) {
-    if (!isJson) return sendRedirect(event, `${ROUTES.contact[locale]}?error=1`, 303)
+    if (!isJson) return sendRedirect(event, `${ROUTES.contact[pathLocale(locale)]}?error=1`, 303)
     setResponseStatus(event, 422)
     return { errors: result.errors }
   }

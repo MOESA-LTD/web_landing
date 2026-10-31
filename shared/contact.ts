@@ -44,8 +44,11 @@ export type ContactErrors = Partial<Record<ContactField, ContactErrorCode>>
 /** Error codes of a non-422 failure (JSON `{ error }`, or `?error=<code>` after a non-JS redirect). */
 export type ContactFailure = 'rate_limited' | 'verification_failed' | 'send_failed'
 
-/** Pragmatic email check (one @, a dot in the domain, no spaces). The server applies the same rule. */
-export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+/**
+ * Pragmatic email check: one @, a dot in the domain, and no whitespace or `<>",;()`, so a display name or a second
+ * address ("Name <a@b.com>", "a@b.com, c@d.com") cannot reach the Reply-To header. The server applies the same rule.
+ */
+export const EMAIL_RE = /^[^\s@<>",;()]+@[^\s@<>",;()]+\.[^\s@<>",;()]+$/
 
 export const CONTACT_LOCALES = ['en', 'tr'] as const
 
