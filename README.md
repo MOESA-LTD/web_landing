@@ -11,8 +11,9 @@ source at all: every German string is our translation of the approved EN and is 
 
 ## Requirements
 
-- Node.js **22.22.2 or newer** (`.nvmrc` = `22`; `package.json` `engines.node` = `>=22.22.2`, so Vercel uses a current
-  Node 22). npm.
+- Node.js **22** (`.nvmrc` = `22`; `package.json` `engines.node` = `22.x`, so Vercel builds with the newest Node 22
+  and never moves to a new major on its own; Nuxt 4.6 needs `>=22.21`). npm. Also set *Node.js Version* to **22.x** in
+  the Vercel project settings (*Project → Settings → Build and Deployment*) so the two never disagree.
 - For the e2e tests and the OG image script: Playwright's Chromium (`npx playwright install chromium`).
 
 ## Local development
@@ -36,6 +37,11 @@ through in `nuxt dev` (the flag is ignored by production builds). The component 
 | `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
 | `npm run test:acceptance` | Acceptance checks (`tests/acceptance`) against the **built** `.output/`: run `npm run build` first (without a build it fails and says so). Starts the built server on a free port and scans all 45 routes: no forbidden claims (EN/TR/DE); claim-sensitive words (AI, platform, portal, guarantee …) only in approved text of the same page, in visible text, `content`/`alt`/`aria-label`/`title` attributes and JSON-LD; no source comment from `app/`, `server/`, `i18n/`, `content/` in the public HTML/JS, the server bundle or the rendered pages. Not part of `npm test`. |
 | `npm run typecheck` (`nuxt typecheck`) | `vue-tsc` over the app, server and config. |
+
+CI (`.github/workflows/ci.yml`, every push and pull request, Node 22): `npm ci`, `npm test`, `npx nuxt typecheck`,
+`npm run build`, `npm run test:acceptance`. The Playwright e2e suite is not run in CI: it builds the site a second
+time and runs about 400 browser tests in two viewports (plus a Chromium download), which is slow for every push; run
+`npm run test:e2e` locally before merging.
 
 ## Build and preview
 
@@ -66,19 +72,19 @@ a redeploy.
 | `CONTACT_FROM` | server, runtime | yes | Sender on a Resend-verified domain, e.g. `MOESA Website <website@moesaltd.com>`. The visitor's address is only used as Reply-To. |
 | `NUXT_TURNSTILE_SECRET_KEY` | server, runtime | yes | Cloudflare Turnstile secret key. |
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
-| `NUXT_PUBLIC_ENABLE_TR` | public, **build-time** | no | `false` hides the Turkish site: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages), contact redirects go to EN paths. Default: TR on. |
-| `NUXT_PUBLIC_ENABLE_DE` | public, **build-time** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
-| `NUXT_PUBLIC_ANALYTICS_ID` | public, **build-time** | no — leave **empty** in v1 | Setting it only shows the cookie consent banner; no analytics loader exists in v1. |
-| `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP. Leave empty on Vercel (it uses `x-vercel-forwarded-for` / `x-real-ip`). |
+| `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Vercel project env (it applies to both). Default: TR on. |
+| `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
+| `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it only shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1. Prerendered pages carry the build-time value, so redeploy after changing it. |
+| `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Vercel. On Vercel (`VERCEL` set by its runtime) the IP comes from `x-vercel-forwarded-for` / `x-real-ip`; anywhere else those headers are ignored and the socket address is used. |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
-| `NUXT_SITE_INDEXABLE` | build/runtime | no | `false` on Vercel **Preview** only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
+| `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` on Vercel **Preview** only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
 | `E2E_PORT` | tests | — | Port for the Playwright web server. Default `3100`. |
 
 ## Deploying to Vercel
 
 1. **Import the repository** `github.com/MOESA-LTD/web_landing` in Vercel (*Add New → Project*). Framework preset:
    **Nuxt** (detected). Build command `npm run build`, output handled by the preset. Node version comes from
-   `engines.node`.
+   `engines.node` (`22.x`); also set *Node.js Version* to **22.x** in the project settings.
 2. **Environment variables**: set the table above for *Production* and *Preview* (use Turnstile test keys or a
    separate widget hostname for previews if you want the form to work there).
 3. **Domains** (*Project → Settings → Domains*):
