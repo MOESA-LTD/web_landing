@@ -29,6 +29,14 @@ describe('ServiceCard', () => {
     expect(n.attributes('aria-hidden')).toBe('true')
   })
 
+  it('the numeral of the cyan-ruled first card is primary blue (text contrast); the rule stays cyan', async () => {
+    const w = await mountSuspended(ServiceCard, { props: { ...props, index: 1 } })
+    expect(w.find('[data-numeral]').attributes('style')).toContain('color: var(--color-blue)')
+    expect(w.attributes('style')).toContain('--rule: var(--color-cyan)')
+    const w2 = await mountSuspended(ServiceCard, { props: { ...props, index: 3 } })
+    expect(w2.find('[data-numeral]').attributes('style')).toContain('color: var(--color-blue-dark)')
+  })
+
   it('capability card shows the localised capability eyebrow instead of the numeral', async () => {
     const w = await mountSuspended(ServiceCard, { props: { ...props, index: undefined, capability: true } })
     expect(w.find('[data-numeral]').exists()).toBe(false)

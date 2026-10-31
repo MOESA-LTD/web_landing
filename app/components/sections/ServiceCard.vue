@@ -19,7 +19,7 @@ const rule = computed(() => ruleColor(props.capability ? (props.index ?? 1) : pr
     :style="{ '--rule': rule }"
   >
     <p v-if="props.capability" class="mb-1 flex min-h-12 items-end text-eyebrow text-blue">{{ t('cards.capability') }}</p>
-    <p v-else-if="props.index" data-numeral aria-hidden="true" class="mb-1 text-numeral text-(--rule)">{{ numeral(props.index) }}</p>
+    <p v-else-if="props.index" data-numeral aria-hidden="true" class="mb-1 text-numeral" :style="{ color: numeralColor(props.index) }">{{ numeral(props.index) }}</p>
     <h3 class="text-h3 text-navy group-hover:text-blue">
       <NuxtLink :to="useLocalizedHref(props.to)" class="text-inherit no-underline after:absolute after:inset-0">{{ props.title }}</NuxtLink>
     </h3>

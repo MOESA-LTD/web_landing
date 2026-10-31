@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{ items: { title: string; body?: string }
       class="flex flex-col gap-3 border-t-4 border-(--rule) pt-6"
       :style="{ '--rule': ruleColor(i + 1) }"
     >
-      <p aria-hidden="true" class="mb-1 text-numeral text-(--rule)">{{ numeral(i + 1) }}</p>
+      <p aria-hidden="true" class="mb-1 text-numeral" :style="{ color: numeralColor(i + 1) }">{{ numeral(i + 1) }}</p>
       <h3 class="text-h3 text-navy">{{ item.title }}</h3>
       <p v-if="item.body" class="text-body-sm text-slate">{{ item.body }}</p>
     </li>

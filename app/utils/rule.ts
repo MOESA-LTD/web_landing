@@ -9,6 +9,16 @@ export function ruleColor(index: number | string | undefined): string {
   return RULES[((Number.isFinite(n) && n > 0 ? n : 1) - 1) % RULES.length]!
 }
 
+/**
+ * Colour of the decorative numeral above a ruled card: the rule colour, except that the cyan of position 1
+ * becomes primary blue. Cyan text on white/mist is 2.7-2.9:1, below the 4.5:1 text contrast of the global
+ * constraints (Lighthouse/axe flag it); the 4px rule itself stays cyan. Deviation from bundle.css `.ms-numeral`.
+ */
+export function numeralColor(index: number | string | undefined): string {
+  const rule = ruleColor(index)
+  return rule === RULES[0] ? 'var(--color-blue)' : rule
+}
+
 /** Two-digit numeral as the profile sets it ("01"). Non-numeric input is returned as given. */
 export function numeral(index: number | string): string {
   const s = String(index)
