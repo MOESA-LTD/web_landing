@@ -98,7 +98,7 @@ test.describe('keyboard walkthrough', () => {
     await expect(button).toHaveAttribute('aria-expanded', 'false')
   })
 
-  test('language dropdown: Enter opens, Tab walks EN/TR, tabbing out closes, Escape returns focus, Enter switches', async ({ page }) => {
+  test('language dropdown: Enter opens, Tab walks EN/TR/DE, tabbing out closes, Escape returns focus, Enter switches', async ({ page }) => {
     await page.goto('/')
     await hydrated(page)
     await tabTo(page, '#lang-button')
@@ -106,7 +106,7 @@ test.describe('keyboard walkthrough', () => {
     await page.keyboard.press('Enter')
     await expect(button).toHaveAttribute('aria-expanded', 'true')
     await expect(page.locator('#lang-menu')).toBeVisible()
-    expect(await tabs(page, 2)).toEqual(['a[/]', 'a[/tr]'])
+    expect(await tabs(page, 3)).toEqual(['a[/]', 'a[/tr]', 'a[/de]'])
     // Tabbing past the last item leaves the dropdown, which closes.
     await page.keyboard.press('Tab')
     await expect(button).toHaveAttribute('aria-expanded', 'false')

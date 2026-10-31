@@ -1,12 +1,13 @@
 # MOESA Ltd. website
 
-The public website of MOESA Ltd. (`https://www.moesaltd.com`), in English and Turkish.
+The public website of MOESA Ltd. (`https://www.moesaltd.com`), in English, Turkish and German.
 
-Nuxt 4 · Tailwind CSS v4 · `@nuxtjs/i18n` (EN at `/`, TR under `/tr/` with Turkish slugs) · `@nuxtjs/sitemap` and
+Nuxt 4 · Tailwind CSS v4 · `@nuxtjs/i18n` (EN at `/`, TR under `/tr/` with Turkish slugs, DE under `/de/` with German slugs) · `@nuxtjs/sitemap` and
 `@nuxtjs/robots` · contact form via a Nitro server route → Resend, protected by Cloudflare Turnstile. Hosted on Vercel.
 
 All page copy comes verbatim from the approved package in `MOESA_Website_Package_v1.0/` (EN) and its TR files.
-Turkish strings that have no approved source are listed in `i18n/UNREVIEWED_TR.md`.
+Turkish strings that have no approved source are listed in `i18n/UNREVIEWED_TR.md`. The German site has no approved
+source at all: every German string is our translation of the approved EN and is listed in `i18n/UNREVIEWED_DE.md`.
 
 ## Requirements
 
@@ -31,8 +32,8 @@ through in `nuxt dev` (the flag is ignored by production builds). The component 
 
 | Command | What it runs |
 |---|---|
-| `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-disabled build, headers). |
-| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 30 URLs, TR hreflang and links. |
+| `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-/DE-disabled builds, headers), DE translation provenance and key parity. |
+| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
 | `npm run typecheck` (`nuxt typecheck`) | `vue-tsc` over the app, server and config. |
 
 ## Build and preview
@@ -49,6 +50,7 @@ Other scripts:
 - `npm run og:image` regenerates `public/og-default.png` (1200×630) from the HTML template in `scripts/og-image.ts`
   (navy ground, bars motif, "MOESA LTD." and the EN descriptor; Manrope from `node_modules`, no network). Commit the PNG.
 - `npm run unreviewed:tr` regenerates `i18n/UNREVIEWED_TR.md`.
+- `npm run unreviewed:de` regenerates `i18n/UNREVIEWED_DE.md` (DE page copy from `content/de/unreviewed.ts` and every key of `i18n/locales/de.json`).
 
 ## Environment variables
 
@@ -63,7 +65,8 @@ a redeploy.
 | `CONTACT_FROM` | server, runtime | yes | Sender on a Resend-verified domain, e.g. `MOESA Website <website@moesaltd.com>`. The visitor's address is only used as Reply-To. |
 | `NUXT_TURNSTILE_SECRET_KEY` | server, runtime | yes | Cloudflare Turnstile secret key. |
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
-| `NUXT_PUBLIC_ENABLE_TR` | public, **build-time** | no | `false` hides the Turkish site: no TR routes prerendered, no language switcher, no TR URLs or alternates in the sitemap. Default: TR on. |
+| `NUXT_PUBLIC_ENABLE_TR` | public, **build-time** | no | `false` hides the Turkish site: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages), contact redirects go to EN paths. Default: TR on. |
+| `NUXT_PUBLIC_ENABLE_DE` | public, **build-time** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | public, **build-time** | no — leave **empty** in v1 | Setting it only shows the cookie consent banner; no analytics loader exists in v1. |
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP. Leave empty on Vercel (it uses `x-vercel-forwarded-for` / `x-real-ip`). |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
@@ -142,8 +145,8 @@ Run against the Vercel preview URL (and again on production). `BASE=https://<dep
   curl -sI "$BASE/og-default.png" | grep -i x-content-type
   curl -sI "$BASE/nope" | grep -i content-security
   ```
-- [ ] **Sitemap and robots**: `curl -s "$BASE/sitemap.xml" | grep -c '<loc>'` → `28` (no `/thank-you`, no
-  `/tr/tesekkurler`); `curl -s "$BASE/robots.txt"` has `Disallow: /api/` and `Sitemap: https://www.moesaltd.com/sitemap.xml`
+- [ ] **Sitemap and robots**: `curl -s "$BASE/sitemap.xml" | grep -c '<loc>'` → `42` (no `/thank-you`,
+  `/tr/tesekkurler` or `/de/danke`); `curl -s "$BASE/robots.txt"` has `Disallow: /api/` and `Sitemap: https://www.moesaltd.com/sitemap.xml`
   (on a preview deployment with `NUXT_SITE_INDEXABLE=false` robots.txt disallows everything — expected).
 - [ ] `/thank-you` sends `X-Robots-Tag: noindex, follow`.
 - [ ] Open `/contact` in a browser with DevTools: the Turnstile widget renders, **no CSP errors in the console**, and a
@@ -172,6 +175,11 @@ Policy are implementation drafts, not final legal advice. Before publication con
 Also:
 
 - [ ] Review the Turkish strings in `i18n/UNREVIEWED_TR.md` (translated by us, no approved source).
+- [ ] Review the German strings in `i18n/UNREVIEWED_DE.md` (the whole German site is our translation of the approved
+  EN; nothing in it is approved yet), or set `NUXT_PUBLIC_ENABLE_DE=false` until it is.
+- [ ] **German legal review before the DE launch:** the German Impressum (`/de/impressum`) and Datenschutzerklärung
+  (`/de/datenschutz`), and the Cookie-Richtlinie, must meet German requirements (e.g. Impressum duties under § 5 DDG,
+  GDPR information duties in German). They are translated drafts of the EN drafts with the same OPEN items.
 - [ ] Legal review of the legal drafts, including the cookie-inventory row for the strictly necessary
   `moesa_consent` cookie.
 - [ ] Provide an **SVG logo** (the site currently uses the PNG lockup/mark from the package; the Organization JSON-LD
@@ -193,8 +201,8 @@ Also:
 ## SEO and security (reference)
 
 - Canonical origin `https://www.moesaltd.com`; every page has a self-referencing canonical and `hreflang` alternates
-  en / tr / x-default (EN). Sitemap: 28 URLs (14 EN + 14 TR) from `i18n/routes.ts`, thank-you pages excluded.
-- Organization JSON-LD on `/` and `/tr` (facts from `data/brand_tokens.json` only).
+  en / tr / de / x-default (EN). Sitemap: 42 URLs (14 per locale) from `i18n/routes.ts`, thank-you pages excluded.
+- Organization JSON-LD on `/`, `/tr` and `/de` (facts from `data/brand_tokens.json` only).
 - Security headers on every response (`routeRules['/**']` in `nuxt.config.ts`): HSTS (2 years, preload),
   `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, and a CSP allowing
   only the site itself plus Cloudflare Turnstile. Fonts are never inlined as `data:` URIs (the CSP's `font-src 'self'`).

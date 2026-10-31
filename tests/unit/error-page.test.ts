@@ -29,6 +29,14 @@ describe('errorLocale', () => {
     expect(errorLocale('/this-does-not-exist')).toBe('en')
     expect(errorLocale('/tr/x', { enableTr: false })).toBe('en')
   })
+
+  it('is DE for /de and /de/* only, unless DE is disabled', () => {
+    expect(errorLocale('/de/gibt-es-nicht')).toBe('de')
+    expect(errorLocale('/de')).toBe('de')
+    expect(errorLocale('/demo')).toBe('en')
+    expect(errorLocale('/de/x', { enableDe: false })).toBe('en')
+    expect(errorLocale('/de/x', { enableTr: false })).toBe('de')
+  })
 })
 
 describe('error.vue', () => {

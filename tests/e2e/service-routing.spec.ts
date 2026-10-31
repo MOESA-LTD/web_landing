@@ -48,10 +48,22 @@ test.describe('service routing', () => {
     await expect(page.locator('h1')).toHaveText('From purchase order to destination.')
   })
 
+  test('switching EN → DE → TR on a service page lands on the German, then the Turkish slug', async ({ page }) => {
+    await page.goto(PAIR.en)
+    await switchLanguage(page, 'de')
+    await expect(page).toHaveURL(/\/de\/leistungen\/operations-und-lieferkette$/)
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de')
+    await expect(page.locator('h1')).toHaveText('Von der Bestellung bis zum Bestimmungsort.')
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.moesaltd.com/de/leistungen/operations-und-lieferkette')
+    await switchLanguage(page, 'tr')
+    await expect(page).toHaveURL(new RegExp(`${PAIR.tr}$`))
+    await expect(page.locator('h1')).toHaveText('Satın alma siparişinden varış noktasına.')
+  })
+
   test('a service page has exactly one canonical and one hreflang alternate per locale', async ({ page }) => {
     await page.goto(PAIR.tr)
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1)
-    for (const lang of ['en', 'tr', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1)
+    for (const lang of ['en', 'tr', 'de', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1)
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', `https://www.moesaltd.com${PAIR.en}`)
   })
 })

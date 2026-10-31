@@ -100,6 +100,35 @@ test.describe('contact form', () => {
     expect(bodies[0]).toMatchObject({ service: 'Market Access', locale: 'tr' })
   })
 
+  test('DE: a valid submit sends the EN service value and lands on /de/danke', async ({ page }) => {
+    const bodies = await mockApi(page)
+    await page.goto('/de/kontakt')
+    await hydrated(page)
+    await fillValid(page, 'Market Access')
+    await expect(page.locator('select[name="service"] option:checked')).toHaveText('Marktzugang')
+    await page.getByRole('button', { name: 'Projektbriefing senden' }).click()
+    await expect(page).toHaveURL(/\/de\/danke$/)
+    await expect(page.locator('h1')).toHaveText('Vielen Dank. Ihr Projektbriefing ist eingegangen.')
+    expect(bodies[0]).toMatchObject({ service: 'Market Access', locale: 'de' })
+  })
+
+  test('DE: an empty submit shows the German error summary; ?error=1 shows the German generic error', async ({ page }) => {
+    await page.goto('/de/kontakt')
+    await hydrated(page)
+    await page.getByRole('button', { name: 'Projektbriefing senden' }).click()
+    await expect(page.locator('[data-error-summary]')).toContainText('Bitte prüfen Sie 7 Felder')
+    await expect(page.locator('[data-error-summary]')).toContainText('Geben Sie Ihren Namen ein.')
+    await page.goto('/de/kontakt?error=1')
+    await expect(page.locator('[data-error-summary]')).toContainText('Einige Angaben konnten nicht angenommen werden.')
+  })
+
+  test('the DE service deep link preselects the EN option value', async ({ page }) => {
+    await page.goto('/de/kontakt?service=operations-supply-chain')
+    await hydrated(page)
+    await expect(page.locator('select[name="service"]')).toHaveValue('Operations & Supply Chain')
+    await expect(page.locator('select[name="service"] option:checked')).toHaveText('Operations & Lieferkette')
+  })
+
   test('server error codes (422) are shown as texts; a 429 shows the rate-limit message', async ({ page }) => {
     let status = 422
     await mockApi(page, (r) =>
@@ -131,7 +160,7 @@ test.describe('contact form', () => {
   })
 
   test('the thank-you pages are noindex', async ({ page }) => {
-    for (const path of ['/thank-you', '/tr/tesekkurler']) {
+    for (const path of ['/thank-you', '/tr/tesekkurler', '/de/danke']) {
       const res = await page.goto(path)
       expect(res?.status()).toBe(200)
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/)
@@ -154,5 +183,11 @@ test.describe('POST /api/contact (server route in the build)', () => {
     const res = await request.post('/api/contact', { form: { name: '', locale: 'tr' }, maxRedirects: 0, headers: uniqueIp() })
     expect(res.status()).toBe(303)
     expect(res.headers()['location']).toBe('/tr/iletisim?error=1')
+  })
+
+  test('an invalid non-JS DE form post is redirected (303) to /de/kontakt?error=1', async ({ request }) => {
+    const res = await request.post('/api/contact', { form: { name: '', locale: 'de' }, maxRedirects: 0, headers: uniqueIp() })
+    expect(res.status()).toBe(303)
+    expect(res.headers()['location']).toBe('/de/kontakt?error=1')
   })
 })

@@ -2,8 +2,11 @@ import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import { buildI18nPages, contactPrerenderRoutes, servicePrerenderRoutes, sitemapUrls } from './i18n/routes'
 
-// NUXT_PUBLIC_ENABLE_TR=false hides TR (no TR routes prerendered, no switcher, not in the sitemap).
+// NUXT_PUBLIC_ENABLE_TR=false hides TR and NUXT_PUBLIC_ENABLE_DE=false hides DE: no routes of that locale are
+// prerendered, the switcher leaves it out, and the sitemap and hreflang alternates do not list it.
 const enableTr = process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
+const enableDe = process.env.NUXT_PUBLIC_ENABLE_DE !== 'false'
+const locales = { enableTr, enableDe }
 
 const SITE_URL = 'https://www.moesaltd.com'
 
@@ -67,6 +70,7 @@ export default defineNuxtConfig({
     // the X-Robots-Tag header and the robots meta; the page also sets the meta itself).
     '/thank-you': { robots: 'noindex, follow' },
     '/tr/tesekkurler': { robots: 'noindex, follow' },
+    '/de/danke': { robots: 'noindex, follow' },
   },
   vite: {
     plugins: [tailwindcss()],
@@ -90,6 +94,7 @@ export default defineNuxtConfig({
     // process.env at request time by server/api/contact.post.ts; see .env.example.
     public: {
       enableTr,
+      enableDe,
       // NUXT_PUBLIC_TURNSTILE_SITE_KEY. /contact is prerendered, so the key must be set at build time.
       turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY ?? '',
     },
@@ -99,22 +104,23 @@ export default defineNuxtConfig({
     // acceptance test (tests/unit/claims.test.ts) asserts that no app source comment ships in .output.
     minify: true,
     prerender: {
-      // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled), plus the contact
-      // and thank-you pages (4 URLs; 2 with TR disabled). /api/contact stays a server route.
+      // The services overview and the five service pages, EN + TR + DE (18 URLs; 6 per enabled locale), plus the
+      // contact and thank-you pages (2 per enabled locale). /api/contact stays a server route.
       // No /404.html: Nuxt would emit an SPA shell (no noindex, no SSR copy). Unknown paths reach the server
       // (Vercel's fallback function, `nuxt preview`) and error.vue renders them with HTTP 404, in the path's locale.
-      routes: [...servicePrerenderRoutes({ enableTr }), ...contactPrerenderRoutes({ enableTr })],
+      routes: [...servicePrerenderRoutes(locales), ...contactPrerenderRoutes(locales)],
     },
   },
-  // The sitemap lists exactly the indexable pages from i18n/routes.ts (28 URLs: 14 EN + 14 TR, no thank-you page,
-  // no /_dev, no /api), each with its hreflang alternates en/tr/x-default, the same set as the pages' own
+  // The sitemap lists exactly the indexable pages from i18n/routes.ts (42 URLs: 14 per locale EN/TR/DE, no thank-you
+  // page, no /_dev, no /api), each with its hreflang alternates en/tr/de/x-default, the same set as the pages' own
   // <link rel="alternate">. The URLs are given explicitly (and the module's own page discovery and i18n
   // expansion are off) because the five service pages share one dynamic route that the module cannot expand,
-  // and because NUXT_PUBLIC_ENABLE_TR=false must drop every TR URL and alternate.
+  // and because NUXT_PUBLIC_ENABLE_TR=false / NUXT_PUBLIC_ENABLE_DE=false must drop every URL and alternate of that
+  // locale.
   sitemap: {
     autoI18n: false,
     excludeAppSources: true,
-    urls: sitemapUrls({ enableTr }),
+    urls: sitemapUrls(locales),
   },
   // Allow everything except the form endpoint; robots.txt links the sitemap (added by @nuxtjs/sitemap).
   robots: {
@@ -124,12 +130,13 @@ export default defineNuxtConfig({
     locales: [
       { code: 'en', language: 'en', name: 'EN', file: 'en.json' },
       { code: 'tr', language: 'tr', name: 'TR', file: 'tr.json' },
+      { code: 'de', language: 'de', name: 'DE', file: 'de.json' },
     ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: false,
     customRoutes: 'config',
-    // TR paths come from i18n/routes.ts, the single source of truth for page paths.
+    // TR and DE paths come from i18n/routes.ts, the single source of truth for page paths.
     pages: buildI18nPages(),
     baseUrl: 'https://www.moesaltd.com',
   },

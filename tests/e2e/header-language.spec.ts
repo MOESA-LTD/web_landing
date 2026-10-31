@@ -14,17 +14,18 @@ test.describe('header language dropdown', () => {
     expect(header).toContain('id="lang-button"')
     expect(header).toContain('aria-label="Language: English"')
     expect(header).toContain('hreflang="tr"')
+    expect(header).toContain('hreflang="de"')
     expect(html).not.toContain('role="group"')
     const nav = /<nav\b[^>]*data-nav="desktop"[\s\S]*?<\/nav>/.exec(header)![0]
     expect(nav).not.toContain('href="/"')
     expect(nav.match(/<li\b/g)!.length).toBe(5 + 6) // 5 items + 6 links in the Services menu
   })
 
-  test('opens, shows English / Türkçe with codes, closes on Escape with focus back, and on an outside click', async ({ page }) => {
+  test('opens, shows English / Türkçe / Deutsch with codes, closes on Escape with focus back, and on an outside click', async ({ page }) => {
     await page.goto('/services')
     await openLanguageMenu(page)
     const menu = page.locator('#lang-menu')
-    await expect(menu.locator('a > span')).toHaveText(['English', 'EN', 'Türkçe', 'TR'])
+    await expect(menu.locator('a > span')).toHaveText(['English', 'EN', 'Türkçe', 'TR', 'Deutsch', 'DE'])
     await expect(menu.locator('a[aria-current="true"] > span').first()).toHaveText('English')
     await page.keyboard.press('Escape')
     await expect(menu).toBeHidden()
@@ -108,9 +109,10 @@ test.describe('header language dropdown', () => {
   })
 
   // Measured: five items + logo + CTA + the 76px reserve need ~1125px (TR) / ~1148px (EN) on one line, so the
-  // header switches to the mobile menu below 1160px (user ruling 2026-10-31).
+  // header switches to the mobile menu below 1160px (user ruling 2026-10-31). DE needs the short header labels
+  // (nav.header.*) to fit: see the DE fit measurement below (Task 12).
   for (const width of [1440, 1200, 1160]) {
-    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR']] as const) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
       test(`${locale} desktop nav is on one line at ${width}px: bar 76px, no overflow, CTA and dropdown clear`, async ({ page }) => {
         test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
         await page.setViewportSize({ width, height: 800 })
@@ -131,13 +133,16 @@ test.describe('header language dropdown', () => {
         expect(cta.x - (last.x + last.width)).toBeGreaterThanOrEqual(0)
         const lang = await box(page.locator('#lang-button'))
         expect(lang.x - (cta.x + cta.width)).toBeGreaterThanOrEqual(10)
-        if (locale === 'TR') await page.screenshot({ path: `tests/e2e/__screens__/hdr-app-tr-${width}.png`, clip: { x: 0, y: 0, width, height: 140 } })
+        if (locale !== 'EN') {
+          const file = `tests/e2e/__screens__/hdr-app-${locale.toLowerCase()}-${width}.png`
+          await page.screenshot({ path: file, clip: { x: 0, y: 0, width, height: 140 } })
+        }
       })
     }
   }
 
   for (const width of [1159, 1024, 960]) {
-    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR']] as const) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
       test(`${locale} shows the mobile menu at ${width}px: menu button visible, desktop nav and CTA hidden, bar 64px, no overflow`, async ({ page }) => {
         test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
         await page.setViewportSize({ width, height: 800 })
@@ -151,8 +156,57 @@ test.describe('header language dropdown', () => {
         expect(Math.round(width - (bb.x + bb.width))).toBe(68)
         expect(Math.round(menu.x - (bb.x + bb.width))).toBe(8)
         expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0)
-        if (locale === 'TR') await page.screenshot({ path: `tests/e2e/__screens__/hdr-app-tr-${width}.png`, clip: { x: 0, y: 0, width, height: 140 } })
+        if (locale !== 'EN') {
+          const file = `tests/e2e/__screens__/hdr-app-${locale.toLowerCase()}-${width}.png`
+          await page.screenshot({ path: file, clip: { x: 0, y: 0, width, height: 140 } })
+        }
       })
     }
   }
+
+  // Task 12: the DE header fit, measured (not assumed). The one-line requirement is the content width of the bar:
+  // logo + gap + nav (natural, unwrapped width) + gap + CTA + the 76px dropdown reserve, plus the side padding.
+  // With the full DE labels ("Für wen wir arbeiten", "Über MOESA") DE needed 1192px (EN 1148, TR 1125), so DE uses
+  // short header-only labels ("Unsere Kunden", "Über uns"), as TR does; the breakpoint stays at 1160px.
+  test('DE fit measurement: with the short header labels DE needs no more than the 1160px breakpoint', async ({ page }) => {
+    test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
+    const need: Record<string, number> = {}
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
+      await page.setViewportSize({ width: 1440, height: 800 })
+      await page.goto(route)
+      need[locale] = await page.evaluate(() => {
+        const inner = document.querySelector('header > div') as HTMLElement
+        const nav = document.querySelector('[data-nav="desktop"]') as HTMLElement
+        const ul = nav.querySelector('ul') as HTMLElement
+        const cta = document.querySelector('[data-header-cta]') as HTMLElement
+        const logo = inner.firstElementChild as HTMLElement
+        const gap = parseFloat(getComputedStyle(inner).columnGap) || 0
+        const navGap = parseFloat(getComputedStyle(ul).columnGap) || 0
+        const items = [...ul.children].map((li) => {
+          const el = li.firstElementChild as HTMLElement
+          const clone = el.cloneNode(true) as HTMLElement
+          clone.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;width:auto'
+          li.appendChild(clone)
+          const w = clone.getBoundingClientRect().width
+          clone.remove()
+          return w
+        })
+        const navW = items.reduce((a, b) => a + b, 0) + navGap * (items.length - 1)
+        const ctaA = cta.querySelector('a') as HTMLElement
+        const ctaClone = ctaA.cloneNode(true) as HTMLElement
+        ctaClone.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;width:auto'
+        cta.appendChild(ctaClone)
+        const ctaW = ctaClone.getBoundingClientRect().width
+        ctaClone.remove()
+        const cs = getComputedStyle(inner)
+        const pad = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight)
+        const ctaMargin = parseFloat(getComputedStyle(cta).marginRight) || 0
+        // The container is centred at max 1200px; below that it spans the viewport.
+        return Math.ceil(logo.getBoundingClientRect().width + gap + navW + gap + ctaW + ctaMargin + pad)
+      })
+    }
+    test.info().annotations.push({ type: 'header-fit', description: JSON.stringify(need) })
+    console.log('header one-line width needed (px):', JSON.stringify(need))
+    expect(need.DE!).toBeLessThanOrEqual(1160)
+  })
 })

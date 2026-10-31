@@ -4,22 +4,23 @@ import { ROUTES, type RouteName } from '../../i18n/routes'
 /**
  * Guards the @nuxtjs/i18n config (strategy, `pages` built from ROUTES) against the real router.
  * Page files arrive in later tasks; every page route that exists must have exactly the path that
- * i18n/routes.ts says, in both locales.
+ * i18n/routes.ts says, in every locale.
  */
 describe('i18n config', () => {
   const routesByName = () => new Map(useRouter().getRoutes().map((r) => [String(r.name), r.path]))
 
-  it('serves the home page at / (EN) and /tr (TR)', () => {
+  it('serves the home page at / (EN), /tr (TR) and /de (DE)', () => {
     expect(routesByName().get('index___en')).toBe('/')
     expect(routesByName().get('index___tr')).toBe('/tr')
+    expect(routesByName().get('index___de')).toBe('/de')
   })
 
   it('every page route has the path ROUTES gives it', () => {
     for (const [name, path] of routesByName()) {
-      const m = /^(.+)___(en|tr)$/.exec(name)
+      const m = /^(.+)___(en|tr|de)$/.exec(name)
       if (!m || m[1]!.startsWith('_dev')) continue
       const base = m[1]!
-      const locale = m[2] as 'en' | 'tr'
+      const locale = m[2] as 'en' | 'tr' | 'de'
       const expected =
         base === 'index'
           ? ROUTES.home[locale]
@@ -30,9 +31,10 @@ describe('i18n config', () => {
     }
   })
 
-  it('has TR enabled by default and a default EN locale', () => {
+  it('has TR and DE enabled by default and a default EN locale', () => {
     expect(useRuntimeConfig().public.enableTr).toBe(true)
+    expect(useRuntimeConfig().public.enableDe).toBe(true)
     expect(useNuxtApp().$i18n.locale.value).toBe('en')
-    expect(useNuxtApp().$i18n.locales.value.map((l) => (typeof l === 'string' ? l : l.code))).toEqual(['en', 'tr'])
+    expect(useNuxtApp().$i18n.locales.value.map((l) => (typeof l === 'string' ? l : l.code))).toEqual(['en', 'tr', 'de'])
   })
 })

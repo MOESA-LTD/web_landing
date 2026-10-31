@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ROUTES, routeNameForLocalePath } from '~~/i18n/routes'
+import type { Locale } from '#content/types'
+import { ROUTES, enabledLocales, routeNameForLocalePath } from '~~/i18n/routes'
 
 /**
  * Language dropdown at the right end of the header bar (CANVAS_UPDATE_1793393437 §1; it replaces the grey
@@ -7,7 +8,8 @@ import { ROUTES, routeNameForLocalePath } from '~~/i18n/routes'
  * native name and the code. Canvas visual, but real links instead of the canvas's JS buttons, and a disclosure:
  * `aria-expanded` / `aria-controls`, Escape closes and returns focus to the button, a mousedown outside and a
  * route change close it (all three are additions to the canvas, which lacks them). The current locale is
- * `aria-current="true"`. Hidden when TR is disabled. The header owns the `open` state (v-model:open) so that
+ * `aria-current="true"`. A locale switched off (`enableTr` / `enableDe` false) is not listed; with only EN left the
+ * dropdown is not rendered at all. The header owns the `open` state (v-model:open) so that
  * opening this menu closes the Services menu and vice versa.
  *
  * Positioned over the header bar: the parent `<header>` is the (relative) positioning context and the
@@ -16,13 +18,13 @@ import { ROUTES, routeNameForLocalePath } from '~~/i18n/routes'
  * Pages in ROUTES (all of them, including the five service pages) get their counterpart from ROUTES, the single
  * source of page paths: the layout renders the header before the page's setup runs, so on the server the
  * service page's `useSetI18nParams` comes too late for `switchLocalePath` (the SSR HTML would keep the EN slug
- * under /tr/hizmetler/). Other paths fall back to `switchLocalePath`.
+ * under /tr/hizmetler/ or /de/leistungen/). Other paths fall back to `switchLocalePath`.
  */
 const open = defineModel<boolean>('open', { default: false })
 const { t, locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const route = useRoute()
-const { enableTr } = useRuntimeConfig().public
+const available = new Set(enabledLocales(useLocaleOptions()))
 const root = useTemplateRef<HTMLElement>('root')
 
 // A prerendered page is served for any query string, so the server-rendered hrefs cannot carry the query.
@@ -32,8 +34,8 @@ const mounted = ref(false)
 const items = computed(() => {
   const page = routeNameForLocalePath(route.path)
   const suffix = route.fullPath.replace(/^[^?#]*/, '')
-  return locales.value.map((l) => {
-    const code = (typeof l === 'string' ? l : l.code) as 'en' | 'tr'
+  const codes = locales.value.map((l) => (typeof l === 'string' ? l : l.code) as Locale).filter((c) => available.has(c))
+  return codes.map((code) => {
     const full = page ? ROUTES[page][code] + suffix : switchLocalePath(code)
     return {
       code,
@@ -87,7 +89,7 @@ watch(
 
 <template>
   <div
-    v-if="enableTr !== false"
+    v-if="items.length > 1"
     ref="root"
     data-lang-dd
     @focusout="onFocusout"

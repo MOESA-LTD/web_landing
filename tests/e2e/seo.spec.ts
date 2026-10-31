@@ -2,14 +2,14 @@ import { expect, test } from '@playwright/test'
 import { ROUTES, type RouteName } from '../../i18n/routes'
 
 /**
- * SEO and security against the production build: per-page head tags on all 30 URLs (15 EN + 15 TR), the sitemap
- * (28 URLs: every page in both locales except the two thank-you pages), robots.txt, the Organization JSON-LD on
+ * SEO and security against the production build: per-page head tags on all 45 URLs (15 per locale EN/TR/DE), the
+ * sitemap (42 URLs: every page in every locale except the three thank-you pages), robots.txt, the Organization JSON-LD on
  * the home pages, the security headers, and a Content-Security-Policy that no page violates.
  */
 const ORIGIN = 'https://www.moesaltd.com'
 const NAMES = Object.keys(ROUTES) as RouteName[]
-const ALL_URLS = NAMES.flatMap((name) => [ROUTES[name].en, ROUTES[name].tr])
-const THANK_YOU = [ROUTES['thank-you'].en, ROUTES['thank-you'].tr]
+const ALL_URLS = NAMES.flatMap((name) => [ROUTES[name].en, ROUTES[name].tr, ROUTES[name].de])
+const THANK_YOU = [ROUTES['thank-you'].en, ROUTES['thank-you'].tr, ROUTES['thank-you'].de]
 const SITEMAP_URLS = ALL_URLS.filter((p) => !THANK_YOU.includes(p))
 
 const SECURITY_HEADERS: Record<string, string> = {
@@ -41,25 +41,31 @@ test.describe('page head', () => {
 })
 
 test.describe('sitemap and robots', () => {
-  test('/sitemap.xml lists the 28 public URLs with hreflang alternates, and no thank-you page', async ({ request }) => {
+  test('/sitemap.xml lists the 42 public URLs with hreflang alternates, and no thank-you page', async ({ request }) => {
     const res = await request.get('/sitemap.xml')
     expect(res.status()).toBe(200)
     const xml = await res.text()
     const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!)
+    expect(locs).toHaveLength(42)
     expect(locs.sort()).toEqual(SITEMAP_URLS.map((p) => ORIGIN + p).sort())
     for (const p of THANK_YOU) expect(xml).not.toContain(ORIGIN + p + '<')
     expect(xml).not.toContain('/_dev')
     expect(xml).not.toContain('/api')
-    // Every entry carries its en, tr and x-default alternates (xhtml:link).
+    // Every entry carries its en, tr, de and x-default alternates (xhtml:link).
     const about = xml.slice(xml.indexOf(`<loc>${ORIGIN}/tr/hakkimizda</loc>`))
     const entry = about.slice(0, about.indexOf('</url>'))
     expect(entry).toContain(`hreflang="en" href="${ORIGIN}/about"`)
     expect(entry).toContain(`hreflang="tr" href="${ORIGIN}/tr/hakkimizda"`)
+    expect(entry).toContain(`hreflang="de" href="${ORIGIN}/de/ueber-uns"`)
     expect(entry).toContain(`hreflang="x-default" href="${ORIGIN}/about"`)
     const svc = xml.slice(xml.indexOf(`<loc>${ORIGIN}/services/operations-supply-chain</loc>`))
     expect(svc.slice(0, svc.indexOf('</url>'))).toContain(
       `hreflang="tr" href="${ORIGIN}/tr/hizmetler/operasyon-ve-tedarik-zinciri"`,
     )
+    const deSvc = xml.slice(xml.indexOf(`<loc>${ORIGIN}/de/leistungen/operations-und-lieferkette</loc>`))
+    const deEntry = deSvc.slice(0, deSvc.indexOf('</url>'))
+    expect(deEntry).toContain(`hreflang="en" href="${ORIGIN}/services/operations-supply-chain"`)
+    expect(deEntry).toContain(`hreflang="de" href="${ORIGIN}/de/leistungen/operations-und-lieferkette"`)
   })
 
   test('/robots.txt allows the site, disallows /api/ and links the sitemap', async ({ request }) => {
@@ -74,7 +80,7 @@ test.describe('sitemap and robots', () => {
 })
 
 test.describe('structured data', () => {
-  for (const path of [ROUTES.home.en, ROUTES.home.tr]) {
+  for (const path of [ROUTES.home.en, ROUTES.home.tr, ROUTES.home.de]) {
     test(`${path} has the Organization JSON-LD`, async ({ request }) => {
       const html = await (await request.get(path)).text()
       expect(html).toContain('application/ld+json')
@@ -110,7 +116,7 @@ test.describe('structured data', () => {
 })
 
 test.describe('security headers', () => {
-  for (const path of ['/', '/services', '/tr/hakkimizda', '/contact', '/this-does-not-exist']) {
+  for (const path of ['/', '/services', '/tr/hakkimizda', '/de/ueber-uns', '/contact', '/this-does-not-exist']) {
     test(`${path} sends the security headers`, async ({ request }) => {
       const res = await request.get(path)
       const headers = res.headers()
@@ -119,7 +125,7 @@ test.describe('security headers', () => {
   }
 
   test('no page violates the Content-Security-Policy', async ({ page }) => {
-    test.setTimeout(180_000)
+    test.setTimeout(270_000)
     const violations: string[] = []
     page.on('console', (msg) => {
       if (msg.type() === 'error' && /Content Security Policy|Content-Security-Policy/i.test(msg.text())) {

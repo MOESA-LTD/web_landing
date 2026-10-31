@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Locale, Section, ServiceSlug, TextSection } from '#content/types'
-import { localeSlugForService, serviceSlugFromLocaleSlug } from '~~/i18n/routes'
+import { localeOfPath, localeSlugForService, serviceSlugFromLocaleSlug } from '~~/i18n/routes'
 
 /**
- * Service page (EN `/services/[slug]`, TR `/tr/hizmetler/[slug]` with the Turkish slug from ROUTES).
+ * Service page (EN `/services/[slug]`, TR `/tr/hizmetler/[slug]`, DE `/de/leistungen/[slug]`, with the Turkish or
+ * German slug from ROUTES).
  * Skeleton of the canvas artboards Service*.dc.html: page hero (crumbs Home / Services / name, the service CTA),
  * Scope (statement split + Typical mandates panel), "How the work runs", related services, final CTA.
  * The approved md sections the canvas has no layout for are built from the DS patterns between Scope and
@@ -14,8 +15,7 @@ import { localeSlugForService, serviceSlugFromLocaleSlug } from '~~/i18n/routes'
  */
 definePageMeta({
   validate: (route) => {
-    const locale: Locale = route.path.startsWith('/tr/') ? 'tr' : 'en'
-    return serviceSlugFromLocaleSlug(locale, String(route.params.slug ?? '')) !== null
+    return serviceSlugFromLocaleSlug(localeOfPath(route.path), String(route.params.slug ?? '')) !== null
   },
 })
 
@@ -35,7 +35,11 @@ const enPage = useContent(`services/${slug}`, 'en')
 usePageSeo(page.meta)
 
 const setI18nParams = useSetI18nParams()
-setI18nParams({ en: { slug: localeSlugForService('en', slug) }, tr: { slug: localeSlugForService('tr', slug) } })
+setI18nParams({
+  en: { slug: localeSlugForService('en', slug) },
+  tr: { slug: localeSlugForService('tr', slug) },
+  de: { slug: localeSlugForService('de', slug) },
+})
 
 const DIGITAL: ServiceSlug = 'digital-commerce-commercial-intelligence'
 const isDigital = slug === DIGITAL

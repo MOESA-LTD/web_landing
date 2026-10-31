@@ -12,22 +12,26 @@
  * Secrets come from env only (see .env.example). This route is never prerendered.
  */
 import { defineEventHandler, getRequestHeader, readBody, sendRedirect, setResponseStatus, type H3Event } from 'h3'
-import { ROUTES } from '../../i18n/routes'
-import type { ContactFailure } from '../../shared/contact'
+import { ROUTES, localeOfPath } from '../../i18n/routes'
+import { CONTACT_LOCALES, type ContactFailure, type ContactLocale } from '../../shared/contact'
 import { validateContact } from '../utils/contact-schema'
 import { mailConfig, sendContactEmail } from '../utils/email'
 import { rateLimit } from '../utils/rate-limit'
 import { shouldBypassTurnstile, verifyTurnstile } from '../utils/turnstile'
 
-type Locale = 'en' | 'tr'
+type Locale = ContactLocale
 
 /** Largest accepted request body. The form's own limits (5000-char brief, 200-char fields) fit well inside it. */
 const MAX_BODY_BYTES = 32 * 1024
 
 const isDev = () => import.meta.dev === true
 
-/** TR is disabled (NUXT_PUBLIC_ENABLE_TR=false, read at request time): every redirect then goes to EN paths. */
-const trEnabled = () => process.env.NUXT_PUBLIC_ENABLE_TR !== 'false'
+/**
+ * Whether a locale is switched on (NUXT_PUBLIC_ENABLE_TR / NUXT_PUBLIC_ENABLE_DE, read at request time). A redirect
+ * for a disabled locale goes to the EN path instead.
+ */
+const localeEnabled = (l: Locale) =>
+  l === 'tr' ? process.env.NUXT_PUBLIC_ENABLE_TR !== 'false' : l === 'de' ? process.env.NUXT_PUBLIC_ENABLE_DE !== 'false' : true
 
 /**
  * The client IP for the rate limit.
@@ -52,8 +56,7 @@ function localeFromReferer(event: H3Event): Locale {
   const ref = getRequestHeader(event, 'referer')
   if (!ref) return 'en'
   try {
-    const path = new URL(ref, 'http://x').pathname
-    return path === '/tr' || path.startsWith('/tr/') ? 'tr' : 'en'
+    return localeOfPath(new URL(ref, 'http://x').pathname)
   } catch {
     return 'en'
   }
@@ -62,7 +65,7 @@ function localeFromReferer(event: H3Event): Locale {
 export default defineEventHandler(async (event: H3Event) => {
   const isJson = (getRequestHeader(event, 'content-type') ?? '').includes('application/json')
   const ip = clientIp(event)
-  const pathLocale = (l: Locale): Locale => (trEnabled() ? l : 'en')
+  const pathLocale = (l: Locale): Locale => (localeEnabled(l) ? l : 'en')
 
   const fail = (status: number, code: ContactFailure, locale: Locale) => {
     if (!isJson) return sendRedirect(event, `${ROUTES.contact[pathLocale(locale)]}?error=${code}`, 303)
@@ -86,7 +89,8 @@ export default defineEventHandler(async (event: H3Event) => {
   } catch {
     body = {}
   }
-  const locale: Locale = (body as { locale?: unknown } | null)?.locale === 'tr' ? 'tr' : 'en'
+  const sent = (body as { locale?: unknown } | null)?.locale
+  const locale: Locale = CONTACT_LOCALES.find((l) => l === sent) ?? 'en'
 
   // Honeypot: bots fill the hidden `website` field. Look like a success, send nothing.
   const honeypot = (body as { website?: unknown } | null)?.website

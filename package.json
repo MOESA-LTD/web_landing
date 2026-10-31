@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "unreviewed:tr": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-tr.ts",
+    "unreviewed:de": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-de.ts",
     "og:image": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/og-image.ts"
   },
   "dependencies": {

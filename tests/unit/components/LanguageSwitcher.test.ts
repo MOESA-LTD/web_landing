@@ -56,6 +56,12 @@ describe('LanguageSwitcher dropdown button', () => {
     expect(button(w).attributes('aria-label')).toBe('Dil: Türkçe')
   })
 
+  it('shows the DE code and a German label on a DE page', async () => {
+    const w = await mount('/de')
+    expect(button(w).text()).toBe('DE')
+    expect(button(w).attributes('aria-label')).toBe('Sprache: Deutsch')
+  })
+
   it('has the canvas spec: 44px button, min 64px, 2px radius, line border; absolute 76px slot, 64px / 68px on mobile', async () => {
     const w = await mount('/')
     expect(button(w).classes()).toEqual(
@@ -76,7 +82,7 @@ describe('LanguageSwitcher dropdown button', () => {
 })
 
 describe('LanguageSwitcher dropdown menu', () => {
-  it('opens on click and lists native name plus code as EN / TR links only', async () => {
+  it('opens on click and lists native name plus code as EN / TR / DE links only', async () => {
     const w = await mount('/')
     await open(w)
     expect(button(w).attributes('aria-expanded')).toBe('true')
@@ -84,9 +90,10 @@ describe('LanguageSwitcher dropdown menu', () => {
     expect(links(w).map((a) => a.findAll('span').map((s) => s.text()))).toEqual([
       ['English', 'EN'],
       ['Türkçe', 'TR'],
+      ['Deutsch', 'DE'],
     ])
-    expect(links(w).map((a) => a.attributes('lang'))).toEqual(['en', 'tr'])
-    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr'])
+    expect(links(w).map((a) => a.attributes('lang'))).toEqual(['en', 'tr', 'de'])
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr', 'de'])
     expect(menu(w).findAll('button')).toHaveLength(0)
   })
 
@@ -107,6 +114,16 @@ describe('LanguageSwitcher dropdown menu', () => {
     expect(en!.attributes('href')).toBe('/contact?service=operations-supply-chain')
   })
 
+  it('on a DE page marks DE current and links EN and TR', async () => {
+    const w = await open(await mount('/de/kontakt?service=operations-supply-chain'))
+    const [en, tr, de] = links(w)
+    expect(de!.attributes('aria-current')).toBe('true')
+    expect(en!.attributes('aria-current')).toBeUndefined()
+    expect(tr!.attributes('aria-current')).toBeUndefined()
+    expect(en!.attributes('href')).toBe('/contact?service=operations-supply-chain')
+    expect(tr!.attributes('href')).toBe('/tr/iletisim?service=operations-supply-chain')
+  })
+
   it('has the canvas menu spec: right-aligned under the button, min 168px, 4px padding, menu shadow, 44px rows', async () => {
     const w = await open(await mount('/'))
     expect(menu(w).classes()).toEqual(
@@ -118,27 +135,33 @@ describe('LanguageSwitcher dropdown menu', () => {
 
 describe('LanguageSwitcher links', () => {
   it('link to the other locale of the current page', async () => {
-    expect(hrefs(await mount('/about'))).toEqual(['/about', '/tr/hakkimizda'])
+    expect(hrefs(await mount('/about'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
+    expect(hrefs(await mount('/de/ueber-uns'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
   })
 
   it('render the same hrefs in the closed (server-rendered) menu', async () => {
     const w = await mount('/how-we-work')
     expect(menu(w).attributes('hidden')).toBeDefined()
-    expect(hrefs(w)).toEqual(['/how-we-work', '/tr/nasil-calisiyoruz'])
+    expect(hrefs(w)).toEqual(['/how-we-work', '/tr/nasil-calisiyoruz', '/de/so-arbeiten-wir'])
   })
 
   it('keep the query on the TR link of /contact?service=...', async () => {
     const w = await mount('/contact?service=operations-supply-chain')
-    expect(hrefs(w)).toEqual(['/contact?service=operations-supply-chain', '/tr/iletisim?service=operations-supply-chain'])
+    expect(hrefs(w)).toEqual([
+      '/contact?service=operations-supply-chain',
+      '/tr/iletisim?service=operations-supply-chain',
+      '/de/kontakt?service=operations-supply-chain',
+    ])
   })
 
   // The layout renders the switcher before the page's setup (and its useSetI18nParams) runs on the server, so the
   // counterpart must come from ROUTES for every service page, in both directions.
-  it.each(serviceSlugs)('link service page %s to its counterpart slug in both directions, without any i18n params set', async (slug) => {
+  it.each(serviceSlugs)('link service page %s to its counterpart slug in every direction (en/tr/de), without any i18n params set', async (slug) => {
     const name = `services/${slug}` as keyof typeof ROUTES
-    const { en, tr } = ROUTES[name]
-    expect(hrefs(await mount(en))).toEqual([en, tr])
-    expect(hrefs(await mount(tr))).toEqual([en, tr])
+    const { en, tr, de } = ROUTES[name]
+    expect(hrefs(await mount(en))).toEqual([en, tr, de])
+    expect(hrefs(await mount(tr))).toEqual([en, tr, de])
+    expect(hrefs(await mount(de))).toEqual([en, tr, de])
   })
 
   it('cover exactly the five service pages', () => {
@@ -230,10 +253,25 @@ describe('LanguageSwitcher with TR disabled', () => {
   const config = () => useRuntimeConfig().public
   afterEach(() => {
     config().enableTr = true
+    config().enableDe = true
   })
 
-  it('renders nothing when enableTr is false', async () => {
+  it('lists only EN and DE when enableTr is false', async () => {
     config().enableTr = false
+    const w = await mount('/about')
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'de'])
+    expect(hrefs(w)).toEqual(['/about', '/de/ueber-uns'])
+  })
+
+  it('lists only EN and TR when enableDe is false', async () => {
+    config().enableDe = false
+    const w = await mount('/about')
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr'])
+  })
+
+  it('renders nothing when both enableTr and enableDe are false', async () => {
+    config().enableTr = false
+    config().enableDe = false
     const w = await mount('/')
     expect(w.find('button').exists()).toBe(false)
     expect(w.findAll('a')).toHaveLength(0)

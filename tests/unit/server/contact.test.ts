@@ -77,6 +77,7 @@ beforeEach(() => {
   vi.stubEnv('CONTACT_DEV_BYPASS_TURNSTILE', '')
   vi.stubEnv('CONTACT_TRUST_XFF', '')
   vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', '')
+  vi.stubEnv('NUXT_PUBLIC_ENABLE_DE', '')
 })
 afterEach(() => vi.unstubAllEnvs())
 
@@ -157,7 +158,7 @@ describe('POST /api/contact', () => {
   })
 
   it('an invalid locale returns 422', async () => {
-    const res = await postJson({ ...VALID, locale: 'de' })
+    const res = await postJson({ ...VALID, locale: 'fr' })
     expect(res.status).toBe(422)
     expect((await res.json()).errors.locale).toBeDefined()
   })
@@ -168,7 +169,25 @@ describe('POST /api/contact', () => {
     expect(en.headers.get('location')).toBe('/contact?error=1')
     const tr = await postForm({ ...VALID, name: '', locale: 'tr' })
     expect(tr.headers.get('location')).toBe('/tr/iletisim?error=1')
+    const de = await postForm({ ...VALID, name: '', locale: 'de' })
+    expect(de.headers.get('location')).toBe('/de/kontakt?error=1')
     expect(send).not.toHaveBeenCalled()
+  })
+
+  it('a form post with locale=de is answered with 303 to /de/danke and the email notes `Locale: de`', async () => {
+    const res = await postForm({ ...VALID, locale: 'de' })
+    expect(res.status).toBe(303)
+    expect(res.headers.get('location')).toBe('/de/danke')
+    expect(send).toHaveBeenCalledTimes(1)
+    expect(send.mock.calls[0]![0].text).toContain('Locale: de')
+  })
+
+  it('a DE post with a DE service label returns 422: only the EN option values are accepted', async () => {
+    const res = await postJson({ ...VALID, locale: 'de', service: 'Operations & Lieferkette' })
+    expect(res.status).toBe(422)
+    expect((await res.json()).errors.service).toBe('invalid_option')
+    const ok = await postJson({ ...VALID, locale: 'de' })
+    expect(ok.status).toBe(200)
   })
 
   it('a filled honeypot returns 303 to thank-you but sends no email (silent drop)', async () => {
@@ -265,6 +284,10 @@ describe('POST /api/contact hardening', () => {
     const res = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/tr/iletisim' })
     expect(res.status).toBe(303)
     expect(res.headers.get('location')).toBe('/tr/iletisim?error=rate_limited')
+    const de = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/de/kontakt' })
+    expect(de.headers.get('location')).toBe('/de/kontakt?error=rate_limited')
+    const notDe = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/demo' })
+    expect(notDe.headers.get('location')).toBe('/contact?error=rate_limited')
   })
 
   it('keys the rate limit on x-vercel-forwarded-for / x-real-ip, not on a spoofable X-Forwarded-For', async () => {
@@ -291,6 +314,15 @@ describe('POST /api/contact hardening', () => {
     expect(ok.headers.get('location')).toBe('/thank-you')
     const bad = await postForm({ ...VALID, name: '', locale: 'tr' })
     expect(bad.headers.get('location')).toBe('/contact?error=1')
+    // DE stays enabled.
+    expect((await postForm({ ...VALID, locale: 'de' })).headers.get('location')).toBe('/de/danke')
+  })
+
+  it('with DE disabled, a locale=de form post is redirected to EN paths (TR unaffected)', async () => {
+    vi.stubEnv('NUXT_PUBLIC_ENABLE_DE', 'false')
+    expect((await postForm({ ...VALID, locale: 'de' })).headers.get('location')).toBe('/thank-you')
+    expect((await postForm({ ...VALID, name: '', locale: 'de' })).headers.get('location')).toBe('/contact?error=1')
+    expect((await postForm({ ...VALID, locale: 'tr' })).headers.get('location')).toBe('/tr/tesekkurler')
   })
 })
 
@@ -337,6 +369,11 @@ describe('composeEmail', () => {
     const tr = composeEmail({ ...data, locale: 'tr' })
     expect(tr.text).toContain('Locale: tr')
     expect(tr.html).toContain('Locale: tr')
+    const de = composeEmail({ ...data, locale: 'de' })
+    expect(de.text).toContain('Locale: de')
+    expect(de.html).toContain('Locale: de')
+    expect(de.text).toContain('Service: Operations & Supply Chain')
+    expect(en.text).not.toContain('Locale:')
   })
 
   it('lists the optional fields only when given', () => {

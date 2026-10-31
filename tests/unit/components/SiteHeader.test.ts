@@ -229,6 +229,38 @@ describe('SiteHeader (TR)', () => {
   })
 })
 
+describe('SiteHeader (DE)', () => {
+  it('shows DE labels, the DE CTA and German paths on /de', async () => {
+    const w = await track('/de')
+    // Short header-only labels (nav.header.*, flagged): with the full "Für wen wir arbeiten" / "Über MOESA" the bar
+    // needs 1192px on one line, more than the 1160px breakpoint (measured in tests/e2e/header-language.spec.ts).
+    expect(
+      desktopNav(w)
+        .findAll(':scope > ul > li')
+        .map((li) => li.find('a, button').text()),
+    ).toEqual(['Leistungen', 'So arbeiten wir', 'Unsere Kunden', 'Über uns', 'Kontakt'])
+    expect(
+      desktopNav(w)
+        .findAll(':scope > ul > li > a')
+        .map((a) => a.attributes('href')),
+    ).toEqual(['/de/so-arbeiten-wir', '/de/fuer-wen-wir-arbeiten', '/de/ueber-uns', '/de/kontakt'])
+    expect(w.find('[data-header-cta] a').attributes('href')).toBe('/de/kontakt')
+    expect(w.find('[data-header-cta] a').text()).toBe('Projekt besprechen')
+    await desktopNav(w).find('button').trigger('click')
+    const links = w.findAll('#services-menu a')
+    expect(links[0]!.text()).toBe('Sourcing & Beschaffungsmanagement')
+    expect(links[0]!.attributes('href')).toBe('/de/leistungen/sourcing-und-beschaffungsmanagement')
+    expect(links.at(-1)!.text()).toBe('Alle Leistungen')
+    expect(links.at(-1)!.attributes('href')).toBe('/de/leistungen')
+  })
+
+  it('marks Services current on a DE service page', async () => {
+    const w = await track('/de/leistungen/operations-und-lieferkette')
+    expect(desktopNav(w).find('button').classes()).toContain('is-current')
+    expect(desktopNav(w).findAll(':scope > ul > li > [aria-current]')).toHaveLength(1)
+  })
+})
+
 describe('SiteHeader language dropdown', () => {
   const langBtn = (w: Wrapper) => w.find('button#lang-button')
   const servicesBtn = (w: Wrapper) => desktopNav(w).find('button#services-button')
@@ -279,7 +311,7 @@ describe('SiteHeader language dropdown', () => {
 
   it('lists the TR counterpart of the current page, and is Turkish on /tr/*', async () => {
     const w = await track('/about')
-    expect(w.findAll('#lang-menu a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda'])
+    expect(w.findAll('#lang-menu a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
     const tr = await track('/tr/hakkimizda')
     expect(langBtn(tr).attributes('aria-label')).toBe('Dil: Türkçe')
   })

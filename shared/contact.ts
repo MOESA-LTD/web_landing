@@ -50,7 +50,8 @@ export type ContactFailure = 'rate_limited' | 'verification_failed' | 'send_fail
  */
 export const EMAIL_RE = /^[^\s@<>",;()]+@[^\s@<>",;()]+\.[^\s@<>",;()]+$/
 
-export const CONTACT_LOCALES = ['en', 'tr'] as const
+export const CONTACT_LOCALES = ['en', 'tr', 'de'] as const
+export type ContactLocale = (typeof CONTACT_LOCALES)[number]
 
 /**
  * Client-side validation of the visible fields, in form order. Returns error codes keyed by field; empty when valid.

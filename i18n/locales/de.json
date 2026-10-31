@@ -1,0 +1,158 @@
+{
+  "skipLink": "Zum Inhalt springen",
+  "language": {
+    "label": "Sprache",
+    "names": {
+      "en": "English",
+      "tr": "Türkçe",
+      "de": "Deutsch"
+    }
+  },
+  "cta": {
+    "discussProject": "Projekt besprechen",
+    "exploreServices": "Leistungen entdecken"
+  },
+  "nav": {
+    "label": "Hauptnavigation",
+    "home": "Startseite",
+    "services": "Leistungen",
+    "howWeWork": "So arbeiten wir",
+    "whoWeWorkWith": "Für wen wir arbeiten",
+    "about": "Über MOESA",
+    "contact": "Kontakt",
+    "header": {
+      "whoWeWorkWith": "Unsere Kunden",
+      "about": "Über uns"
+    },
+    "allServices": "Alle Leistungen",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "serviceLinks": {
+      "sourcing-managed-procurement": "Sourcing & Beschaffungsmanagement",
+      "product-private-label-development": "Produkt- & Private-Label-Entwicklung",
+      "market-access-commercial-representation": "Marktzugang & Handelsvertretung",
+      "operations-supply-chain": "Operations & Lieferkette",
+      "digital-commerce-commercial-intelligence": "Digital Commerce & Commercial Intelligence"
+    }
+  },
+  "logo": {
+    "homeLabel": "MOESA Ltd. Startseite"
+  },
+  "breadcrumbs": {
+    "label": "Brotkrümelnavigation",
+    "home": "Startseite",
+    "services": "Leistungen",
+    "allServices": "Alle Leistungen"
+  },
+  "related": {
+    "services": "Verwandte Leistungen"
+  },
+  "cards": {
+    "exploreService": "Leistung ansehen",
+    "capability": "Bereichsübergreifende Kompetenz"
+  },
+  "status": {
+    "draft": "Entwurf",
+    "open": "Offen"
+  },
+  "footer": {
+    "servicesTitle": "Leistungen",
+    "companyTitle": "Unternehmen",
+    "contactTitle": "Kontakt",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "address": "Eingetragene Anschrift",
+    "companyLine": "MOESA Ltd. · Firmennummer {companyId} · USt-IdNr. {vat}",
+    "legal": {
+      "privacyPolicy": "Datenschutzerklärung",
+      "cookiePolicy": "Cookie-Richtlinie",
+      "legalNotice": "Impressum"
+    }
+  },
+  "company": {
+    "companyId": "Firmennummer",
+    "vat": "USt-IdNr."
+  },
+  "form": {
+    "heading": "Projektformular",
+    "labels": {
+      "name": "Name",
+      "company": "Unternehmen",
+      "workEmail": "Geschäftliche E-Mail",
+      "country": "Land",
+      "service": "Wie können wir Sie unterstützen?",
+      "projectBrief": "Kurzes Projektbriefing",
+      "productCategory": "Produktkategorie",
+      "targetMarket": "Zielmarkt",
+      "estimatedVolume": "Geschätztes Volumen",
+      "targetTimeline": "Gewünschter Zeitrahmen"
+    },
+    "projectDetails": "Projektdetails",
+    "optional": "(optional)",
+    "servicePlaceholder": "Leistung auswählen",
+    "briefHelp": "Was das Unternehmen braucht, was bereits bestätigt ist und was offen bleibt.",
+    "consent": "Ich bin damit einverstanden, dass MOESA die von mir übermittelten Informationen verarbeitet, um diese Anfrage zu beantworten. Siehe {link}.",
+    "submit": "Projektbriefing senden",
+    "disclaimer": "Ein übermitteltes Formular begründet kein Vertragsverhältnis.",
+    "sending": "Wird gesendet…",
+    "honeypot": "Dieses Feld leer lassen",
+    "serviceOptions": {
+      "sourcing": "Marken- oder Produkt-Sourcing",
+      "procurement": "Beschaffungsmanagement",
+      "productPrivateLabel": "Produkt- & Private-Label-Entwicklung",
+      "marketAccess": "Marktzugang",
+      "commercialRepresentation": "Handelsvertretung",
+      "operations": "Operations & Lieferkette",
+      "digitalCommerce": "Digital-Commerce-Operations",
+      "integrated": "Integriert / mehrere Leistungen",
+      "notSure": "Noch nicht sicher",
+      "other": "Sonstiges"
+    },
+    "errorSummaryOne": "Bitte prüfen Sie 1 Feld",
+    "errorSummaryMany": "Bitte prüfen Sie {count} Felder",
+    "errors": {
+      "name": "Geben Sie Ihren Namen ein.",
+      "company": "Geben Sie den Namen Ihres Unternehmens ein.",
+      "workEmail": "Geben Sie eine geschäftliche E-Mail-Adresse ein, zum Beispiel name{'@'}unternehmen.de.",
+      "country": "Geben Sie Ihr Land ein.",
+      "service": "Wählen Sie aus, wie wir Sie unterstützen können.",
+      "projectBrief": "Beschreiben Sie das Projekt kurz.",
+      "consent": "Bestätigen Sie Ihre Einwilligung, damit wir Ihre Anfrage beantworten können.",
+      "tooLong": "Verwenden Sie höchstens {max} Zeichen.",
+      "briefTooShort": "Beschreiben Sie das Projekt in mindestens {min} Zeichen.",
+      "generic": "Einige Angaben konnten nicht angenommen werden. Bitte prüfen Sie das Formular und senden Sie es erneut.",
+      "rateLimited": "Zu viele Übermittlungen von dieser Verbindung. Bitte warten Sie 10 Minuten und versuchen Sie es erneut, oder schreiben Sie uns direkt eine E-Mail.",
+      "verificationFailed": "Die Spam-Prüfung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+      "sendFailed": "Das Formular konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info{'@'}moesaltd.com."
+    }
+  },
+  "cookie": {
+    "title": "Cookie-Einstellungen",
+    "strictlyNecessary": "Unbedingt erforderlich",
+    "alwaysOn": "(immer aktiv)",
+    "preferences": "Präferenzen",
+    "analytics": "Analyse",
+    "rejectNonEssential": "Nicht erforderliche ablehnen",
+    "acceptAll": "Alle akzeptieren",
+    "saveChoices": "Auswahl speichern",
+    "chooseSettings": "Einstellungen wählen",
+    "saved": "Ihre Auswahl wurde gespeichert.",
+    "inventory": {
+      "caption": "Von dieser Website gesetzte Cookies",
+      "name": "Name",
+      "category": "Kategorie",
+      "purpose": "Zweck",
+      "duration": "Speicherdauer",
+      "consentPurpose": "Speichert Ihre Cookie-Auswahl.",
+      "consentDuration": "180 Tage"
+    }
+  },
+  "stats": {
+    "digitalCommerce": "Jahre im Digital Commerce",
+    "ecommerceOperations": "Jahre in professionellen E-Commerce-Operations"
+  },
+  "error": {
+    "title": "Etwas ist schiefgelaufen.",
+    "body": "Die Seite konnte nicht geladen werden. Bitte versuchen Sie es später erneut."
+  }
+}

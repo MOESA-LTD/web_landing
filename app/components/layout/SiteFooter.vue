@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Locale } from '#content/types'
+import { siteDe } from '#content/de/site'
 import { brand, navigation } from '#content/site'
 import { localizeHref, routeNameForPath, type RouteName } from '~~/i18n/routes'
 
@@ -10,7 +12,7 @@ import { localizeHref, routeNameForPath, type RouteName } from '~~/i18n/routes'
 const props = withDefaults(defineProps<{ showCta?: boolean }>(), { showCta: false })
 
 const { t, locale } = useI18n()
-const loc = (href: string) => localizeHref(href, locale.value as 'en' | 'tr')
+const loc = (href: string) => localizeHref(href, locale.value as Locale)
 
 const NAV_LABEL_KEY: Partial<Record<RouteName, string>> = {
   services: 'nav.services',
@@ -25,7 +27,9 @@ const LEGAL_LABEL_KEY: Partial<Record<RouteName, string>> = {
   'legal-notice': 'footer.legal.legalNotice',
 }
 
-const descriptor = computed(() => (locale.value === 'tr' ? brand.descriptor_tr : brand.descriptor_en))
+// The package gives the descriptor in EN and TR (brand_tokens.json); DE is our flagged translation (content/de/site.ts).
+const DESCRIPTOR: Record<Locale, string> = { en: brand.descriptor_en, tr: brand.descriptor_tr, de: siteDe.descriptor }
+const descriptor = computed(() => DESCRIPTOR[locale.value as Locale] ?? brand.descriptor_en)
 const serviceLinks = computed(() =>
   navigation.services.map((s) => ({
     href: loc(s.href),

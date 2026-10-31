@@ -3,10 +3,10 @@
  * Acceptance checks against the PRODUCTION BUILD (`.output/`). Run `npm run build` first: without `.output`
  * the suite fails with a message saying so (it never passes silently on a missing or partial build).
  *
- * 1. Forbidden claims (build spec §11, global constraints): no page of either locale contains a forbidden phrase,
+ * 1. Forbidden claims (build spec §11, global constraints): no page of any locale (EN/TR/DE) contains a forbidden phrase,
  *    and claim-sensitive words (AI, platform, portal, dashboard, guarantee ...) only appear inside text that is
- *    approved copy (package md, EN or TR) or the flagged TR translation of approved EN (content/tr/unreviewed.ts).
- *    Pages: the prerendered HTML in `.output/public/**` plus every one of the 30 routes rendered by the built
+ *    approved copy (package md, EN or TR) or a flagged TR/DE translation of approved EN (content/{tr,de}/unreviewed.ts).
+ *    Pages: the prerendered HTML in `.output/public/**` plus every one of the 45 routes rendered by the built
  *    server (`node .output/server/index.mjs`), since most pages are server-rendered on request, not prerendered.
  * 2. No source comment leaks: comment texts from app/**\/*.{vue,ts} (`<!-- -->`, `//`, `/* *\/`; licence
  *    comments `/*!` excluded) never appear in `.output/public/**\/*.{html,js}` or `.output/server/**\/*.mjs`.
@@ -17,6 +17,7 @@ import { join, relative, resolve } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ROUTES } from '../../i18n/routes'
 import { UNREVIEWED_TR } from '../../content/tr/unreviewed'
+import { UNREVIEWED_DE } from '../../content/de/unreviewed'
 
 const ROOT = resolve(import.meta.dirname, '../..')
 const OUTPUT = join(ROOT, '.output')
@@ -89,6 +90,18 @@ const FORBIDDEN = [
   'tüm yasal sorumluluk',
   'her ülkede',
   'müşteri portal',
+  // DE equivalents (our translation of the EN claims)
+  'volle Compliance garantiert',
+  'vollständige Compliance garantiert',
+  'Compliance wird garantiert',
+  'Konformität garantiert',
+  'gesamte rechtliche Verantwortung',
+  'sämtliche rechtliche Verantwortung',
+  'jegliche rechtliche Verantwortung',
+  'alle rechtliche Verantwortung',
+  'in jedem Land',
+  'in allen Ländern',
+  'Kundenportal',
 ]
 
 /**
@@ -97,7 +110,10 @@ const FORBIDDEN = [
  * them as roadmap or disclaimer wording ("AI-assisted analysis ... roadmap capabilities", "Not a software
  * platform", "cannot be guaranteed").
  */
-const SENSITIVE = /\bAI\b|yapay zek|\bplatform|portal|dashboard|guarant|garanti|\bcertif|sertifika/i
+const SENSITIVE = /\bAI\b|yapay zek|\bplatform|plattform|portal|dashboard|guarant|garanti|\bcertif|sertifika|zertifi/i
+/** German "KI" (AI), case-sensitive so that the Turkish word "ki" does not count. */
+const SENSITIVE_CASED = /\bKI\b/
+const isSensitive = (run: string) => SENSITIVE.test(run) || SENSITIVE_CASED.test(run)
 
 const mdFiles = (locale: 'en' | 'tr') =>
   readdirSync(join(PKG_CONTENT, locale))
@@ -114,10 +130,11 @@ const approvedCorpus = fold(
         .replace(/^\s*(?:[-*]|\d+\.|#+)\s+/gm, ''),
     ),
     ...UNREVIEWED_TR.map((u) => u.tr),
+    ...UNREVIEWED_DE.map((u) => u.de),
   ].join('\n'),
 )
 
-const PAGE_PATHS = Object.values(ROUTES).flatMap((p) => [p.en, p.tr])
+const PAGE_PATHS = Object.values(ROUTES).flatMap((p) => [p.en, p.tr, p.de])
 
 let server: ChildProcess | undefined
 const pages = new Map<string, string>()
@@ -159,15 +176,15 @@ afterAll(() => {
   server?.kill()
 })
 
-describe('forbidden claims (built site, EN + TR)', () => {
+describe('forbidden claims (built site, EN + TR + DE)', () => {
   it('the production build exists', () => {
     if (buildError) throw buildError
     expect(pages.size).toBeGreaterThanOrEqual(PAGE_PATHS.length)
   })
 
-  it('renders all 30 routes from the built server', () => {
+  it('renders all 45 routes from the built server', () => {
     if (buildError) throw buildError
-    expect(PAGE_PATHS).toHaveLength(30)
+    expect(PAGE_PATHS).toHaveLength(45)
     for (const p of PAGE_PATHS) expect(pages.has(`ssr:${p}`), p).toBe(true)
   })
 
@@ -202,7 +219,7 @@ describe('forbidden claims (built site, EN + TR)', () => {
     let checked = 0
     for (const [name, html] of pages) {
       for (const run of textRuns(html)) {
-        if (!SENSITIVE.test(run)) continue
+        if (!isSensitive(run)) continue
         checked++
         if (!approvedCorpus.includes(fold(run))) hits.add(`${name}: "${run}"`)
       }

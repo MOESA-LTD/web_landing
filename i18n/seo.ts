@@ -3,7 +3,7 @@
  * OG/Twitter tags for one page in one locale. Plain TypeScript so it is unit-testable.
  */
 import type { Locale, PageMeta } from '../content/types'
-import { localizeHref, routeNameForPath } from './routes'
+import { enabledLocales, localizeHref, routeNameForPath, type LocaleOptions } from './routes'
 
 export const SITE_ORIGIN = 'https://www.moesaltd.com'
 export const SITE_NAME = 'MOESA Ltd.'
@@ -31,16 +31,15 @@ export interface SeoHead {
 /**
  * @param meta     the page meta, where `path` is the EN path
  * @param locale   the locale the page is rendered in (self-referencing canonical)
- * @param options  `enableTr: false` drops the TR alternate
+ * @param options  `enableTr: false` / `enableDe: false` drops the TR / DE alternate
  *
  * A path that is not a route (the 404 page) gets no canonical, no alternates and no og:url.
  */
 export function buildPageSeo(
   meta: PageMeta,
   locale: Locale,
-  options: { enableTr?: boolean } = {},
+  options: LocaleOptions = {},
 ): SeoHead {
-  const enableTr = options.enableTr ?? true
   const known = routeNameForPath(meta.path) !== null
   const urlFor = (l: Locale) => SITE_ORIGIN + localizeHref(meta.path, l)
   const canonical = urlFor(locale)
@@ -62,8 +61,7 @@ export function buildPageSeo(
   const link: SeoLink[] = []
   if (known) {
     link.push({ rel: 'canonical', href: canonical })
-    link.push({ rel: 'alternate', hreflang: 'en', href: urlFor('en') })
-    if (enableTr) link.push({ rel: 'alternate', hreflang: 'tr', href: urlFor('tr') })
+    for (const l of enabledLocales(options)) link.push({ rel: 'alternate', hreflang: l, href: urlFor(l) })
     link.push({ rel: 'alternate', hreflang: 'x-default', href: urlFor('en') })
   }
 
@@ -78,7 +76,7 @@ export interface OrganizationSource {
 }
 
 /**
- * Organization JSON-LD for the home page (the same in both locales). Only facts from brand_tokens.json: the
+ * Organization JSON-LD for the home page (the same in every locale). Only facts from brand_tokens.json: the
  * address "1 Petyofi Str., Plovdiv 4000, Bulgaria" split into PostalAddress fields, the VAT number, the
  * email and phone (also as a sales ContactPoint), and the lockup PNG as the logo.
  */

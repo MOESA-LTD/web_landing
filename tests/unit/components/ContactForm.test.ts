@@ -94,6 +94,39 @@ describe('ContactForm', () => {
     expect(w.text()).toContain('(opsiyonel)')
   })
 
+  it('shows DE labels on DE pages but keeps the EN option values', async () => {
+    const w = await mountAt('/de/kontakt?service=operations-supply-chain')
+    const options = w.findAll('select[name="service"] option').slice(1)
+    expect(options.map((o) => o.attributes('value'))).toEqual(contactForm.service_options)
+    expect(options[5]!.text()).toBe('Operations & Lieferkette')
+    expect((w.find('select[name="service"]').element as HTMLSelectElement).value).toBe('Operations & Supply Chain')
+    expect(w.find('input[name="locale"]').attributes('value')).toBe('de')
+    expect(w.text()).toContain('Geschäftliche E-Mail')
+    expect(w.text()).toContain('Wie können wir Sie unterstützen?')
+    expect(w.text()).toContain('(optional)')
+  })
+
+  it('shows the DE error texts and posts the EN service value from the DE page, then goes to /de/danke', async () => {
+    let received: Record<string, unknown> | undefined
+    registerEndpoint('/api/contact', {
+      method: 'POST',
+      handler: async (event) => {
+        received = await readBody(event)
+        return { ok: true }
+      },
+    })
+    const empty = await mountAt('/de/kontakt')
+    await empty.find('form').trigger('submit')
+    await flushPromises()
+    expect(empty.text()).toContain('Bitte prüfen Sie 7 Felder')
+    const w = await mountAt('/de/kontakt')
+    await fill(w, VALID)
+    await w.find('[name="privacy_consent"]').setValue(true)
+    await w.find('form').trigger('submit')
+    await vi.waitFor(() => expect(useRoute().path).toBe('/de/danke'))
+    expect(received).toMatchObject({ ...VALID, privacy_consent: 'on', locale: 'de', website: '' })
+  })
+
   it('preselects the service from ?service=operations-supply-chain', async () => {
     const w = await mountAt('/contact?service=operations-supply-chain')
     const select = w.find('select[name="service"]').element as HTMLSelectElement

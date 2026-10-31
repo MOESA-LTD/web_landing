@@ -8,6 +8,8 @@ import {
   serviceSlugFromLocaleSlug,
   servicePrerenderRoutes,
   contactPrerenderRoutes,
+  enabledLocales,
+  sitemapUrls,
   type RouteName,
 } from '../../i18n/routes'
 import { useLocalizedHref } from '../../app/composables/useLocalizedHref'
@@ -31,7 +33,7 @@ const EXPECTED: [string, string][] = [
   ['/legal-notice', '/tr/yasal-bildirim'],
 ]
 
-const entries = Object.entries(ROUTES) as [RouteName, { en: string; tr: string }][]
+const entries = Object.entries(ROUTES) as [RouteName, { en: string; tr: string; de: string }][]
 
 describe('ROUTES', () => {
   it('has 15 entries', () => {
@@ -116,16 +118,16 @@ describe('buildI18nPages', () => {
   const pages = buildI18nPages()
 
   it('gives the TR path (without the /tr locale prefix) for each file route', () => {
-    expect(pages['services']).toEqual({ tr: '/hizmetler' })
-    expect(pages['services/[slug]']).toEqual({ tr: '/hizmetler/[slug]' })
-    expect(pages['how-we-work']).toEqual({ tr: '/nasil-calisiyoruz' })
-    expect(pages['who-we-work-with']).toEqual({ tr: '/kimlerle-calisiyoruz' })
-    expect(pages['about']).toEqual({ tr: '/hakkimizda' })
-    expect(pages['contact']).toEqual({ tr: '/iletisim' })
-    expect(pages['thank-you']).toEqual({ tr: '/tesekkurler' })
-    expect(pages['privacy-policy']).toEqual({ tr: '/gizlilik-politikasi' })
-    expect(pages['cookie-policy']).toEqual({ tr: '/cerez-politikasi' })
-    expect(pages['legal-notice']).toEqual({ tr: '/yasal-bildirim' })
+    expect(pages['services']).toMatchObject({ tr: '/hizmetler' })
+    expect(pages['services/[slug]']).toMatchObject({ tr: '/hizmetler/[slug]' })
+    expect(pages['how-we-work']).toMatchObject({ tr: '/nasil-calisiyoruz' })
+    expect(pages['who-we-work-with']).toMatchObject({ tr: '/kimlerle-calisiyoruz' })
+    expect(pages['about']).toMatchObject({ tr: '/hakkimizda' })
+    expect(pages['contact']).toMatchObject({ tr: '/iletisim' })
+    expect(pages['thank-you']).toMatchObject({ tr: '/tesekkurler' })
+    expect(pages['privacy-policy']).toMatchObject({ tr: '/gizlilik-politikasi' })
+    expect(pages['cookie-policy']).toMatchObject({ tr: '/cerez-politikasi' })
+    expect(pages['legal-notice']).toMatchObject({ tr: '/yasal-bildirim' })
   })
 
   it('does not customise the home page (the prefix alone gives /tr)', () => {
@@ -183,7 +185,7 @@ describe('serviceSlugFromLocaleSlug', () => {
 
 describe('servicePrerenderRoutes', () => {
   it('lists the overview and the 5 service pages in both locales (12 URLs) when TR is enabled', () => {
-    const routes = servicePrerenderRoutes({ enableTr: true })
+    const routes = servicePrerenderRoutes({ enableTr: true, enableDe: false })
     expect(routes).toHaveLength(12)
     expect(routes).toEqual(expect.arrayContaining(['/services', '/tr/hizmetler']))
     for (const [, p] of entries.filter(([n]) => n.startsWith('services/'))) {
@@ -193,7 +195,7 @@ describe('servicePrerenderRoutes', () => {
   })
 
   it('leaves out every /tr URL when TR is disabled', () => {
-    const routes = servicePrerenderRoutes({ enableTr: false })
+    const routes = servicePrerenderRoutes({ enableTr: false, enableDe: false })
     expect(routes).toHaveLength(6)
     expect(routes.some((r) => r.startsWith('/tr'))).toBe(false)
   })
@@ -201,7 +203,154 @@ describe('servicePrerenderRoutes', () => {
 
 describe('contactPrerenderRoutes', () => {
   it('lists the contact and thank-you pages in both locales, never the API route', () => {
-    expect(contactPrerenderRoutes({ enableTr: true })).toEqual(['/contact', '/tr/iletisim', '/thank-you', '/tr/tesekkurler'])
-    expect(contactPrerenderRoutes({ enableTr: false })).toEqual(['/contact', '/thank-you'])
+    expect(contactPrerenderRoutes({ enableTr: true, enableDe: false })).toEqual(['/contact', '/tr/iletisim', '/thank-you', '/tr/tesekkurler'])
+    expect(contactPrerenderRoutes({ enableTr: false, enableDe: false })).toEqual(['/contact', '/thank-you'])
+  })
+})
+
+/** The DE routes table from task-12-brief.md, copied independently of ROUTES. */
+const EXPECTED_DE: [string, string][] = [
+  ['/', '/de'],
+  ['/services', '/de/leistungen'],
+  ['/services/sourcing-managed-procurement', '/de/leistungen/sourcing-und-beschaffungsmanagement'],
+  ['/services/product-private-label-development', '/de/leistungen/produkt-und-private-label-entwicklung'],
+  ['/services/market-access-commercial-representation', '/de/leistungen/marktzugang-und-handelsvertretung'],
+  ['/services/operations-supply-chain', '/de/leistungen/operations-und-lieferkette'],
+  ['/services/digital-commerce-commercial-intelligence', '/de/leistungen/digital-commerce-und-commercial-intelligence'],
+  ['/how-we-work', '/de/so-arbeiten-wir'],
+  ['/who-we-work-with', '/de/fuer-wen-wir-arbeiten'],
+  ['/about', '/de/ueber-uns'],
+  ['/contact', '/de/kontakt'],
+  ['/thank-you', '/de/danke'],
+  ['/privacy-policy', '/de/datenschutz'],
+  ['/cookie-policy', '/de/cookie-richtlinie'],
+  ['/legal-notice', '/de/impressum'],
+]
+
+describe('ROUTES (DE)', () => {
+  it('matches the approved DE routes table exactly', () => {
+    expect(entries.map(([, p]) => [p.en, p.de])).toEqual(EXPECTED_DE)
+  })
+
+  it('every DE path starts with /de, is lowercase ASCII [a-z0-9/-], unique, without a trailing slash', () => {
+    for (const [, p] of entries) {
+      expect(p.de === '/de' || p.de.startsWith('/de/')).toBe(true)
+      expect(p.de).toMatch(/^[a-z0-9/-]+$/)
+      expect(p.de.endsWith('/')).toBe(false)
+    }
+    expect(new Set(entries.map(([, p]) => p.de)).size).toBe(entries.length)
+  })
+})
+
+describe('localizeHref (DE)', () => {
+  it('maps EN paths to the German slugs, keeping query and hash', () => {
+    expect(localizeHref('/', 'de')).toBe('/de')
+    expect(localizeHref('/services/operations-supply-chain', 'de')).toBe('/de/leistungen/operations-und-lieferkette')
+    expect(localizeHref('/contact?service=operations-supply-chain#project-form', 'de')).toBe(
+      '/de/kontakt?service=operations-supply-chain#project-form',
+    )
+    expect(localizeHref('/legal-notice', 'de')).toBe('/de/impressum')
+  })
+
+  it('returns external, unknown and already-localised hrefs unchanged', () => {
+    for (const href of ['https://x.y/', 'mailto:info@moesaltd.com', '#top', '/nope', '/de/kontakt']) {
+      expect(localizeHref(href, 'de')).toBe(href)
+    }
+  })
+})
+
+describe('routeNameForLocalePath (DE)', () => {
+  it('maps DE paths to their route names', () => {
+    expect(routeNameForLocalePath('/de')).toBe('home')
+    expect(routeNameForLocalePath('/de/')).toBe('home')
+    expect(routeNameForLocalePath('/de/ueber-uns')).toBe('about')
+    expect(routeNameForLocalePath('/de/leistungen/operations-und-lieferkette')).toBe('services/operations-supply-chain')
+    expect(routeNameForLocalePath('/de/about')).toBeNull()
+  })
+})
+
+describe('buildI18nPages (DE)', () => {
+  const pages = buildI18nPages()
+  it('gives the TR and DE paths (without the locale prefix) for each file route', () => {
+    expect(pages['services']).toEqual({ tr: '/hizmetler', de: '/leistungen' })
+    expect(pages['services/[slug]']).toEqual({ tr: '/hizmetler/[slug]', de: '/leistungen/[slug]' })
+    expect(pages['who-we-work-with']).toEqual({ tr: '/kimlerle-calisiyoruz', de: '/fuer-wen-wir-arbeiten' })
+    expect(pages['thank-you']).toEqual({ tr: '/tesekkurler', de: '/danke' })
+    expect(pages['legal-notice']).toEqual({ tr: '/yasal-bildirim', de: '/impressum' })
+  })
+})
+
+describe('serviceSlugFromLocaleSlug (DE)', () => {
+  const PAIRS: [string, string][] = [
+    ['sourcing-managed-procurement', 'sourcing-und-beschaffungsmanagement'],
+    ['product-private-label-development', 'produkt-und-private-label-entwicklung'],
+    ['market-access-commercial-representation', 'marktzugang-und-handelsvertretung'],
+    ['operations-supply-chain', 'operations-und-lieferkette'],
+    ['digital-commerce-commercial-intelligence', 'digital-commerce-und-commercial-intelligence'],
+  ]
+
+  it('maps each DE slug to its EN service slug and back', () => {
+    for (const [en, de] of PAIRS) {
+      expect(serviceSlugFromLocaleSlug('de', de)).toBe(en)
+      expect(localeSlugForService('de', en as never)).toBe(de)
+    }
+  })
+
+  it('rejects EN and TR slugs on DE URLs and DE slugs on EN/TR URLs', () => {
+    expect(serviceSlugFromLocaleSlug('de', 'operations-supply-chain')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('de', 'operasyon-ve-tedarik-zinciri')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('en', 'operations-und-lieferkette')).toBeNull()
+    expect(serviceSlugFromLocaleSlug('tr', 'operations-und-lieferkette')).toBeNull()
+  })
+})
+
+describe('locale switches (enableTr / enableDe)', () => {
+  it('enabledLocales lists EN always, TR and DE unless disabled (both default to enabled)', () => {
+    expect(enabledLocales({})).toEqual(['en', 'tr', 'de'])
+    expect(enabledLocales({ enableTr: false })).toEqual(['en', 'de'])
+    expect(enabledLocales({ enableDe: false })).toEqual(['en', 'tr'])
+    expect(enabledLocales({ enableTr: false, enableDe: false })).toEqual(['en'])
+  })
+
+  it('prerenders the DE service, contact and thank-you pages unless DE is disabled', () => {
+    const all = servicePrerenderRoutes({ enableTr: true, enableDe: true })
+    expect(all).toHaveLength(18)
+    for (const [, p] of entries.filter(([n]) => n === 'services' || n.startsWith('services/'))) expect(all).toContain(p.de)
+    expect(contactPrerenderRoutes({ enableTr: true, enableDe: true })).toEqual([
+      '/contact',
+      '/tr/iletisim',
+      '/de/kontakt',
+      '/thank-you',
+      '/tr/tesekkurler',
+      '/de/danke',
+    ])
+    const noDe = [
+      ...servicePrerenderRoutes({ enableTr: true, enableDe: false }),
+      ...contactPrerenderRoutes({ enableTr: true, enableDe: false }),
+    ]
+    expect(noDe.some((r) => r.startsWith('/de'))).toBe(false)
+    expect(servicePrerenderRoutes({ enableTr: false, enableDe: true }).some((r) => r.startsWith('/tr'))).toBe(false)
+  })
+
+  it('sitemapUrls: 42 URLs (14 per locale) with en/tr/de/x-default alternates', () => {
+    const urls = sitemapUrls({ enableTr: true, enableDe: true })
+    expect(urls).toHaveLength(42)
+    expect(urls.filter((u) => u.loc.startsWith('/de')).length).toBe(14)
+    const about = urls.find((u) => u.loc === '/de/ueber-uns')!
+    expect(about.alternatives).toEqual([
+      { hreflang: 'en', href: '/about' },
+      { hreflang: 'tr', href: '/tr/hakkimizda' },
+      { hreflang: 'de', href: '/de/ueber-uns' },
+      { hreflang: 'x-default', href: '/about' },
+    ])
+    expect(urls.some((u) => u.loc === '/de/danke')).toBe(false)
+  })
+
+  it('sitemapUrls drops every DE URL and alternate when DE is disabled', () => {
+    const urls = sitemapUrls({ enableTr: true, enableDe: false })
+    expect(urls).toHaveLength(28)
+    expect(urls.some((u) => u.loc.startsWith('/de') || u.alternatives.some((a) => a.hreflang === 'de'))).toBe(false)
+    expect(sitemapUrls({ enableTr: false, enableDe: true })).toHaveLength(28)
+    expect(sitemapUrls({ enableTr: false, enableDe: false })).toHaveLength(14)
   })
 })

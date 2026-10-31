@@ -23,15 +23,33 @@ describe('buildPageSeo', () => {
     expect(metaContent(head, 'og:url')).toBe('https://www.moesaltd.com/tr/iletisim')
   })
 
-  it('emits hreflang en, tr and x-default (= EN) on both locales', () => {
-    for (const locale of ['en', 'tr'] as const) {
+  it('emits hreflang en, tr, de and x-default (= EN) on every locale', () => {
+    for (const locale of ['en', 'tr', 'de'] as const) {
       const alt = buildPageSeo(meta, locale).link.filter((l) => l.rel === 'alternate')
       expect(alt.map((l) => [l.hreflang, l.href])).toEqual([
         ['en', 'https://www.moesaltd.com/contact'],
         ['tr', 'https://www.moesaltd.com/tr/iletisim'],
+        ['de', 'https://www.moesaltd.com/de/kontakt'],
         ['x-default', 'https://www.moesaltd.com/contact'],
       ])
     }
+  })
+
+  it('uses a self-referencing DE canonical, DE html lang and the German slug', () => {
+    const head = buildPageSeo(meta, 'de')
+    expect(head.htmlAttrs).toEqual({ lang: 'de' })
+    expect(head.link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/de/kontakt')
+    expect(metaContent(head, 'og:url')).toBe('https://www.moesaltd.com/de/kontakt')
+    const svc = buildPageSeo({ ...meta, path: '/services/operations-supply-chain' }, 'de')
+    expect(svc.link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/de/leistungen/operations-und-lieferkette')
+    expect(buildPageSeo({ ...meta, path: '/' }, 'de').link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/de')
+  })
+
+  it('drops the DE alternate when DE is disabled, and both when both are disabled', () => {
+    const noDe = buildPageSeo(meta, 'en', { enableDe: false }).link.filter((l) => l.rel === 'alternate')
+    expect(noDe.map((l) => l.hreflang)).toEqual(['en', 'tr', 'x-default'])
+    const none = buildPageSeo(meta, 'en', { enableTr: false, enableDe: false }).link.filter((l) => l.rel === 'alternate')
+    expect(none.map((l) => l.hreflang)).toEqual(['en', 'x-default'])
   })
 
   it('keeps "/" as the only path with a trailing slash; TR home has none', () => {
@@ -63,7 +81,7 @@ describe('buildPageSeo', () => {
 
   it('drops the TR alternate when TR is disabled', () => {
     const alt = buildPageSeo(meta, 'en', { enableTr: false }).link.filter((l) => l.rel === 'alternate')
-    expect(alt.map((l) => l.hreflang)).toEqual(['en', 'x-default'])
+    expect(alt.map((l) => l.hreflang)).toEqual(['en', 'de', 'x-default'])
   })
 
   it('emits no canonical or alternates for a path that is not a route (404)', () => {

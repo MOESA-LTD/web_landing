@@ -7,7 +7,7 @@ import { errorLocale } from '~/utils/error-locale'
 /**
  * Error page, inside the default layout (header, `<main id="main">`, footer).
  * - 404 (NotFound.dc.html): `MessageState kind="notFound"` with the approved 404.md copy in the locale of the
- *   requested path (`/tr/*` → TR, everything else EN), the "Continue from here" link list, then the approved
+ *   requested path (`/tr/*` → TR, `/de/*` → DE, everything else EN), the "Continue from here" link list, then the approved
  *   final CTA. The response keeps its HTTP 404 status (Nuxt sets it for unmatched routes and `createError`s).
  * - Any other status: a generic message (`error.*` microcopy) with a Home link; no internals are shown.
  * No canonical or hreflang alternates (404 is not a route, see buildPageSeo), and noindex.
@@ -17,7 +17,7 @@ const props = defineProps<{ error: NuxtError & { url?: string } }>()
 
 const { t } = useI18n()
 const route = useRoute()
-const { enableTr } = useRuntimeConfig().public
+const localeOptions = useLocaleOptions()
 
 const requestPath = (() => {
   const raw = props.error?.url || route.path || '/'
@@ -27,7 +27,7 @@ const requestPath = (() => {
     return route.path
   }
 })()
-const locale = errorLocale(requestPath, { enableTr: enableTr !== false })
+const locale = errorLocale(requestPath, localeOptions)
 const statusCode = Number(props.error?.statusCode) || 500
 const is404 = statusCode === 404
 
@@ -36,7 +36,7 @@ const LINK_TARGETS = ['/', '/services', '/how-we-work', '/contact']
 const links: Cta[] = (page.next.items ?? []).map((label, i) => ({ label, href: LINK_TARGETS[i] ?? '/' }))
 
 const head = is404
-  ? buildPageSeo(page.meta, locale, { enableTr: enableTr !== false })
+  ? buildPageSeo(page.meta, locale, localeOptions)
   : { title: `${t('error.title')} | MOESA Ltd.`, htmlAttrs: { lang: locale }, meta: [], link: [] }
 // unhead types an `alternate` link as a feed and wants each meta keyed by one known name; the tags are valid.
 useHead({

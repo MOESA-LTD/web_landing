@@ -9,12 +9,12 @@ import DefaultLayout from '~/layouts/default.vue'
  * Dedicated stub-only routes for the <html lang> tests: no real page exists at these paths, so only app.vue
  * (not a page's usePageSeo) can set the lang. Named `<base>___<locale>` like the i18n module names routes.
  */
-const LANG_STUB = { en: '/__lang-stub', tr: '/tr/__lang-stub' } as const
+const LANG_STUB = { en: '/__lang-stub', tr: '/tr/__lang-stub', de: '/de/__lang-stub' } as const
 
 beforeAll(() => {
   addPageStubs()
   const router = useRouter()
-  for (const locale of ['en', 'tr'] as const) {
+  for (const locale of ['en', 'tr', 'de'] as const) {
     router.addRoute({ name: `lang-stub___${locale}`, path: LANG_STUB[locale], component: { render: () => null } })
   }
 })
@@ -51,6 +51,11 @@ describe('default layout', () => {
     expect(w.findAll('main')).toHaveLength(1)
     expect(w.find('main#main #page-h1').exists()).toBe(true)
     expect(w.find('main').attributes('tabindex')).toBe('-1')
+  })
+
+  it('translates the skip link in DE', async () => {
+    const w = await mountLayout('/de')
+    expect(w.find('a[href="#main"]').text()).toBe('Zum Inhalt springen')
   })
 
   it('translates the skip link in TR', async () => {
@@ -90,6 +95,13 @@ describe('<html lang>', () => {
     await mountSuspended(App, { route: LANG_STUB.tr })
     await flushPromises()
     await expectLang('tr')
+  })
+
+  it('is "de" on DE pages', async () => {
+    expect(useRouter().resolve(LANG_STUB.de).matched[0]?.name).toBe('lang-stub___de')
+    await mountSuspended(App, { route: LANG_STUB.de })
+    await flushPromises()
+    await expectLang('de')
   })
 
   it('follows the locale when navigating between EN and TR', async () => {

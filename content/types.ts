@@ -1,14 +1,17 @@
 /**
- * Shared content types. Every page module (content/en/*.ts and content/tr/*.ts) is typed by an
- * interface declared next to the EN module; TR modules reuse the EN interface.
+ * Shared content types. Every page module (content/{en,tr,de}/*.ts) is typed by an
+ * interface declared next to the EN module; TR and DE modules reuse the EN interface.
  *
  * Copy rule: strings in the page modules are transcribed verbatim from
  * MOESA_Website_Package_v1.0/content/<locale>/*.md. Never take copy from design-reference/.
- * The only exception: TR strings the TR md lacks are translated from the approved EN and listed,
- * one entry each, in content/tr/unreviewed.ts (rendered to i18n/UNREVIEWED_TR.md for review).
+ * The only exceptions: TR strings the TR md lacks are translated from the approved EN and listed,
+ * one entry each, in content/tr/unreviewed.ts (rendered to i18n/UNREVIEWED_TR.md for review); and the whole
+ * German site (content/de/*.ts), which has no approved source: it is our translation of the approved EN, with
+ * every string listed in content/de/unreviewed.ts (rendered to i18n/UNREVIEWED_DE.md). DE modules have exactly
+ * the EN shape (no `condensed`/TR-only fields).
  */
 
-export type Locale = 'en' | 'tr'
+export type Locale = 'en' | 'tr' | 'de'
 
 export interface Cta {
   label: string

@@ -1,5 +1,5 @@
 /**
- * The enquiry email to MOESA: always in English, whatever the site language (`Locale: tr` marks TR enquiries).
+ * The enquiry email to MOESA: always in English, whatever the site language (`Locale: tr` / `Locale: de` marks TR and DE enquiries).
  * Every submitted value is HTML-escaped in the HTML part. The sender's address is only ever the Reply-To.
  */
 import { Resend } from 'resend'
@@ -32,7 +32,8 @@ export function composeEmail(data: ContactInput): { subject: string; text: strin
     ['Target timeline', data.target_timeline],
     ['Privacy consent', 'given (to respond to this enquiry only)'],
   ]
-  if (data.locale === 'tr') rows.push(['Locale', 'tr'])
+  // The enquiry's UI language, for non-EN enquiries only (the email itself is always English).
+  if (data.locale !== 'en') rows.push(['Locale', data.locale])
   const present = rows.filter((r): r is [string, string] => Boolean(r[1]))
 
   const subject = oneLine(`Project brief: ${data.company} – ${data.service}`)

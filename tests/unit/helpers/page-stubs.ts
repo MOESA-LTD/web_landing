@@ -12,7 +12,7 @@ export function addPageStubs() {
   const stub = { render: () => null }
   for (const [name, paths] of Object.entries(ROUTES)) {
     const base = name === 'home' ? 'index' : name.replace(/\//g, '-')
-    for (const locale of ['en', 'tr'] as const) {
+    for (const locale of ['en', 'tr', 'de'] as const) {
       const routeName = `${base}___${locale}`
       if (router.hasRoute(routeName) || router.resolve(paths[locale]).matched.length > 0) continue
       router.addRoute({ name: routeName, path: paths[locale], component: stub, meta: { pageStub: true } })

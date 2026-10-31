@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Locale } from '#content/types'
 import { navigation } from '#content/site'
 import { localizeHref, routeNameForPath, type RouteName } from '~~/i18n/routes'
 
@@ -28,7 +29,7 @@ const currentPath = computed(() => trimSlash(route.path))
 const items = computed(() =>
   // Home is not a menu item (canvas v1793393437): the logo is the way home.
   navigation.primary.filter((item) => item.href !== '/').map((item) => {
-    const href = localizeHref(item.href, locale.value as 'en' | 'tr')
+    const href = localizeHref(item.href, locale.value as Locale)
     const exact = currentPath.value === href
     // `/services/*` marks Services.
     const ancestor = currentPath.value.startsWith(href + '/')
@@ -44,7 +45,7 @@ const items = computed(() =>
 
 const services = computed(() =>
   navigation.services.map((s) => {
-    const href = localizeHref(s.href, locale.value as 'en' | 'tr')
+    const href = localizeHref(s.href, locale.value as Locale)
     return {
       href,
       label: t(`nav.serviceLinks.${s.href.replace('/services/', '')}`),
@@ -52,7 +53,7 @@ const services = computed(() =>
     }
   }),
 )
-const allServicesHref = computed(() => localizeHref('/services', locale.value as 'en' | 'tr'))
+const allServicesHref = computed(() => localizeHref('/services', locale.value as Locale))
 
 const servicesOpen = ref(false)
 const langOpen = ref(false)
