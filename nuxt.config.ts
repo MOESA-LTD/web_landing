@@ -95,6 +95,9 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    // Minify the server bundle (terser, comments: false): Nitro keeps source comments in it otherwise, and the
+    // acceptance test (tests/unit/claims.test.ts) asserts that no app source comment ships in .output.
+    minify: true,
     prerender: {
       // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled), plus the contact
       // and thank-you pages (4 URLs; 2 with TR disabled). /api/contact stays a server route.
