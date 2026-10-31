@@ -134,10 +134,24 @@
     "rejectNonEssential": "Zorunlu olmayanları reddet",
     "acceptAll": "Tümünü kabul et",
     "saveChoices": "Seçimleri kaydet",
-    "chooseSettings": "Ayarları seç"
+    "chooseSettings": "Ayarları seç",
+    "saved": "Seçimleriniz kaydedildi.",
+    "inventory": {
+      "caption": "Bu web sitesinin kullandığı çerezler",
+      "name": "Ad",
+      "category": "Kategori",
+      "purpose": "Amaç",
+      "duration": "Süre",
+      "consentPurpose": "Çerez tercihlerinizi saklar.",
+      "consentDuration": "180 gün"
+    }
   },
   "stats": {
     "digitalCommerce": "yıllık dijital ticaret",
     "ecommerceOperations": "yıllık profesyonel e-ticaret operasyonları"
+  },
+  "error": {
+    "title": "Bir sorun oluştu.",
+    "body": "Sayfa yüklenemedi. Lütfen daha sonra tekrar deneyin."
   }
 }

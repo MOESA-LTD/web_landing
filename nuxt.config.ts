@@ -58,7 +58,9 @@ export default defineNuxtConfig({
     prerender: {
       // The services overview and the five service pages, EN + TR (12 URLs; 6 with TR disabled), plus the contact
       // and thank-you pages (4 URLs; 2 with TR disabled). /api/contact stays a server route.
-      routes: [...servicePrerenderRoutes({ enableTr }), ...contactPrerenderRoutes({ enableTr })],
+      // /404.html is the static EN 404 page for hosts that serve one for unmatched static paths; unknown paths that
+      // reach the server (Vercel's fallback function, `nuxt preview`) are rendered by error.vue with status 404.
+      routes: [...servicePrerenderRoutes({ enableTr }), ...contactPrerenderRoutes({ enableTr }), '/404.html'],
     },
   },
   i18n: {

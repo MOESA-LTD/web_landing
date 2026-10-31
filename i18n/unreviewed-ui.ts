@@ -66,6 +66,18 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   'cookie.acceptAll',
   'cookie.saveChoices',
   'cookie.chooseSettings',
+  'cookie.saved',
+  // The moesa_consent row of the Cookie Policy inventory (the rest of the inventory stays OPEN in the md).
+  'cookie.inventory.caption',
+  'cookie.inventory.name',
+  'cookie.inventory.category',
+  'cookie.inventory.purpose',
+  'cookie.inventory.duration',
+  'cookie.inventory.consentPurpose',
+  'cookie.inventory.consentDuration',
+  // Generic error page (500 and other non-404 errors); 404 copy comes from 404.md.
+  'error.title',
+  'error.body',
   // About Experience Stat labels, cut from the approved Experience sentence (TR: "... operasyonlarının" without its case ending).
   'stats.digitalCommerce',
   'stats.ecommerceOperations',

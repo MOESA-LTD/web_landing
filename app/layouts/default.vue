@@ -2,7 +2,8 @@
 import { routeNameForLocalePath } from '~~/i18n/routes'
 
 /**
- * Default layout: skip link, header (with the language dropdown), `<main id="main">`, footer. The footer CTA shows on
+ * Default layout: skip link, header (with the language dropdown), `<main id="main">`, footer, and the global cookie
+ * banner (CookieConsent `mode="banner"`: only with `runtimeConfig.public.analyticsId` set and no stored choice). The footer CTA shows on
  * Home and About only (DESIGN_NOTES §3.2), in both locales.
  */
 const { t } = useI18n()

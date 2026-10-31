@@ -499,7 +499,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[effectiveDate].title` | Effective date | Yürürlük tarihi |
 | `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Yayın tarihini ekleyin. |
 
-## UI microcopy (59 strings)
+## UI microcopy (69 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -571,5 +571,15 @@ Not listed here, because they come from the package TR md:
 | `cookie.acceptAll` | Accept all | Tümünü kabul et |
 | `cookie.saveChoices` | Save choices | Seçimleri kaydet |
 | `cookie.chooseSettings` | Choose settings | Ayarları seç |
+| `cookie.saved` | Your choices have been saved. | Seçimleriniz kaydedildi. |
+| `cookie.inventory.caption` | Cookies set by this website | Bu web sitesinin kullandığı çerezler |
+| `cookie.inventory.name` | Name | Ad |
+| `cookie.inventory.category` | Category | Kategori |
+| `cookie.inventory.purpose` | Purpose | Amaç |
+| `cookie.inventory.duration` | Duration | Süre |
+| `cookie.inventory.consentPurpose` | Stores your cookie choices. | Çerez tercihlerinizi saklar. |
+| `cookie.inventory.consentDuration` | 180 days | 180 gün |
+| `error.title` | Something went wrong. | Bir sorun oluştu. |
+| `error.body` | The page could not be loaded. Please try again later. | Sayfa yüklenemedi. Lütfen daha sonra tekrar deneyin. |
 | `stats.digitalCommerce` | years in digital commerce | yıllık dijital ticaret |
 | `stats.ecommerceOperations` | years in professional e-commerce operations | yıllık profesyonel e-ticaret operasyonları |

@@ -134,10 +134,24 @@
     "rejectNonEssential": "Reject non-essential",
     "acceptAll": "Accept all",
     "saveChoices": "Save choices",
-    "chooseSettings": "Choose settings"
+    "chooseSettings": "Choose settings",
+    "saved": "Your choices have been saved.",
+    "inventory": {
+      "caption": "Cookies set by this website",
+      "name": "Name",
+      "category": "Category",
+      "purpose": "Purpose",
+      "duration": "Duration",
+      "consentPurpose": "Stores your cookie choices.",
+      "consentDuration": "180 days"
+    }
   },
   "stats": {
     "digitalCommerce": "years in digital commerce",
     "ecommerceOperations": "years in professional e-commerce operations"
+  },
+  "error": {
+    "title": "Something went wrong.",
+    "body": "The page could not be loaded. Please try again later."
   }
 }

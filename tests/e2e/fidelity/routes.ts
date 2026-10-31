@@ -36,4 +36,10 @@ export const FIDELITY_ROUTES: FidelityRoute[] = [
   { route: '/tr/iletisim', md: 'contact.md', locale: 'tr' },
   { route: '/thank-you', md: 'thank-you.md', locale: 'en' },
   { route: '/tr/tesekkurler', md: 'thank-you.md', locale: 'tr' },
+  { route: '/privacy-policy', md: 'privacy-policy.md', locale: 'en' },
+  { route: '/tr/gizlilik-politikasi', md: 'privacy-policy.md', locale: 'tr' },
+  { route: '/cookie-policy', md: 'cookie-policy.md', locale: 'en' },
+  { route: '/tr/cerez-politikasi', md: 'cookie-policy.md', locale: 'tr' },
+  { route: '/legal-notice', md: 'legal-notice.md', locale: 'en' },
+  { route: '/tr/yasal-bildirim', md: 'legal-notice.md', locale: 'tr' },
 ]

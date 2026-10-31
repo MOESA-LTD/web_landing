@@ -4,7 +4,7 @@ import type { Cta } from '#content/types'
 /**
  * Message page body (bundle.js `MessagePage`: `ThankYouState` / `NotFound`, bundle.css `.ms-message*`): a check icon
  * (`kind="thanks"`) or an eyebrow code (`kind="notFound"`), the page's single h1, the lead, then a titled list —
- * numbered steps for thanks, a link list for 404 — and an optional titled note. Actions are optional (the pages
+ * numbered steps for thanks, the DS `.ms-linklist` for 404 (ruled rows with an arrow) — and an optional titled note. Actions are optional (the pages
  * use the approved FinalCTA instead).
  * The DS column (max 720) hugs the left edge of the viewport; here it sits in the 1200 site container so it lines up
  * with the header. `condensed` is the approved TR running sentence, shown above the translated list.
@@ -64,9 +64,15 @@ const infoParts = computed(() => {
           <ol v-if="props.kind === 'thanks'" class="m-0 grid list-decimal gap-2 pl-6 text-body text-slate marker:font-bold marker:text-blue">
             <li v-for="(s, i) in props.steps" :key="i">{{ s }}</li>
           </ol>
-          <ul v-else class="m-0 grid list-none gap-2 p-0">
-            <li v-for="(l, i) in props.links" :key="i">
-              <Button :to="l.href" variant="text">{{ l.label }}</Button>
+          <ul v-else class="m-0 list-none border-t border-line p-0">
+            <li v-for="(l, i) in props.links" :key="i" class="border-b border-line">
+              <NuxtLink
+                :to="useLocalizedHref(l.href)"
+                class="group flex items-center justify-between gap-4 py-4 text-label text-navy no-underline hover:text-blue"
+              >
+                <span>{{ l.label }}</span>
+                <Glyph name="arrow" :size="18" class="flex-none transition-transform duration-150 group-hover:translate-x-[3px]" />
+              </NuxtLink>
             </li>
           </ul>
         </div>

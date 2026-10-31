@@ -161,6 +161,20 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
       renderedAs: ['info@moesaltd.com', '+359 88 501 661', '1 Petyofi Str., Plovdiv 4000, Bulgaria'],
     },
   ],
+  'tr/legal-notice.md': [
+    {
+      text: 'MOESA LTD. | 1 Petyofi Str., Plovdiv 4000, Bulgaria | Company ID 207200475 | VAT BG207200475',
+      reason:
+        'The one-line form of the "Şirket" values; the section shows the same four values one per line (as the EN Legal Notice does), so the line is not repeated above them.',
+      renderedAs: ['MOESA LTD.', '1 Petyofi Str., Plovdiv 4000, Bulgaria', 'Company ID 207200475', 'VAT BG207200475'],
+    },
+    {
+      text: 'info@moesaltd.com | +359 88 501 661',
+      reason:
+        'The one-line form of the "İletişim" values; the section shows the same two values one per line with labels (E-posta / Telefon), as the EN Legal Notice does.',
+      renderedAs: ['info@moesaltd.com', '+359 88 501 661'],
+    },
+  ],
   'en/home.md': [
     {
       text: 'Digital Commerce & Commercial Intelligence as a cross-functional capability',

@@ -1,0 +1,60 @@
+/**
+ * The visitor's cookie choice, stored in the strictly necessary `moesa_consent` cookie for 180 days (listed in
+ * the Cookie Policy inventory). `state` is `null` until a choice is made. v1 sets no non-essential cookies and
+ * loads no analytics: the banner only appears when `runtimeConfig.public.analyticsId` is set, and any future
+ * analytics loader must also check `state.value?.analytics === true`.
+ */
+export interface ConsentState {
+  necessary: true
+  preferences: boolean
+  analytics: boolean
+}
+
+/** "Reject non-essential", "Accept all", or the ticked categories ("Save choices"). */
+export type ConsentChoice = 'reject' | 'accept' | { preferences: boolean; analytics: boolean }
+
+export const CONSENT_COOKIE = 'moesa_consent'
+export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60
+
+/** A stored value back to a `ConsentState`, or `null` when it is missing or not well formed (e.g. edited by hand). */
+export function parseConsent(value: unknown): ConsentState | null {
+  if (!value || typeof value !== 'object') return null
+  const v = value as Record<string, unknown>
+  if (typeof v.preferences !== 'boolean' || typeof v.analytics !== 'boolean') return null
+  return { necessary: true, preferences: v.preferences, analytics: v.analytics }
+}
+
+function stateFor(choice: ConsentChoice): ConsentState {
+  if (choice === 'accept') return { necessary: true, preferences: true, analytics: true }
+  if (choice === 'reject') return { necessary: true, preferences: false, analytics: false }
+  return { necessary: true, preferences: !!choice.preferences, analytics: !!choice.analytics }
+}
+
+export function useConsent() {
+  const cookie = useCookie<ConsentState | null>(CONSENT_COOKIE, {
+    default: () => null,
+    maxAge: CONSENT_MAX_AGE,
+    sameSite: 'lax',
+    path: '/',
+  })
+  // One shared value per app instance, so the banner and the Cookie Policy panel stay in step. Deliberately not
+  // `useState`: that would carry the server's value in the payload, and a prerendered page was rendered without
+  // the visitor's cookie. Each side reads the cookie itself (the client reads document.cookie).
+  const nuxtApp = useNuxtApp() as ReturnType<typeof useNuxtApp> & { _moesaConsent?: Ref<ConsentState | null> }
+  nuxtApp._moesaConsent ??= ref(parseConsent(cookie.value))
+  const shared = nuxtApp._moesaConsent
+  const state = computed(() => shared.value)
+
+  function save(choice: ConsentChoice) {
+    const next = stateFor(choice)
+    shared.value = next
+    cookie.value = next
+  }
+
+  function reset() {
+    shared.value = null
+    cookie.value = null
+  }
+
+  return { state, save, reset }
+}
