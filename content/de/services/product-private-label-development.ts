@@ -4,7 +4,7 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/product-private-label-development',
-    title: 'Produkt- & Private-Label-Entwicklung | MOESA Ltd.',
+    title: 'Leistungen für Produkt- & Private-Label-Entwicklung | MOESA Ltd.',
     description: 'MOESA entwickelt Produkte und Private-Label-Portfolios von der Kategoriestrategie und Produktarchitektur über die Lieferantenauswahl und Verpackung bis zur Produktionsreife.',
   },
   slug: 'product-private-label-development',

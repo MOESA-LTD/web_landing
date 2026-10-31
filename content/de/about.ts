@@ -4,7 +4,7 @@ import type { AboutContent } from '../en/about'
 const content: AboutContent = {
   meta: {
     path: '/about',
-    title: 'Über MOESA Ltd. | Internationale Beschaffung & Produktoperations',
+    title: 'Über MOESA Ltd. | Internationale Beschaffung & Product Operations',
     description: 'Erfahren Sie mehr über MOESA Ltd., einen in Bulgarien ansässigen Partner für internationale Beschaffung, Produktentwicklung und Commercial Operations für internationale Unternehmen.',
   },
   hero: {
@@ -21,7 +21,7 @@ const content: AboutContent = {
       'Internationales Marken- und Produkt-Sourcing',
       'Beschaffungsmanagement',
       'Produkt- und Private-Label-Entwicklung',
-      'Marktzugang und Handelsvertretung',
+      'Marktzugang und Vertriebsrepräsentanz',
       'Operations und Lieferkette',
       'Digital Commerce und Commercial Intelligence',
     ],

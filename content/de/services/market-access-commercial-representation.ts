@@ -4,8 +4,8 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/market-access-commercial-representation',
-    title: 'Europäischer Marktzugang & Handelsvertretung | MOESA Ltd.',
-    description: 'MOESA unterstützt Marken, Hersteller und Einkäufer bei der Vorbereitung auf europäische Märkte, bei der Handelsvertretung, der Kanalentwicklung und der lokalen operativen Koordination.',
+    title: 'Europäischer Marktzugang & Vertriebsrepräsentanz | MOESA Ltd.',
+    description: 'MOESA unterstützt Marken, Hersteller und Einkäufer bei der Vorbereitung auf europäische Märkte, bei der kommerziellen Vertretung, der Kanalentwicklung und der lokalen operativen Koordination.',
   },
   slug: 'market-access-commercial-representation',
   hero: {
@@ -28,7 +28,7 @@ const content: ServicePageContent = {
     items: [
       'In den europäischen Markt eintreten',
       'Einen Distributor oder Handelspartner finden',
-      'Eine Handelsvertretung aufbauen',
+      'Eine kommerzielle Vertretung aufbauen',
       'Eine internationale Marke für einen Markt beschaffen',
       'Einen neuen Vertriebskanal im Einzelhandel, Großhandel oder digital aufbauen',
     ],
@@ -50,7 +50,7 @@ const content: ServicePageContent = {
     title: 'Vertretungsstrukturen',
     items: [
       'Projektbasierter Markteintritt',
-      'Laufende Handelsvertretung',
+      'Laufende kommerzielle Vertretung',
       'Handels- und Vertriebsvereinbarung',
       'Lokaler operativer Partner',
     ],

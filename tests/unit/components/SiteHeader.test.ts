@@ -238,7 +238,7 @@ describe('SiteHeader (DE)', () => {
       desktopNav(w)
         .findAll(':scope > ul > li')
         .map((li) => li.find('a, button').text()),
-    ).toEqual(['Leistungen', 'So arbeiten wir', 'Unsere Kunden', 'Über uns', 'Kontakt'])
+    ).toEqual(['Leistungen', 'So arbeiten wir', 'Zielgruppen', 'Über uns', 'Kontakt'])
     expect(
       desktopNav(w)
         .findAll(':scope > ul > li > a')

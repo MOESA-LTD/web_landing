@@ -178,9 +178,13 @@ Also:
 - [ ] Review the Turkish strings in `i18n/UNREVIEWED_TR.md` (translated by us, no approved source).
 - [ ] Review the German strings in `i18n/UNREVIEWED_DE.md` (the whole German site is our translation of the approved
   EN; nothing in it is approved yet), or set `NUXT_PUBLIC_ENABLE_DE=false` until it is.
-- [ ] **German legal review before the DE launch:** the German Impressum (`/de/impressum`) and Datenschutzerklärung
-  (`/de/datenschutz`), and the Cookie-Richtlinie, must meet German requirements (e.g. Impressum duties under § 5 DDG,
-  GDPR information duties in German). They are translated drafts of the EN drafts with the same OPEN items.
+- [ ] **German legal review before the DE launch:** the German Impressum (`/de/impressum`), Datenschutzerklärung
+  (`/de/datenschutz`) and Cookie-Richtlinie must meet German requirements. The Impressum needs the § 5 DDG details the
+  package does not yet have: the **Geschäftsführer** (managing director / legal representative), the
+  **Registergericht** and **Registernummer** (register court and number; for MOESA Ltd. the Bulgarian commercial
+  register entry, EIK 207200475), plus the VAT ID (USt-IdNr. BG207200475) and the contact details already shown. The
+  Datenschutzerklärung needs the GDPR information duties in German. All three are translated drafts of the EN drafts
+  with the same open items.
 - [ ] Legal review of the legal drafts, including the cookie-inventory row for the strictly necessary
   `moesa_consent` cookie.
 - [ ] Provide an **SVG logo** (the site currently uses the PNG lockup/mark from the package; the Organization JSON-LD

@@ -96,6 +96,12 @@ describe('FIDELITY_EXCLUSIONS', () => {
     expect(home).toContain('Cross-functional capability')
     expect(home).toContain('Digital Commerce & Commercial Intelligence')
   })
+
+  it('checks a legal OPEN item as the sentence after the md marker (the marker is the localised Open chip)', () => {
+    const notice = approvedStringsFor('en', 'legal-notice.md')
+    expect(notice.some((s) => s.startsWith('OPEN / AÇIK'))).toBe(false)
+    expect(notice).toContain('Confirm the legal representative or managing director before publication.')
+  })
 })
 
 describe('findMissing', () => {

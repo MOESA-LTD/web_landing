@@ -4,7 +4,7 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/sourcing-managed-procurement',
-    title: 'Sourcing & Beschaffungsmanagement | MOESA Ltd.',
+    title: 'Leistungen für Sourcing & Beschaffungsmanagement | MOESA Ltd.',
     description: 'MOESA steuert internationales Produkt- und Marken-Sourcing, Lieferantenbewertung, kaufmännische Verhandlungen, Einkauf und laufende Beschaffungsprozesse.',
   },
   slug: 'sourcing-managed-procurement',
@@ -13,7 +13,7 @@ const content: ServicePageContent = {
     body: 'Ob Sie eine bestimmte internationale Marke, einen neuen Lieferanten oder ein externes Team für wiederkehrende Einkaufsprozesse suchen: MOESA macht aus der Anforderung einen umsetzbaren Beschaffungsprozess.',
   },
   intro: {
-    title: 'Sie definieren, was das Unternehmen braucht. Wir steuern, wie es beschafft wird.',
+    title: 'Sie definieren, was Ihr Unternehmen braucht. Wir steuern, wie es beschafft wird.',
     body: 'Ein Sourcing-Projekt kann mit einer bestimmten Marke, einem bekannten Produkt, einer Zielkategorie oder einem kommerziellen Ziel beginnen. Der Kunde behält strategische Entscheidungen und Freigaben; MOESA steuert Recherche, Kommunikation, Verhandlung und die operative Umsetzung.',
   },
   typicalMandates: {
@@ -56,7 +56,7 @@ const content: ServicePageContent = {
       'Projektbasiertes Sourcing',
       'Gemanagte Beschaffung als Service',
       'Handelsvereinbarung',
-      'Handelsvertretung',
+      'Vertriebsrepräsentanz',
     ],
   },
   suitableFor: {

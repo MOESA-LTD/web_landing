@@ -36,11 +36,11 @@ const content: ServicesContent = {
     },
     {
       slug: 'market-access-commercial-representation',
-      title: 'Marktzugang & Handelsvertretung',
-      summary: 'Vorbereitung auf europäische Märkte, Handelsvertretung, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination.',
+      title: 'Marktzugang & Vertriebsrepräsentanz',
+      summary: 'Vorbereitung auf europäische Märkte, kommerzielle Vertretung, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination.',
       items: [
         'Eintritt in europäische Märkte',
-        'Handelsvertretung',
+        'Vertriebsrepräsentanz',
         'Aufbau von Distributoren und Händlern',
         'Vertretung internationaler Einkäufer',
       ],

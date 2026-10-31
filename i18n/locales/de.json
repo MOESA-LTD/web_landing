@@ -21,7 +21,7 @@
     "about": "Über MOESA",
     "contact": "Kontakt",
     "header": {
-      "whoWeWorkWith": "Unsere Kunden",
+      "whoWeWorkWith": "Zielgruppen",
       "about": "Über uns"
     },
     "allServices": "Alle Leistungen",
@@ -30,7 +30,7 @@
     "serviceLinks": {
       "sourcing-managed-procurement": "Sourcing & Beschaffungsmanagement",
       "product-private-label-development": "Produkt- & Private-Label-Entwicklung",
-      "market-access-commercial-representation": "Marktzugang & Handelsvertretung",
+      "market-access-commercial-representation": "Marktzugang & Vertriebsrepräsentanz",
       "operations-supply-chain": "Operations & Lieferkette",
       "digital-commerce-commercial-intelligence": "Digital Commerce & Commercial Intelligence"
     }
@@ -62,7 +62,7 @@
     "email": "E-Mail",
     "phone": "Telefon",
     "address": "Eingetragene Anschrift",
-    "companyLine": "MOESA Ltd. · Firmennummer {companyId} · USt-IdNr. {vat}",
+    "companyLine": "MOESA Ltd. · Unternehmens-ID (EIK) {companyId} · USt-IdNr. {vat}",
     "legal": {
       "privacyPolicy": "Datenschutzerklärung",
       "cookiePolicy": "Cookie-Richtlinie",
@@ -70,7 +70,7 @@
     }
   },
   "company": {
-    "companyId": "Firmennummer",
+    "companyId": "Unternehmens-ID (EIK)",
     "vat": "USt-IdNr."
   },
   "form": {
@@ -90,8 +90,8 @@
     "projectDetails": "Projektdetails",
     "optional": "(optional)",
     "servicePlaceholder": "Leistung auswählen",
-    "briefHelp": "Was das Unternehmen braucht, was bereits bestätigt ist und was offen bleibt.",
-    "consent": "Ich bin damit einverstanden, dass MOESA die von mir übermittelten Informationen verarbeitet, um diese Anfrage zu beantworten. Siehe {link}.",
+    "briefHelp": "Was Ihr Unternehmen braucht, was bereits bestätigt ist und was offen bleibt.",
+    "consent": "Ich bin damit einverstanden, dass MOESA die von mir übermittelten Informationen verarbeitet, um diese Anfrage zu beantworten. Weitere Informationen finden Sie in der {link}.",
     "submit": "Projektbriefing senden",
     "disclaimer": "Ein übermitteltes Formular begründet kein Vertragsverhältnis.",
     "sending": "Wird gesendet…",
@@ -101,11 +101,11 @@
       "procurement": "Beschaffungsmanagement",
       "productPrivateLabel": "Produkt- & Private-Label-Entwicklung",
       "marketAccess": "Marktzugang",
-      "commercialRepresentation": "Handelsvertretung",
+      "commercialRepresentation": "Vertriebsrepräsentanz",
       "operations": "Operations & Lieferkette",
       "digitalCommerce": "Digital-Commerce-Operations",
       "integrated": "Integriert / mehrere Leistungen",
-      "notSure": "Noch nicht sicher",
+      "notSure": "Noch unklar",
       "other": "Sonstiges"
     },
     "errorSummaryOne": "Bitte prüfen Sie 1 Feld",

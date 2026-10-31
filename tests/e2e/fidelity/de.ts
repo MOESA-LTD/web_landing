@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { content as de } from '../../../content/de/index'
 import type { PageKey } from '../../../content/types'
-import type { FidelityExclusion } from './extract'
+import { OPEN_PREFIX, type FidelityExclusion } from './extract'
 
 const here: string = import.meta.dirname ?? __dirname
 const deJson = JSON.parse(readFileSync(resolve(here, '../../../i18n/locales/de.json'), 'utf8'))
@@ -67,7 +67,9 @@ export function deStringsFor(page: PageKey): string[] {
   const copy = leaves(de[page]).filter(
     (l) => !STRUCTURAL_KEYS.has(l.key) && !l.path.startsWith('meta.') && !exclusions.some((e) => e.path.test(l.path)),
   )
-  return [...new Set([...copy.map((l) => l.value), ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
+  // Legal OPEN items show the "Offen" chip instead of the md marker "OPEN / AÇIK - " (see approvedStringsFor).
+  const shown = copy.map((l) => (l.value.startsWith(OPEN_PREFIX) ? l.value.slice(OPEN_PREFIX.length) : l.value))
+  return [...new Set([...shown, ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
 }
 
 /** The DE meta title and description of a page. */

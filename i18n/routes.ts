@@ -32,6 +32,15 @@ export function enabledLocales(options: LocaleOptions = {}): Locale[] {
   return LOCALES.filter((l) => (l === 'tr' ? options.enableTr !== false : l === 'de' ? options.enableDe !== false : true))
 }
 
+/**
+ * The locale of `path` when that locale is switched off (`/tr/...` with `enableTr: false`, `/de/...` with
+ * `enableDe: false`), else null. Such paths answer 404 (server/middleware/locale-guard.ts).
+ */
+export function disabledLocaleOfPath(path: string, options: LocaleOptions): Locale | null {
+  const locale = localeOfPath(path)
+  return locale !== 'en' && !enabledLocales(options).includes(locale) ? locale : null
+}
+
 /** The locale prefix of a path (`/tr`, `/tr/...` → tr; `/de`, `/de/...` → de; anything else, e.g. `/tracking`, → en). */
 export function localeOfPath(path: string): Locale {
   for (const l of LOCALES) if (l !== 'en' && (path === `/${l}` || path.startsWith(`/${l}/`))) return l

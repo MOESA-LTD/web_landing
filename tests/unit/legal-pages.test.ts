@@ -7,6 +7,7 @@ import CookiePage from '~/pages/cookie-policy.vue'
 import LegalNoticePage from '~/pages/legal-notice.vue'
 import { content as en } from '#content/en'
 import { content as tr } from '#content/tr'
+import { content as de } from '#content/de'
 import type { LegalContent } from '#content/en/legal'
 
 beforeAll(addPageStubs)
@@ -26,13 +27,29 @@ const bgOf = (el: Element) => BG.find((c) => el.classList.contains(c)) ?? 'none'
 const OPEN_PREFIX = 'OPEN / AÇIK - '
 
 const PAGES = [
-  { key: 'privacy-policy', component: PrivacyPage, en: '/privacy-policy', tr: '/tr/gizlilik-politikasi' },
-  { key: 'cookie-policy', component: CookiePage, en: '/cookie-policy', tr: '/tr/cerez-politikasi' },
-  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim' },
+  { key: 'privacy-policy', component: PrivacyPage, en: '/privacy-policy', tr: '/tr/gizlilik-politikasi', de: '/de/datenschutz' },
+  { key: 'cookie-policy', component: CookiePage, en: '/cookie-policy', tr: '/tr/cerez-politikasi', de: '/de/cookie-richtlinie' },
+  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim', de: '/de/impressum' },
 ] as const
 
+/** The OPEN chip label per locale (`status.open`, uppercased by CSS): it stands in for the md marker "OPEN / AÇIK". */
+const OPEN_LABEL = { en: 'Open', tr: 'Açık', de: 'Offen' } as const
+/** An OPEN item is shown as the chip plus the md sentence after the marker. */
+const display = (t: string) => (t.startsWith(OPEN_PREFIX) ? t.slice(OPEN_PREFIX.length) : t)
 /** Every display string of a section, as the page must show it. */
-const sectionStrings = (s: LegalContent['sections'][number]) => [s.title, ...(s.paragraphs ?? []), ...(s.items ?? [])]
+const sectionStrings = (s: LegalContent['sections'][number]) => [s.title, ...(s.paragraphs ?? []), ...(s.items ?? [])].map(display)
+
+/** Every OPEN item: one `[data-open]` note per md OPEN paragraph, chip in the page locale, then the md sentence. */
+async function expectOpenNotes(w: Wrapper, c: LegalContent, locale: keyof typeof OPEN_LABEL) {
+  const opens = c.sections.flatMap((s) => s.paragraphs ?? []).filter((t) => t.startsWith(OPEN_PREFIX))
+  const rendered = w.findAll('[data-open]')
+  expect(rendered).toHaveLength(opens.length)
+  expect(opens.length).toBeGreaterThan(0)
+  rendered.forEach((el, i) => {
+    expect(el.find('[data-chip="open"]').text()).toBe(OPEN_LABEL[locale])
+    expect(norm(el.text())).toBe(`${OPEN_LABEL[locale]} - ${display(opens[i]!)}`)
+  })
+}
 
 for (const p of PAGES) {
   describe(`${p.key} (EN ${p.en})`, () => {
@@ -77,15 +94,8 @@ for (const p of PAGES) {
       for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
     })
 
-    it('marks every OPEN item with an Open chip carrying the md marker, never replacing the md text', async () => {
-      const w = await mountAt(p.component, p.en)
-      const opens = c.sections.flatMap((s) => s.paragraphs ?? []).filter((t) => t.startsWith(OPEN_PREFIX))
-      const rendered = w.findAll('[data-open]')
-      expect(rendered).toHaveLength(opens.length)
-      rendered.forEach((el, i) => {
-        expect(norm(el.text())).toBe(opens[i])
-        expect(el.find('[data-chip="open"]').text()).toBe('OPEN / AÇIK')
-      })
+    it('marks every OPEN item with the EN "Open" chip (the md marker), followed by the md sentence', async () => {
+      await expectOpenNotes(await mountAt(p.component, p.en), c, 'en')
     })
 
     it('centres the article in the site container (DESIGN_NOTES §7.5)', async () => {
@@ -128,6 +138,26 @@ for (const p of PAGES) {
         const sec = w.find(`[data-legal-section="${s.id}"]`)
         expect(norm(sec.find('[data-condensed]').text())).toBe(s.condensed)
       }
+    })
+
+    it('marks every OPEN item with the TR "Açık" chip', async () => {
+      await expectOpenNotes(await mountAt(p.component, p.tr), c, 'tr')
+      const w = await mountAt(p.component, p.tr)
+      expect(w.find('[data-open-fields] [data-chip="open"]').text()).toBe('Açık')
+    })
+  })
+
+  describe(`${p.key} (DE ${p.de})`, () => {
+    const c = de[p.key] as LegalContent
+
+    it('has the DE h1, the md status in the draft chip, every section, and the "Offen" chip on every OPEN item', async () => {
+      const w = await mountAt(p.component, p.de)
+      expect(norm(w.find('h1').text())).toBe(c.hero.title)
+      expect(norm(w.find('[data-legal-status]').text())).toContain(c.status)
+      const text = norm(w.find('[data-legal-page]').text())
+      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      await expectOpenNotes(w, c, 'de')
+      expect(sections(w).at(-1)!.querySelector('a')!.getAttribute('href')).toBe('/de/kontakt')
     })
   })
 }

@@ -2,7 +2,7 @@
 /**
  * Status chip (bundle.css `.ms-chip`): "Draft" (navy, legal status line) or "Open" (dashed outline,
  * open-information notes). The default label is UI microcopy (`status.*`); `label` replaces it with page copy,
- * e.g. the md `**Status:**` value or the md's own "OPEN / AÇIK" marker on the legal pages. A long label wraps
+ * e.g. the md `**Status:**` value of the legal pages' draft chip. A long label wraps
  * (min height 24 instead of a fixed 24).
  */
 const props = defineProps<{ kind: 'draft' | 'open'; label?: string }>()

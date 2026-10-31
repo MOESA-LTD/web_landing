@@ -22,7 +22,7 @@ const content: HomeContent = {
     items: [
       'Sourcing & Beschaffungsmanagement',
       'Produkt- & Private-Label-Entwicklung',
-      'Marktzugang & Handelsvertretung',
+      'Marktzugang & Vertriebsrepräsentanz',
       'Operations & Lieferkette',
       'Digital Commerce & Commercial Intelligence als bereichsübergreifende Kompetenz',
     ],
@@ -53,7 +53,7 @@ const content: HomeContent = {
       'Partner für Beschaffungsmanagement',
       'Partner für Produktentwicklung',
       'Handelspartner',
-      'Partner für Markteintritt & Handelsvertretung',
+      'Partner für Markteintritt & Vertriebsrepräsentanz',
       'Partner für Managed Commerce oder integrierte Operations',
     ],
   },
@@ -70,7 +70,7 @@ const content: HomeContent = {
     title: 'Kommerzielle Kompetenz über das Sourcing hinaus.',
     paragraphs: [
       'MOESA kann das Produkt auch weiter begleiten, nachdem es das Lager erreicht hat - auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen.',
-      'Digital Commerce ist eine Kompetenz innerhalb unseres Betriebsmodells, keine Einschränkung der Unternehmen, für die wir arbeiten.',
+      'Digital Commerce ist eine Kompetenz innerhalb unseres Betriebsmodells und schränkt nicht ein, für welche Unternehmen wir arbeiten.',
     ],
   },
   euBase: {

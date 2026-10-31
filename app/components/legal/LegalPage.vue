@@ -10,9 +10,10 @@ import { brand } from '#content/site'
  * - The article sits inside `.container-site`, lined up with the breadcrumbs (the DS column hugs the viewport's
  *   left edge: DESIGN_NOTES §7.5).
  * - Status: the md `**Status:**` value is the Draft chip's text, the same in both locales.
- * - OPEN items: a paragraph starting "OPEN / AÇIK - " renders as the DS open note: Chip kind="open" carrying the md's
- *   own marker "OPEN / AÇIK", then the rest of the md text. A visually hidden " - " keeps the md sentence whole for
- *   screen readers and copy. Nothing replaces an open item.
+ * - OPEN items: a paragraph starting "OPEN / AÇIK - " (the md marker, the same in every locale's content and only the
+ *   detection key) renders as the DS open note: Chip kind="open" with the page locale's label (`status.open`: EN "Open",
+ *   TR "Açık", DE "Offen", uppercased by the chip), then the rest of the md text. The chip conveys the marker, so the
+ *   prefix is not repeated; a visually hidden " - " separates the two for screen readers. Nothing replaces an open item.
  * - TR "Açık alanlar" (`openFields`, approved TR) is shown once, as the open-items summary under the status, and is
  *   not repeated as a section. The translated sections below keep their own OPEN notes: the summary names the
  *   topics, the sections give the item text, so nothing is shown twice.
@@ -26,8 +27,8 @@ import { brand } from '#content/site'
 const props = defineProps<{ content: LegalContent }>()
 const { t } = useI18n()
 
-const OPEN_MARKER = 'OPEN / AÇIK'
-const OPEN_PREFIX = `${OPEN_MARKER} - `
+/** Detection key only: never displayed (the chip shows the locale's `status.open`). */
+const OPEN_PREFIX = 'OPEN / AÇIK - '
 
 const openFields = computed(() => props.content.sections.find((s) => s.id === 'openFields'))
 const sections = computed(() => props.content.sections.filter((s) => s.id !== 'openFields'))
@@ -68,7 +69,7 @@ const parts = (s: LegalSection): Part[] =>
           class="grid gap-2 rounded-sm border border-dashed border-line-strong bg-mist px-4 py-3"
         >
           <div class="flex flex-wrap items-center gap-3">
-            <Chip kind="open" :label="OPEN_MARKER" aria-hidden="true" />
+            <Chip kind="open" aria-hidden="true" />
             <h2 :id="`legal-${openFields.id}`" class="text-h4 text-navy">{{ openFields.title }}</h2>
           </div>
           <p v-for="(p, i) in openFields.paragraphs ?? []" :key="i" class="m-0 text-body-sm text-navy">{{ p }}</p>
@@ -90,7 +91,7 @@ const parts = (s: LegalSection): Part[] =>
               data-open
               class="m-0 flex items-start gap-3 rounded-sm border border-dashed border-line-strong bg-mist px-4 py-3 text-body-sm text-navy max-[479.98px]:flex-col max-[479.98px]:gap-2"
             >
-              <Chip kind="open" :label="OPEN_MARKER" /><span class="sr-only"> - </span><span>{{ p.text }}</span>
+              <Chip kind="open" /><span class="sr-only"> - </span><span>{{ p.text }}</span>
             </p>
             <p v-else class="m-0 text-body text-slate">
               {{ p.before }}<a v-if="p.email" :href="`mailto:${p.email}`" class="font-semibold text-blue underline hover:text-blue-dark">{{ p.email }}</a>{{ p.after }}

@@ -57,7 +57,7 @@ const content: HowWeWorkContent = {
   },
   productTruth: {
     title: 'Eine kontrollierte Produktwahrheit',
-    body: 'MOESA strukturiert bestätigte Fakten, Entscheidungen, offene Fragen und zugehörige Unterlagen, damit Informationen zu Lieferanten, Verpackung, Katalog und Kanälen übereinstimmen.',
+    body: 'MOESA strukturiert freigegebene Fakten, Entscheidungen, offene Fragen und zugehörige Unterlagen, damit Informationen zu Lieferanten, Verpackung, Katalog und Kanälen übereinstimmen.',
   },
   openQuestions: {
     title: 'Offene Fragen und Risiken',
@@ -82,7 +82,7 @@ const content: HowWeWorkContent = {
       'Partner für Beschaffungsmanagement',
       'Partner für Produktentwicklung',
       'Handelspartner',
-      'Partner für Markteintritt & Handelsvertretung',
+      'Partner für Markteintritt & Vertriebsrepräsentanz',
       'Partner für Managed Commerce',
       'Partner für integrierte Operations',
     ],

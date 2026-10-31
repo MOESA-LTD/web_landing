@@ -4,7 +4,7 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/operations-supply-chain',
-    title: 'Internationale Operations & Lieferkette | MOESA Ltd.',
+    title: 'Leistungen für internationale Operations & Lieferkette | MOESA Ltd.',
     description: 'MOESA koordiniert Einkauf, Produktionsverfolgung, Dokumentation, internationale Logistik, Importabwicklung, Lagerhaltung, Bestandsführung und Lieferung.',
   },
   slug: 'operations-supply-chain',
@@ -13,7 +13,7 @@ const content: ServicePageContent = {
     body: 'MOESA koordiniert den operativen Prozess über Einkauf, Produktion, Produktdokumentation, internationale Logistik, Import, Lagerhaltung, Bestandsführung und Lieferung hinweg.',
   },
   intro: {
-    title: 'Auch eine kommerzielle Vereinbarung braucht eine operative Umsetzung.',
+    title: 'Eine kommerzielle Vereinbarung erfordert weiterhin eine operative Umsetzung.',
     body: 'Nachdem Produkt, Lieferant und Einkaufsbedingungen vereinbart sind, muss das Projekt Produktion, Dokumentation, Versand, Import, Lagerung und Lieferung durchlaufen. MOESA verbindet diese Phasen in einer gemeinsamen operativen Sicht.',
   },
   typicalMandates: {

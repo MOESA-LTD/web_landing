@@ -179,14 +179,22 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
   ],
 }
 
+/** The md marker of an open item on the legal pages ("OPEN / AÇIK - Confirm …"). */
+export const OPEN_PREFIX = 'OPEN / AÇIK - '
+
 /**
  * `extractApprovedStrings` minus the `FIDELITY_EXCLUSIONS` of that locale and file, plus the `renderedAs`
  * strings of those exclusions (what the page shows instead).
+ * Legal OPEN items (polish round, controller ruling 2026-10-31): the marker "OPEN / AÇIK" is shown as the Open chip
+ * in the page's locale (EN "Open", TR "Açık", DE "Offen"), so the page must show the sentence after the marker; the
+ * chip itself is checked by tests/unit/legal-pages.test.ts.
  */
 export function approvedStringsFor(locale: FidelityLocale, file: string): string[] {
   const exclusions = FIDELITY_EXCLUSIONS[`${locale}/${file}`] ?? []
   const excluded = new Set(exclusions.map((e) => e.text))
-  const kept = extractApprovedStrings(mdPath(locale, file)).filter((s) => !excluded.has(s))
+  const kept = extractApprovedStrings(mdPath(locale, file))
+    .filter((s) => !excluded.has(s))
+    .map((s) => (s.startsWith(OPEN_PREFIX) ? s.slice(OPEN_PREFIX.length) : s))
   return [...kept, ...exclusions.flatMap((e) => e.renderedAs ?? [])]
 }
 

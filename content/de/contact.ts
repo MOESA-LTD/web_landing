@@ -9,7 +9,7 @@ const content: ContactContent = {
   },
   hero: {
     title: 'Beginnen Sie mit dem Ziel.',
-    body: 'Sagen Sie uns, was das Unternehmen braucht, was bereits bestätigt ist und was offen bleibt. Wir helfen Ihnen, den nächsten Schritt zu strukturieren.',
+    body: 'Sagen Sie uns, was Ihr Unternehmen braucht, was bereits bestätigt ist und was offen bleibt. Wir helfen Ihnen, den nächsten Schritt zu strukturieren.',
   },
   serviceOptions: {
     title: 'Wie können wir Sie unterstützen?',
@@ -18,11 +18,11 @@ const content: ContactContent = {
       'Beschaffungsmanagement',
       'Produkt- & Private-Label-Entwicklung',
       'Marktzugang',
-      'Handelsvertretung',
+      'Vertriebsrepräsentanz',
       'Operations & Lieferkette',
       'Digital-Commerce-Operations',
       'Integriert / mehrere Leistungen',
-      'Noch nicht sicher',
+      'Noch unklar',
     ],
   },
   formFields: {
@@ -61,7 +61,7 @@ const content: ContactContent = {
   company: {
     title: 'Unternehmensangaben',
     items: [
-      'Firmennummer: 207200475',
+      'Unternehmens-ID (EIK): 207200475',
       'USt-IdNr.: BG207200475',
     ],
   },

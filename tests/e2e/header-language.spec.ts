@@ -167,7 +167,7 @@ test.describe('header language dropdown', () => {
   // Task 12: the DE header fit, measured (not assumed). The one-line requirement is the content width of the bar:
   // logo + gap + nav (natural, unwrapped width) + gap + CTA + the 76px dropdown reserve, plus the side padding.
   // With the full DE labels ("Für wen wir arbeiten", "Über MOESA") DE needed 1192px (EN 1148, TR 1125), so DE uses
-  // short header-only labels ("Unsere Kunden", "Über uns"), as TR does; the breakpoint stays at 1160px.
+  // short header-only labels ("Zielgruppen", "Über uns": 1110px), as TR does; the breakpoint stays at 1160px.
   test('DE fit measurement: with the short header labels DE needs no more than the 1160px breakpoint', async ({ page }) => {
     test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
     const need: Record<string, number> = {}

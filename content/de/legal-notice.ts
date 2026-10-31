@@ -24,7 +24,7 @@ const content: LegalContent = {
       paragraphs: [
         'MOESA LTD.',
         '1 Petyofi Str., Plovdiv 4000, Bulgaria',
-        'Firmennummer: 207200475',
+        'Unternehmens-ID (EIK): 207200475',
         'USt-IdNr.: BG207200475',
       ],
     },

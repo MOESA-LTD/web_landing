@@ -58,7 +58,7 @@ const content: WhoWeWorkWithContent = {
       items: [
         'Eintritt in europäische Märkte',
         'Aufbau von Distributoren und Händlern',
-        'Handelsvertretung',
+        'Vertriebsrepräsentanz',
         'Marktspezifische Vorbereitung des Portfolios',
         'Import, Lagerhaltung und lokale Operations',
       ],
@@ -81,7 +81,7 @@ const content: WhoWeWorkWithContent = {
   },
   noInternalProcurement: {
     title: 'Unternehmen ohne vollständiges internes Beschaffungsteam',
-    body: 'MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Produktoperations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
+    body: 'MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Product-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
   },
   selectionGuide: {
     title: 'Leitfaden zur Wahl der Zusammenarbeit',
@@ -98,7 +98,7 @@ const content: WhoWeWorkWithContent = {
       },
       {
         need: 'Sie benötigen europäische Einkäufer oder eine lokale Vertretung',
-        target: 'Marktzugang & Handelsvertretung',
+        target: 'Marktzugang & Vertriebsrepräsentanz',
         service: 'market-access-commercial-representation',
       },
       {
@@ -118,7 +118,7 @@ const content: WhoWeWorkWithContent = {
     ],
   },
   notSure: {
-    title: 'Noch nicht sicher?',
+    title: 'Noch unklar?',
     body: 'Beschreiben Sie das geschäftliche Problem, die aktuelle Situation und das gewünschte Ergebnis. MOESA kann helfen, den richtigen Ausgangspunkt zu finden, ohne das Projekt in ein unnötiges Leistungspaket zu zwängen.',
   },
   finalCta: {
