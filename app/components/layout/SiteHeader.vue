@@ -171,6 +171,11 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         <Button to="/contact" size="sm">{{ t('cta.discussProject') }}</Button>
       </div>
 
+      <!-- Over the right end of the bar (absolute, offsets from the canvas, positioned against the header, which is
+           its containing block); owns its own open/close behaviour. Placed between the CTA and the menu button so the
+           Tab order follows the visual order: desktop CTA then language; mobile language, menu button, menu panel. -->
+      <LanguageSwitcher v-model:open="langOpen" />
+
       <button
         id="menu-button"
         type="button"
@@ -184,9 +189,6 @@ const mobileLink = 'block border-b border-line py-4 text-[17px]/6 font-bold no-u
         <span class="sr-only">{{ menuOpen ? t('nav.closeMenu') : t('nav.openMenu') }}</span>
       </button>
     </div>
-
-    <!-- Over the right end of the bar (absolute, offsets from the canvas); owns its own open/close behaviour. -->
-    <LanguageSwitcher v-model:open="langOpen" />
 
     <!-- In the document flow below the bar: opening it pushes the page content down. -->
     <div

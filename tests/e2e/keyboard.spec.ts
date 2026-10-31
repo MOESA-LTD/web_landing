@@ -21,12 +21,29 @@ async function focused(page: Page): Promise<string> {
   })
 }
 
-/** Presses Tab `n` times and returns the descriptor after each press. */
+/** The computed outline of the focused element (the :focus-visible ring). */
+async function ring(page: Page): Promise<{ who: string; style: string; width: number }> {
+  return page.evaluate(() => {
+    const el = document.activeElement as HTMLElement
+    const s = getComputedStyle(el)
+    return { who: el.id || el.getAttribute('href') || el.tagName, style: s.outlineStyle, width: parseFloat(s.outlineWidth) }
+  })
+}
+
+/** Fails unless the focused element shows a visible focus ring (solid outline of at least 2px). */
+async function expectRing(page: Page) {
+  const r = await ring(page)
+  expect(r.style, `focus ring style on ${r.who}`).not.toBe('none')
+  expect(r.width, `focus ring width on ${r.who}`).toBeGreaterThanOrEqual(2)
+}
+
+/** Presses Tab `n` times and returns the descriptor after each press; every stop must show a focus ring. */
 async function tabs(page: Page, n: number): Promise<string[]> {
   const out: string[] = []
   for (let i = 0; i < n; i++) {
     await page.keyboard.press('Tab')
     out.push(await focused(page))
+    await expectRing(page)
   }
   return out
 }
@@ -51,30 +68,58 @@ test.describe('keyboard walkthrough', () => {
     await expect(skip).toBeFocused()
     const box = await skip.boundingBox()
     expect(box && box.width > 20 && box.height > 20).toBe(true)
+    await expectRing(page)
     await page.keyboard.press('Enter')
     await expect(page.locator('#main')).toBeFocused()
   })
 
-  test('desktop header Tab order: skip link, logo, nav (Services first), CTA, language button', async ({ page }) => {
-    test.skip(!isDesktop(page), 'desktop header (>=1160px)')
-    await page.goto('/')
-    await hydrated(page)
-    const order = await tabs(page, 9)
-    expect(order[0]).toBe('a[#main]')
-    expect(order[1]).toBe('a[/]')
-    expect(order[2]).toBe('#services-button')
-    // Nav links after Services in visual order (Contact is a nav link too), then the CTA, then the language button.
-    expect(order.slice(3)).toEqual([
-      'a[/how-we-work]',
-      'a[/who-we-work-with]',
-      'a[/about]',
-      'a[/contact]',
-      'a[/contact]',
-      '#lang-button',
-    ])
-    await expect(page.locator('#lang-button')).toBeFocused()
-    await expect(page.locator('[data-header-cta] a')).toHaveAttribute('href', '/contact')
-  })
+  const HEADER_PATHS = {
+    en: { home: '/', how: '/how-we-work', who: '/who-we-work-with', about: '/about', contact: '/contact' },
+    tr: { home: '/tr', how: '/tr/nasil-calisiyoruz', who: '/tr/kimlerle-calisiyoruz', about: '/tr/hakkimizda', contact: '/tr/iletisim' },
+  } as const
+
+  for (const locale of ['en', 'tr'] as const) {
+    const p = HEADER_PATHS[locale]
+
+    test(`desktop header Tab order (${locale}): skip link, logo, nav (Services first), CTA, language button`, async ({ page }) => {
+      test.skip(!isDesktop(page), 'desktop header (>=1160px)')
+      await page.goto(p.home)
+      await hydrated(page)
+      // Nav links after Services in visual order (Contact is a nav link too), then the CTA, then the language button.
+      expect(await tabs(page, 9)).toEqual([
+        'a[#main]',
+        `a[${p.home}]`,
+        '#services-button',
+        `a[${p.how}]`,
+        `a[${p.who}]`,
+        `a[${p.about}]`,
+        `a[${p.contact}]`,
+        `a[${p.contact}]`,
+        '#lang-button',
+      ])
+      await expect(page.locator('[data-header-cta] a')).toHaveAttribute('href', p.contact)
+    })
+
+    test(`mobile header Tab order (${locale}): skip link, logo, language button, menu button, then the menu panel`, async ({ page }) => {
+      test.skip(isDesktop(page), 'mobile header (<1160px)')
+      await page.goto(p.home)
+      await hydrated(page)
+      // Visual order left to right: logo, language button, menu button.
+      expect(await tabs(page, 4)).toEqual(['a[#main]', `a[${p.home}]`, '#lang-button', '#menu-button'])
+      await page.keyboard.press('Enter')
+      await expect(page.locator('#menu-button')).toHaveAttribute('aria-expanded', 'true')
+      await expect(page.locator('#mobile-menu')).toBeVisible()
+      // The panel opens below the bar and comes next in the Tab order.
+      const next = await tabs(page, 2)
+      for (const stop of next) expect(stop).toMatch(/^(a\[\/|#services)/)
+      expect(await page.evaluate(() => document.querySelector('#mobile-menu')!.contains(document.activeElement))).toBe(true)
+      await page.keyboard.press('Escape')
+      await expect(page.locator('#menu-button')).toHaveAttribute('aria-expanded', 'false')
+      await expect(page.locator('#mobile-menu')).toBeHidden()
+      await expect(page.locator('#menu-button')).toBeFocused()
+      await expectRing(page)
+    })
+  }
 
   test('Services disclosure: Enter opens, Tab enters the menu, Escape closes and returns focus', async ({ page }) => {
     test.skip(!isDesktop(page), 'desktop header (>=1160px)')
@@ -87,10 +132,12 @@ test.describe('keyboard walkthrough', () => {
     await expect(page.locator('#services-menu')).toBeVisible()
     await page.keyboard.press('Tab')
     expect(await focused(page)).toMatch(/^a\[\/services/)
+    await expectRing(page)
     await page.keyboard.press('Escape')
     await expect(button).toHaveAttribute('aria-expanded', 'false')
     await expect(page.locator('#services-menu')).toBeHidden()
     await expect(button).toBeFocused()
+    await expectRing(page)
     // Space toggles it too.
     await page.keyboard.press('Space')
     await expect(button).toHaveAttribute('aria-expanded', 'true')
@@ -117,6 +164,7 @@ test.describe('keyboard walkthrough', () => {
     await page.keyboard.press('Escape')
     await expect(button).toHaveAttribute('aria-expanded', 'false')
     await expect(button).toBeFocused()
+    await expectRing(page)
     // Enter on TR follows the link.
     await page.keyboard.press('Enter')
     await page.keyboard.press('Tab')
@@ -124,27 +172,6 @@ test.describe('keyboard walkthrough', () => {
     await page.keyboard.press('Enter')
     await expect(page).toHaveURL(/\/tr$/)
     await expect(page.locator('html')).toHaveAttribute('lang', 'tr')
-  })
-
-  test('mobile (390): Tab order skip, logo, menu button, language button; the menu opens with Enter and closes with Escape', async ({ page }) => {
-    test.skip(isDesktop(page), 'mobile header (<1160px)')
-    await page.goto('/')
-    await hydrated(page)
-    // DOM order puts the menu button before the language button (the language button sits visually left of it).
-    expect(await tabs(page, 4)).toEqual(['a[#main]', 'a[/]', '#menu-button', '#lang-button'])
-    await page.locator('#menu-button').focus()
-    await page.keyboard.press('Enter')
-    await expect(page.locator('#menu-button')).toHaveAttribute('aria-expanded', 'true')
-    await expect(page.locator('#mobile-menu')).toBeVisible()
-    // The panel follows the language button in the Tab order.
-    const next = await tabs(page, 3)
-    expect(next[0]).toBe('#lang-button')
-    expect(next[1]).toMatch(/^a\[\//)
-    expect(await page.evaluate(() => document.querySelector('#mobile-menu')!.contains(document.activeElement))).toBe(true)
-    await page.keyboard.press('Escape')
-    await expect(page.locator('#menu-button')).toHaveAttribute('aria-expanded', 'false')
-    await expect(page.locator('#mobile-menu')).toBeHidden()
-    await expect(page.locator('#menu-button')).toBeFocused()
   })
 
   test('focus is visible: 2px blue outline on header controls', async ({ page }) => {
@@ -181,14 +208,17 @@ test.describe('keyboard walkthrough', () => {
     ])
     await page.keyboard.press('Tab')
     expect(await focused(page)).toBe('button')
+    await expectRing(page)
     // The honeypot (tabindex -1) is skipped. Enter on the submit button validates.
     await page.keyboard.press('Enter')
     const summary = page.locator('[data-error-summary]')
     await expect(summary).toBeFocused()
     await page.keyboard.press('Tab')
     expect(await focused(page)).toBe('a[#contact-name]')
+    await expectRing(page)
     await page.keyboard.press('Enter')
     await expect(page.locator('#contact-name')).toBeFocused()
+    await expectRing(page)
     // Space toggles the consent checkbox.
     await page.locator('#contact-privacy_consent').focus()
     await page.keyboard.press('Space')
