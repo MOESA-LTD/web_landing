@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { addPageStubs } from './helpers/page-stubs'
 import ErrorPage from '~/error.vue'
 import { content as en } from '#content/en'
@@ -82,3 +82,39 @@ describe('error.vue', () => {
     expect(w.text()).not.toContain(en['404'].next.title)
   })
 })
+
+/**
+ * I1: with a locale switched off, a 404 under its prefix (`/tr/...` with enableTr false, `/de/...` with enableDe
+ * false) is rendered entirely in EN: page copy, layout chrome (skip link, header, footer), the in-page links and the
+ * switcher. No link may lead back into the disabled locale (every such path answers 404 too).
+ */
+describe('error.vue with a locale disabled', () => {
+  const config = () => useRuntimeConfig().public
+  afterEach(() => {
+    config().enableTr = true
+    config().enableDe = true
+    useNuxtApp().$i18n.locale.value = 'en'
+    document.documentElement.removeAttribute('lang')
+  })
+
+  it.each([
+    ['tr', '/tr/hakkimizda', 'enableTr'],
+    ['de', '/de/ueber-uns', 'enableDe'],
+  ] as const)('%s off: the 404 at %s is EN throughout, with no link into the disabled locale', async (code, url, flag) => {
+    config()[flag] = false
+    const w = await mountSuspended(ErrorPage as never, {
+      props: { error: { statusCode: 404, statusMessage: 'x', url, message: 'x' } },
+      route: url,
+    })
+    await flushPromises()
+    expect(norm(w.find('h1').text())).toBe(en['404'].hero.title)
+    expect(w.find('a[href="#main"]').text()).toBe('Skip to content')
+    const hrefs = w.findAll('a').map((a) => a.attributes('href') ?? '')
+    expect(hrefs.length).toBeGreaterThan(5)
+    const prefix = `/${code}`
+    expect(hrefs.filter((h) => h === prefix || h.startsWith(`${prefix}/`))).toEqual([])
+    expect(w.findAll('[lang]').map((el) => el.attributes('lang'))).not.toContain(code)
+    await vi.waitFor(() => expect(document.documentElement.getAttribute('lang')).toBe('en'))
+  })
+})
+

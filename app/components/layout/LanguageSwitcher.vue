@@ -18,7 +18,8 @@ import { ROUTES, enabledLocales, routeNameForLocalePath } from '~~/i18n/routes'
  * Pages in ROUTES (all of them, including the five service pages) get their counterpart from ROUTES, the single
  * source of page paths: the layout renders the header before the page's setup runs, so on the server the
  * service page's `useSetI18nParams` comes too late for `switchLocalePath` (the SSR HTML would keep the EN slug
- * under /tr/hizmetler/ or /de/leistungen/). Other paths fall back to `switchLocalePath`.
+ * under /tr/hizmetler/ or /de/leistungen/). Other paths fall back to `switchLocalePath`, and a path without any
+ * counterpart (the 404 page) to the locale's home, so every link keeps a real href.
  */
 const open = defineModel<boolean>('open', { default: false })
 const { t, locale, locales } = useI18n()
@@ -36,7 +37,8 @@ const items = computed(() => {
   const suffix = route.fullPath.replace(/^[^?#]*/, '')
   const codes = locales.value.map((l) => (typeof l === 'string' ? l : l.code) as Locale).filter((c) => available.has(c))
   return codes.map((code) => {
-    const full = page ? ROUTES[page][code] + suffix : switchLocalePath(code)
+    // An unmatched path (the 404 page) has no counterpart: switchLocalePath gives '' there, so use the locale's home.
+    const full = page ? ROUTES[page][code] + suffix : switchLocalePath(code) || ROUTES.home[code]
     return {
       code,
       label: code.toUpperCase(),

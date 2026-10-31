@@ -28,6 +28,16 @@ const requestPath = (() => {
   }
 })()
 const locale = errorLocale(requestPath, localeOptions)
+
+// i18n took its locale from the path prefix, so under a disabled locale (`/tr/x` with TR off) the layout, header,
+// footer, switcher and `useLocalizedHref` would still render that locale and link into its dead paths. Align i18n
+// with the error locale before anything renders: a plain assignment (no `setLocale`, which would navigate), after
+// making sure that locale's messages are loaded.
+const i18n = useNuxtApp().$i18n
+if (i18n.locale.value !== locale) {
+  await i18n.loadLocaleMessages(locale)
+  i18n.locale.value = locale
+}
 const statusCode = Number(props.error?.statusCode) || 500
 const is404 = statusCode === 404
 

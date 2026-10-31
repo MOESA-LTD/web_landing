@@ -277,3 +277,25 @@ describe('LanguageSwitcher with TR disabled', () => {
     expect(w.findAll('a')).toHaveLength(0)
   })
 })
+
+/**
+ * S4: on a path no route matches (the 404 page), `switchLocalePath` returns '' and the links had no href (not
+ * focusable, dead). They fall back to each locale's home instead. A catch-all stub route stands in for the
+ * unmatched path, since the test router refuses to navigate to a path without any route.
+ */
+describe('LanguageSwitcher on an unmatched path (404)', () => {
+  it('links every locale to its home page', async () => {
+    const remove = useRouter().addRoute({ name: 'catch-all-stub', path: '/:pathMatch(.*)*', component: { render: () => null } })
+    try {
+      const w = await mount('/no-such-page')
+      expect(useRoute().path).toBe('/no-such-page')
+      expect(links(w).map((a) => [a.attributes('hreflang'), a.attributes('href')])).toEqual([
+        ['en', '/'],
+        ['tr', '/tr'],
+        ['de', '/de'],
+      ])
+    } finally {
+      remove()
+    }
+  })
+})
