@@ -11,6 +11,7 @@
     "typecheck": "nuxt typecheck",
     "postinstall": "nuxt prepare",
     "test": "vitest run",
+    "test:acceptance": "vitest run --config vitest.acceptance.config.ts",
     "test:e2e": "playwright test",
     "unreviewed:tr": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-tr.ts",
     "unreviewed:de": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-de.ts",
