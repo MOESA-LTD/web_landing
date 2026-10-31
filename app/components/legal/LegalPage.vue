@@ -16,9 +16,8 @@ import { brand } from '#content/site'
  * - TR "Açık alanlar" (`openFields`, approved TR) is shown once, as the open-items summary under the status, and is
  *   not repeated as a section. The translated sections below keep their own OPEN notes: the summary names the
  *   topics, the sections give the item text, so nothing is shown twice.
- * - TR `condensed` (approved one-line form): above a translated list as an intro paragraph. On paragraph sections
- *   (TR Legal Notice "Şirket" / "İletişim") the paragraphs are the same values line by line, so the line itself is
- *   not repeated (see the fidelity exclusions).
+ * - TR `condensed` (the approved one-line form; the only approved TR text of that section): an intro paragraph above
+ *   the translated list or the per-line values (TR Legal Notice "Şirket" / "İletişim"). Approved text is never hidden.
  * - The company email is a mailto link wherever it appears; the text stays verbatim.
  *
  * Slots: `section-end` (scoped by `id`) appends to a section (Cookie Policy inventory row), `after` follows the
@@ -83,7 +82,7 @@ const parts = (s: LegalSection): Part[] =>
           class="grid gap-3 border-t border-line pt-6"
         >
           <h2 :id="`legal-${s.id}`" class="text-h4 text-navy">{{ s.title }}</h2>
-          <p v-if="s.condensed && s.items" data-condensed class="m-0 text-body text-slate">{{ s.condensed }}</p>
+          <p v-if="s.condensed" data-condensed class="m-0 text-body text-slate">{{ s.condensed }}</p>
           <TickList v-if="s.items" :items="s.items" class="text-body text-slate" />
           <template v-for="(p, i) in parts(s)" :key="i">
             <p

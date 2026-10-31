@@ -120,17 +120,27 @@ for (const p of PAGES) {
       expect(h2s).toEqual(c.sections.filter((s) => s.id !== 'openFields').map((s) => s.title))
     })
 
-    it('renders the translated sections, with the approved condensed line above translated lists', async () => {
+    it('renders the translated sections, with the approved condensed line above the translated list or values', async () => {
       const w = await mountAt(p.component, p.tr)
       const text = norm(w.find('[data-legal-page]').text())
       for (const s of c.sections.filter((x) => x.id !== 'openFields')) for (const str of sectionStrings(s)) expect(text).toContain(str)
-      for (const s of c.sections.filter((x) => x.condensed && x.items)) {
+      for (const s of c.sections.filter((x) => x.condensed)) {
         const sec = w.find(`[data-legal-section="${s.id}"]`)
         expect(norm(sec.find('[data-condensed]').text())).toBe(s.condensed)
       }
     })
   })
 }
+
+describe('TR legal notice approved one-line forms', () => {
+  it('shows the approved "Şirket" and "İletişim" lines above the per-line values', async () => {
+    const w = await mountAt(LegalNoticePage, '/tr/yasal-bildirim')
+    expect(norm(w.find('[data-legal-section="operator"] [data-condensed]').text())).toBe(
+      'MOESA LTD. | 1 Petyofi Str., Plovdiv 4000, Bulgaria | Company ID 207200475 | VAT BG207200475',
+    )
+    expect(norm(w.find('[data-legal-section="contact"] [data-condensed]').text())).toBe('info@moesaltd.com | +359 88 501 661')
+  })
+})
 
 describe('cookie policy consent panel', () => {
   it('EN: the in-page settings panel is always shown, and the moesa_consent cookie is listed as strictly necessary', async () => {

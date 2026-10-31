@@ -30,12 +30,15 @@ function stateFor(choice: ConsentChoice): ConsentState {
   return { necessary: true, preferences: !!choice.preferences, analytics: !!choice.analytics }
 }
 
+/** Cookie attributes; `Secure` whenever the page is served over HTTPS (production), not on plain-http dev/e2e. */
+export function consentCookieOptions(protocol: string) {
+  return { maxAge: CONSENT_MAX_AGE, sameSite: 'lax' as const, path: '/', secure: protocol === 'https:' }
+}
+
 export function useConsent() {
   const cookie = useCookie<ConsentState | null>(CONSENT_COOKIE, {
     default: () => null,
-    maxAge: CONSENT_MAX_AGE,
-    sameSite: 'lax',
-    path: '/',
+    ...consentCookieOptions(useRequestURL().protocol),
   })
   // One shared value per app instance, so the banner and the Cookie Policy panel stay in step. Deliberately not
   // `useState`: that would carry the server's value in the payload, and a prerendered page was rendered without

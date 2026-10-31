@@ -1,7 +1,7 @@
 import { flushPromises } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { CONSENT_COOKIE, CONSENT_MAX_AGE, parseConsent, useConsent } from '~/composables/useConsent'
+import { CONSENT_COOKIE, CONSENT_MAX_AGE, consentCookieOptions, parseConsent, useConsent } from '~/composables/useConsent'
 import CookieConsent from '~/components/legal/CookieConsent.vue'
 
 const clearCookie = () => {
@@ -54,6 +54,11 @@ describe('useConsent', () => {
     save('accept')
     reset()
     expect(state.value).toBeNull()
+  })
+
+  it('marks the cookie Secure over HTTPS only (e2e and dev run on http)', () => {
+    expect(consentCookieOptions('https:')).toEqual({ maxAge: CONSENT_MAX_AGE, sameSite: 'lax', path: '/', secure: true })
+    expect(consentCookieOptions('http:').secure).toBe(false)
   })
 
   it('parseConsent rejects a tampered or malformed cookie value', () => {
