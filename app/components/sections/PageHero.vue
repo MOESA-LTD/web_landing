@@ -84,11 +84,17 @@ const display = computed(() => props.variant === 'display')
         class="surface-inverse relative min-h-[520px] overflow-hidden bg-navy-dark max-[859.98px]:hidden"
       >
         <!--
-          Canvas 1793402809 (Main.dc.html): the chevron is nudged 13% of its width to the left and may overflow its own
-          SVG box (the panel still clips it); the whole panel, label included, is hidden at a viewport of 859px or less
-          (viewport query as in the canvas; the hero is full width, so it coincides with the DS container query).
+          Canvas 1793440192-c426 (Main.dc.html): the chevron's SVG box is as wide as the panel and as tall as the viewBox
+          ratio gives (734/1125, independent of the panel height), anchored at the panel centre and moved by
+          translate(-63.2%, -40.6%) of its own box; it may overflow that box (the panel still clips it). The important
+          modifiers override LineMotif's DS `absolute inset-0 h-full w-full`. The whole panel, label included, is hidden
+          at a viewport of 859px or less (viewport query as in the canvas; the hero is full width, so it coincides with
+          the DS container query).
         -->
-        <LineMotif variant="chevron" class="overflow-visible [transform:translateX(-13%)]" />
+        <LineMotif
+          variant="chevron"
+          class="!inset-auto !top-1/2 !left-1/2 !h-auto !w-full aspect-[734/1125] overflow-visible [transform:translate(-63.2%,-40.6%)]"
+        />
         <p v-if="props.panelLabel" data-panel-label class="absolute bottom-8 left-8 m-0 text-label tracking-[.03em] text-mist-blue">
           {{ props.panelLabel }}
         </p>
