@@ -24,7 +24,7 @@ export async function verifyTurnstile(token: string, secret: string | undefined,
     })
     return res?.success === true
   } catch (err) {
-    console.error('[contact] Turnstile verification request failed', err)
+    console.error('[contact] Turnstile verification request failed:', err instanceof Error ? err.message : 'unknown error')
     return false
   }
 }

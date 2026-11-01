@@ -120,7 +120,8 @@ export default defineEventHandler(async (event: H3Event) => {
   try {
     await sendContactEmail(data, config)
   } catch (err) {
-    console.error('[contact] sending the enquiry email failed', err)
+    // Message only (no stack, no request): Vercel keeps runtime logs, and they must not hold form data.
+    console.error('[contact] sending the enquiry email failed:', err instanceof Error ? err.message : 'unknown error')
     return fail(500, 'send_failed', data.locale)
   }
   return succeed(data.locale)

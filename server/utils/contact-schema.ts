@@ -38,6 +38,7 @@ export const contactSchema = z.object({
     .min(1, { error: 'required' })
     .min(LIMITS.briefMin, { error: 'too_short' })
     .max(LIMITS.briefMax, { error: 'too_long' }),
+  // Acknowledgement of the privacy policy (legal review S2), not consent: the enquiry is answered under Art. 6(1)(b)/(f).
   privacy_consent: z.union([z.literal('on'), z.literal(true)], { error: 'required' }),
   product_category: optionalText,
   target_market: optionalText,

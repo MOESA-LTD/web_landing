@@ -30,7 +30,8 @@ export function composeEmail(data: ContactInput): { subject: string; text: strin
     ['Target market', data.target_market],
     ['Estimated volume', data.estimated_volume],
     ['Target timeline', data.target_timeline],
-    ['Privacy consent', 'given (to respond to this enquiry only)'],
+    // The checkbox acknowledges the privacy policy; the enquiry is answered under Art. 6(1)(b)/(f) GDPR, not on consent.
+    ['Privacy policy', 'acknowledged (details used only to respond to this enquiry)'],
   ]
   // The enquiry's UI language, for non-EN enquiries only (the email itself is always English).
   if (data.locale !== 'en') rows.push(['Locale', data.locale])
@@ -89,5 +90,6 @@ export async function sendContactEmail(data: ContactInput, config: MailConfig): 
     text: mail.text,
     html: mail.html,
   })
-  if (error) throw new Error(`Resend error: ${error.name}: ${error.message}`)
+  // The error name only: a provider message can quote the submitted addresses, and the caller logs this text.
+  if (error) throw new Error(`Resend error: ${error.name}`)
 }
