@@ -12,7 +12,7 @@ const content: MessageContent = {
     body: 'Die Adresse hat sich möglicherweise geändert, oder der Link ist unvollständig.',
   },
   next: {
-    title: 'Von hier aus weiter',
+    title: 'So geht es weiter',
     items: [
       'Zur Startseite',
       'Leistungen entdecken',
@@ -21,7 +21,7 @@ const content: MessageContent = {
     ],
   },
   finalCta: {
-    title: 'Brauchen Sie Hilfe, die richtigen Informationen zu finden?',
+    title: 'Benötigen Sie Hilfe bei der Suche nach den richtigen Informationen?',
     body: 'Beginnen Sie auf der Startseite oder kontaktieren Sie uns direkt.',
     cta: {
       label: 'Zur Startseite',

@@ -175,6 +175,13 @@
     color: var(--color-navy);
   }
 
+  /* Long German compounds ("Vertriebsrepräsentanz", "Beschaffungsmanagement") can overflow narrow cards, chips and
+     mobile headings: let the browser hyphenate them. Relies on `<html lang="de">` (app.vue), so EN and TR are unchanged. */
+  :lang(de) :is(h1, h2, h3, h4, h5, h6, li, dt, [data-chip]) {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;

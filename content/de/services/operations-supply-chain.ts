@@ -4,7 +4,7 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/operations-supply-chain',
-    title: 'Leistungen für internationale Operations & Lieferkette | MOESA Ltd.',
+    title: 'Internationale Operations & Lieferkette | MOESA Ltd.',
     description: 'MOESA koordiniert Einkauf, Produktionsverfolgung, Dokumentation, internationale Logistik, Importabwicklung, Lagerhaltung, Bestandsführung und Lieferung.',
   },
   slug: 'operations-supply-chain',
@@ -13,7 +13,7 @@ const content: ServicePageContent = {
     body: 'MOESA koordiniert den operativen Prozess über Einkauf, Produktion, Produktdokumentation, internationale Logistik, Import, Lagerhaltung, Bestandsführung und Lieferung hinweg.',
   },
   intro: {
-    title: 'Eine kommerzielle Vereinbarung erfordert weiterhin eine operative Umsetzung.',
+    title: 'Auch eine getroffene Handelsvereinbarung muss operativ umgesetzt werden.',
     body: 'Nachdem Produkt, Lieferant und Einkaufsbedingungen vereinbart sind, muss das Projekt Produktion, Dokumentation, Versand, Import, Lagerung und Lieferung durchlaufen. MOESA verbindet diese Phasen in einer gemeinsamen operativen Sicht.',
   },
   typicalMandates: {
@@ -29,7 +29,7 @@ const content: ServicePageContent = {
   manages: {
     title: 'Was MOESA steuert',
     items: [
-      'Kommerzielle Übergabe',
+      'Kaufmännische Übergabe',
       'Koordination von Bestellungen',
       'Produktionsplanung und -verfolgung',
       'Koordination von Qualität und Dokumentation',
@@ -44,7 +44,7 @@ const content: ServicePageContent = {
   flow: {
     title: 'Durchgängiger operativer Ablauf',
     steps: [
-      'Kommerzielle Freigabe',
+      'Kaufmännische Freigabe',
       'Bestellung',
       'Produktion',
       'Produkt- und Dokumentenprüfung',
@@ -71,14 +71,14 @@ const content: ServicePageContent = {
   },
   exceptions: {
     title: 'Ausnahmemanagement',
-    body: 'MOESA koordiniert Fakten, verantwortliche Beteiligte, Kommunikation, Eskalation, Entscheidungen und korrigierende Nachverfolgung. Gegen Verzögerungen oder Verluste durch Dritte kann keine Garantie übernommen werden.',
+    body: 'MOESA koordiniert Fakten, verantwortliche Beteiligte, Kommunikation, Eskalation, Entscheidungen und Nachverfolgung von Korrekturmaßnahmen. Gegen Verzögerungen oder Verluste durch Dritte kann keine Garantie übernommen werden.',
   },
   legalBoundary: {
-    title: 'Grenze der rechtlichen Rolle',
+    title: 'Abgrenzung der rechtlichen Rolle',
     body: 'MOESA übernimmt nicht automatisch die rechtliche Rolle des Importeurs, des Zollanmelders, des verantwortlichen Wirtschaftsakteurs oder des vertragschließenden Käufers. Diese Rollen werden für jede Transaktion gesondert festgelegt.',
   },
   finalCta: {
-    title: 'Wohin muss das Produkt?',
+    title: 'Wohin soll das Produkt geliefert werden?',
     body: 'Nennen Sie uns das Produkt, den Lieferanten, die Herkunft, den Bestimmungsort und die operative Herausforderung. Wir helfen Ihnen, den Prozess von der Bestellung bis zur Lieferung zu strukturieren.',
     cta: {
       label: 'Operations-Projekt besprechen',

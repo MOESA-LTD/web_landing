@@ -80,7 +80,7 @@ const content: HowWeWorkContent = {
       'Tamamlanan aksiyonlar',
       'Açık kararlar',
       'Müşteriden beklenen aksiyon',
-      'Tedarikçi aksiyonu',
+      'Tedarikçiden beklenen aksiyon',
       'Belgeler ve numuneler',
       'Üretim veya sevkiyat durumu',
       'Riskler ve sonraki kilometre taşı',
@@ -102,7 +102,7 @@ const content: HowWeWorkContent = {
     title: 'İş birliği seviyeleri',
     items: [
       'Tanımlı Proje',
-      'Tekrarlayan Yönetilen Hizmet',
+      'Sürekli Yönetilen Hizmet',
       'Entegre Partnerlik',
     ],
   },
@@ -112,7 +112,7 @@ const content: HowWeWorkContent = {
   },
   evolve: {
     title: 'Gelişime açık yapı',
-    body: 'Çalışma modeli; yapılandırılmış veri, gelecekte müşteri görünürlüğü, iş akışı otomasyonu ve AI destekli analiz için tasarlanmıştır. Bunlar, kullanıma hazır oldukları ayrıca teyit edilene kadar yol haritasındaki yetkinliklerdir.',
+    body: 'Çalışma modeli; yapılandırılmış veri, gelecekte müşteri görünürlüğü, iş akışı otomasyonu ve yapay zekâ destekli analiz için tasarlanmıştır. Bunlar, kullanıma hazır oldukları ayrıca teyit edilene kadar yol haritasındaki yetkinliklerdir.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

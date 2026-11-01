@@ -190,7 +190,7 @@ describe('i18n/UNREVIEWED_DE.md', () => {
 
 describe('useContent (DE)', () => {
   it('returns the German module for locale de', () => {
-    expect(useContent('home', 'de').hero.title).toBe('Vom kommerziellen Ziel zur marktreifen Lieferung.')
+    expect(useContent('home', 'de').hero.title).toBe('Vom Geschäftsziel zur marktreifen Lieferung.')
     expect(useContent('services/operations-supply-chain', 'de').slug).toBe('operations-supply-chain')
     expect(norm(useContent('legal-notice', 'de').hero.title)).toBe('Impressum')
   })

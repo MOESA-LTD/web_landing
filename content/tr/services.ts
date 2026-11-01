@@ -41,7 +41,7 @@ const content: ServicesContent = {
       items: [
         'Avrupa pazarına giriş',
         'Ticari temsil',
-        'Distribütör ve perakendeci geliştirme',
+        'Distribütör ve perakendeci ağı geliştirme',
         'Uluslararası alıcı temsili',
       ],
     },
@@ -53,7 +53,7 @@ const content: ServicesContent = {
         'Tek sipariş koordinasyonu',
         'Tekrarlayan üretim ve lojistik',
         'Çoklu tedarikçi operasyonları',
-        'Stok ve ikmal koordinasyonu',
+        'Stok yönetimi ve stok yenileme koordinasyonu',
       ],
     },
     {
@@ -70,7 +70,7 @@ const content: ServicesContent = {
   ],
   integrated: {
     title: 'Tek hizmet veya entegre bir görev.',
-    body: 'Bir proje her noktadan başlayabilir. MOESA nelerin kesinleştiğini, nelerin açık kaldığını ve hangi hizmetlerin gerçekten gerektiğini belirler.',
+    body: 'Bir proje herhangi bir aşamadan başlayabilir. MOESA nelerin kesinleştiğini, nelerin açık kaldığını ve hangi hizmetlerin gerçekten gerektiğini belirler.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

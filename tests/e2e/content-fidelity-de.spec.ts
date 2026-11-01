@@ -41,5 +41,5 @@ test('switching EN → DE on Home updates lang, title and canonical without a re
   await expect(page.locator('html')).toHaveAttribute('lang', 'de')
   await expect(page).toHaveTitle(deMeta('home').title)
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.moesaltd.com/de')
-  await expect(page.locator('h1')).toHaveText('Vom kommerziellen Ziel zur marktreifen Lieferung.')
+  await expect(page.locator('h1')).toHaveText('Vom Geschäftsziel zur marktreifen Lieferung.')
 })

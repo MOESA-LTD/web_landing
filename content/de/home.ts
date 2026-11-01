@@ -4,21 +4,21 @@ import type { HomeContent } from '../en/home'
 const content: HomeContent = {
   meta: {
     path: '/',
-    title: 'MOESA Ltd. | Internationale Beschaffung, Produktentwicklung & Commercial Operations',
-    description: 'MOESA steuert internationales Sourcing, Produktentwicklung, Beschaffung, Marktzugang, Lieferkette und Commercial Operations für Handelsunternehmen, Marken, Hersteller und weitere Unternehmen.',
+    title: 'MOESA Ltd. | Beschaffung, Produktentwicklung & Operations',
+    description: 'MOESA steuert Sourcing, Produktentwicklung, Beschaffung, Marktzugang, Lieferkette und Commercial Operations für Händler, Marken und Hersteller.',
   },
   hero: {
-    title: 'Vom kommerziellen Ziel zur marktreifen Lieferung.',
-    body: 'MOESA ist externer Partner für Produkt, Beschaffung und Commercial Operations für Unternehmen, die ein koordiniertes Team für Sourcing, Entwicklung, Umsetzung und Lieferung wünschen.',
+    title: 'Vom Geschäftsziel zur marktreifen Lieferung.',
+    body: 'MOESA ist der externe Partner für Produkt, Beschaffung und Commercial Operations – für Unternehmen, die ein einziges, koordiniertes Team für Sourcing, Entwicklung, Umsetzung und Lieferung wünschen.',
     tagline: 'Mit Sitz in der Europäischen Union. International tätig.',
   },
   team: {
     title: 'Ihr externes Produkt- und Beschaffungsteam.',
-    body: 'Unsere Partner definieren das kommerzielle Ziel und behalten die wesentlichen Entscheidungen. MOESA koordiniert die Umsetzung über Lieferanten, Produkte, Beschaffung, Marktvorbereitung, Operations und Lieferung hinweg.',
+    body: 'Unsere Partner definieren das Geschäftsziel und behalten die wesentlichen Entscheidungen. MOESA koordiniert die Umsetzung über Lieferanten, Produkte, Beschaffung, Marktvorbereitung, Operations und Lieferung hinweg.',
     statement: 'Ein Mandat. Ein koordinierter operativer Partner.',
   },
   operatingModel: {
-    title: 'Ein Betriebsmodell für den gesamten kommerziellen Prozess.',
+    title: 'Ein Betriebsmodell für den gesamten Geschäftsprozess.',
     items: [
       'Sourcing & Beschaffungsmanagement',
       'Produkt- & Private-Label-Entwicklung',
@@ -40,9 +40,9 @@ const content: HomeContent = {
   process: {
     title: 'Sie definieren das Ziel. Wir steuern die Umsetzung.',
     items: [
-      'Das kommerzielle Ziel definieren',
+      'Das Geschäftsziel definieren',
       'Die Lösung beschaffen oder entwickeln',
-      'Kommerzielle Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten',
+      'Kaufmännische Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten',
       'Einkauf, Produktion, Logistik und Lieferung umsetzen',
       'Betreiben, messen und bei Bedarf verbessern',
     ],
@@ -58,7 +58,7 @@ const content: HomeContent = {
     ],
   },
   audiences: {
-    title: 'Für unterschiedliche Geschäftsmodelle gebaut.',
+    title: 'Ausgerichtet auf unterschiedliche Geschäftsmodelle.',
     items: [
       'Handelsgruppen & Unternehmenseinkäufer',
       'Großhändler & Distributoren',
@@ -67,9 +67,9 @@ const content: HomeContent = {
     ],
   },
   capability: {
-    title: 'Kommerzielle Kompetenz über das Sourcing hinaus.',
+    title: 'Vertriebs- und Handelskompetenz über das Sourcing hinaus.',
     paragraphs: [
-      'MOESA kann das Produkt auch weiter begleiten, nachdem es das Lager erreicht hat - auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen.',
+      'MOESA kann das Produkt auch weiter begleiten, nachdem es das Lager erreicht hat – auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen.',
       'Digital Commerce ist eine Kompetenz innerhalb unseres Betriebsmodells und schränkt nicht ein, für welche Unternehmen wir arbeiten.',
     ],
   },
@@ -79,7 +79,7 @@ const content: HomeContent = {
   },
   finalCta: {
     title: 'Lassen Sie uns besprechen, was Ihr Unternehmen braucht.',
-    body: 'Ob Sie eine internationale Marke beschaffen, ein Private-Label-Portfolio entwickeln, die Beschaffung auslagern oder einen neuen kommerziellen Betrieb aufbauen möchten: Beginnen Sie mit dem Ziel.',
+    body: 'Ob Sie eine internationale Marke beschaffen, ein Private-Label-Portfolio entwickeln, die Beschaffung auslagern oder eine neue Geschäftstätigkeit aufbauen möchten: Beginnen Sie mit dem Ziel.',
     cta: {
       label: 'Projekt besprechen',
       href: '/contact',

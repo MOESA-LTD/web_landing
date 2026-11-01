@@ -4,17 +4,17 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/sourcing-managed-procurement',
-    title: 'Leistungen für Sourcing & Beschaffungsmanagement | MOESA Ltd.',
+    title: 'Sourcing & Beschaffungsmanagement | MOESA Ltd.',
     description: 'MOESA steuert internationales Produkt- und Marken-Sourcing, Lieferantenbewertung, kaufmännische Verhandlungen, Einkauf und laufende Beschaffungsprozesse.',
   },
   slug: 'sourcing-managed-procurement',
   hero: {
-    title: 'Vom Sourcing-Mandat zum gemanagten Einkauf.',
+    title: 'Vom Sourcing-Mandat zum Beschaffungsmanagement.',
     body: 'Ob Sie eine bestimmte internationale Marke, einen neuen Lieferanten oder ein externes Team für wiederkehrende Einkaufsprozesse suchen: MOESA macht aus der Anforderung einen umsetzbaren Beschaffungsprozess.',
   },
   intro: {
     title: 'Sie definieren, was Ihr Unternehmen braucht. Wir steuern, wie es beschafft wird.',
-    body: 'Ein Sourcing-Projekt kann mit einer bestimmten Marke, einem bekannten Produkt, einer Zielkategorie oder einem kommerziellen Ziel beginnen. Der Kunde behält strategische Entscheidungen und Freigaben; MOESA steuert Recherche, Kommunikation, Verhandlung und die operative Umsetzung.',
+    body: 'Ein Sourcing-Projekt kann mit einer bestimmten Marke, einem bekannten Produkt, einer Zielkategorie oder einem Geschäftsziel beginnen. Der Kunde behält strategische Entscheidungen und Freigaben; MOESA steuert Recherche, Kommunikation, Verhandlung und die operative Umsetzung.',
   },
   typicalMandates: {
     title: 'Typische Mandate',
@@ -33,7 +33,7 @@ const content: ServicePageContent = {
       'Recherche zu Marken, Produkten, Herstellern und Lieferanten',
       'Lieferantenbewertung',
       'Kaufmännische Verhandlungen',
-      'Muster und kommerzielle Machbarkeit',
+      'Muster und wirtschaftliche Machbarkeit',
       'Koordination von Bestellungen und Lieferanten',
       'Übergabe an die Lieferkette',
     ],
@@ -54,7 +54,7 @@ const content: ServicePageContent = {
     title: 'Zusammenarbeitsmodelle',
     items: [
       'Projektbasiertes Sourcing',
-      'Gemanagte Beschaffung als Service',
+      'Beschaffungsmanagement als Service',
       'Handelsvereinbarung',
       'Vertriebsrepräsentanz',
     ],

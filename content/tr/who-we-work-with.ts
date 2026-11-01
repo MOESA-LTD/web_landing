@@ -39,19 +39,19 @@ const content: WhoWeWorkWithContent = {
         'Ticari ve bölge anlaşmaları',
         'Münhasır veya kendi markalı ürünler',
         'Satın alma ve lojistik',
-        'Stok ve ikmal',
+        'Stok yönetimi ve stok yenileme',
       ],
     },
     {
       title: 'Markalar ve Marka Sahipleri',
       condensed: 'Ürün/portföy geliştirme, üretici, ambalaj, konumlandırma, commerce operasyonları ve müşteri geri bildirimi.',
-      body: 'Köklü markalar, yeni marka sahipleri, private-label işletmeleri, marketplace’te doğan markalar, D2C markaları ve kurumsal şirketlere ait ürün markaları için.',
+      body: 'Köklü markalar, yeni marka sahipleri, private-label işletmeleri, marketplace odaklı markalar, D2C markaları ve kurumsal şirketlere ait ürün markaları için.',
       items: [
         'Yeni ürün ve kategori geliştirme',
         'Ürün ailesi mimarisi',
         'Tedarikçi ve üretici koordinasyonu',
         'Ambalaj ve konumlandırma',
-        'Ticari operasyonlar',
+        'E-ticaret operasyonları',
         'Müşteri geri bildirimi ve portföy iyileştirme',
       ],
     },
@@ -61,7 +61,7 @@ const content: WhoWeWorkWithContent = {
       body: 'Avrupa’da alıcı veya operasyon arayan nihai ürün üreticileri, OEM ve private-label üreticileri, bileşen tedarikçileri ve ihracat odaklı üreticiler için.',
       items: [
         'Avrupa pazarına giriş',
-        'Distribütör ve perakendeci geliştirme',
+        'Distribütör ve perakendeci ağı geliştirme',
         'Ticari temsil',
         'Pazara özel portföy hazırlığı',
         'İthalat, depolama ve yerel operasyonlar',
@@ -75,7 +75,7 @@ const content: WhoWeWorkWithContent = {
         'Ürün tedariki ve private label',
         'Listing ve katalog operasyonları',
         'Marketplace ve D2C yönetimi',
-        'Stok ve ikmal',
+        'Stok yönetimi ve stok yenileme',
         'Performans ve müşteri içgörüsü',
       ],
     },
@@ -107,7 +107,7 @@ const content: WhoWeWorkWithContent = {
         service: 'market-access-commercial-representation',
       },
       {
-        need: 'Üretim, lojistik, stok veya teslimat koordinasyonuna ihtiyacınız var',
+        need: 'Üretim, lojistik, stok veya teslimat desteğine ihtiyacınız var',
         target: 'Operasyon ve Tedarik Zinciri',
         service: 'operations-supply-chain',
       },
@@ -124,7 +124,7 @@ const content: WhoWeWorkWithContent = {
   },
   notSure: {
     title: 'Henüz emin değil misiniz?',
-    body: 'İş sorununu, mevcut durumu ve istenen sonucu anlatın. MOESA, projeyi gereksiz bir hizmet paketine zorlamadan doğru başlangıç noktasını belirlemenize yardımcı olabilir.',
+    body: 'Karşılaştığınız iş sorununu, mevcut durumunuzu ve hedeflediğiniz sonucu anlatın. MOESA, projeyi gereksiz bir hizmet paketine zorlamadan doğru başlangıç noktasını belirlemenize yardımcı olabilir.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

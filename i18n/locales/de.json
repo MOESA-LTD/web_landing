@@ -45,7 +45,7 @@
     "allServices": "Alle Leistungen"
   },
   "related": {
-    "services": "Verwandte Leistungen"
+    "services": "Passende Leistungen"
   },
   "cards": {
     "exploreService": "Leistung ansehen",
@@ -61,7 +61,7 @@
     "contactTitle": "Kontakt",
     "email": "E-Mail",
     "phone": "Telefon",
-    "address": "Eingetragene Anschrift",
+    "address": "Eingetragener Sitz",
     "companyLine": "MOESA Ltd. · Unternehmens-ID (EIK) {companyId} · USt-IdNr. {vat}",
     "legal": {
       "privacyPolicy": "Datenschutzerklärung",
@@ -149,7 +149,7 @@
   },
   "stats": {
     "digitalCommerce": "Jahre im Digital Commerce",
-    "ecommerceOperations": "Jahre in professionellen E-Commerce-Operations"
+    "ecommerceOperations": "Jahre professionelle E-Commerce-Operations"
   },
   "error": {
     "title": "Etwas ist schiefgelaufen.",

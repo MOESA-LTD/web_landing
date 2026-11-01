@@ -9,28 +9,28 @@ const content: HowWeWorkContent = {
   },
   hero: {
     title: 'Sie definieren das Ziel. Wir steuern die Umsetzung.',
-    body: 'MOESA verbindet die kommerzielle Entscheidung mit den Anforderungen an Produkt, Lieferanten, Markt, Operations und Lieferung, die nötig sind, um daraus ein kontrolliertes Geschäftsprojekt zu machen.',
+    body: 'MOESA verbindet die Geschäftsentscheidung mit den Anforderungen an Produkt, Lieferanten, Markt, Operations und Lieferung, die nötig sind, um daraus ein kontrolliertes Geschäftsprojekt zu machen.',
   },
   intro: {
-    title: 'Ein Betriebsmodell für unterschiedliche kommerzielle Anforderungen.',
+    title: 'Ein Betriebsmodell für unterschiedliche geschäftliche Anforderungen.',
     body: 'Ein Projekt kann mit einem Produkt, einer Marke, einem Lieferanten, einem Private-Label-Konzept, einem neuen Markt oder einer operativen Herausforderung beginnen. Der Ausgangspunkt kann unterschiedlich sein, doch die Entscheidungen hängen zusammen.',
   },
   operatingFlow: {
     title: 'Der operative Ablauf von MOESA',
     items: [
-      'Das kommerzielle Ziel definieren',
+      'Das Geschäftsziel definieren',
       'Die Lösung beschaffen oder entwickeln',
-      'Kommerzielle Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten',
-      'Die Entscheidungen vor der Verpflichtung freigeben',
+      'Kaufmännische Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten',
+      'Entscheidungen freigeben, bevor Verbindlichkeiten eingegangen werden',
       'Einkauf, Produktion, Logistik und Lieferung umsetzen',
-      'Die fortlaufende kommerzielle Tätigkeit bei Bedarf betreiben',
+      'Bei Bedarf das laufende Geschäft operativ betreuen',
       'Messen, verbessern, nachbestellen oder ausbauen',
     ],
   },
   nonLinear: {
     title: 'Kein linearer Prozess',
     steps: [
-      'Kommerzielles Ziel',
+      'Geschäftsziel',
       'Beschaffen oder entwickeln',
       'Vorbereiten',
       'Freigeben',
@@ -42,13 +42,13 @@ const content: HowWeWorkContent = {
     body: 'Jedes abgeschlossene Projekt sollte das nächste verbessern.',
   },
   startAnywhere: {
-    title: 'Beginnen Sie an jedem Punkt',
+    title: 'Einstieg an jedem Punkt möglich',
     items: [
-      'Kommerzielle Idee',
+      'Geschäftsidee',
       'Bekanntes Produkt oder bekannte Marke',
       'Bestehender Lieferant',
       'Bestehendes Produkt, das verbessert werden soll',
-      'Laufender kommerzieller Betrieb, der gesteuert werden muss',
+      'Laufender Geschäftsbetrieb, der gesteuert werden muss',
     ],
   },
   governance: {
@@ -56,7 +56,7 @@ const content: HowWeWorkContent = {
     body: 'Der Kunde behält Geschäftsstrategie, Markeneigentum, Budgethoheit und endgültige Freigaben. MOESA bereitet Informationen auf, koordiniert die Arbeit und setzt im Rahmen des vereinbarten Mandats um.',
   },
   productTruth: {
-    title: 'Eine kontrollierte Produktwahrheit',
+    title: 'Eine verbindliche, kontrollierte Produktdatenbasis',
     body: 'MOESA strukturiert freigegebene Fakten, Entscheidungen, offene Fragen und zugehörige Unterlagen, damit Informationen zu Lieferanten, Verpackung, Katalog und Kanälen übereinstimmen.',
   },
   openQuestions: {
@@ -91,12 +91,12 @@ const content: HowWeWorkContent = {
     title: 'Formen der Zusammenarbeit',
     items: [
       'Definiertes Projekt',
-      'Wiederkehrender gemanagter Service',
+      'Laufender Managed Service',
       'Integrierte Partnerschaft',
     ],
   },
   responsibility: {
-    title: 'Grenze der Verantwortung',
+    title: 'Abgrenzung der Verantwortung',
     body: 'MOESA koordiniert den Prozess. Rechtliche und vertragliche Rollen bleiben entsprechend Produkt, Markt, Transaktion und vereinbartem Mandat zugeordnet.',
   },
   evolve: {
@@ -105,7 +105,7 @@ const content: HowWeWorkContent = {
   },
   finalCta: {
     title: 'Wo sollen wir beginnen?',
-    body: 'Sagen Sie uns, was bereits bestätigt ist, was offen bleibt und welches kommerzielle Ergebnis Sie erreichen möchten. Wir helfen Ihnen, die nächste Phase zu strukturieren.',
+    body: 'Sagen Sie uns, was bereits bestätigt ist, was offen bleibt und welches geschäftliche Ergebnis Sie erreichen möchten. Wir helfen Ihnen, die nächste Phase zu strukturieren.',
     cta: {
       label: 'Projekt besprechen',
       href: '/contact',

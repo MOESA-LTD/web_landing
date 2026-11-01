@@ -16,9 +16,9 @@ const content: MessageContent = {
     items: [
       'Die Anfrage wird geprüft',
       'Der passende Leistungsbereich wird ermittelt',
-      'Fehlende Informationen werden gegebenenfalls angefragt',
-      'Gegebenenfalls wird ein erstes Sondierungsgespräch vorgeschlagen',
-      'Eine Zusammenarbeit beginnt erst, wenn Umfang und kommerzielle Bedingungen vereinbart sind',
+      'Fehlende Informationen fragen wir bei Bedarf an',
+      'Gegebenenfalls schlagen wir ein erstes Sondierungsgespräch vor',
+      'Eine Zusammenarbeit beginnt erst, wenn Umfang und kaufmännische Konditionen vereinbart sind',
     ],
   },
   info: {
@@ -26,7 +26,7 @@ const content: MessageContent = {
     body: 'Senden Sie weitere Details per E-Mail an info@moesaltd.com und nennen Sie dabei den Unternehmens- oder Projektnamen, den Sie im Formular verwendet haben.',
   },
   finalCta: {
-    title: 'Entdecken Sie MOESA weiter.',
+    title: 'Erfahren Sie mehr über MOESA.',
     body: 'Sehen Sie sich unsere Leistungen an oder kehren Sie zur Startseite zurück.',
     cta: {
       label: 'Leistungen entdecken',

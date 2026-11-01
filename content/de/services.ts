@@ -5,10 +5,10 @@ const content: ServicesContent = {
   meta: {
     path: '/services',
     title: 'Leistungen | MOESA Ltd.',
-    description: 'Entdecken Sie die Leistungen von MOESA in internationalem Sourcing, Beschaffungsmanagement, Produktentwicklung, Marktzugang, Lieferkette und Digital-Commerce-Operations.',
+    description: 'Leistungen von MOESA: Sourcing, Beschaffungsmanagement, Produktentwicklung, Marktzugang, Lieferkette und Digital-Commerce-Operations.',
   },
   hero: {
-    title: 'Vernetzte Leistungen für internationale Produktunternehmen.',
+    title: 'Vernetzte Leistungen für Unternehmen im internationalen Produktgeschäft.',
     body: 'Nutzen Sie eine Leistung für einen definierten Bedarf oder verbinden Sie mehrere Leistungen in einer langfristigen operativen Partnerschaft.',
   },
   services: [
@@ -37,11 +37,11 @@ const content: ServicesContent = {
     {
       slug: 'market-access-commercial-representation',
       title: 'Marktzugang & Vertriebsrepräsentanz',
-      summary: 'Vorbereitung auf europäische Märkte, kommerzielle Vertretung, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination.',
+      summary: 'Vorbereitung auf europäische Märkte, Vertriebsrepräsentanz, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination.',
       items: [
         'Eintritt in europäische Märkte',
         'Vertriebsrepräsentanz',
-        'Aufbau von Distributoren und Händlern',
+        'Aufbau von Distributoren- und Händlernetzwerken',
         'Vertretung internationaler Einkäufer',
       ],
     },
@@ -59,12 +59,12 @@ const content: ServicesContent = {
     {
       slug: 'digital-commerce-commercial-intelligence',
       title: 'Digital Commerce & Commercial Intelligence',
-      summary: 'Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundenerkenntnisse.',
+      summary: 'Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundeneinblicke.',
       items: [
         'Vorbereitung digitaler Markteinführungen',
         'Katalog- und Content-Operations',
-        'Gemanagte Marktplatz- oder D2C-Operations',
-        'Kommerzielle Analyse und Verbesserung',
+        'Betreute Marktplatz- oder D2C-Operations',
+        'Geschäftsanalyse und Verbesserung',
       ],
     },
   ],
@@ -74,7 +74,7 @@ const content: ServicesContent = {
   },
   finalCta: {
     title: 'Nicht sicher, welche Leistung passt?',
-    body: 'Beschreiben Sie das kommerzielle Ziel, die aktuelle Situation und die zentrale Herausforderung. Wir helfen Ihnen, den passenden Ausgangspunkt zu strukturieren.',
+    body: 'Beschreiben Sie das Geschäftsziel, die aktuelle Situation und die zentrale Herausforderung. Wir helfen Ihnen, den passenden Ausgangspunkt zu strukturieren.',
     cta: {
       label: 'Projekt besprechen',
       href: '/contact',

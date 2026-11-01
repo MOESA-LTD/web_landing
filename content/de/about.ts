@@ -4,8 +4,8 @@ import type { AboutContent } from '../en/about'
 const content: AboutContent = {
   meta: {
     path: '/about',
-    title: 'Über MOESA Ltd. | Internationale Beschaffung & Product Operations',
-    description: 'Erfahren Sie mehr über MOESA Ltd., einen in Bulgarien ansässigen Partner für internationale Beschaffung, Produktentwicklung und Commercial Operations für internationale Unternehmen.',
+    title: 'Über MOESA Ltd. | Beschaffung & Product Operations',
+    description: 'MOESA Ltd. mit Sitz in Bulgarien ist Partner für internationale Beschaffung, Produktentwicklung und Commercial Operations.',
   },
   hero: {
     title: 'Ein externes Team für Produkt, Beschaffung und Commercial Operations.',
@@ -33,14 +33,14 @@ const content: AboutContent = {
       'Flexible Partnerschaftsmodelle statt eines festen Leistungspakets',
       'Die Entscheidungsrechte des Kunden bleiben klar',
       'Offene Fragen werden gesteuert, statt hinter Annahmen versteckt zu werden',
-      'Die kommerzielle Vorbereitung ist mit der operativen Umsetzung verbunden',
+      'Die kaufmännische Vorbereitung ist mit der operativen Umsetzung verbunden',
       'Produkt- und Kundenfeedback fließt in die nächste Geschäftsentscheidung ein',
     ],
   },
   principles: {
     title: 'Unsere Arbeitsprinzipien',
     items: [
-      'Kommerzieller Realismus',
+      'Wirtschaftlicher Realismus',
       'Strukturierte Umsetzung',
       'Klare Verantwortlichkeiten',
       'Kontrollierte Produktinformationen',

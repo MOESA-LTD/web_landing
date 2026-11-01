@@ -21,7 +21,7 @@ const content: ServicePageContent = {
     condensed: 'Yeni private-label ürün; ürün ailesi; üretici standardı ürünün uyarlanması; mevcut ürünün iyileştirilmesi; belirli satış kanalına ürün geliştirme.',
     items: [
       'Yeni bir private-label ürün geliştirmek',
-      'Eksiksiz bir ürün ailesi oluşturmak',
+      'Komple bir ürün ailesi oluşturmak',
       'Üreticinin mevcut bir ürününü uyarlamak',
       'Mevcut bir ürünü iyileştirmek veya yeniden kurgulamak',
       'Belirli bir satış kanalı için ürün geliştirmek',

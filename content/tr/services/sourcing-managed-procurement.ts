@@ -24,7 +24,7 @@ const content: ServicePageContent = {
       'Bir ürün veya üretici bulmak',
       'Bir tedarikçiyi değiştirmek veya tedarikçi yapısını çeşitlendirmek',
       'Tekrarlayan satın alma operasyonlarını dış kaynakla yürütmek',
-      'Birden fazla tedarikçide satın almayı koordine etmek',
+      'Birden fazla tedarikçiyle yürütülen satın almayı koordine etmek',
     ],
   },
   manages: {

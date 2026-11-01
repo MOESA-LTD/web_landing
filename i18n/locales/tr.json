@@ -62,7 +62,7 @@
     "email": "E-posta",
     "phone": "Telefon",
     "address": "Kayıtlı adres",
-    "companyLine": "MOESA Ltd. · Company ID {companyId} · VAT {vat}",
+    "companyLine": "MOESA Ltd. · Şirket sicil no (EIK) {companyId} · KDV no {vat}",
     "legal": {
       "privacyPolicy": "Gizlilik Politikası",
       "cookiePolicy": "Çerez Politikası",
@@ -70,8 +70,8 @@
     }
   },
   "company": {
-    "companyId": "Company ID",
-    "vat": "VAT"
+    "companyId": "Şirket sicil no (EIK)",
+    "vat": "KDV no"
   },
   "form": {
     "heading": "Form",
@@ -82,10 +82,10 @@
       "country": "Ülke",
       "service": "Hizmet",
       "projectBrief": "Kısa proje briefi",
-      "productCategory": "Ürün Kategorisi",
-      "targetMarket": "Hedef Pazar",
-      "estimatedVolume": "Tahmini Hacim",
-      "targetTimeline": "Hedef Zaman Çizelgesi"
+      "productCategory": "Ürün kategorisi",
+      "targetMarket": "Hedef pazar",
+      "estimatedVolume": "Tahmini hacim",
+      "targetTimeline": "Hedef takvim"
     },
     "projectDetails": "Proje detayları",
     "optional": "(opsiyonel)",
@@ -93,7 +93,7 @@
     "briefHelp": "İşletmenin neye ihtiyacı olduğunu, nelerin kesinleştiğini ve nelerin açık olduğunu anlatın.",
     "consent": "Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. {link}'na bakın.",
     "submit": "Proje Briefini Gönder",
-    "disclaimer": "Gönderilen bir form sözleşmesel bir taahhüt oluşturmaz.",
+    "disclaimer": "Form gönderimi sözleşmeye dayalı bir ilişki doğurmaz.",
     "sending": "Gönderiliyor…",
     "honeypot": "Bu alanı boş bırakın",
     "serviceOptions": {
@@ -113,7 +113,7 @@
     "errors": {
       "name": "Adınızı girin.",
       "company": "Şirket adınızı girin.",
-      "workEmail": "ad{'@'}sirket.com gibi bir iş e-postası adresi girin.",
+      "workEmail": "Geçerli bir iş e-postası adresi girin (ör. ad{'@'}sirket.com).",
       "country": "Ülkenizi girin.",
       "service": "Size nasıl destek olabileceğimizi seçin.",
       "projectBrief": "Projeyi kısaca anlatın.",
@@ -135,7 +135,7 @@
     "rejectNonEssential": "Zorunlu olmayanları reddet",
     "acceptAll": "Tümünü kabul et",
     "saveChoices": "Seçimleri kaydet",
-    "chooseSettings": "Ayarları seç",
+    "chooseSettings": "Tercihleri yönet",
     "saved": "Seçimleriniz kaydedildi.",
     "inventory": {
       "caption": "Bu web sitesinin kullandığı çerezler",
@@ -148,8 +148,8 @@
     }
   },
   "stats": {
-    "digitalCommerce": "yıllık dijital ticaret",
-    "ecommerceOperations": "yıllık profesyonel e-ticaret operasyonları"
+    "digitalCommerce": "yıl dijital ticaret deneyimi",
+    "ecommerceOperations": "yıl profesyonel e-ticaret operasyonu deneyimi"
   },
   "error": {
     "title": "Bir sorun oluştu.",

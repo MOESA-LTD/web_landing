@@ -139,7 +139,7 @@ describe('home page (TR)', () => {
     const finalCta = w.findAll('section').at(-1)!
     expect(finalCta.find('a').text()).toBe(trHome.finalCta.cta.label)
     expect(finalCta.find('a').attributes('href')).toBe('/tr/iletisim')
-    expect(w.find('dl').findAll('dt').map((d) => d.text())).toEqual(['Kayıtlı adres', 'Company ID', 'VAT'])
+    expect(w.find('dl').findAll('dt').map((d) => d.text())).toEqual(['Kayıtlı adres', 'Şirket sicil no (EIK)', 'KDV no'])
   })
 
   it('has no `condensed` sections to show (TR home.md is complete)', () => {

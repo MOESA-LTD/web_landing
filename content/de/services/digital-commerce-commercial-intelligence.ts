@@ -4,13 +4,13 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/digital-commerce-commercial-intelligence',
-    title: 'Digital-Commerce-Operations & Commercial Intelligence | MOESA Ltd.',
-    description: 'MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundenerkenntnissen.',
+    title: 'Digital Commerce & Commercial Intelligence | MOESA Ltd.',
+    description: 'MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundeneinblicken.',
   },
   slug: 'digital-commerce-commercial-intelligence',
   hero: {
     title: 'Das Produkt betreiben. Den Markt verstehen. Das Geschäft verbessern.',
-    body: 'MOESA unterstützt laufende kommerzielle Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundenerkenntnisse.',
+    body: 'MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundeneinblicke.',
   },
   intro: {
     title: 'Die Arbeit endet nicht, wenn das Produkt online geht.',
@@ -44,7 +44,7 @@ const content: ServicePageContent = {
       'Unterstützung bei Preisen und Aktionen',
       'Bestand und Nachschub',
       'Performance und Commercial Intelligence',
-      'Stimme des Kunden',
+      'Voice of the Customer',
     ],
   },
   framework: {
@@ -66,20 +66,20 @@ const content: ServicePageContent = {
     ],
   },
   productTruth: {
-    title: 'Eine einheitliche Produktwahrheit',
+    title: 'Eine einheitliche Produktdatenbasis',
     body: 'Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein kreatives Asset fertigzustellen.',
   },
   managedModel: {
     title: 'Managed-Commerce-Modell',
-    body: 'Der Kunde behält die Inhaberschaft der Konten, Markenstrategie, Budgets, Preise und endgültige Risikoentscheidungen. MOESA steuert den vereinbarten wiederkehrenden kommerziellen Betrieb und die bereichsübergreifende Nachverfolgung.',
+    body: 'Der Kunde bleibt Inhaber der Konten und behält Markenstrategie, Budgets, Preise und endgültige Risikoentscheidungen. MOESA steuert den vereinbarten laufenden Geschäftsbetrieb und die bereichsübergreifende Nachverfolgung.',
   },
   technology: {
     title: 'Aktueller Technologiestand',
     body: 'MOESA entwickelt strukturierte Betriebsdaten und künftige Fähigkeiten zur Workflow-Automatisierung. Es wird nicht behauptet, dass eine öffentliche Software- oder KI-Plattform derzeit verfügbar ist, sofern dies nicht gesondert bestätigt wurde.',
   },
   finalCta: {
-    title: 'Was sollte Ihr digitaler Betrieb besser machen?',
-    body: 'Nennen Sie uns die Produkte, Kanäle und kommerziellen Herausforderungen, die Sie steuern. Wir helfen Ihnen, das Betriebsmodell und die Prioritäten festzulegen.',
+    title: 'Was soll Ihr digitales Geschäft künftig besser leisten?',
+    body: 'Nennen Sie uns die Produkte, Kanäle und geschäftlichen Herausforderungen, die Sie steuern. Wir helfen Ihnen, das Betriebsmodell und die Prioritäten festzulegen.',
     cta: {
       label: 'Commerce-Projekt besprechen',
       href: '/contact?service=digital-commerce-commercial-intelligence',

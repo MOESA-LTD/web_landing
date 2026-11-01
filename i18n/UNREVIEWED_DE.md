@@ -19,15 +19,15 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | MOESA Ltd. \| International Procurement, Product Development & Commercial Operations | MOESA Ltd. \| Internationale Beschaffung, Produktentwicklung & Commercial Operations |
-| `meta.description` | MOESA manages international sourcing, product development, procurement, market access, supply chain and commercial operations for retailers, brands, manufacturers and businesses. | MOESA steuert internationales Sourcing, Produktentwicklung, Beschaffung, Marktzugang, Lieferkette und Commercial Operations für Handelsunternehmen, Marken, Hersteller und weitere Unternehmen. |
-| `hero.title` | From commercial objective to market-ready delivery. | Vom kommerziellen Ziel zur marktreifen Lieferung. |
-| `hero.body` | MOESA acts as an external product, procurement and commercial operations partner for companies that want one coordinated team across sourcing, development, execution and delivery. | MOESA ist externer Partner für Produkt, Beschaffung und Commercial Operations für Unternehmen, die ein koordiniertes Team für Sourcing, Entwicklung, Umsetzung und Lieferung wünschen. |
+| `meta.title` | MOESA Ltd. \| International Procurement, Product Development & Commercial Operations | MOESA Ltd. \| Beschaffung, Produktentwicklung & Operations |
+| `meta.description` | MOESA manages international sourcing, product development, procurement, market access, supply chain and commercial operations for retailers, brands, manufacturers and businesses. | MOESA steuert Sourcing, Produktentwicklung, Beschaffung, Marktzugang, Lieferkette und Commercial Operations für Händler, Marken und Hersteller. |
+| `hero.title` | From commercial objective to market-ready delivery. | Vom Geschäftsziel zur marktreifen Lieferung. |
+| `hero.body` | MOESA acts as an external product, procurement and commercial operations partner for companies that want one coordinated team across sourcing, development, execution and delivery. | MOESA ist der externe Partner für Produkt, Beschaffung und Commercial Operations – für Unternehmen, die ein einziges, koordiniertes Team für Sourcing, Entwicklung, Umsetzung und Lieferung wünschen. |
 | `hero.tagline` | Based in the European Union. Operating internationally. | Mit Sitz in der Europäischen Union. International tätig. |
 | `team.title` | Your external product & procurement team. | Ihr externes Produkt- und Beschaffungsteam. |
-| `team.body` | Our partners define the commercial objective and retain the key decisions. MOESA coordinates execution across suppliers, products, procurement, market preparation, operations and delivery. | Unsere Partner definieren das kommerzielle Ziel und behalten die wesentlichen Entscheidungen. MOESA koordiniert die Umsetzung über Lieferanten, Produkte, Beschaffung, Marktvorbereitung, Operations und Lieferung hinweg. |
+| `team.body` | Our partners define the commercial objective and retain the key decisions. MOESA coordinates execution across suppliers, products, procurement, market preparation, operations and delivery. | Unsere Partner definieren das Geschäftsziel und behalten die wesentlichen Entscheidungen. MOESA koordiniert die Umsetzung über Lieferanten, Produkte, Beschaffung, Marktvorbereitung, Operations und Lieferung hinweg. |
 | `team.statement` | One mandate. One coordinated operating partner. | Ein Mandat. Ein koordinierter operativer Partner. |
-| `operatingModel.title` | One operating model across the commercial process. | Ein Betriebsmodell für den gesamten kommerziellen Prozess. |
+| `operatingModel.title` | One operating model across the commercial process. | Ein Betriebsmodell für den gesamten Geschäftsprozess. |
 | `operatingModel.items[0]` | Sourcing & Managed Procurement | Sourcing & Beschaffungsmanagement |
 | `operatingModel.items[1]` | Product & Private Label Development | Produkt- & Private-Label-Entwicklung |
 | `operatingModel.items[2]` | Market Access & Commercial Representation | Marktzugang & Vertriebsrepräsentanz |
@@ -40,9 +40,9 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `businessNeeds.items[3]` | Enter or expand in a European market | In einen europäischen Markt eintreten oder dort expandieren |
 | `businessNeeds.items[4]` | Manage ongoing marketplace, D2C, catalog, inventory and performance operations | Laufende Marktplatz-, D2C-, Katalog-, Bestands- und Performance-Prozesse steuern |
 | `process.title` | You define the objective. We manage the execution. | Sie definieren das Ziel. Wir steuern die Umsetzung. |
-| `process.items[0]` | Define the commercial objective | Das kommerzielle Ziel definieren |
+| `process.items[0]` | Define the commercial objective | Das Geschäftsziel definieren |
 | `process.items[1]` | Source or develop the solution | Die Lösung beschaffen oder entwickeln |
-| `process.items[2]` | Prepare commercial, product, packaging and documentation requirements | Kommerzielle Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten |
+| `process.items[2]` | Prepare commercial, product, packaging and documentation requirements | Kaufmännische Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten |
 | `process.items[3]` | Execute purchasing, production, logistics and delivery | Einkauf, Produktion, Logistik und Lieferung umsetzen |
 | `process.items[4]` | Operate, measure and improve where required | Betreiben, messen und bei Bedarf verbessern |
 | `partnership.title` | Flexible partnership models. | Flexible Partnerschaftsmodelle. |
@@ -51,18 +51,18 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `partnership.items[2]` | Trading Partner | Handelspartner |
 | `partnership.items[3]` | Market Entry & Commercial Representation Partner | Partner für Markteintritt & Vertriebsrepräsentanz |
 | `partnership.items[4]` | Managed Commerce or Integrated Operations Partner | Partner für Managed Commerce oder integrierte Operations |
-| `audiences.title` | Built for different commercial models. | Für unterschiedliche Geschäftsmodelle gebaut. |
+| `audiences.title` | Built for different commercial models. | Ausgerichtet auf unterschiedliche Geschäftsmodelle. |
 | `audiences.items[0]` | Retail Groups & Corporate Buyers | Handelsgruppen & Unternehmenseinkäufer |
 | `audiences.items[1]` | Wholesalers & Distributors | Großhändler & Distributoren |
 | `audiences.items[2]` | Brands & Manufacturers | Marken & Hersteller |
 | `audiences.items[3]` | Digital Commerce Businesses | Digital-Commerce-Unternehmen |
-| `capability.title` | Commercial capability beyond sourcing. | Kommerzielle Kompetenz über das Sourcing hinaus. |
-| `capability.paragraphs[0]` | MOESA can continue supporting the product after it reaches the warehouse - across marketplaces, direct-to-consumer websites and other digital sales channels. | MOESA kann das Produkt auch weiter begleiten, nachdem es das Lager erreicht hat - auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen. |
+| `capability.title` | Commercial capability beyond sourcing. | Vertriebs- und Handelskompetenz über das Sourcing hinaus. |
+| `capability.paragraphs[0]` | MOESA can continue supporting the product after it reaches the warehouse - across marketplaces, direct-to-consumer websites and other digital sales channels. | MOESA kann das Produkt auch weiter begleiten, nachdem es das Lager erreicht hat – auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen. |
 | `capability.paragraphs[1]` | Digital commerce is a capability within our operating model, not a limitation on the businesses we serve. | Digital Commerce ist eine Kompetenz innerhalb unseres Betriebsmodells und schränkt nicht ein, für welche Unternehmen wir arbeiten. |
 | `euBase.title` | Based in the European Union. Operating internationally. | Mit Sitz in der Europäischen Union. International tätig. |
 | `euBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, procurement, market access and commercial operations. | MOESA Ltd. hat ihren Sitz in Plovdiv, Bulgarien, und bietet eine operative Basis in der EU für internationales Sourcing, Beschaffung, Marktzugang und Commercial Operations. |
 | `finalCta.title` | Let us discuss what your business needs. | Lassen Sie uns besprechen, was Ihr Unternehmen braucht. |
-| `finalCta.body` | Whether you need to source an international brand, develop a private-label portfolio, outsource procurement or build a new commercial operation, start with the objective. | Ob Sie eine internationale Marke beschaffen, ein Private-Label-Portfolio entwickeln, die Beschaffung auslagern oder einen neuen kommerziellen Betrieb aufbauen möchten: Beginnen Sie mit dem Ziel. |
+| `finalCta.body` | Whether you need to source an international brand, develop a private-label portfolio, outsource procurement or build a new commercial operation, start with the objective. | Ob Sie eine internationale Marke beschaffen, ein Private-Label-Portfolio entwickeln, die Beschaffung auslagern oder eine neue Geschäftstätigkeit aufbauen möchten: Beginnen Sie mit dem Ziel. |
 | `finalCta.cta.label` | Discuss a Project | Projekt besprechen |
 
 ### services (39)
@@ -70,8 +70,8 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | Path | EN | DE |
 | --- | --- | --- |
 | `meta.title` | Services \| MOESA Ltd. | Leistungen \| MOESA Ltd. |
-| `meta.description` | Explore MOESA services across international sourcing, managed procurement, product development, market access, supply chain and digital commerce operations. | Entdecken Sie die Leistungen von MOESA in internationalem Sourcing, Beschaffungsmanagement, Produktentwicklung, Marktzugang, Lieferkette und Digital-Commerce-Operations. |
-| `hero.title` | Connected services for international product businesses. | Vernetzte Leistungen für internationale Produktunternehmen. |
+| `meta.description` | Explore MOESA services across international sourcing, managed procurement, product development, market access, supply chain and digital commerce operations. | Leistungen von MOESA: Sourcing, Beschaffungsmanagement, Produktentwicklung, Marktzugang, Lieferkette und Digital-Commerce-Operations. |
+| `hero.title` | Connected services for international product businesses. | Vernetzte Leistungen für Unternehmen im internationalen Produktgeschäft. |
 | `hero.body` | Use one service for a defined requirement or connect multiple services within a long-term operating partnership. | Nutzen Sie eine Leistung für einen definierten Bedarf oder verbinden Sie mehrere Leistungen in einer langfristigen operativen Partnerschaft. |
 | `services[0].title` | Sourcing & Managed Procurement | Sourcing & Beschaffungsmanagement |
 | `services[0].summary` | International brand and product sourcing, manufacturer and supplier identification, commercial negotiation, purchasing and recurring procurement management. | Internationales Marken- und Produkt-Sourcing, Identifizierung von Herstellern und Lieferanten, kaufmännische Verhandlungen, Einkauf und Management wiederkehrender Beschaffung. |
@@ -86,10 +86,10 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `services[1].items[2]` | Existing-product adaptation | Anpassung bestehender Produkte |
 | `services[1].items[3]` | Product improvement and supplier transition | Produktverbesserung und Lieferantenwechsel |
 | `services[2].title` | Market Access & Commercial Representation | Marktzugang & Vertriebsrepräsentanz |
-| `services[2].summary` | European market preparation, commercial representation, distributor and retailer relationships, channel development and local operational coordination. | Vorbereitung auf europäische Märkte, kommerzielle Vertretung, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination. |
+| `services[2].summary` | European market preparation, commercial representation, distributor and retailer relationships, channel development and local operational coordination. | Vorbereitung auf europäische Märkte, Vertriebsrepräsentanz, Beziehungen zu Distributoren und Händlern, Kanalentwicklung und lokale operative Koordination. |
 | `services[2].items[0]` | European market entry | Eintritt in europäische Märkte |
 | `services[2].items[1]` | Commercial representation | Vertriebsrepräsentanz |
-| `services[2].items[2]` | Distributor and retailer development | Aufbau von Distributoren und Händlern |
+| `services[2].items[2]` | Distributor and retailer development | Aufbau von Distributoren- und Händlernetzwerken |
 | `services[2].items[3]` | International buyer representation | Vertretung internationaler Einkäufer |
 | `services[3].title` | Operations & Supply Chain | Operations & Lieferkette |
 | `services[3].summary` | Purchasing, production follow-up, product and document coordination, international logistics, import operations, warehousing, inventory and delivery. | Einkauf, Produktionsverfolgung, Produkt- und Dokumentenkoordination, internationale Logistik, Importabwicklung, Lagerhaltung, Bestandsführung und Lieferung. |
@@ -98,27 +98,27 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `services[3].items[2]` | Multi-supplier operations | Operations mit mehreren Lieferanten |
 | `services[3].items[3]` | Inventory and replenishment coordination | Koordination von Bestand und Nachschub |
 | `services[4].title` | Digital Commerce & Commercial Intelligence | Digital Commerce & Commercial Intelligence |
-| `services[4].summary` | Product positioning, creative coordination, SEO, listings, catalog, marketplace and D2C operations, inventory planning, reporting and customer intelligence. | Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundenerkenntnisse. |
+| `services[4].summary` | Product positioning, creative coordination, SEO, listings, catalog, marketplace and D2C operations, inventory planning, reporting and customer intelligence. | Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundeneinblicke. |
 | `services[4].items[0]` | Digital launch preparation | Vorbereitung digitaler Markteinführungen |
 | `services[4].items[1]` | Catalog and content operations | Katalog- und Content-Operations |
-| `services[4].items[2]` | Managed marketplace or D2C operations | Gemanagte Marktplatz- oder D2C-Operations |
-| `services[4].items[3]` | Commercial analysis and improvement | Kommerzielle Analyse und Verbesserung |
+| `services[4].items[2]` | Managed marketplace or D2C operations | Betreute Marktplatz- oder D2C-Operations |
+| `services[4].items[3]` | Commercial analysis and improvement | Geschäftsanalyse und Verbesserung |
 | `integrated.title` | One service or an integrated mandate. | Eine Leistung oder ein integriertes Mandat. |
 | `integrated.body` | A project can begin at any point. MOESA identifies what is already confirmed, what remains open and which services are actually required. | Ein Projekt kann an jedem Punkt beginnen. MOESA stellt fest, was bereits bestätigt ist, was offen bleibt und welche Leistungen tatsächlich erforderlich sind. |
 | `finalCta.title` | Not sure which service fits? | Nicht sicher, welche Leistung passt? |
-| `finalCta.body` | Describe the commercial objective, current situation and main challenge. We will help structure the appropriate starting point. | Beschreiben Sie das kommerzielle Ziel, die aktuelle Situation und die zentrale Herausforderung. Wir helfen Ihnen, den passenden Ausgangspunkt zu strukturieren. |
+| `finalCta.body` | Describe the commercial objective, current situation and main challenge. We will help structure the appropriate starting point. | Beschreiben Sie das Geschäftsziel, die aktuelle Situation und die zentrale Herausforderung. Wir helfen Ihnen, den passenden Ausgangspunkt zu strukturieren. |
 | `finalCta.cta.label` | Discuss a Project | Projekt besprechen |
 
 ### services/sourcing-managed-procurement (43)
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | Sourcing & Managed Procurement Services \| MOESA Ltd. | Leistungen für Sourcing & Beschaffungsmanagement \| MOESA Ltd. |
+| `meta.title` | Sourcing & Managed Procurement Services \| MOESA Ltd. | Sourcing & Beschaffungsmanagement \| MOESA Ltd. |
 | `meta.description` | MOESA manages international product and brand sourcing, supplier assessment, commercial negotiation, purchasing and ongoing procurement operations. | MOESA steuert internationales Produkt- und Marken-Sourcing, Lieferantenbewertung, kaufmännische Verhandlungen, Einkauf und laufende Beschaffungsprozesse. |
-| `hero.title` | From sourcing mandate to managed procurement. | Vom Sourcing-Mandat zum gemanagten Einkauf. |
+| `hero.title` | From sourcing mandate to managed procurement. | Vom Sourcing-Mandat zum Beschaffungsmanagement. |
 | `hero.body` | Whether you are looking for a specific international brand, a new supplier or an external team to manage recurring purchasing operations, MOESA turns the requirement into an executable procurement process. | Ob Sie eine bestimmte internationale Marke, einen neuen Lieferanten oder ein externes Team für wiederkehrende Einkaufsprozesse suchen: MOESA macht aus der Anforderung einen umsetzbaren Beschaffungsprozess. |
 | `intro.title` | You define what the business needs. We manage how it gets sourced. | Sie definieren, was Ihr Unternehmen braucht. Wir steuern, wie es beschafft wird. |
-| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Ein Sourcing-Projekt kann mit einer bestimmten Marke, einem bekannten Produkt, einer Zielkategorie oder einem kommerziellen Ziel beginnen. Der Kunde behält strategische Entscheidungen und Freigaben; MOESA steuert Recherche, Kommunikation, Verhandlung und die operative Umsetzung. |
+| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Ein Sourcing-Projekt kann mit einer bestimmten Marke, einem bekannten Produkt, einer Zielkategorie oder einem Geschäftsziel beginnen. Der Kunde behält strategische Entscheidungen und Freigaben; MOESA steuert Recherche, Kommunikation, Verhandlung und die operative Umsetzung. |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Source a specific international brand | Eine bestimmte internationale Marke beschaffen |
 | `typicalMandates.items[1]` | Find a product or manufacturer | Ein Produkt oder einen Hersteller finden |
@@ -130,7 +130,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `manages.items[1]` | Brand, product, manufacturer and supplier research | Recherche zu Marken, Produkten, Herstellern und Lieferanten |
 | `manages.items[2]` | Supplier assessment | Lieferantenbewertung |
 | `manages.items[3]` | Commercial negotiation | Kaufmännische Verhandlungen |
-| `manages.items[4]` | Samples and commercial feasibility | Muster und kommerzielle Machbarkeit |
+| `manages.items[4]` | Samples and commercial feasibility | Muster und wirtschaftliche Machbarkeit |
 | `manages.items[5]` | Purchase-order and supplier coordination | Koordination von Bestellungen und Lieferanten |
 | `manages.items[6]` | Supply-chain handover | Übergabe an die Lieferkette |
 | `managedModel.title` | Managed procurement model | Modell des Beschaffungsmanagements |
@@ -143,7 +143,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `managedModel.items[5]` | Reorder and continuity planning | Nachbestell- und Kontinuitätsplanung |
 | `models.title` | Engagement models | Zusammenarbeitsmodelle |
 | `models.items[0]` | Project-Based Sourcing | Projektbasiertes Sourcing |
-| `models.items[1]` | Managed Procurement Service | Gemanagte Beschaffung als Service |
+| `models.items[1]` | Managed Procurement Service | Beschaffungsmanagement als Service |
 | `models.items[2]` | Trading Arrangement | Handelsvereinbarung |
 | `models.items[3]` | Commercial Representation | Vertriebsrepräsentanz |
 | `suitableFor.title` | Suitable for | Geeignet für |
@@ -161,12 +161,12 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | Product & Private Label Development Services \| MOESA Ltd. | Leistungen für Produkt- & Private-Label-Entwicklung \| MOESA Ltd. |
-| `meta.description` | MOESA develops products and private-label portfolios from category strategy and product architecture through supplier selection, packaging and production readiness. | MOESA entwickelt Produkte und Private-Label-Portfolios von der Kategoriestrategie und Produktarchitektur über die Lieferantenauswahl und Verpackung bis zur Produktionsreife. |
-| `hero.title` | From category opportunity to market-ready product. | Von der Kategoriechance zum marktreifen Produkt. |
-| `hero.body` | MOESA develops individual products and complete private-label portfolios, connecting the commercial objective with product architecture, suppliers, specifications, packaging and production preparation. | MOESA entwickelt einzelne Produkte und vollständige Private-Label-Portfolios und verbindet das kommerzielle Ziel mit Produktarchitektur, Lieferanten, Spezifikationen, Verpackung und Produktionsvorbereitung. |
+| `meta.title` | Product & Private Label Development Services \| MOESA Ltd. | Produkt- & Private-Label-Entwicklung \| MOESA Ltd. |
+| `meta.description` | MOESA develops products and private-label portfolios from category strategy and product architecture through supplier selection, packaging and production readiness. | MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Produktionsreife. |
+| `hero.title` | From category opportunity to market-ready product. | Vom Marktpotenzial einer Kategorie zum marktreifen Produkt. |
+| `hero.body` | MOESA develops individual products and complete private-label portfolios, connecting the commercial objective with product architecture, suppliers, specifications, packaging and production preparation. | MOESA entwickelt einzelne Produkte und vollständige Private-Label-Portfolios und verbindet das Geschäftsziel mit Produktarchitektur, Lieferanten, Spezifikationen, Verpackung und Produktionsvorbereitung. |
 | `intro.title` | A product should be designed for the business that will sell it. | Ein Produkt sollte für das Unternehmen gestaltet sein, das es verkaufen wird. |
-| `intro.body` | Private-label development is more than placing a logo on an existing product. The product must match the intended customer, market position, channel, quality level, commercial structure and future portfolio strategy. | Private-Label-Entwicklung ist mehr, als ein Logo auf ein bestehendes Produkt zu setzen. Das Produkt muss zur vorgesehenen Kundschaft, Marktposition, zum Kanal, zum Qualitätsniveau, zur kommerziellen Struktur und zur künftigen Portfoliostrategie passen. |
+| `intro.body` | Private-label development is more than placing a logo on an existing product. The product must match the intended customer, market position, channel, quality level, commercial structure and future portfolio strategy. | Private-Label-Entwicklung ist mehr, als ein Logo auf ein bestehendes Produkt zu setzen. Das Produkt muss zur vorgesehenen Kundschaft, zur Marktposition, zum Kanal, zum Qualitätsniveau, zur Geschäftsstruktur und zur künftigen Portfoliostrategie passen. |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Develop a new private-label product | Ein neues Private-Label-Produkt entwickeln |
 | `typicalMandates.items[1]` | Build a complete product family | Eine vollständige Produktfamilie aufbauen |
@@ -174,7 +174,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `typicalMandates.items[3]` | Improve or rebuild an existing product | Ein bestehendes Produkt verbessern oder neu aufbauen |
 | `typicalMandates.items[4]` | Develop products for a specific sales channel | Produkte für einen bestimmten Vertriebskanal entwickeln |
 | `manages.title` | What MOESA manages | Was MOESA steuert |
-| `manages.items[0]` | Commercial and product brief | Kommerzielles Briefing und Produktbriefing |
+| `manages.items[0]` | Commercial and product brief | Geschäfts- und Produktbriefing |
 | `manages.items[1]` | Category and market assessment | Kategorie- und Marktbewertung |
 | `manages.items[2]` | Product architecture | Produktarchitektur |
 | `manages.items[3]` | Supplier and manufacturer selection | Auswahl von Lieferanten und Herstellern |
@@ -182,10 +182,10 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `manages.items[5]` | Samples and development rounds | Muster und Entwicklungsrunden |
 | `manages.items[6]` | QA and compliance coordination | Koordination von QS und Compliance |
 | `manages.items[7]` | Packaging and product presentation | Verpackung und Produktpräsentation |
-| `manages.items[8]` | Commercial feasibility | Kommerzielle Machbarkeit |
+| `manages.items[8]` | Commercial feasibility | Wirtschaftliche Machbarkeit |
 | `manages.items[9]` | Production readiness | Produktionsreife |
 | `architecture.title` | Product architecture | Produktarchitektur |
-| `architecture.body` | MOESA structures the relationship between the category, product family, quality tier, model, material or design, size, pack count and market status. | MOESA strukturiert die Beziehung zwischen Kategorie, Produktfamilie, Qualitätsstufe, Modell, Material oder Design, Größe, Packungsanzahl und Marktstatus. |
+| `architecture.body` | MOESA structures the relationship between the category, product family, quality tier, model, material or design, size, pack count and market status. | MOESA strukturiert die Beziehung zwischen Kategorie, Produktfamilie, Qualitätsstufe, Modell, Material oder Design, Größe, Stückzahl pro Packung und Marktstatus. |
 | `architecture.items[0]` | Prevents unnecessary duplication | Verhindert unnötige Dopplungen |
 | `architecture.items[1]` | Supports future portfolio expansion | Unterstützt den künftigen Ausbau des Portfolios |
 | `architecture.items[2]` | Improves supplier communication | Verbessert die Kommunikation mit Lieferanten |
@@ -207,40 +207,40 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | European Market Access & Commercial Representation \| MOESA Ltd. | Europäischer Marktzugang & Vertriebsrepräsentanz \| MOESA Ltd. |
-| `meta.description` | MOESA supports brands, manufacturers and buyers with European market preparation, commercial representation, channel development and local operational coordination. | MOESA unterstützt Marken, Hersteller und Einkäufer bei der Vorbereitung auf europäische Märkte, bei der kommerziellen Vertretung, der Kanalentwicklung und der lokalen operativen Koordination. |
+| `meta.title` | European Market Access & Commercial Representation \| MOESA Ltd. | Marktzugang & Vertriebsrepräsentanz in Europa \| MOESA Ltd. |
+| `meta.description` | MOESA supports brands, manufacturers and buyers with European market preparation, commercial representation, channel development and local operational coordination. | MOESA unterstützt Marken, Hersteller und Einkäufer bei Markteintritt, Vertriebsrepräsentanz, Kanalentwicklung und lokaler Koordination in Europa. |
 | `hero.title` | Connecting products, brands and markets. | Wir verbinden Produkte, Marken und Märkte. |
 | `hero.body` | MOESA supports manufacturers, brand owners, buyers and commercial partners that want to establish international relationships, enter European markets or develop new sales channels. | MOESA unterstützt Hersteller, Markeninhaber, Einkäufer und Handelspartner, die internationale Geschäftsbeziehungen aufbauen, in europäische Märkte eintreten oder neue Vertriebskanäle entwickeln möchten. |
 | `intro.title` | A new market requires more than a new customer. | Ein neuer Markt erfordert mehr als einen neuen Kunden. |
-| `intro.body` | Entering a new market requires the right commercial relationships, product preparation, channel strategy and operational structure. MOESA acts as a local commercial and operating partner within an agreed mandate. | Der Eintritt in einen neuen Markt erfordert die richtigen Geschäftsbeziehungen, Produktvorbereitung, Kanalstrategie und operative Struktur. MOESA handelt als lokaler kommerzieller und operativer Partner im Rahmen eines vereinbarten Mandats. |
+| `intro.body` | Entering a new market requires the right commercial relationships, product preparation, channel strategy and operational structure. MOESA acts as a local commercial and operating partner within an agreed mandate. | Der Eintritt in einen neuen Markt erfordert die richtigen Geschäftsbeziehungen, Produktvorbereitung, Kanalstrategie und operative Struktur. MOESA agiert als lokaler Vertriebs- und operativer Partner im Rahmen eines vereinbarten Mandats. |
 | `twoSides.title` | Two sides of international trade | Zwei Seiten des internationalen Handels |
-| `twoSides.items[0]` | For manufacturers and brand owners entering or expanding in Europe | Für Hersteller und Markeninhaber, die in Europa eintreten oder expandieren |
+| `twoSides.items[0]` | For manufacturers and brand owners entering or expanding in Europe | Für Hersteller und Markeninhaber, die in den europäischen Markt eintreten oder in Europa expandieren |
 | `twoSides.items[1]` | For retailers, distributors and buyers seeking international brands, manufacturers or suppliers | Für Händler, Distributoren und Einkäufer, die internationale Marken, Hersteller oder Lieferanten suchen |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Enter the European market | In den europäischen Markt eintreten |
 | `typicalMandates.items[1]` | Find a distributor or retail partner | Einen Distributor oder Handelspartner finden |
-| `typicalMandates.items[2]` | Establish commercial representation | Eine kommerzielle Vertretung aufbauen |
+| `typicalMandates.items[2]` | Establish commercial representation | Eine Vertriebsrepräsentanz aufbauen |
 | `typicalMandates.items[3]` | Source an international brand for a market | Eine internationale Marke für einen Markt beschaffen |
 | `typicalMandates.items[4]` | Build a new retail, wholesale or digital sales channel | Einen neuen Vertriebskanal im Einzelhandel, Großhandel oder digital aufbauen |
 | `manages.title` | What MOESA manages | Was MOESA steuert |
 | `manages.items[0]` | Market assessment | Marktbewertung |
 | `manages.items[1]` | Product and portfolio preparation | Vorbereitung von Produkt und Portfolio |
-| `manages.items[2]` | Commercial positioning | Kommerzielle Positionierung |
+| `manages.items[2]` | Commercial positioning | Marktpositionierung |
 | `manages.items[3]` | Partner and channel identification | Identifizierung von Partnern und Kanälen |
-| `manages.items[4]` | Commercial outreach | Kommerzielle Ansprache |
+| `manages.items[4]` | Commercial outreach | Vertriebsansprache |
 | `manages.items[5]` | Negotiation support | Unterstützung bei Verhandlungen |
 | `manages.items[6]` | Local operational preparation | Lokale operative Vorbereitung |
-| `manages.items[7]` | Ongoing commercial coordination | Laufende kommerzielle Koordination |
+| `manages.items[7]` | Ongoing commercial coordination | Laufende vertriebliche Koordination |
 | `models.title` | Representation structures | Vertretungsstrukturen |
 | `models.items[0]` | Project-Based Market Entry | Projektbasierter Markteintritt |
-| `models.items[1]` | Ongoing Commercial Representation | Laufende kommerzielle Vertretung |
+| `models.items[1]` | Ongoing Commercial Representation | Laufende Vertriebsrepräsentanz |
 | `models.items[2]` | Trading and Distribution Arrangement | Handels- und Vertriebsvereinbarung |
 | `models.items[3]` | Local Operations Partner | Lokaler operativer Partner |
 | `europeanBase.title` | European operating base | Europäische operative Basis |
 | `europeanBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria. The exact scope and responsibilities are defined separately for each market, product and commercial relationship. | MOESA Ltd. hat ihren Sitz in Plovdiv, Bulgarien. Der genaue Umfang und die Verantwortlichkeiten werden für jeden Markt, jedes Produkt und jede Geschäftsbeziehung gesondert festgelegt. |
 | `responsibilities.title` | Clear mandate and control | Klares Mandat und klare Kontrolle |
-| `responsibilities.body` | The client retains brand ownership, strategy, pricing authority, contractual approvals, partner approval and final commercial decisions. MOESA coordinates the agreed market-development and commercial activities. | Der Kunde behält Markeneigentum, Strategie, Preishoheit, Vertragsfreigaben, Partnerfreigabe und endgültige kommerzielle Entscheidungen. MOESA koordiniert die vereinbarten Aktivitäten zur Marktentwicklung und die kommerziellen Aktivitäten. |
-| `finalCta.title` | Which market do you want to develop? | Welchen Markt möchten Sie entwickeln? |
+| `responsibilities.body` | The client retains brand ownership, strategy, pricing authority, contractual approvals, partner approval and final commercial decisions. MOESA coordinates the agreed market-development and commercial activities. | Der Kunde behält Markeneigentum, Strategie, Preishoheit, Vertragsfreigaben, Partnerfreigabe und endgültige Geschäftsentscheidungen. MOESA koordiniert die vereinbarten Aktivitäten in Markterschließung und Vertrieb. |
+| `finalCta.title` | Which market do you want to develop? | Welchen Markt möchten Sie erschließen? |
 | `finalCta.body` | Tell us the product, brand, target market or commercial relationship you want to build. We will help structure the next steps. | Nennen Sie uns das Produkt, die Marke, den Zielmarkt oder die Geschäftsbeziehung, die Sie aufbauen möchten. Wir helfen Ihnen, die nächsten Schritte zu strukturieren. |
 | `finalCta.cta.label` | Discuss a Market Project | Marktprojekt besprechen |
 
@@ -248,11 +248,11 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | International Operations & Supply Chain Services \| MOESA Ltd. | Leistungen für internationale Operations & Lieferkette \| MOESA Ltd. |
+| `meta.title` | International Operations & Supply Chain Services \| MOESA Ltd. | Internationale Operations & Lieferkette \| MOESA Ltd. |
 | `meta.description` | MOESA coordinates purchasing, production follow-up, documentation, international logistics, import operations, warehousing, inventory and delivery. | MOESA koordiniert Einkauf, Produktionsverfolgung, Dokumentation, internationale Logistik, Importabwicklung, Lagerhaltung, Bestandsführung und Lieferung. |
 | `hero.title` | From purchase order to destination. | Von der Bestellung bis zum Bestimmungsort. |
 | `hero.body` | MOESA coordinates the operational process across purchasing, production, product documentation, international logistics, import, warehousing, inventory and delivery. | MOESA koordiniert den operativen Prozess über Einkauf, Produktion, Produktdokumentation, internationale Logistik, Import, Lagerhaltung, Bestandsführung und Lieferung hinweg. |
-| `intro.title` | A commercial agreement still requires operational execution. | Eine kommerzielle Vereinbarung erfordert weiterhin eine operative Umsetzung. |
+| `intro.title` | A commercial agreement still requires operational execution. | Auch eine getroffene Handelsvereinbarung muss operativ umgesetzt werden. |
 | `intro.body` | After the product, supplier and purchasing conditions have been agreed, the project must move through production, documentation, shipment, import, storage and delivery. MOESA connects these stages in one operating view. | Nachdem Produkt, Lieferant und Einkaufsbedingungen vereinbart sind, muss das Projekt Produktion, Dokumentation, Versand, Import, Lagerung und Lieferung durchlaufen. MOESA verbindet diese Phasen in einer gemeinsamen operativen Sicht. |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Manage production after purchase | Die Produktion nach dem Kauf steuern |
@@ -261,7 +261,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `typicalMandates.items[3]` | Manage recurring supply operations | Wiederkehrende Versorgungsprozesse steuern |
 | `typicalMandates.items[4]` | Consolidate multiple suppliers | Mehrere Lieferanten bündeln |
 | `manages.title` | What MOESA manages | Was MOESA steuert |
-| `manages.items[0]` | Commercial handover | Kommerzielle Übergabe |
+| `manages.items[0]` | Commercial handover | Kaufmännische Übergabe |
 | `manages.items[1]` | Purchase-order coordination | Koordination von Bestellungen |
 | `manages.items[2]` | Production planning and follow-up | Produktionsplanung und -verfolgung |
 | `manages.items[3]` | Quality and documentation coordination | Koordination von Qualität und Dokumentation |
@@ -272,7 +272,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `manages.items[8]` | Inventory and replenishment coordination | Koordination von Bestand und Nachschub |
 | `manages.items[9]` | Final delivery | Endzustellung |
 | `flow.title` | End-to-end operating flow | Durchgängiger operativer Ablauf |
-| `flow.steps[0]` | Commercial Approval | Kommerzielle Freigabe |
+| `flow.steps[0]` | Commercial Approval | Kaufmännische Freigabe |
 | `flow.steps[1]` | Purchase Order | Bestellung |
 | `flow.steps[2]` | Production | Produktion |
 | `flow.steps[3]` | Product and Document Checks | Produkt- und Dokumentenprüfung |
@@ -292,10 +292,10 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `visibility.items[6]` | Estimated completion | Voraussichtlicher Abschluss |
 | `visibility.items[7]` | Supporting documents | Zugehörige Dokumente |
 | `exceptions.title` | Exception management | Ausnahmemanagement |
-| `exceptions.body` | MOESA coordinates facts, responsible parties, communication, escalation, decisions and corrective follow-up. Third-party delays or losses cannot be guaranteed against. | MOESA koordiniert Fakten, verantwortliche Beteiligte, Kommunikation, Eskalation, Entscheidungen und korrigierende Nachverfolgung. Gegen Verzögerungen oder Verluste durch Dritte kann keine Garantie übernommen werden. |
-| `legalBoundary.title` | Legal-role boundary | Grenze der rechtlichen Rolle |
+| `exceptions.body` | MOESA coordinates facts, responsible parties, communication, escalation, decisions and corrective follow-up. Third-party delays or losses cannot be guaranteed against. | MOESA koordiniert Fakten, verantwortliche Beteiligte, Kommunikation, Eskalation, Entscheidungen und Nachverfolgung von Korrekturmaßnahmen. Gegen Verzögerungen oder Verluste durch Dritte kann keine Garantie übernommen werden. |
+| `legalBoundary.title` | Legal-role boundary | Abgrenzung der rechtlichen Rolle |
 | `legalBoundary.body` | MOESA does not automatically assume the legal role of importer, customs declarant, responsible economic operator or contracting purchaser. These roles are defined separately for each transaction. | MOESA übernimmt nicht automatisch die rechtliche Rolle des Importeurs, des Zollanmelders, des verantwortlichen Wirtschaftsakteurs oder des vertragschließenden Käufers. Diese Rollen werden für jede Transaktion gesondert festgelegt. |
-| `finalCta.title` | Where does the product need to go? | Wohin muss das Produkt? |
+| `finalCta.title` | Where does the product need to go? | Wohin soll das Produkt geliefert werden? |
 | `finalCta.body` | Tell us the product, supplier, origin, destination and operational challenge. We will help structure the process from order to delivery. | Nennen Sie uns das Produkt, den Lieferanten, die Herkunft, den Bestimmungsort und die operative Herausforderung. Wir helfen Ihnen, den Prozess von der Bestellung bis zur Lieferung zu strukturieren. |
 | `finalCta.cta.label` | Discuss an Operations Project | Operations-Projekt besprechen |
 
@@ -303,10 +303,10 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | Digital Commerce Operations & Commercial Intelligence \| MOESA Ltd. | Digital-Commerce-Operations & Commercial Intelligence \| MOESA Ltd. |
-| `meta.description` | MOESA supports marketplace and D2C operations across product positioning, content, SEO, listings, catalog, inventory, performance and customer intelligence. | MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundenerkenntnissen. |
+| `meta.title` | Digital Commerce Operations & Commercial Intelligence \| MOESA Ltd. | Digital Commerce & Commercial Intelligence \| MOESA Ltd. |
+| `meta.description` | MOESA supports marketplace and D2C operations across product positioning, content, SEO, listings, catalog, inventory, performance and customer intelligence. | MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundeneinblicken. |
 | `hero.title` | Operate the product. Understand the market. Improve the business. | Das Produkt betreiben. Den Markt verstehen. Das Geschäft verbessern. |
-| `hero.body` | MOESA supports ongoing commercial operations across marketplaces, direct-to-consumer websites and other digital sales channels, connecting product presentation, catalog, inventory, performance and customer intelligence. | MOESA unterstützt laufende kommerzielle Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundenerkenntnisse. |
+| `hero.body` | MOESA supports ongoing commercial operations across marketplaces, direct-to-consumer websites and other digital sales channels, connecting product presentation, catalog, inventory, performance and customer intelligence. | MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundeneinblicke. |
 | `intro.title` | The work does not end when the product goes live. | Die Arbeit endet nicht, wenn das Produkt online geht. |
 | `intro.body` | Product information must remain accurate. Listings and catalogs must be maintained. Inventory must reflect sales demand. Pricing, promotions, customer feedback and channel performance must be reviewed. | Produktinformationen müssen korrekt bleiben. Listings und Kataloge müssen gepflegt werden. Der Bestand muss die Absatznachfrage widerspiegeln. Preise, Aktionen, Kundenfeedback und Kanal-Performance müssen überprüft werden. |
 | `broader.title` | More than an e-commerce agency. | Mehr als eine E-Commerce-Agentur. |
@@ -329,7 +329,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `manages.items[8]` | Pricing and promotion support | Unterstützung bei Preisen und Aktionen |
 | `manages.items[9]` | Inventory and replenishment | Bestand und Nachschub |
 | `manages.items[10]` | Performance and commercial intelligence | Performance und Commercial Intelligence |
-| `manages.items[11]` | Voice of customer | Stimme des Kunden |
+| `manages.items[11]` | Voice of customer | Voice of the Customer |
 | `framework.title` | Commercial intelligence framework | Rahmenwerk für Commercial Intelligence |
 | `framework.steps[0]` | Measure | Messen |
 | `framework.steps[1]` | Understand | Verstehen |
@@ -342,14 +342,14 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `framework.items[3]` | Pricing and promotions | Preise und Aktionen |
 | `framework.items[4]` | Content and catalog gaps | Lücken in Content und Katalog |
 | `framework.items[5]` | Product and portfolio opportunities | Chancen für Produkte und Portfolio |
-| `productTruth.title` | One product truth | Eine einheitliche Produktwahrheit |
+| `productTruth.title` | One product truth | Eine einheitliche Produktdatenbasis |
 | `productTruth.body` | Every channel should reflect the same approved product. Unresolved information remains open and is not replaced with assumptions to complete a listing or creative asset. | Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein kreatives Asset fertigzustellen. |
 | `managedModel.title` | Managed commerce model | Managed-Commerce-Modell |
-| `managedModel.body` | The client retains account ownership, brand strategy, budgets, pricing and final risk decisions. MOESA manages the agreed recurring commercial operation and cross-functional follow-up. | Der Kunde behält die Inhaberschaft der Konten, Markenstrategie, Budgets, Preise und endgültige Risikoentscheidungen. MOESA steuert den vereinbarten wiederkehrenden kommerziellen Betrieb und die bereichsübergreifende Nachverfolgung. |
+| `managedModel.body` | The client retains account ownership, brand strategy, budgets, pricing and final risk decisions. MOESA manages the agreed recurring commercial operation and cross-functional follow-up. | Der Kunde bleibt Inhaber der Konten und behält Markenstrategie, Budgets, Preise und endgültige Risikoentscheidungen. MOESA steuert den vereinbarten laufenden Geschäftsbetrieb und die bereichsübergreifende Nachverfolgung. |
 | `technology.title` | Current technology position | Aktueller Technologiestand |
 | `technology.body` | MOESA is developing structured operating data and future workflow automation capabilities. A public software or AI platform is not claimed as currently available unless separately confirmed. | MOESA entwickelt strukturierte Betriebsdaten und künftige Fähigkeiten zur Workflow-Automatisierung. Es wird nicht behauptet, dass eine öffentliche Software- oder KI-Plattform derzeit verfügbar ist, sofern dies nicht gesondert bestätigt wurde. |
-| `finalCta.title` | What should your digital operation do better? | Was sollte Ihr digitaler Betrieb besser machen? |
-| `finalCta.body` | Tell us the products, channels and commercial challenges you are managing. We will help define the operating model and priorities. | Nennen Sie uns die Produkte, Kanäle und kommerziellen Herausforderungen, die Sie steuern. Wir helfen Ihnen, das Betriebsmodell und die Prioritäten festzulegen. |
+| `finalCta.title` | What should your digital operation do better? | Was soll Ihr digitales Geschäft künftig besser leisten? |
+| `finalCta.body` | Tell us the products, channels and commercial challenges you are managing. We will help define the operating model and priorities. | Nennen Sie uns die Produkte, Kanäle und geschäftlichen Herausforderungen, die Sie steuern. Wir helfen Ihnen, das Betriebsmodell und die Prioritäten festzulegen. |
 | `finalCta.cta.label` | Discuss a Commerce Project | Commerce-Projekt besprechen |
 
 ### how-we-work (63)
@@ -359,19 +359,19 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `meta.title` | How We Work \| MOESA Ltd. | So arbeiten wir \| MOESA Ltd. |
 | `meta.description` | Learn how MOESA connects sourcing, product development, procurement, market access, supply chain and digital commerce from objective to execution. | Erfahren Sie, wie MOESA Sourcing, Produktentwicklung, Beschaffung, Marktzugang, Lieferkette und Digital Commerce vom Ziel bis zur Umsetzung verbindet. |
 | `hero.title` | You define the objective. We manage the execution. | Sie definieren das Ziel. Wir steuern die Umsetzung. |
-| `hero.body` | MOESA connects the commercial decision with the product, supplier, market, operational and delivery requirements needed to turn it into a controlled business project. | MOESA verbindet die kommerzielle Entscheidung mit den Anforderungen an Produkt, Lieferanten, Markt, Operations und Lieferung, die nötig sind, um daraus ein kontrolliertes Geschäftsprojekt zu machen. |
-| `intro.title` | One operating model across different commercial needs. | Ein Betriebsmodell für unterschiedliche kommerzielle Anforderungen. |
+| `hero.body` | MOESA connects the commercial decision with the product, supplier, market, operational and delivery requirements needed to turn it into a controlled business project. | MOESA verbindet die Geschäftsentscheidung mit den Anforderungen an Produkt, Lieferanten, Markt, Operations und Lieferung, die nötig sind, um daraus ein kontrolliertes Geschäftsprojekt zu machen. |
+| `intro.title` | One operating model across different commercial needs. | Ein Betriebsmodell für unterschiedliche geschäftliche Anforderungen. |
 | `intro.body` | A project may begin with a product, a brand, a supplier, a private-label concept, a new market or an operational challenge. The starting point may differ, but the decisions are connected. | Ein Projekt kann mit einem Produkt, einer Marke, einem Lieferanten, einem Private-Label-Konzept, einem neuen Markt oder einer operativen Herausforderung beginnen. Der Ausgangspunkt kann unterschiedlich sein, doch die Entscheidungen hängen zusammen. |
 | `operatingFlow.title` | The MOESA operating flow | Der operative Ablauf von MOESA |
-| `operatingFlow.items[0]` | Define the commercial objective | Das kommerzielle Ziel definieren |
+| `operatingFlow.items[0]` | Define the commercial objective | Das Geschäftsziel definieren |
 | `operatingFlow.items[1]` | Source or develop the solution | Die Lösung beschaffen oder entwickeln |
-| `operatingFlow.items[2]` | Prepare commercial, product, packaging and documentation requirements | Kommerzielle Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten |
-| `operatingFlow.items[3]` | Approve the decisions before commitment | Die Entscheidungen vor der Verpflichtung freigeben |
+| `operatingFlow.items[2]` | Prepare commercial, product, packaging and documentation requirements | Kaufmännische Anforderungen sowie Anforderungen an Produkt, Verpackung und Dokumentation vorbereiten |
+| `operatingFlow.items[3]` | Approve the decisions before commitment | Entscheidungen freigeben, bevor Verbindlichkeiten eingegangen werden |
 | `operatingFlow.items[4]` | Execute purchasing, production, logistics and delivery | Einkauf, Produktion, Logistik und Lieferung umsetzen |
-| `operatingFlow.items[5]` | Operate the continuing commercial activity where required | Die fortlaufende kommerzielle Tätigkeit bei Bedarf betreiben |
+| `operatingFlow.items[5]` | Operate the continuing commercial activity where required | Bei Bedarf das laufende Geschäft operativ betreuen |
 | `operatingFlow.items[6]` | Measure, improve, reorder or expand | Messen, verbessern, nachbestellen oder ausbauen |
 | `nonLinear.title` | Not a linear process | Kein linearer Prozess |
-| `nonLinear.steps[0]` | Commercial Objective | Kommerzielles Ziel |
+| `nonLinear.steps[0]` | Commercial Objective | Geschäftsziel |
 | `nonLinear.steps[1]` | Source or Develop | Beschaffen oder entwickeln |
 | `nonLinear.steps[2]` | Prepare | Vorbereiten |
 | `nonLinear.steps[3]` | Approve | Freigeben |
@@ -380,15 +380,15 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `nonLinear.steps[6]` | Measure | Messen |
 | `nonLinear.steps[7]` | Improve, Reorder or Expand | Verbessern, nachbestellen oder ausbauen |
 | `nonLinear.body` | Every completed project should improve the next one. | Jedes abgeschlossene Projekt sollte das nächste verbessern. |
-| `startAnywhere.title` | Start at any point | Beginnen Sie an jedem Punkt |
-| `startAnywhere.items[0]` | Commercial idea | Kommerzielle Idee |
+| `startAnywhere.title` | Start at any point | Einstieg an jedem Punkt möglich |
+| `startAnywhere.items[0]` | Commercial idea | Geschäftsidee |
 | `startAnywhere.items[1]` | Known product or brand | Bekanntes Produkt oder bekannte Marke |
 | `startAnywhere.items[2]` | Existing supplier | Bestehender Lieferant |
 | `startAnywhere.items[3]` | Existing product requiring improvement | Bestehendes Produkt, das verbessert werden soll |
-| `startAnywhere.items[4]` | Active commercial operation requiring management | Laufender kommerzieller Betrieb, der gesteuert werden muss |
+| `startAnywhere.items[4]` | Active commercial operation requiring management | Laufender Geschäftsbetrieb, der gesteuert werden muss |
 | `governance.title` | Decision governance | Entscheidungshoheit |
 | `governance.body` | The client retains business strategy, brand ownership, budget authority and final approvals. MOESA prepares information, coordinates work and executes within the agreed mandate. | Der Kunde behält Geschäftsstrategie, Markeneigentum, Budgethoheit und endgültige Freigaben. MOESA bereitet Informationen auf, koordiniert die Arbeit und setzt im Rahmen des vereinbarten Mandats um. |
-| `productTruth.title` | One controlled product truth | Eine kontrollierte Produktwahrheit |
+| `productTruth.title` | One controlled product truth | Eine verbindliche, kontrollierte Produktdatenbasis |
 | `productTruth.body` | MOESA structures approved facts, decisions, open questions and supporting records so supplier, packaging, catalog and channel information remain aligned. | MOESA strukturiert freigegebene Fakten, Entscheidungen, offene Fragen und zugehörige Unterlagen, damit Informationen zu Lieferanten, Verpackung, Katalog und Kanälen übereinstimmen. |
 | `openQuestions.title` | Open questions and risks | Offene Fragen und Risiken |
 | `openQuestions.body` | An open question is not a finished fact. Each unresolved matter is connected to required evidence, responsible party, target decision date and controlled update. | Eine offene Frage ist keine feststehende Tatsache. Jeder ungeklärte Punkt wird mit den erforderlichen Nachweisen, der verantwortlichen Partei, einem Zieltermin für die Entscheidung und einer kontrollierten Aktualisierung verknüpft. |
@@ -410,14 +410,14 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `partnershipModels.items[5]` | Integrated Operations Partner | Partner für integrierte Operations |
 | `engagementLevels.title` | Engagement levels | Formen der Zusammenarbeit |
 | `engagementLevels.items[0]` | Defined Project | Definiertes Projekt |
-| `engagementLevels.items[1]` | Recurring Managed Service | Wiederkehrender gemanagter Service |
+| `engagementLevels.items[1]` | Recurring Managed Service | Laufender Managed Service |
 | `engagementLevels.items[2]` | Integrated Partnership | Integrierte Partnerschaft |
-| `responsibility.title` | Responsibility boundary | Grenze der Verantwortung |
+| `responsibility.title` | Responsibility boundary | Abgrenzung der Verantwortung |
 | `responsibility.body` | MOESA coordinates the process. Legal and contractual roles remain assigned according to the product, market, transaction and agreed mandate. | MOESA koordiniert den Prozess. Rechtliche und vertragliche Rollen bleiben entsprechend Produkt, Markt, Transaktion und vereinbartem Mandat zugeordnet. |
 | `evolve.title` | Built to evolve | Auf Weiterentwicklung ausgelegt |
 | `evolve.body` | The operating model is designed for structured data, future client visibility, workflow automation and AI-assisted analysis. These are roadmap capabilities until separately confirmed as available. | Das Betriebsmodell ist auf strukturierte Daten, künftige Transparenz für Kunden, Workflow-Automatisierung und KI-gestützte Analyse ausgelegt. Dies sind Fähigkeiten auf der Roadmap, bis ihre Verfügbarkeit gesondert bestätigt ist. |
 | `finalCta.title` | Where should we begin? | Wo sollen wir beginnen? |
-| `finalCta.body` | Tell us what is already confirmed, what remains open and what commercial result you want to achieve. We will help structure the next stage. | Sagen Sie uns, was bereits bestätigt ist, was offen bleibt und welches kommerzielle Ergebnis Sie erreichen möchten. Wir helfen Ihnen, die nächste Phase zu strukturieren. |
+| `finalCta.body` | Tell us what is already confirmed, what remains open and what commercial result you want to achieve. We will help structure the next stage. | Sagen Sie uns, was bereits bestätigt ist, was offen bleibt und welches geschäftliche Ergebnis Sie erreichen möchten. Wir helfen Ihnen, die nächste Phase zu strukturieren. |
 | `finalCta.cta.label` | Discuss a Project | Projekt besprechen |
 
 ### who-we-work-with (66)
@@ -425,11 +425,11 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | Path | EN | DE |
 | --- | --- | --- |
 | `meta.title` | Who We Work With \| MOESA Ltd. | Für wen wir arbeiten \| MOESA Ltd. |
-| `meta.description` | MOESA works with corporate buyers, retailers, wholesalers, distributors, brands, manufacturers and digital commerce businesses across sourcing, product development and operations. | MOESA arbeitet mit Unternehmenseinkäufern, Händlern, Großhändlern, Distributoren, Marken, Herstellern und Digital-Commerce-Unternehmen in Sourcing, Produktentwicklung und Operations. |
+| `meta.description` | MOESA works with corporate buyers, retailers, wholesalers, distributors, brands, manufacturers and digital commerce businesses across sourcing, product development and operations. | MOESA arbeitet mit Einkäufern, Händlern, Distributoren, Marken, Herstellern und Digital-Commerce-Unternehmen – von Sourcing bis Operations. |
 | `hero.title` | Different business models. One coordinated operating partner. | Unterschiedliche Geschäftsmodelle. Ein koordinierter operativer Partner. |
 | `hero.body` | MOESA works with companies that need products, suppliers, procurement capacity, private-label development, market access or continuing commercial operations. | MOESA arbeitet mit Unternehmen, die Produkte, Lieferanten, Beschaffungskapazität, Private-Label-Entwicklung, Marktzugang oder fortlaufende Commercial Operations benötigen. |
 | `intro.title` | Start with the business need, not a predefined package. | Beginnen Sie mit dem geschäftlichen Bedarf, nicht mit einem vordefinierten Paket. |
-| `intro.body` | A retail group, manufacturer, distributor and digital commerce business may require different commercial structures. MOESA begins with the client’s objective and structures the appropriate operating model around it. | Eine Handelsgruppe, ein Hersteller, ein Distributor und ein Digital-Commerce-Unternehmen können unterschiedliche kommerzielle Strukturen benötigen. MOESA beginnt mit dem Ziel des Kunden und baut das passende Betriebsmodell darum herum auf. |
+| `intro.body` | A retail group, manufacturer, distributor and digital commerce business may require different commercial structures. MOESA begins with the client’s objective and structures the appropriate operating model around it. | Eine Handelsgruppe, ein Hersteller, ein Distributor und ein Digital-Commerce-Unternehmen können unterschiedliche Geschäftsstrukturen benötigen. MOESA beginnt mit dem Ziel des Kunden und richtet das passende Betriebsmodell daran aus. |
 | `audiences[0].title` | Retail Groups & Corporate Buyers | Handelsgruppen & Unternehmenseinkäufer |
 | `audiences[0].body` | For retail groups, chain-store organisations, hospitality companies, healthcare and care organisations, facility-management companies, industrial buyers, service groups and procurement departments. | Für Handelsgruppen, Filialunternehmen, Unternehmen aus Hotellerie und Gastronomie, Organisationen aus Gesundheitswesen und Pflege, Facility-Management-Unternehmen, industrielle Einkäufer, Dienstleistungsgruppen und Einkaufsabteilungen. |
 | `audiences[0].items[0]` | Category and assortment development | Kategorie- und Sortimentsentwicklung |
@@ -457,7 +457,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `audiences[3].title` | Manufacturers | Hersteller |
 | `audiences[3].body` | For finished-goods manufacturers, OEM and private-label producers, component suppliers and export-focused manufacturers seeking European buyers or operations. | Für Hersteller von Fertigwaren, OEM- und Private-Label-Produzenten, Komponentenlieferanten und exportorientierte Hersteller, die europäische Einkäufer oder Operations suchen. |
 | `audiences[3].items[0]` | European market entry | Eintritt in europäische Märkte |
-| `audiences[3].items[1]` | Distributor and retailer development | Aufbau von Distributoren und Händlern |
+| `audiences[3].items[1]` | Distributor and retailer development | Aufbau von Distributoren- und Händlernetzwerken |
 | `audiences[3].items[2]` | Commercial representation | Vertriebsrepräsentanz |
 | `audiences[3].items[3]` | Market-specific portfolio preparation | Marktspezifische Vorbereitung des Portfolios |
 | `audiences[3].items[4]` | Import, warehousing and local operations | Import, Lagerhaltung und lokale Operations |
@@ -467,12 +467,12 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `audiences[4].items[1]` | Listing and catalog operations | Listing- und Katalog-Operations |
 | `audiences[4].items[2]` | Marketplace and D2C management | Marktplatz- und D2C-Management |
 | `audiences[4].items[3]` | Inventory and replenishment | Bestand und Nachschub |
-| `audiences[4].items[4]` | Performance and customer intelligence | Performance und Kundenerkenntnisse |
+| `audiences[4].items[4]` | Performance and customer intelligence | Performance und Kundeneinblicke |
 | `seekingBrands.title` | Buyers seeking international brands | Einkäufer auf der Suche nach internationalen Marken |
-| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Ein Kunde kennt die Marke oder das Produkt, das er kaufen möchte, möglicherweise bereits. MOESA ermittelt die zuständige Geschäftspartei, stellt den Kontakt her und koordiniert Sourcing, Verhandlung und Einkauf. |
+| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Ein Kunde kennt die Marke oder das Produkt, das er kaufen möchte, möglicherweise bereits. MOESA ermittelt den zuständigen Geschäftspartner, stellt den Kontakt her und koordiniert Sourcing, Verhandlung und Einkauf. |
 | `noInternalProcurement.title` | Businesses without a full internal procurement team | Unternehmen ohne vollständiges internes Beschaffungsteam |
-| `noInternalProcurement.body` | MOESA can operate as an external procurement and product-operations function within a defined mandate while the client retains strategy, budget and approvals. | MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Product-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält. |
-| `selectionGuide.title` | Engagement selection guide | Leitfaden zur Wahl der Zusammenarbeit |
+| `noInternalProcurement.body` | MOESA can operate as an external procurement and product-operations function within a defined mandate while the client retains strategy, budget and approvals. | MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Produkt-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält. |
+| `selectionGuide.title` | Engagement selection guide | Wegweiser: Welche Leistung passt? |
 | `selectionGuide.rows[0].need` | Need a specific brand or supplier | Sie benötigen eine bestimmte Marke oder einen bestimmten Lieferanten |
 | `selectionGuide.rows[0].target` | Sourcing & Managed Procurement | Sourcing & Beschaffungsmanagement |
 | `selectionGuide.rows[1].need` | Need a product or category under your own brand | Sie benötigen ein Produkt oder eine Kategorie unter Ihrer eigenen Marke |
@@ -495,8 +495,8 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | About MOESA Ltd. \| International Procurement & Product Operations | Über MOESA Ltd. \| Internationale Beschaffung & Product Operations |
-| `meta.description` | Learn about MOESA Ltd., a Bulgaria-based international procurement, product development and commercial operations partner serving international businesses. | Erfahren Sie mehr über MOESA Ltd., einen in Bulgarien ansässigen Partner für internationale Beschaffung, Produktentwicklung und Commercial Operations für internationale Unternehmen. |
+| `meta.title` | About MOESA Ltd. \| International Procurement & Product Operations | Über MOESA Ltd. \| Beschaffung & Product Operations |
+| `meta.description` | Learn about MOESA Ltd., a Bulgaria-based international procurement, product development and commercial operations partner serving international businesses. | MOESA Ltd. mit Sitz in Bulgarien ist Partner für internationale Beschaffung, Produktentwicklung und Commercial Operations. |
 | `hero.title` | An external product, procurement and commercial operations team. | Ein externes Team für Produkt, Beschaffung und Commercial Operations. |
 | `hero.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, and works with international businesses across sourcing, product development, market access, supply chain and digital commerce. | MOESA Ltd. hat ihren Sitz in Plovdiv, Bulgarien, und arbeitet mit internationalen Unternehmen in Sourcing, Produktentwicklung, Marktzugang, Lieferkette und Digital Commerce. |
 | `whoWeAre.title` | Who we are | Wer wir sind |
@@ -513,10 +513,10 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `why.items[1]` | Flexible partnership models rather than one fixed service package | Flexible Partnerschaftsmodelle statt eines festen Leistungspakets |
 | `why.items[2]` | Client decision rights remain clear | Die Entscheidungsrechte des Kunden bleiben klar |
 | `why.items[3]` | Open questions are controlled instead of hidden by assumptions | Offene Fragen werden gesteuert, statt hinter Annahmen versteckt zu werden |
-| `why.items[4]` | Commercial preparation is connected with operational delivery | Die kommerzielle Vorbereitung ist mit der operativen Umsetzung verbunden |
+| `why.items[4]` | Commercial preparation is connected with operational delivery | Die kaufmännische Vorbereitung ist mit der operativen Umsetzung verbunden |
 | `why.items[5]` | Product and customer feedback return to the next business decision | Produkt- und Kundenfeedback fließt in die nächste Geschäftsentscheidung ein |
 | `principles.title` | Our operating principles | Unsere Arbeitsprinzipien |
-| `principles.items[0]` | Commercial realism | Kommerzieller Realismus |
+| `principles.items[0]` | Commercial realism | Wirtschaftlicher Realismus |
 | `principles.items[1]` | Structured execution | Strukturierte Umsetzung |
 | `principles.items[2]` | Clear responsibilities | Klare Verantwortlichkeiten |
 | `principles.items[3]` | Controlled product information | Kontrollierte Produktinformationen |
@@ -542,7 +542,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 
 | Path | EN | DE |
 | --- | --- | --- |
-| `meta.title` | Contact MOESA Ltd. \| Discuss a Product, Procurement or Market Project | MOESA Ltd. kontaktieren \| Produkt-, Beschaffungs- oder Marktprojekt besprechen |
+| `meta.title` | Contact MOESA Ltd. \| Discuss a Product, Procurement or Market Project | Kontakt \| MOESA Ltd. – Projekt besprechen |
 | `meta.description` | Contact MOESA Ltd. to discuss sourcing, procurement, private-label development, market access, supply chain or digital commerce operations. | Kontaktieren Sie MOESA Ltd., um Sourcing, Beschaffung, Private-Label-Entwicklung, Marktzugang, Lieferkette oder Digital-Commerce-Operations zu besprechen. |
 | `hero.title` | Start with the objective. | Beginnen Sie mit dem Ziel. |
 | `hero.body` | Tell us what the business needs, what is already confirmed and what remains open. We will help structure the next step. | Sagen Sie uns, was Ihr Unternehmen braucht, was bereits bestätigt ist und was offen bleibt. Wir helfen Ihnen, den nächsten Schritt zu strukturieren. |
@@ -563,20 +563,20 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `formFields.items[3]` | Country | Land |
 | `formFields.items[4]` | How Can We Support You? | Wie können wir Sie unterstützen? |
 | `formFields.items[5]` | Short Project Brief | Kurzes Projektbriefing |
-| `formFields.items[6]` | Product Category - optional | Produktkategorie - optional |
-| `formFields.items[7]` | Target Market - optional | Zielmarkt - optional |
-| `formFields.items[8]` | Estimated Volume - optional | Geschätztes Volumen - optional |
-| `formFields.items[9]` | Target Timeline - optional | Gewünschter Zeitrahmen - optional |
-| `formFields.items[10]` | File Upload - optional | Datei-Upload - optional |
+| `formFields.items[6]` | Product Category - optional | Produktkategorie – optional |
+| `formFields.items[7]` | Target Market - optional | Zielmarkt – optional |
+| `formFields.items[8]` | Estimated Volume - optional | Geschätztes Volumen – optional |
+| `formFields.items[9]` | Target Timeline - optional | Gewünschter Zeitrahmen – optional |
+| `formFields.items[10]` | File Upload - optional | Datei-Upload – optional |
 | `next.title` | What happens next | Wie es weitergeht |
 | `next.items[0]` | MOESA reviews the request and identifies the relevant service area | MOESA prüft die Anfrage und ermittelt den passenden Leistungsbereich |
 | `next.items[1]` | We may request missing project information | Wir fragen gegebenenfalls fehlende Projektinformationen an |
 | `next.items[2]` | A discovery discussion is arranged where appropriate | Bei Bedarf wird ein erstes Sondierungsgespräch vereinbart |
-| `next.items[3]` | Scope, responsibilities and commercial terms are defined before work begins | Umfang, Verantwortlichkeiten und kommerzielle Bedingungen werden vor Beginn der Arbeit festgelegt |
+| `next.items[3]` | Scope, responsibilities and commercial terms are defined before work begins | Umfang, Verantwortlichkeiten und kaufmännische Konditionen werden vor Beginn der Arbeit festgelegt |
 | `direct.title` | Direct contact | Direkter Kontakt |
 | `direct.items[0]` | Email: info@moesaltd.com | E-Mail: info@moesaltd.com |
 | `direct.items[1]` | Phone: +359 88 501 661 | Telefon: +359 88 501 661 |
-| `direct.items[2]` | Registered address: 1 Petyofi Str., Plovdiv 4000, Bulgaria | Eingetragene Anschrift: 1 Petyofi Str., Plovdiv 4000, Bulgaria |
+| `direct.items[2]` | Registered address: 1 Petyofi Str., Plovdiv 4000, Bulgaria | Eingetragener Sitz: 1 Petyofi Str., Plovdiv 4000, Bulgarien |
 | `company.title` | Company details | Unternehmensangaben |
 | `company.items[0]` | Company ID: 207200475 | Unternehmens-ID (EIK): 207200475 |
 | `company.items[1]` | VAT: BG207200475 | USt-IdNr.: BG207200475 |
@@ -597,12 +597,12 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `next.title` | What happens next | Wie es weitergeht |
 | `next.items[0]` | The enquiry is reviewed | Die Anfrage wird geprüft |
 | `next.items[1]` | The relevant service area is identified | Der passende Leistungsbereich wird ermittelt |
-| `next.items[2]` | Missing information may be requested | Fehlende Informationen werden gegebenenfalls angefragt |
-| `next.items[3]` | A discovery discussion may be proposed | Gegebenenfalls wird ein erstes Sondierungsgespräch vorgeschlagen |
-| `next.items[4]` | No engagement begins until scope and commercial terms are agreed | Eine Zusammenarbeit beginnt erst, wenn Umfang und kommerzielle Bedingungen vereinbart sind |
+| `next.items[2]` | Missing information may be requested | Fehlende Informationen fragen wir bei Bedarf an |
+| `next.items[3]` | A discovery discussion may be proposed | Gegebenenfalls schlagen wir ein erstes Sondierungsgespräch vor |
+| `next.items[4]` | No engagement begins until scope and commercial terms are agreed | Eine Zusammenarbeit beginnt erst, wenn Umfang und kaufmännische Konditionen vereinbart sind |
 | `info.title` | Need to add information? | Möchten Sie Informationen ergänzen? |
 | `info.body` | Email additional details to info@moesaltd.com and reference the company or project name used in the form. | Senden Sie weitere Details per E-Mail an info@moesaltd.com und nennen Sie dabei den Unternehmens- oder Projektnamen, den Sie im Formular verwendet haben. |
-| `finalCta.title` | Continue exploring MOESA. | Entdecken Sie MOESA weiter. |
+| `finalCta.title` | Continue exploring MOESA. | Erfahren Sie mehr über MOESA. |
 | `finalCta.body` | Review our services or return to the home page. | Sehen Sie sich unsere Leistungen an oder kehren Sie zur Startseite zurück. |
 | `finalCta.cta.label` | Explore Services | Leistungen entdecken |
 
@@ -614,12 +614,12 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `meta.description` | The page you requested could not be found. | Die angeforderte Seite wurde nicht gefunden. |
 | `hero.title` | The page could not be found. | Die Seite wurde nicht gefunden. |
 | `hero.body` | The address may have changed, or the link may be incomplete. | Die Adresse hat sich möglicherweise geändert, oder der Link ist unvollständig. |
-| `next.title` | Continue from here | Von hier aus weiter |
+| `next.title` | Continue from here | So geht es weiter |
 | `next.items[0]` | Return to Home | Zur Startseite |
 | `next.items[1]` | Explore Services | Leistungen entdecken |
 | `next.items[2]` | How We Work | So arbeiten wir |
 | `next.items[3]` | Contact MOESA | MOESA kontaktieren |
-| `finalCta.title` | Need help finding the right information? | Brauchen Sie Hilfe, die richtigen Informationen zu finden? |
+| `finalCta.title` | Need help finding the right information? | Benötigen Sie Hilfe bei der Suche nach den richtigen Informationen? |
 | `finalCta.body` | Start from the home page or contact us directly. | Beginnen Sie auf der Startseite oder kontaktieren Sie uns direkt. |
 | `finalCta.cta.label` | Return Home | Zur Startseite |
 
@@ -773,7 +773,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `breadcrumbs.home` | Home | Startseite |
 | `breadcrumbs.services` | Services | Leistungen |
 | `breadcrumbs.allServices` | All services | Alle Leistungen |
-| `related.services` | Related services | Verwandte Leistungen |
+| `related.services` | Related services | Passende Leistungen |
 | `cards.exploreService` | Explore service | Leistung ansehen |
 | `cards.capability` | Cross-functional capability | Bereichsübergreifende Kompetenz |
 | `status.draft` | Draft | Entwurf |
@@ -783,7 +783,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `footer.contactTitle` | Contact | Kontakt |
 | `footer.email` | Email | E-Mail |
 | `footer.phone` | Phone | Telefon |
-| `footer.address` | Registered address | Eingetragene Anschrift |
+| `footer.address` | Registered address | Eingetragener Sitz |
 | `footer.companyLine` | MOESA Ltd. · Company ID {companyId} · VAT {vat} | MOESA Ltd. · Unternehmens-ID (EIK) {companyId} · USt-IdNr. {vat} |
 | `footer.legal.privacyPolicy` | Privacy Policy | Datenschutzerklärung |
 | `footer.legal.cookiePolicy` | Cookie Policy | Cookie-Richtlinie |
@@ -853,6 +853,6 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `cookie.inventory.consentPurpose` | Stores your cookie choices. | Speichert Ihre Cookie-Auswahl. |
 | `cookie.inventory.consentDuration` | 180 days | 180 Tage |
 | `stats.digitalCommerce` | years in digital commerce | Jahre im Digital Commerce |
-| `stats.ecommerceOperations` | years in professional e-commerce operations | Jahre in professionellen E-Commerce-Operations |
+| `stats.ecommerceOperations` | years in professional e-commerce operations | Jahre professionelle E-Commerce-Operations |
 | `error.title` | Something went wrong. | Etwas ist schiefgelaufen. |
 | `error.body` | The page could not be loaded. Please try again later. | Die Seite konnte nicht geladen werden. Bitte versuchen Sie es später erneut. |

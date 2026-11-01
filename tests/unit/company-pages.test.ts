@@ -316,13 +316,21 @@ describe('about (EN /about)', () => {
     expect(panel.findAll('.text-h4').map((s) => s.text())).toEqual(['years in digital commerce', 'years in professional e-commerce operations'])
   })
 
-  it('takes each Stat (value + label) verbatim from the approved Experience sentence, in both locales', async () => {
-    for (const [route, c] of [['/about', en.about], [ROUTES.about.tr, tr.about]] as const) {
-      const w = await mountAt(AboutPage, route)
-      const stats = w.find('[data-stats]').findAll('.grid')
-      expect(stats).toHaveLength(2)
-      for (const s of stats) expect(c.experience.body).toContain(`${s.find('.text-stat').text()} ${s.find('.text-h4').text()}`)
-    }
+  it('takes each EN Stat (value + label) verbatim from the approved Experience sentence', async () => {
+    const w = await mountAt(AboutPage, '/about')
+    const stats = w.find('[data-stats]').findAll('.grid')
+    expect(stats).toHaveLength(2)
+    for (const s of stats) expect(en.about.experience.body).toContain(`${s.find('.text-stat').text()} ${s.find('.text-h4').text()}`)
+  })
+
+  it('TR Stats read as whole phrases ("15 yıl … deneyimi"), not as a fragment cut from the approved sentence', async () => {
+    // Translation review TR-S4: the cut "15 yıllık dijital ticaret" lacked its noun; the labels are listed as unreviewed.
+    const w = await mountAt(AboutPage, ROUTES.about.tr)
+    const stats = w.find('[data-stats]').findAll('.grid')
+    expect(stats.map((s) => `${s.find('.text-stat').text()} ${s.find('.text-h4').text()}`)).toEqual([
+      '15 yıl dijital ticaret deneyimi',
+      '10 yıl profesyonel e-ticaret operasyonu deneyimi',
+    ])
   })
 
   it('uses EUBaseSection with the About text and the company rows', async () => {

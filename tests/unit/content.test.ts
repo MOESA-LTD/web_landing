@@ -306,9 +306,6 @@ describe('UI microcopy json', () => {
     .join('\n')
     .toLowerCase()
 
-  /** Same string in both languages on purpose (a company-register line that the TR md also gives in English). */
-  const LANGUAGE_NEUTRAL = new Set(['footer.companyLine'])
-
   it('EN and TR have identical key sets and no empty values', () => {
     expect(Object.keys(tr).sort()).toEqual(Object.keys(en).sort())
     for (const [k, v] of [...Object.entries(en), ...Object.entries(tr)]) expect(v.trim(), k).not.toBe('')
@@ -394,7 +391,7 @@ describe('UI microcopy json', () => {
   it('every TR value is either listed as unreviewed or found verbatim in the TR package md', () => {
     const offenders: string[] = []
     for (const [k, v] of Object.entries(tr)) {
-      if (unreviewed.has(k) || LANGUAGE_NEUTRAL.has(k)) continue
+      if (unreviewed.has(k)) continue
       if (!trCorpus.includes(v.toLowerCase())) offenders.push(`${k} = ${v}`)
     }
     expect(offenders).toEqual([])

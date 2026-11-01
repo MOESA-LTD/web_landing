@@ -19,7 +19,7 @@ Rulings made on the user's behalf while executing docs/superpowers/plans/2026-10
 - band mobile padding — CapabilityStrip/EUBaseSection/FinalCTA must drop to 64px vertical ≤860 (DS intent per DESIGN_NOTES §1.5; DS container rule is dead, same as hero stack ruling) — fix carried into Task 6 dispatch — cost if wrong: canvas-identical 96px on mobile.
 - scope to #main — cost if wrong: none.
 - home capability line rendered as DS eyebrow "Cross-functional capability" + service title (approved line "…as a cross-functional capability" not verbatim) — accept as DS presentation, disclosed to user — cost if wrong: render approved line verbatim on the card.
-- keep TR nav labels from approved TR page titles; canvas draft "Müşterilerimiz"/"Hakkımızda" not adopted — package is copy source — cost if wrong: two JSON strings.
+- keep TR nav labels from approved TR page titles — package is copy source — cost if wrong: two JSON strings. Amended 2026-10-31 by user decision: the site header uses the short canvas labels "Müşterilerimiz"/"Hakkımızda" (`nav.header.*`, listed in UNREVIEWED_TR); the footer keeps the page titles.
 - language dropdown gets Escape/outside-click/route-change close (canvas lacks) — a11y parity with Services disclosure — cost if wrong: none.
 - raise header mobile breakpoint to ~1160px so nav never wraps in either locale — wrapped nav is a defect; hamburger on tablets/small laptops is standard — cost if wrong: desktop nav hidden at 960–1160px.
 - home hero at ≤859px gives text full width (canvas keeps an empty 37% column due to dead stack rule) — follows 'text only' intent — cost if wrong: CSS tweak.

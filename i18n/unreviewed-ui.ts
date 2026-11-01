@@ -30,6 +30,10 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   'footer.email',
   'footer.phone',
   'footer.address',
+  // Turkish register labels (translation review TR-S6/TR-A7); the TR legal-notice.md gives "Company ID" and "VAT" in English.
+  'footer.companyLine',
+  'company.companyId',
+  'company.vat',
   'form.labels.productCategory',
   'form.labels.targetMarket',
   'form.labels.estimatedVolume',
@@ -79,7 +83,7 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   // Generic error page (500 and other non-404 errors); 404 copy comes from 404.md.
   'error.title',
   'error.body',
-  // About Experience Stat labels, cut from the approved Experience sentence (TR: "... operasyonlarının" without its case ending).
+  // About Experience Stat labels: EN cut from the approved Experience sentence; TR reworded as whole phrases ("yıl ... deneyimi", TR-S4).
   'stats.digitalCommerce',
   'stats.ecommerceOperations',
 ]

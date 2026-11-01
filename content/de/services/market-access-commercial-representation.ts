@@ -4,8 +4,8 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/market-access-commercial-representation',
-    title: 'Europäischer Marktzugang & Vertriebsrepräsentanz | MOESA Ltd.',
-    description: 'MOESA unterstützt Marken, Hersteller und Einkäufer bei der Vorbereitung auf europäische Märkte, bei der kommerziellen Vertretung, der Kanalentwicklung und der lokalen operativen Koordination.',
+    title: 'Marktzugang & Vertriebsrepräsentanz in Europa | MOESA Ltd.',
+    description: 'MOESA unterstützt Marken, Hersteller und Einkäufer bei Markteintritt, Vertriebsrepräsentanz, Kanalentwicklung und lokaler Koordination in Europa.',
   },
   slug: 'market-access-commercial-representation',
   hero: {
@@ -14,12 +14,12 @@ const content: ServicePageContent = {
   },
   intro: {
     title: 'Ein neuer Markt erfordert mehr als einen neuen Kunden.',
-    body: 'Der Eintritt in einen neuen Markt erfordert die richtigen Geschäftsbeziehungen, Produktvorbereitung, Kanalstrategie und operative Struktur. MOESA handelt als lokaler kommerzieller und operativer Partner im Rahmen eines vereinbarten Mandats.',
+    body: 'Der Eintritt in einen neuen Markt erfordert die richtigen Geschäftsbeziehungen, Produktvorbereitung, Kanalstrategie und operative Struktur. MOESA agiert als lokaler Vertriebs- und operativer Partner im Rahmen eines vereinbarten Mandats.',
   },
   twoSides: {
     title: 'Zwei Seiten des internationalen Handels',
     items: [
-      'Für Hersteller und Markeninhaber, die in Europa eintreten oder expandieren',
+      'Für Hersteller und Markeninhaber, die in den europäischen Markt eintreten oder in Europa expandieren',
       'Für Händler, Distributoren und Einkäufer, die internationale Marken, Hersteller oder Lieferanten suchen',
     ],
   },
@@ -28,7 +28,7 @@ const content: ServicePageContent = {
     items: [
       'In den europäischen Markt eintreten',
       'Einen Distributor oder Handelspartner finden',
-      'Eine kommerzielle Vertretung aufbauen',
+      'Eine Vertriebsrepräsentanz aufbauen',
       'Eine internationale Marke für einen Markt beschaffen',
       'Einen neuen Vertriebskanal im Einzelhandel, Großhandel oder digital aufbauen',
     ],
@@ -38,19 +38,19 @@ const content: ServicePageContent = {
     items: [
       'Marktbewertung',
       'Vorbereitung von Produkt und Portfolio',
-      'Kommerzielle Positionierung',
+      'Marktpositionierung',
       'Identifizierung von Partnern und Kanälen',
-      'Kommerzielle Ansprache',
+      'Vertriebsansprache',
       'Unterstützung bei Verhandlungen',
       'Lokale operative Vorbereitung',
-      'Laufende kommerzielle Koordination',
+      'Laufende vertriebliche Koordination',
     ],
   },
   models: {
     title: 'Vertretungsstrukturen',
     items: [
       'Projektbasierter Markteintritt',
-      'Laufende kommerzielle Vertretung',
+      'Laufende Vertriebsrepräsentanz',
       'Handels- und Vertriebsvereinbarung',
       'Lokaler operativer Partner',
     ],
@@ -61,10 +61,10 @@ const content: ServicePageContent = {
   },
   responsibilities: {
     title: 'Klares Mandat und klare Kontrolle',
-    body: 'Der Kunde behält Markeneigentum, Strategie, Preishoheit, Vertragsfreigaben, Partnerfreigabe und endgültige kommerzielle Entscheidungen. MOESA koordiniert die vereinbarten Aktivitäten zur Marktentwicklung und die kommerziellen Aktivitäten.',
+    body: 'Der Kunde behält Markeneigentum, Strategie, Preishoheit, Vertragsfreigaben, Partnerfreigabe und endgültige Geschäftsentscheidungen. MOESA koordiniert die vereinbarten Aktivitäten in Markterschließung und Vertrieb.',
   },
   finalCta: {
-    title: 'Welchen Markt möchten Sie entwickeln?',
+    title: 'Welchen Markt möchten Sie erschließen?',
     body: 'Nennen Sie uns das Produkt, die Marke, den Zielmarkt oder die Geschäftsbeziehung, die Sie aufbauen möchten. Wir helfen Ihnen, die nächsten Schritte zu strukturieren.',
     cta: {
       label: 'Marktprojekt besprechen',

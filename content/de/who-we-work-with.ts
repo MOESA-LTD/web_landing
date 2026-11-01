@@ -5,7 +5,7 @@ const content: WhoWeWorkWithContent = {
   meta: {
     path: '/who-we-work-with',
     title: 'Für wen wir arbeiten | MOESA Ltd.',
-    description: 'MOESA arbeitet mit Unternehmenseinkäufern, Händlern, Großhändlern, Distributoren, Marken, Herstellern und Digital-Commerce-Unternehmen in Sourcing, Produktentwicklung und Operations.',
+    description: 'MOESA arbeitet mit Einkäufern, Händlern, Distributoren, Marken, Herstellern und Digital-Commerce-Unternehmen – von Sourcing bis Operations.',
   },
   hero: {
     title: 'Unterschiedliche Geschäftsmodelle. Ein koordinierter operativer Partner.',
@@ -13,7 +13,7 @@ const content: WhoWeWorkWithContent = {
   },
   intro: {
     title: 'Beginnen Sie mit dem geschäftlichen Bedarf, nicht mit einem vordefinierten Paket.',
-    body: 'Eine Handelsgruppe, ein Hersteller, ein Distributor und ein Digital-Commerce-Unternehmen können unterschiedliche kommerzielle Strukturen benötigen. MOESA beginnt mit dem Ziel des Kunden und baut das passende Betriebsmodell darum herum auf.',
+    body: 'Eine Handelsgruppe, ein Hersteller, ein Distributor und ein Digital-Commerce-Unternehmen können unterschiedliche Geschäftsstrukturen benötigen. MOESA beginnt mit dem Ziel des Kunden und richtet das passende Betriebsmodell daran aus.',
   },
   audiences: [
     {
@@ -57,7 +57,7 @@ const content: WhoWeWorkWithContent = {
       body: 'Für Hersteller von Fertigwaren, OEM- und Private-Label-Produzenten, Komponentenlieferanten und exportorientierte Hersteller, die europäische Einkäufer oder Operations suchen.',
       items: [
         'Eintritt in europäische Märkte',
-        'Aufbau von Distributoren und Händlern',
+        'Aufbau von Distributoren- und Händlernetzwerken',
         'Vertriebsrepräsentanz',
         'Marktspezifische Vorbereitung des Portfolios',
         'Import, Lagerhaltung und lokale Operations',
@@ -71,20 +71,20 @@ const content: WhoWeWorkWithContent = {
         'Listing- und Katalog-Operations',
         'Marktplatz- und D2C-Management',
         'Bestand und Nachschub',
-        'Performance und Kundenerkenntnisse',
+        'Performance und Kundeneinblicke',
       ],
     },
   ],
   seekingBrands: {
     title: 'Einkäufer auf der Suche nach internationalen Marken',
-    body: 'Ein Kunde kennt die Marke oder das Produkt, das er kaufen möchte, möglicherweise bereits. MOESA ermittelt die zuständige Geschäftspartei, stellt den Kontakt her und koordiniert Sourcing, Verhandlung und Einkauf.',
+    body: 'Ein Kunde kennt die Marke oder das Produkt, das er kaufen möchte, möglicherweise bereits. MOESA ermittelt den zuständigen Geschäftspartner, stellt den Kontakt her und koordiniert Sourcing, Verhandlung und Einkauf.',
   },
   noInternalProcurement: {
     title: 'Unternehmen ohne vollständiges internes Beschaffungsteam',
-    body: 'MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Product-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
+    body: 'MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Produkt-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
   },
   selectionGuide: {
-    title: 'Leitfaden zur Wahl der Zusammenarbeit',
+    title: 'Wegweiser: Welche Leistung passt?',
     rows: [
       {
         need: 'Sie benötigen eine bestimmte Marke oder einen bestimmten Lieferanten',

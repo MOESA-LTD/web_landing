@@ -4,17 +4,17 @@ import type { ServicePageContent } from '../../en/service-page'
 const content: ServicePageContent = {
   meta: {
     path: '/services/product-private-label-development',
-    title: 'Leistungen für Produkt- & Private-Label-Entwicklung | MOESA Ltd.',
-    description: 'MOESA entwickelt Produkte und Private-Label-Portfolios von der Kategoriestrategie und Produktarchitektur über die Lieferantenauswahl und Verpackung bis zur Produktionsreife.',
+    title: 'Produkt- & Private-Label-Entwicklung | MOESA Ltd.',
+    description: 'MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Produktionsreife.',
   },
   slug: 'product-private-label-development',
   hero: {
-    title: 'Von der Kategoriechance zum marktreifen Produkt.',
-    body: 'MOESA entwickelt einzelne Produkte und vollständige Private-Label-Portfolios und verbindet das kommerzielle Ziel mit Produktarchitektur, Lieferanten, Spezifikationen, Verpackung und Produktionsvorbereitung.',
+    title: 'Vom Marktpotenzial einer Kategorie zum marktreifen Produkt.',
+    body: 'MOESA entwickelt einzelne Produkte und vollständige Private-Label-Portfolios und verbindet das Geschäftsziel mit Produktarchitektur, Lieferanten, Spezifikationen, Verpackung und Produktionsvorbereitung.',
   },
   intro: {
     title: 'Ein Produkt sollte für das Unternehmen gestaltet sein, das es verkaufen wird.',
-    body: 'Private-Label-Entwicklung ist mehr, als ein Logo auf ein bestehendes Produkt zu setzen. Das Produkt muss zur vorgesehenen Kundschaft, Marktposition, zum Kanal, zum Qualitätsniveau, zur kommerziellen Struktur und zur künftigen Portfoliostrategie passen.',
+    body: 'Private-Label-Entwicklung ist mehr, als ein Logo auf ein bestehendes Produkt zu setzen. Das Produkt muss zur vorgesehenen Kundschaft, zur Marktposition, zum Kanal, zum Qualitätsniveau, zur Geschäftsstruktur und zur künftigen Portfoliostrategie passen.',
   },
   typicalMandates: {
     title: 'Typische Mandate',
@@ -29,7 +29,7 @@ const content: ServicePageContent = {
   manages: {
     title: 'Was MOESA steuert',
     items: [
-      'Kommerzielles Briefing und Produktbriefing',
+      'Geschäfts- und Produktbriefing',
       'Kategorie- und Marktbewertung',
       'Produktarchitektur',
       'Auswahl von Lieferanten und Herstellern',
@@ -37,13 +37,13 @@ const content: ServicePageContent = {
       'Muster und Entwicklungsrunden',
       'Koordination von QS und Compliance',
       'Verpackung und Produktpräsentation',
-      'Kommerzielle Machbarkeit',
+      'Wirtschaftliche Machbarkeit',
       'Produktionsreife',
     ],
   },
   architecture: {
     title: 'Produktarchitektur',
-    body: 'MOESA strukturiert die Beziehung zwischen Kategorie, Produktfamilie, Qualitätsstufe, Modell, Material oder Design, Größe, Packungsanzahl und Marktstatus.',
+    body: 'MOESA strukturiert die Beziehung zwischen Kategorie, Produktfamilie, Qualitätsstufe, Modell, Material oder Design, Größe, Stückzahl pro Packung und Marktstatus.',
     items: [
       'Verhindert unnötige Dopplungen',
       'Unterstützt den künftigen Ausbau des Portfolios',

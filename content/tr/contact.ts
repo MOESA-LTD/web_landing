@@ -36,10 +36,10 @@ const content: ContactContent = {
       'Ülke',
       'Hizmet',
       'Kısa proje briefi',
-      'Ürün Kategorisi - opsiyonel',
-      'Hedef Pazar - opsiyonel',
-      'Tahmini Hacim - opsiyonel',
-      'Hedef Zaman Çizelgesi - opsiyonel',
+      'Ürün kategorisi - opsiyonel',
+      'Hedef pazar - opsiyonel',
+      'Tahmini hacim - opsiyonel',
+      'Hedef takvim - opsiyonel',
       'Dosya Yükleme - opsiyonel',
     ],
   },
@@ -65,8 +65,8 @@ const content: ContactContent = {
   company: {
     title: 'Şirket bilgileri',
     items: [
-      'Company ID: 207200475',
-      'VAT: BG207200475',
+      'Şirket sicil no (EIK): 207200475',
+      'KDV no: BG207200475',
     ],
   },
   privacyNote: {

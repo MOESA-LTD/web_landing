@@ -4,7 +4,7 @@ import type { ContactContent } from '../en/contact'
 const content: ContactContent = {
   meta: {
     path: '/contact',
-    title: 'MOESA Ltd. kontaktieren | Produkt-, Beschaffungs- oder Marktprojekt besprechen',
+    title: 'Kontakt | MOESA Ltd. – Projekt besprechen',
     description: 'Kontaktieren Sie MOESA Ltd., um Sourcing, Beschaffung, Private-Label-Entwicklung, Marktzugang, Lieferkette oder Digital-Commerce-Operations zu besprechen.',
   },
   hero: {
@@ -34,11 +34,11 @@ const content: ContactContent = {
       'Land',
       'Wie können wir Sie unterstützen?',
       'Kurzes Projektbriefing',
-      'Produktkategorie - optional',
-      'Zielmarkt - optional',
-      'Geschätztes Volumen - optional',
-      'Gewünschter Zeitrahmen - optional',
-      'Datei-Upload - optional',
+      'Produktkategorie – optional',
+      'Zielmarkt – optional',
+      'Geschätztes Volumen – optional',
+      'Gewünschter Zeitrahmen – optional',
+      'Datei-Upload – optional',
     ],
   },
   next: {
@@ -47,7 +47,7 @@ const content: ContactContent = {
       'MOESA prüft die Anfrage und ermittelt den passenden Leistungsbereich',
       'Wir fragen gegebenenfalls fehlende Projektinformationen an',
       'Bei Bedarf wird ein erstes Sondierungsgespräch vereinbart',
-      'Umfang, Verantwortlichkeiten und kommerzielle Bedingungen werden vor Beginn der Arbeit festgelegt',
+      'Umfang, Verantwortlichkeiten und kaufmännische Konditionen werden vor Beginn der Arbeit festgelegt',
     ],
   },
   direct: {
@@ -55,7 +55,7 @@ const content: ContactContent = {
     items: [
       'E-Mail: info@moesaltd.com',
       'Telefon: +359 88 501 661',
-      'Eingetragene Anschrift: 1 Petyofi Str., Plovdiv 4000, Bulgaria',
+      'Eingetragener Sitz: 1 Petyofi Str., Plovdiv 4000, Bulgarien',
     ],
   },
   company: {

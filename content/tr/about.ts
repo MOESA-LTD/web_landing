@@ -64,7 +64,7 @@ const content: AboutContent = {
       'Yalnızca e-ticaret şirketleriyle sınırlı değil',
       'Yalnızca bir tedarik aracısı değil',
       'Yalnızca bir ticaret şirketi değil',
-      'Mevzuatın belirlediği ekonomik operatörlerin hukuki ikamesi değil',
+      'Mevzuatın öngördüğü ekonomik operatörlerin yerine geçen hukuki bir yapı değil',
       'Ayrı bir teknoloji hizmeti teyit edilmedikçe bir yazılım platformu değil',
     ],
   },
