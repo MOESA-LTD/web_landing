@@ -76,7 +76,7 @@ test.describe('404', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'de')
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)
     await expect(page.locator('h1')).toHaveText('Die Seite wurde nicht gefunden.')
-    await expect(page.locator('#main')).toContainText('Brauchen Sie Hilfe, die richtigen Informationen zu finden?')
+    await expect(page.locator('#main')).toContainText('Benötigen Sie Hilfe bei der Suche nach den richtigen Informationen?')
     await expect(page.locator('[data-message-list] a', { hasText: 'Leistungen entdecken' })).toHaveAttribute('href', '/de/leistungen')
   })
 
