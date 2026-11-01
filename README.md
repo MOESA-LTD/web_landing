@@ -58,6 +58,8 @@ Other scripts:
   (navy ground, bars motif, "MOESA LTD." and the EN descriptor; Manrope from `node_modules`, no network). Commit the PNG.
 - `npm run unreviewed:tr` regenerates `i18n/UNREVIEWED_TR.md`.
 - `npm run unreviewed:de` regenerates `i18n/UNREVIEWED_DE.md` (DE page copy from `content/de/unreviewed.ts` and every key of `i18n/locales/de.json`).
+- `npm run unreviewed:legal` regenerates `i18n/UNREVIEWED_LEGAL.md`: the legal text we wrote after the legal review
+  (paths in `content/legal-revisions.ts`, EN/TR/DE), the legal UI strings, and the package strings the legal pages dropped.
 
 ## Environment variables
 
@@ -74,7 +76,7 @@ a redeploy.
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
 | `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Vercel project env (it applies to both). Default: TR on. |
 | `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
-| `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it only shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1. Prerendered pages carry the build-time value, so redeploy after changing it. |
+| `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it adds the Analytics category and its buttons to the consent panel and shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1, so add one (and update the Cookie Policy) before setting it. Prerendered pages carry the build-time value, so redeploy after changing it. |
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Vercel. On Vercel (`VERCEL` set by its runtime) the IP comes from `x-vercel-forwarded-for` / `x-real-ip`; anywhere else those headers are ignored and the socket address is used. |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
 | `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` on Vercel **Preview** only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
@@ -163,21 +165,23 @@ Run against the Vercel preview URL (and again on production). `BASE=https://<dep
 
 ## Before launch
 
-From `MOESA_Website_Package_v1.0/.../legal/LEGAL_IMPLEMENTATION_NOTES.md` — the Legal Notice, Privacy Policy and Cookie
-Policy are implementation drafts, not final legal advice. Before publication confirm:
+From `MOESA_Website_Package_v1.0/.../legal/LEGAL_IMPLEMENTATION_NOTES.md` and the legal review
+(`docs/superpowers/reviews/2026-11-01-legal-pages-review.md`). The legal pages now describe the real stack (Vercel,
+Resend, Cloudflare Turnstile, the `moesa_consent` cookie; no analytics, no file upload), but they are still our drafts,
+not legal advice: every authored string is in `i18n/UNREVIEWED_LEGAL.md`. Before publication:
 
-- [ ] legal representative / managing director details
-- [ ] hosting and email providers
-- [ ] contact-form provider and data route
-- [ ] analytics and tag-management tools
-- [ ] cookie inventory and consent configuration
-- [ ] embedded media and third-party services
-- [ ] CRM, file upload and scheduling services
-- [ ] data retention periods
-- [ ] international data transfers
-- [ ] supervisory authority and country-specific legal requirements
+- [ ] Owner facts for the OPEN notes: legal form (ЕООД/ООД) and Commercial Register entry, managing director, phone
+  number (`+359 88 501 661` looks one digit short), the provider hosting the info@moesaltd.com mailbox, retention
+  periods (enquiries, Vercel logs, Resend emails).
+- [ ] Lawyer: review `i18n/UNREVIEWED_LEGAL.md` (legal bases, recipients, transfers incl. DPF/SCCs per provider, CPDP
+  complaint text, the contact-form acknowledgement instead of consent, Turnstile as strictly necessary without consent).
+- [ ] Decide the Vercel function region: `vercel.json` sets no `regions`, so `/api/contact` runs in the default US
+  region (iad1); `"regions": ["fra1"]` would process form data in the EU (review S6, an owner decision).
+- [ ] Check in DevTools (Application tab, frame `challenges.cloudflare.com`) whether Turnstile stores anything, and
+  adjust the Cookie Policy inventory text if needed.
 - [ ] Record legal review and technical review before changing these pages to FINAL status (then remove the
-  "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip).
+  "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip and set `LEGAL_UPDATED` in `content/en/legal.ts` to the publication
+  date).
 
 Also:
 
@@ -191,8 +195,6 @@ Also:
   register entry, EIK 207200475), plus the VAT ID (USt-IdNr. BG207200475) and the contact details already shown. The
   Datenschutzerklärung needs the GDPR information duties in German. All three are translated drafts of the EN drafts
   with the same open items.
-- [ ] Legal review of the legal drafts, including the cookie-inventory row for the strictly necessary
-  `moesa_consent` cookie.
 - [ ] Provide an **SVG logo** (the site currently uses the PNG lockup/mark from the package; the Organization JSON-LD
   points to `/moesa_lockup.png`).
 - [ ] Set the production env vars, verify the Resend domain and the Turnstile widget, run the post-deploy checklist.
@@ -206,8 +208,12 @@ Also:
 | **Cloudflare Turnstile** | Spam check on `/contact` (script and iframe from `challenges.cloudflare.com`, loaded on the contact pages only) | Browser signals for the challenge, the visitor IP on verification |
 
 - **Fonts are self-hosted** (`@fontsource-variable/manrope`, served from the site; no Google Fonts).
-- **No analytics** and no non-essential cookies in v1. The only cookie is the strictly necessary `moesa_consent`
-  (only written when the consent banner is enabled via `NUXT_PUBLIC_ANALYTICS_ID`).
+- **No analytics** and no non-essential cookies in v1. The only first-party cookie is the strictly necessary
+  `moesa_consent`, written only when a visitor saves a cookie choice. A choice is offered (Cookie Policy panel and
+  banner) only once `NUXT_PUBLIC_ANALYTICS_ID` is set, so v1 never writes it; the panel shows "Strictly necessary"
+  and a note that there is nothing to choose.
+- **Logs:** the contact route logs only an error message on a failed Resend or Turnstile call (no form data, no stack);
+  Vercel keeps runtime logs per the plan's retention.
 
 ## SEO and security (reference)
 
