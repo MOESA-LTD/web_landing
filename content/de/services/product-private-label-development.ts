@@ -5,7 +5,7 @@ const content: ServicePageContent = {
   meta: {
     path: '/services/product-private-label-development',
     title: 'Produkt- & Private-Label-Entwicklung | MOESA Ltd.',
-    description: 'MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Produktionsreife.',
+    description: 'MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Serienreife.',
   },
   slug: 'product-private-label-development',
   hero: {

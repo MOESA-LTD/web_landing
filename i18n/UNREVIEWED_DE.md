@@ -162,7 +162,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | Path | EN | DE |
 | --- | --- | --- |
 | `meta.title` | Product & Private Label Development Services \| MOESA Ltd. | Produkt- & Private-Label-Entwicklung \| MOESA Ltd. |
-| `meta.description` | MOESA develops products and private-label portfolios from category strategy and product architecture through supplier selection, packaging and production readiness. | MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Produktionsreife. |
+| `meta.description` | MOESA develops products and private-label portfolios from category strategy and product architecture through supplier selection, packaging and production readiness. | MOESA entwickelt Produkte und Private-Label-Portfolios – von Kategoriestrategie und Produktarchitektur bis Lieferantenauswahl, Verpackung und Serienreife. |
 | `hero.title` | From category opportunity to market-ready product. | Vom Marktpotenzial einer Kategorie zum marktreifen Produkt. |
 | `hero.body` | MOESA develops individual products and complete private-label portfolios, connecting the commercial objective with product architecture, suppliers, specifications, packaging and production preparation. | MOESA entwickelt einzelne Produkte und vollständige Private-Label-Portfolios und verbindet das Geschäftsziel mit Produktarchitektur, Lieferanten, Spezifikationen, Verpackung und Produktionsvorbereitung. |
 | `intro.title` | A product should be designed for the business that will sell it. | Ein Produkt sollte für das Unternehmen gestaltet sein, das es verkaufen wird. |
