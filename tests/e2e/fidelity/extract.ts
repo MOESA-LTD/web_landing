@@ -4,6 +4,7 @@
  */
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { LEGAL_REMOVED } from '../../../content/legal-revisions'
 
 export type FidelityLocale = 'en' | 'tr'
 
@@ -183,6 +184,22 @@ export const FIDELITY_EXCLUSIONS: Record<string, FidelityExclusion[]> = {
 export const OPEN_PREFIX = 'OPEN / AÇIK - '
 
 /**
+ * Legal-page exception (legal review 2026-11-01, content/legal-revisions.ts `LEGAL_REMOVED`): the approved package
+ * strings that the Privacy Policy, Cookie Policy and Legal Notice deliberately no longer show (draft instructions,
+ * answered OPEN notes, claims about file uploads/analytics, the TR "Açık alanlar" summaries). Scoped to exactly those
+ * strings of those three md files; every other approved string, legal or not, is still checked. Their replacements
+ * are listed in i18n/UNREVIEWED_LEGAL.md and checked by tests/unit/legal-pages.test.ts.
+ */
+function legalRemoved(locale: FidelityLocale, file: string): string[] {
+  return LEGAL_REMOVED.filter((r) => r.locale === locale && `${r.page}.md` === file && !r.meta).map((r) => r.text)
+}
+
+/** The md meta description a legal page replaced (draft text, legal review B4), or undefined. */
+export function legalRemovedMetaDescription(locale: FidelityLocale, file: string): string | undefined {
+  return LEGAL_REMOVED.find((r) => r.locale === locale && `${r.page}.md` === file && r.meta)?.text
+}
+
+/**
  * `extractApprovedStrings` minus the `FIDELITY_EXCLUSIONS` of that locale and file, plus the `renderedAs`
  * strings of those exclusions (what the page shows instead).
  * Legal OPEN items (polish round, controller ruling 2026-10-31): the marker "OPEN / AÇIK" is shown as the Open chip
@@ -191,7 +208,7 @@ export const OPEN_PREFIX = 'OPEN / AÇIK - '
  */
 export function approvedStringsFor(locale: FidelityLocale, file: string): string[] {
   const exclusions = FIDELITY_EXCLUSIONS[`${locale}/${file}`] ?? []
-  const excluded = new Set(exclusions.map((e) => e.text))
+  const excluded = new Set([...exclusions.map((e) => e.text), ...legalRemoved(locale, file)])
   const kept = extractApprovedStrings(mdPath(locale, file))
     .filter((s) => !excluded.has(s))
     .map((s) => (s.startsWith(OPEN_PREFIX) ? s.slice(OPEN_PREFIX.length) : s))

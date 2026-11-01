@@ -55,6 +55,10 @@
     "draft": "Taslak",
     "open": "Açık"
   },
+  "legal": {
+    "lastUpdated": "Son güncelleme: {date}",
+    "seeAlso": "Ayrıca bakınız:"
+  },
   "footer": {
     "servicesTitle": "Hizmetler",
     "companyTitle": "Şirket",
@@ -91,7 +95,7 @@
     "optional": "(opsiyonel)",
     "servicePlaceholder": "Bir hizmet seçin",
     "briefHelp": "İşletmenin neye ihtiyacı olduğunu, nelerin kesinleştiğini ve nelerin açık olduğunu anlatın.",
-    "consent": "Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. {link}'na bakın.",
+    "consent": "{link} metnini okudum; MOESA’nın bilgilerimi bu talebe yanıt vermek için kullanacağını anlıyorum.",
     "submit": "Proje Briefini Gönder",
     "disclaimer": "Form gönderimi sözleşmeye dayalı bir ilişki doğurmaz.",
     "sending": "Gönderiliyor…",
@@ -117,7 +121,7 @@
       "country": "Ülkenizi girin.",
       "service": "Size nasıl destek olabileceğimizi seçin.",
       "projectBrief": "Projeyi kısaca anlatın.",
-      "consent": "Talebinize yanıt verebilmemiz için onay verin.",
+      "consent": "Talebinize yanıt verebilmemiz için gizlilik politikasını okuduğunuzu onaylayın.",
       "tooLong": "En fazla {max} karakter kullanın.",
       "briefTooShort": "Projeyi en az {min} karakterle anlatın.",
       "generic": "Bazı bilgiler kabul edilemedi. Lütfen formu kontrol edip yeniden gönderin.",
@@ -130,7 +134,7 @@
     "title": "Çerez tercihleri",
     "strictlyNecessary": "Zorunlu",
     "alwaysOn": "(her zaman açık)",
-    "preferences": "Tercihler",
+    "noOptional": "Şu anda tercih, analitik veya pazarlama çerezi kullanmıyoruz; bu nedenle seçim yapmanız gerekmiyor.",
     "analytics": "Analitik",
     "rejectNonEssential": "Zorunlu olmayanları reddet",
     "acceptAll": "Tümünü kabul et",
@@ -138,13 +142,19 @@
     "chooseSettings": "Tercihleri yönet",
     "saved": "Seçimleriniz kaydedildi.",
     "inventory": {
-      "caption": "Bu web sitesinin kullandığı çerezler",
+      "caption": "Bu web sitesindeki çerezler ve benzer teknolojiler",
       "name": "Ad",
+      "provider": "Sağlayıcı",
       "category": "Kategori",
       "purpose": "Amaç",
       "duration": "Süre",
-      "consentPurpose": "Çerez tercihlerinizi saklar.",
-      "consentDuration": "180 gün"
+      "privacy": "Gizlilik",
+      "consentProvider": "MOESA (birinci taraf)",
+      "consentPurpose": "Çerez tercihinizi saklar. Yalnızca bir tercih kaydettiğinizde ayarlanır; bu web sitesi isteğe bağlı çerez kullanmadığı sürece tercih sorulmaz.",
+      "consentDuration": "180 gün",
+      "turnstileProvider": "Cloudflare, Inc. (üçüncü taraf, challenges.cloudflare.com), yalnızca iletişim sayfası",
+      "turnstilePurpose": "İletişim formu gönderiminin bir bottan değil, bir kişiden geldiğini kontrol eder. Teknik tarayıcı sinyallerini ve IP adresinizi değerlendirir ve kendi çerçevesinde kısa ömürlü teknik veriler saklayabilir.",
+      "turnstileDuration": "Cloudflare tarafından belirlenir (gizlilik politikasına bakınız)"
     }
   },
   "stats": {

@@ -1,6 +1,11 @@
 import type { LegalContent } from './legal'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/legal-notice.md */
+/**
+ * From MOESA_Website_Package_v1.0/content/en/legal-notice.md, with the draft notes rewritten after the legal review
+ * of 2026-11-01 (B3, B4, N5). Every string that is not verbatim package text is listed in ../legal-revisions.ts
+ * (i18n/UNREVIEWED_LEGAL.md) for the lawyer; the removed package strings are listed there too. The OPEN items need
+ * owner facts (legal form, register entry, managing director, phone number).
+ */
 const content: LegalContent = {
   meta: {
     path: '/legal-notice',
@@ -19,8 +24,9 @@ const content: LegalContent = {
       paragraphs: [
         'MOESA LTD.',
         '1 Petyofi Str., Plovdiv 4000, Bulgaria',
-        'Company ID: 207200475',
+        'UIC (EIK): 207200475',
         'VAT: BG207200475',
+        'OPEN / AÇIK - The legal form (EOOD or OOD) and the entry in the Commercial Register of the Registry Agency of the Republic of Bulgaria are to be confirmed.',
       ],
     },
     {
@@ -29,34 +35,28 @@ const content: LegalContent = {
       paragraphs: [
         'Email: info@moesaltd.com',
         'Phone: +359 88 501 661',
+        'OPEN / AÇIK - The phone number is to be confirmed.',
       ],
     },
     {
       id: 'representative',
       title: 'Legal representative',
       paragraphs: [
-        'OPEN / AÇIK - Confirm the legal representative or managing director before publication.',
-      ],
-    },
-    {
-      id: 'contentResponsibility',
-      title: 'Content responsibility',
-      paragraphs: [
-        'OPEN / AÇIK - Confirm the wording required for the publication countries and applicable law.',
+        'OPEN / AÇIK - The managing director (upravitel) is to be confirmed.',
       ],
     },
     {
       id: 'externalLinks',
       title: 'External links',
       paragraphs: [
-        'MOESA is not responsible for the content of external websites controlled by third parties. Final wording requires legal review.',
+        'MOESA is not responsible for the content of external websites controlled by third parties.',
       ],
     },
     {
       id: 'intellectualProperty',
       title: 'Intellectual property',
       paragraphs: [
-        'Website content, design and brand assets may not be reproduced without permission, except where permitted by applicable law. Final wording requires legal review.',
+        'Website content, design and brand assets may not be reproduced without permission, except where permitted by applicable law.',
       ],
     },
   ],

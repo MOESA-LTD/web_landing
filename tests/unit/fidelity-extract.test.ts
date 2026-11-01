@@ -97,10 +97,20 @@ describe('FIDELITY_EXCLUSIONS', () => {
     expect(home).toContain('Digital Commerce & Commercial Intelligence')
   })
 
-  it('checks a legal OPEN item as the sentence after the md marker (the marker is the localised Open chip)', () => {
+  it('never checks the md OPEN marker itself (it is shown as the localised Open chip)', () => {
     const notice = approvedStringsFor('en', 'legal-notice.md')
     expect(notice.some((s) => s.startsWith('OPEN / AÇIK'))).toBe(false)
-    expect(notice).toContain('Confirm the legal representative or managing director before publication.')
+  })
+
+  it('skips exactly the package strings a legal page dropped after the legal review (LEGAL_REMOVED), nothing else', () => {
+    const notice = approvedStringsFor('en', 'legal-notice.md')
+    // Dropped: the draft OPEN note and the "Final wording requires legal review." sentences (legal review B3/B4).
+    expect(notice).not.toContain('Confirm the legal representative or managing director before publication.')
+    expect(notice).not.toContain('Content responsibility')
+    // Still checked: the rest of the approved legal notice.
+    expect(notice).toEqual(expect.arrayContaining(['Website operator', 'Legal representative', 'Phone: +359 88 501 661', 'VAT: BG207200475']))
+    // Scoped to the three legal md files: the same kind of string on another page is still checked.
+    expect(approvedStringsFor('en', 'contact.md')).toEqual(extractApprovedStrings(mdPath('en', 'contact.md')).filter((s) => !FIDELITY_EXCLUSIONS['en/contact.md']!.some((e) => e.text === s)))
   })
 })
 

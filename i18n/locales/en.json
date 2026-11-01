@@ -55,6 +55,10 @@
     "draft": "Draft",
     "open": "Open"
   },
+  "legal": {
+    "lastUpdated": "Last updated: {date}",
+    "seeAlso": "See also:"
+  },
   "footer": {
     "servicesTitle": "Services",
     "companyTitle": "Company",
@@ -91,7 +95,7 @@
     "optional": "(optional)",
     "servicePlaceholder": "Select a service",
     "briefHelp": "What the business needs, what is already confirmed and what remains open.",
-    "consent": "I agree that MOESA may process the information I submit to respond to this enquiry. See the {link}.",
+    "consent": "I have read the {link} and understand that MOESA will use my details to respond to this enquiry.",
     "submit": "Send Project Brief",
     "disclaimer": "A submitted form does not create a contractual engagement.",
     "sending": "Sending…",
@@ -117,7 +121,7 @@
       "country": "Enter your country.",
       "service": "Choose how we can support you.",
       "projectBrief": "Describe the project briefly.",
-      "consent": "Confirm consent so we can respond to your enquiry.",
+      "consent": "Confirm that you have read the privacy policy so we can respond to your enquiry.",
       "tooLong": "Use {max} characters or fewer.",
       "briefTooShort": "Describe the project in at least {min} characters.",
       "generic": "Some details could not be accepted. Please check the form and send it again.",
@@ -130,7 +134,7 @@
     "title": "Cookie preferences",
     "strictlyNecessary": "Strictly necessary",
     "alwaysOn": "(always on)",
-    "preferences": "Preferences",
+    "noOptional": "We currently use no preference, analytics or marketing cookies, so there is nothing to choose.",
     "analytics": "Analytics",
     "rejectNonEssential": "Reject non-essential",
     "acceptAll": "Accept all",
@@ -138,13 +142,19 @@
     "chooseSettings": "Choose settings",
     "saved": "Your choices have been saved.",
     "inventory": {
-      "caption": "Cookies set by this website",
+      "caption": "Cookies and similar technologies on this website",
       "name": "Name",
+      "provider": "Provider",
       "category": "Category",
       "purpose": "Purpose",
       "duration": "Duration",
-      "consentPurpose": "Stores your cookie choices.",
-      "consentDuration": "180 days"
+      "privacy": "Privacy",
+      "consentProvider": "MOESA (first party)",
+      "consentPurpose": "Stores your cookie choice. Set only when you save a choice; while this website uses no optional cookies, no choice is asked for.",
+      "consentDuration": "180 days",
+      "turnstileProvider": "Cloudflare, Inc. (third party, challenges.cloudflare.com), contact page only",
+      "turnstilePurpose": "Checks that a contact-form submission comes from a person, not a bot. It evaluates technical browser signals and your IP address and may store short-lived technical data in its frame.",
+      "turnstileDuration": "Set by Cloudflare (see its privacy policy)"
     }
   },
   "stats": {

@@ -15,7 +15,7 @@ Approved TR text from the package is not changed and is not listed here, with tw
 `i18n/UNREVIEWED_LEGAL.md`). Fragments cut from an approved TR line
 (for example the page names in the 404 "Buradan devam edin" line) are listed, because they are not a whole approved string.
 
-## Page copy (410 strings)
+## Page copy (386 strings)
 
 Source: `content/tr/unreviewed.ts`; the strings are used verbatim in `content/tr/*.ts`. The path is the field in the
 page module (legal sections are addressed by id). Where the TR package condensed an EN list into one sentence, that
@@ -427,52 +427,25 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `next.items[2]` | How We Work | Nasıl Çalışıyoruz |
 | `next.items[3]` | Contact MOESA | İletişim |
 
-### legal-notice (14)
+### privacy-policy (27)
 
 | Path | EN | TR |
 | --- | --- | --- |
-| `sections[operator].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
-| `sections[operator].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
-| `sections[operator].paragraphs[2]` | Company ID: 207200475 | Company ID 207200475 |
-| `sections[operator].paragraphs[3]` | VAT: BG207200475 | VAT BG207200475 |
-| `sections[contact].paragraphs[0]` | Email: info@moesaltd.com | E-posta: info@moesaltd.com |
-| `sections[contact].paragraphs[1]` | Phone: +359 88 501 661 | Telefon: +359 88 501 661 |
-| `sections[representative].title` | Legal representative | Yasal temsilci |
-| `sections[representative].paragraphs[0]` | OPEN / AÇIK - Confirm the legal representative or managing director before publication. | OPEN / AÇIK - Yayından önce yasal temsilciyi veya genel müdürü teyit edin. |
-| `sections[contentResponsibility].title` | Content responsibility | İçerik sorumluluğu |
-| `sections[contentResponsibility].paragraphs[0]` | OPEN / AÇIK - Confirm the wording required for the publication countries and applicable law. | OPEN / AÇIK - Yayın yapılan ülkeler ve uygulanacak hukuk için gerekli ifadeyi teyit edin. |
-| `sections[externalLinks].title` | External links | Harici bağlantılar |
-| `sections[externalLinks].paragraphs[0]` | MOESA is not responsible for the content of external websites controlled by third parties. Final wording requires legal review. | MOESA, üçüncü tarafların kontrolündeki harici web sitelerinin içeriğinden sorumlu değildir. Nihai ifade hukuki inceleme gerektirir. |
-| `sections[intellectualProperty].title` | Intellectual property | Fikri mülkiyet |
-| `sections[intellectualProperty].paragraphs[0]` | Website content, design and brand assets may not be reproduced without permission, except where permitted by applicable law. Final wording requires legal review. | Web sitesinin içeriği, tasarımı ve marka varlıkları, uygulanacak hukukun izin verdiği durumlar dışında izinsiz çoğaltılamaz. Nihai ifade hukuki inceleme gerektirir. |
-
-### privacy-policy (37)
-
-| Path | EN | TR |
-| --- | --- | --- |
+| `meta.description` | Information about how MOESA Ltd. processes personal data through its website. | MOESA Ltd.’nin web sitesi üzerinden kişisel verileri nasıl işlediğine ilişkin bilgiler. |
 | `sections[controller].title` | Controller | Veri sorumlusu |
 | `sections[controller].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
 | `sections[controller].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
 | `sections[controller].paragraphs[2]` | Email: info@moesaltd.com | E-posta: info@moesaltd.com |
-| `sections[dataCollected].items[0]` | Contact-form data | İletişim formu verileri |
-| `sections[dataCollected].items[1]` | Files submitted by users | Kullanıcıların gönderdiği dosyalar |
-| `sections[dataCollected].items[2]` | Technical server logs | Teknik sunucu kayıtları |
-| `sections[dataCollected].items[3]` | Cookie and analytics data if enabled | Etkinleştirilmişse çerez ve analitik verileri |
-| `sections[dataCollected].items[4]` | Business correspondence | İş yazışmaları |
+| `sections[dataCollected].items[2]` | Business correspondence | İş yazışmaları |
 | `sections[purposes].title` | Purposes | Amaçlar |
 | `sections[purposes].items[0]` | Responding to enquiries | Taleplere yanıt vermek |
 | `sections[purposes].items[1]` | Preparing and managing a potential business relationship | Olası bir iş ilişkisini hazırlamak ve yönetmek |
 | `sections[purposes].items[2]` | Website security and operation | Web sitesinin güvenliği ve işletilmesi |
 | `sections[purposes].items[3]` | Legal and record-keeping obligations | Yasal yükümlülükler ve kayıt tutma yükümlülükleri |
-| `sections[purposes].items[4]` | Analytics only if lawfully implemented | Yalnızca hukuka uygun şekilde uygulanırsa analitik |
 | `sections[legalBases].title` | Legal bases | Hukuki dayanaklar |
-| `sections[legalBases].paragraphs[0]` | OPEN / AÇIK - Final legal bases must be confirmed with counsel for each processing activity. | OPEN / AÇIK - Nihai hukuki dayanaklar her işleme faaliyeti için hukuk danışmanıyla teyit edilmelidir. |
 | `sections[recipients].title` | Recipients and processors | Alıcılar ve veri işleyenler |
-| `sections[recipients].paragraphs[0]` | OPEN / AÇIK - Add hosting provider, form provider, email provider, analytics tools, CRM and other processors after the technical stack is final. | OPEN / AÇIK - Teknik altyapı kesinleştikten sonra hosting sağlayıcısını, form sağlayıcısını, e-posta sağlayıcısını, analitik araçlarını, CRM’i ve diğer veri işleyenleri ekleyin. |
 | `sections[transfers].title` | International transfers | Uluslararası aktarımlar |
-| `sections[transfers].paragraphs[0]` | OPEN / AÇIK - Confirm whether any provider processes data outside the EEA and document the transfer mechanism. | OPEN / AÇIK - Herhangi bir sağlayıcının verileri EEA dışında işleyip işlemediğini teyit edin ve aktarım mekanizmasını belgeleyin. |
 | `sections[retention].title` | Retention | Saklama süreleri |
-| `sections[retention].paragraphs[0]` | OPEN / AÇIK - Define retention periods for enquiries, files, logs, analytics and business correspondence. | OPEN / AÇIK - Talepler, dosyalar, kayıtlar, analitik verileri ve iş yazışmaları için saklama sürelerini tanımlayın. |
 | `sections[rights].title` | Data-subject rights | İlgili kişi hakları |
 | `sections[rights].items[0]` | Access | Erişim |
 | `sections[rights].items[1]` | Rectification | Düzeltme |
@@ -480,34 +453,37 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[rights].items[3]` | Restriction | İşlemenin kısıtlanması |
 | `sections[rights].items[4]` | Objection | İtiraz |
 | `sections[rights].items[5]` | Data portability where applicable | Uygulanabildiği durumlarda veri taşınabilirliği |
-| `sections[rights].items[6]` | Complaint to a competent supervisory authority | Yetkili denetim makamına şikâyet |
+| `sections[rights].items[7]` | Complaint to a competent supervisory authority | Yetkili denetim makamına şikâyet |
 | `sections[security].title` | Security | Güvenlik |
-| `sections[security].paragraphs[0]` | Use appropriate technical and organisational measures. Final wording must match the actual system. | Uygun teknik ve organizasyonel önlemler alın. Nihai ifade gerçek sistemle uyumlu olmalıdır. |
 | `sections[privacyContact].title` | Contact for privacy requests | Gizlilik talepleri için iletişim |
 | `sections[privacyContact].paragraphs[0]` | info@moesaltd.com | info@moesaltd.com |
 | `sections[updates].title` | Policy updates | Politika güncellemeleri |
-| `sections[updates].paragraphs[0]` | State the effective date and explain that the policy may be updated when services or legal requirements change. | Yürürlük tarihini belirtin ve hizmetler veya yasal gereklilikler değiştiğinde politikanın güncellenebileceğini açıklayın. |
 
-### cookie-policy (14)
+### cookie-policy (6)
 
 | Path | EN | TR |
 | --- | --- | --- |
+| `meta.description` | Information about cookies and similar technologies used on the MOESA website. | MOESA web sitesinde kullanılan çerezler ve benzer teknolojiler hakkında bilgiler. |
 | `sections[categories].items[0]` | Strictly necessary | Zorunlu |
-| `sections[categories].items[1]` | Preferences | Tercihler |
-| `sections[categories].items[2]` | Analytics | Analitik |
-| `sections[categories].items[3]` | Marketing - only if implemented | Pazarlama - yalnızca uygulanırsa |
 | `sections[consentModel].title` | Consent model | Onay modeli |
-| `sections[consentModel].paragraphs[0]` | Non-essential cookies must not be activated before valid consent where consent is legally required. Users must be able to reject and later change their choices. | Onayın yasal olarak gerekli olduğu durumlarda zorunlu olmayan çerezler geçerli onaydan önce etkinleştirilmemelidir. Kullanıcılar tercihlerini reddedebilmeli ve daha sonra değiştirebilmelidir. |
 | `sections[inventory].title` | Cookie inventory | Çerez envanteri |
-| `sections[inventory].paragraphs[0]` | OPEN / AÇIK - Create the final cookie table after hosting, analytics, embedded media, forms and third-party services are selected. | OPEN / AÇIK - Hosting, analitik, gömülü medya, formlar ve üçüncü taraf hizmetler seçildikten sonra nihai çerez tablosunu oluşturun. |
 | `sections[thirdParties].title` | Third-party services | Üçüncü taraf hizmetler |
-| `sections[thirdParties].paragraphs[0]` | OPEN / AÇIK - List each third-party provider, purpose, cookie duration and privacy link. | OPEN / AÇIK - Her üçüncü taraf sağlayıcıyı, amacını, çerez süresini ve gizlilik bağlantısını listeleyin. |
 | `sections[managing].title` | Managing cookies | Çerezlerin yönetimi |
-| `sections[managing].paragraphs[0]` | Explain browser controls and the website consent-preference mechanism. | Tarayıcı kontrollerini ve web sitesinin onay tercihi mekanizmasını açıklayın. |
-| `sections[effectiveDate].title` | Effective date | Yürürlük tarihi |
-| `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Yayın tarihini ekleyin. |
 
-## UI microcopy (73 strings)
+### legal-notice (8)
+
+| Path | EN | TR |
+| --- | --- | --- |
+| `sections[operator].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
+| `sections[operator].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
+| `sections[operator].paragraphs[3]` | VAT: BG207200475 | KDV no: BG207200475 |
+| `sections[contact].paragraphs[0]` | Email: info@moesaltd.com | E-posta: info@moesaltd.com |
+| `sections[contact].paragraphs[1]` | Phone: +359 88 501 661 | Telefon: +359 88 501 661 |
+| `sections[representative].title` | Legal representative | Yasal temsilci |
+| `sections[externalLinks].title` | External links | Harici bağlantılar |
+| `sections[intellectualProperty].title` | Intellectual property | Fikri mülkiyet |
+
+## UI microcopy (81 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -555,7 +531,7 @@ Not listed here, because they come from the package TR md:
 | `form.projectDetails` | Project details | Proje detayları |
 | `form.optional` | (optional) | (opsiyonel) |
 | `form.servicePlaceholder` | Select a service | Bir hizmet seçin |
-| `form.consent` | I agree that MOESA may process the information I submit to respond to this enquiry. See the {link}. | Bu talebe yanıt verebilmesi için MOESA'nın gönderdiğim bilgileri işlemesini kabul ediyorum. {link}'na bakın. |
+| `form.consent` | I have read the {link} and understand that MOESA will use my details to respond to this enquiry. | {link} metnini okudum; MOESA’nın bilgilerimi bu talebe yanıt vermek için kullanacağını anlıyorum. |
 | `form.submit` | Send Project Brief | Proje Briefini Gönder |
 | `form.disclaimer` | A submitted form does not create a contractual engagement. | Form gönderimi sözleşmeye dayalı bir ilişki doğurmaz. |
 | `form.sending` | Sending… | Gönderiliyor… |
@@ -569,7 +545,7 @@ Not listed here, because they come from the package TR md:
 | `form.errors.country` | Enter your country. | Ülkenizi girin. |
 | `form.errors.service` | Choose how we can support you. | Size nasıl destek olabileceğimizi seçin. |
 | `form.errors.projectBrief` | Describe the project briefly. | Projeyi kısaca anlatın. |
-| `form.errors.consent` | Confirm consent so we can respond to your enquiry. | Talebinize yanıt verebilmemiz için onay verin. |
+| `form.errors.consent` | Confirm that you have read the privacy policy so we can respond to your enquiry. | Talebinize yanıt verebilmemiz için gizlilik politikasını okuduğunuzu onaylayın. |
 | `form.errors.tooLong` | Use {max} characters or fewer. | En fazla {max} karakter kullanın. |
 | `form.errors.briefTooShort` | Describe the project in at least {min} characters. | Projeyi en az {min} karakterle anlatın. |
 | `form.errors.generic` | Some details could not be accepted. Please check the form and send it again. | Bazı bilgiler kabul edilemedi. Lütfen formu kontrol edip yeniden gönderin. |
@@ -578,20 +554,28 @@ Not listed here, because they come from the package TR md:
 | `form.errors.sendFailed` | The form could not be sent. Please try again or email info{'@'}moesaltd.com. | Form gönderilemedi. Lütfen yeniden deneyin veya info{'@'}moesaltd.com adresine e-posta gönderin. |
 | `cookie.title` | Cookie preferences | Çerez tercihleri |
 | `cookie.alwaysOn` | (always on) | (her zaman açık) |
-| `cookie.preferences` | Preferences | Tercihler |
+| `cookie.noOptional` | We currently use no preference, analytics or marketing cookies, so there is nothing to choose. | Şu anda tercih, analitik veya pazarlama çerezi kullanmıyoruz; bu nedenle seçim yapmanız gerekmiyor. |
 | `cookie.analytics` | Analytics | Analitik |
 | `cookie.rejectNonEssential` | Reject non-essential | Zorunlu olmayanları reddet |
 | `cookie.acceptAll` | Accept all | Tümünü kabul et |
 | `cookie.saveChoices` | Save choices | Seçimleri kaydet |
 | `cookie.chooseSettings` | Choose settings | Tercihleri yönet |
 | `cookie.saved` | Your choices have been saved. | Seçimleriniz kaydedildi. |
-| `cookie.inventory.caption` | Cookies set by this website | Bu web sitesinin kullandığı çerezler |
+| `cookie.inventory.caption` | Cookies and similar technologies on this website | Bu web sitesindeki çerezler ve benzer teknolojiler |
 | `cookie.inventory.name` | Name | Ad |
+| `cookie.inventory.provider` | Provider | Sağlayıcı |
 | `cookie.inventory.category` | Category | Kategori |
 | `cookie.inventory.purpose` | Purpose | Amaç |
 | `cookie.inventory.duration` | Duration | Süre |
-| `cookie.inventory.consentPurpose` | Stores your cookie choices. | Çerez tercihlerinizi saklar. |
+| `cookie.inventory.privacy` | Privacy | Gizlilik |
+| `cookie.inventory.consentProvider` | MOESA (first party) | MOESA (birinci taraf) |
+| `cookie.inventory.consentPurpose` | Stores your cookie choice. Set only when you save a choice; while this website uses no optional cookies, no choice is asked for. | Çerez tercihinizi saklar. Yalnızca bir tercih kaydettiğinizde ayarlanır; bu web sitesi isteğe bağlı çerez kullanmadığı sürece tercih sorulmaz. |
 | `cookie.inventory.consentDuration` | 180 days | 180 gün |
+| `cookie.inventory.turnstileProvider` | Cloudflare, Inc. (third party, challenges.cloudflare.com), contact page only | Cloudflare, Inc. (üçüncü taraf, challenges.cloudflare.com), yalnızca iletişim sayfası |
+| `cookie.inventory.turnstilePurpose` | Checks that a contact-form submission comes from a person, not a bot. It evaluates technical browser signals and your IP address and may store short-lived technical data in its frame. | İletişim formu gönderiminin bir bottan değil, bir kişiden geldiğini kontrol eder. Teknik tarayıcı sinyallerini ve IP adresinizi değerlendirir ve kendi çerçevesinde kısa ömürlü teknik veriler saklayabilir. |
+| `cookie.inventory.turnstileDuration` | Set by Cloudflare (see its privacy policy) | Cloudflare tarafından belirlenir (gizlilik politikasına bakınız) |
+| `legal.lastUpdated` | Last updated: {date} | Son güncelleme: {date} |
+| `legal.seeAlso` | See also: | Ayrıca bakınız: |
 | `error.title` | Something went wrong. | Bir sorun oluştu. |
 | `error.body` | The page could not be loaded. Please try again later. | Sayfa yüklenemedi. Lütfen daha sonra tekrar deneyin. |
 | `stats.digitalCommerce` | years in digital commerce | yıl dijital ticaret deneyimi |

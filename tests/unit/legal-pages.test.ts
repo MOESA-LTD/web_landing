@@ -8,7 +8,7 @@ import LegalNoticePage from '~/pages/legal-notice.vue'
 import { content as en } from '#content/en'
 import { content as tr } from '#content/tr'
 import { content as de } from '#content/de'
-import type { LegalContent } from '#content/en/legal'
+import { LEGAL_UPDATED, type LegalContent } from '#content/en/legal'
 
 beforeAll(addPageStubs)
 
@@ -27,9 +27,23 @@ const bgOf = (el: Element) => BG.find((c) => el.classList.contains(c)) ?? 'none'
 const OPEN_PREFIX = 'OPEN / AÇIK - '
 
 const PAGES = [
-  { key: 'privacy-policy', component: PrivacyPage, en: '/privacy-policy', tr: '/tr/gizlilik-politikasi', de: '/de/datenschutz' },
-  { key: 'cookie-policy', component: CookiePage, en: '/cookie-policy', tr: '/tr/cerez-politikasi', de: '/de/cookie-richtlinie' },
-  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim', de: '/de/impressum' },
+  {
+    key: 'privacy-policy',
+    component: PrivacyPage,
+    en: '/privacy-policy',
+    tr: '/tr/gizlilik-politikasi',
+    de: '/de/datenschutz',
+    related: { en: '/cookie-policy', tr: '/tr/cerez-politikasi', de: '/de/cookie-richtlinie' },
+  },
+  {
+    key: 'cookie-policy',
+    component: CookiePage,
+    en: '/cookie-policy',
+    tr: '/tr/cerez-politikasi',
+    de: '/de/cookie-richtlinie',
+    related: { en: '/privacy-policy', tr: '/tr/gizlilik-politikasi', de: '/de/datenschutz' },
+  },
+  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim', de: '/de/impressum', related: null },
 ] as const
 
 /** The OPEN chip label per locale (`status.open`, uppercased by CSS): it stands in for the md marker "OPEN / AÇIK". */
@@ -44,7 +58,6 @@ async function expectOpenNotes(w: Wrapper, c: LegalContent, locale: keyof typeof
   const opens = c.sections.flatMap((s) => s.paragraphs ?? []).filter((t) => t.startsWith(OPEN_PREFIX))
   const rendered = w.findAll('[data-open]')
   expect(rendered).toHaveLength(opens.length)
-  expect(opens.length).toBeGreaterThan(0)
   rendered.forEach((el, i) => {
     expect(el.find('[data-chip="open"]').text()).toBe(OPEN_LABEL[locale])
     expect(norm(el.text())).toBe(`${OPEN_LABEL[locale]} - ${display(opens[i]!)}`)
@@ -94,8 +107,29 @@ for (const p of PAGES) {
       for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
     })
 
-    it('marks every OPEN item with the EN "Open" chip (the md marker), followed by the md sentence', async () => {
+    it('marks every OPEN item (a missing owner fact) with the EN "Open" chip, followed by its sentence', async () => {
       await expectOpenNotes(await mountAt(p.component, p.en), c, 'en')
+    })
+
+    it('shows the last-updated date under the lead (legal review S5)', async () => {
+      const w = await mountAt(p.component, p.en)
+      const line = w.find('[data-legal-updated]')
+      expect(norm(line.text())).toBe('Last updated: November 2, 2026')
+      expect(line.find('time').attributes('datetime')).toBe(LEGAL_UPDATED[p.key])
+    })
+
+    it('links the sibling policy under the article (legal review N3)', async () => {
+      const w = await mountAt(p.component, p.en)
+      const related = w.find('[data-legal-related]')
+      expect(related.exists()).toBe(!!p.related)
+      if (p.related) expect(related.find('a').attributes('href')).toBe(p.related.en)
+    })
+
+    it('shows no drafting instruction to the visitor (legal review B4)', async () => {
+      const text = norm((await mountAt(p.component, p.en)).find('[data-legal-page]').text())
+      for (const phrase of ['Implementation draft', 'Final wording', 'must match the actual system', 'State the effective date', 'Explain browser controls']) {
+        expect(text).not.toContain(phrase)
+      }
     })
 
     it('centres the article in the site container (DESIGN_NOTES §7.5)', async () => {
@@ -107,7 +141,6 @@ for (const p of PAGES) {
 
   describe(`${p.key} (TR ${p.tr})`, () => {
     const c = tr[p.key] as LegalContent
-    const openFields = c.sections.find((s) => s.id === 'openFields')!
 
     it('has the TR h1, the TR status, and the TR final CTA to /tr/iletisim', async () => {
       const w = await mountAt(p.component, p.tr)
@@ -119,21 +152,24 @@ for (const p of PAGES) {
       expect(norm(w.find('[data-legal-crumbs] nav').text())).toBe(`Ana Sayfa/${c.hero.title}`)
     })
 
-    it('shows the approved "Açık alanlar" once, as the summary block under the status, not as a section', async () => {
+    it('has the same sections as EN, in order (the draft "Açık alanlar" summary is gone: legal review B4)', async () => {
       const w = await mountAt(p.component, p.tr)
-      const block = w.find('[data-open-fields]')
-      expect(norm(block.find('h2').text())).toBe(openFields.title)
-      expect(norm(block.text())).toContain(openFields.paragraphs![0])
-      const text = norm(w.text())
-      expect(text.split(openFields.paragraphs![0]!).length - 1).toBe(1)
       const h2s = w.findAll('[data-legal-section] h2').map((h) => norm(h.text()))
-      expect(h2s).toEqual(c.sections.filter((s) => s.id !== 'openFields').map((s) => s.title))
+      expect(h2s).toEqual(c.sections.map((s) => s.title))
+      expect(c.sections.map((s) => s.id)).toEqual((en[p.key] as LegalContent).sections.map((s) => s.id))
+      expect(w.find('[data-open-fields]').exists()).toBe(false)
     })
 
-    it('renders the translated sections, with the approved condensed line above the translated list or values', async () => {
+    it('shows the last-updated date in Turkish and the sibling-policy link localised', async () => {
+      const w = await mountAt(p.component, p.tr)
+      expect(norm(w.find('[data-legal-updated]').text())).toBe('Son güncelleme: 2 Kasım 2026')
+      if (p.related) expect(w.find('[data-legal-related] a').attributes('href')).toBe(p.related.tr)
+    })
+
+    it('renders the translated sections, with an approved condensed line above the translated list or values', async () => {
       const w = await mountAt(p.component, p.tr)
       const text = norm(w.find('[data-legal-page]').text())
-      for (const s of c.sections.filter((x) => x.id !== 'openFields')) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
       for (const s of c.sections.filter((x) => x.condensed)) {
         const sec = w.find(`[data-legal-section="${s.id}"]`)
         expect(norm(sec.find('[data-condensed]').text())).toBe(s.condensed)
@@ -142,8 +178,6 @@ for (const p of PAGES) {
 
     it('marks every OPEN item with the TR "Açık" chip', async () => {
       await expectOpenNotes(await mountAt(p.component, p.tr), c, 'tr')
-      const w = await mountAt(p.component, p.tr)
-      expect(w.find('[data-open-fields] [data-chip="open"]').text()).toBe('Açık')
     })
   })
 
@@ -158,35 +192,44 @@ for (const p of PAGES) {
       for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
       await expectOpenNotes(w, c, 'de')
       expect(sections(w).at(-1)!.querySelector('a')!.getAttribute('href')).toBe('/de/kontakt')
+      expect(norm(w.find('[data-legal-updated]').text())).toBe('Stand: 2. November 2026')
+      if (p.related) expect(w.find('[data-legal-related] a').attributes('href')).toBe(p.related.de)
     })
   })
 }
 
-describe('TR legal notice approved one-line forms', () => {
-  it('shows the approved "Şirket" and "İletişim" lines above the per-line values', async () => {
+describe('TR legal notice', () => {
+  it('keeps the approved "İletişim" line above the per-line values, and gives the register data with Turkish labels', async () => {
     const w = await mountAt(LegalNoticePage, '/tr/yasal-bildirim')
-    expect(norm(w.find('[data-legal-section="operator"] [data-condensed]').text())).toBe(
-      'MOESA LTD. | 1 Petyofi Str., Plovdiv 4000, Bulgaria | Company ID 207200475 | VAT BG207200475',
-    )
     expect(norm(w.find('[data-legal-section="contact"] [data-condensed]').text())).toBe('info@moesaltd.com | +359 88 501 661')
+    // The approved "Şirket" one-liner used the English "Company ID" / "VAT" (legal review N4): replaced by the labelled lines.
+    const operator = w.find('[data-legal-section="operator"]')
+    expect(operator.find('[data-condensed]').exists()).toBe(false)
+    expect(norm(operator.text())).toContain('Şirket sicil no (EIK): 207200475')
+    expect(norm(operator.text())).toContain('KDV no: BG207200475')
   })
 })
 
 describe('cookie policy consent panel', () => {
-  it('EN: the in-page settings panel is always shown, and the moesa_consent cookie is listed as strictly necessary', async () => {
+  it('EN: the settings panel is always shown at #cookie-settings, and the inventory lists moesa_consent and Turnstile', async () => {
     const w = await mountAt(CookiePage, '/cookie-policy')
-    expect(w.find('[data-cookie-consent]').exists()).toBe(true)
-    const inv = w.find('[data-cookie-inventory]')
-    expect(inv.text()).toContain('moesa_consent')
-    expect(inv.text()).toContain('Strictly necessary')
-    expect(inv.text()).toContain('180')
-    // The OPEN inventory marker stays: the final table is still open.
-    expect(w.find('[data-legal-section="inventory"] [data-open]').exists()).toBe(true)
+    expect(w.find('#cookie-settings [data-cookie-consent]').exists()).toBe(true)
+    const consent = w.find('[data-cookie-item="consent"]')
+    expect(consent.text()).toContain('moesa_consent')
+    expect(consent.text()).toContain('Strictly necessary')
+    expect(consent.text()).toContain('180')
+    const turnstile = w.find('[data-cookie-item="turnstile"]')
+    expect(turnstile.text()).toContain('Cloudflare Turnstile')
+    expect(turnstile.text()).toContain('challenges.cloudflare.com')
+    expect(turnstile.find('a').attributes('href')).toBe('https://www.cloudflare.com/privacypolicy/')
+    // The inventory is complete for v1 (legal review B2): no OPEN marker left in it.
+    expect(w.find('[data-legal-section="inventory"] [data-open]').exists()).toBe(false)
   })
 
   it('TR: the panel and the inventory row are shown in Turkish', async () => {
     const w = await mountAt(CookiePage, '/tr/cerez-politikasi')
     expect(w.find('[data-cookie-consent]').exists()).toBe(true)
     expect(w.find('[data-cookie-inventory]').text()).toContain('moesa_consent')
+    expect(w.find('[data-cookie-item="turnstile"]').text()).toContain('yalnızca iletişim sayfası')
   })
 })

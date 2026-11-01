@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
-import { approvedStringsFor, findMissing, mdPath, readPageMeta } from './fidelity/extract'
+import { content as trContent } from '../../content/tr/index'
+import type { PageKey } from '../../content/types'
+import { approvedStringsFor, findMissing, legalRemovedMetaDescription, mdPath, readPageMeta } from './fidelity/extract'
 import { FIDELITY_ROUTES } from './fidelity/routes'
 import { switchLanguage } from './lang'
 
@@ -8,7 +10,8 @@ import { switchLanguage } from './lang'
  * the page's own content: `<main id="main">` only, so the header (with the language dropdown) and footer (nav labels, service
  * links, header CTA) cannot stand in for a missing section. Case-insensitive, because eyebrows are uppercased
  * by CSS (innerText reflects that); TR is case-folded with Turkish rules (see `findMissing`).
- * Title and meta description must equal the md values.
+ * Title and meta description must equal the md values, except a legal meta description that was draft text and is
+ * replaced by a translation of the EN one (legal review B4; listed in content/legal-revisions.ts `LEGAL_REMOVED`).
  */
 for (const { route, md, locale } of FIDELITY_ROUTES) {
   test.describe(`content fidelity ${route} (${locale}/${md})`, () => {
@@ -25,7 +28,9 @@ for (const { route, md, locale } of FIDELITY_ROUTES) {
       await page.goto(route)
       const meta = readPageMeta(mdPath(locale, md))
       await expect(page).toHaveTitle(meta.title)
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', meta.description)
+      const replaced = legalRemovedMetaDescription(locale, md) === meta.description
+      const description = replaced ? trContent[md.replace(/\.md$/, '') as PageKey].meta.description : meta.description
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description)
       await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('html')).toHaveAttribute('lang', locale)
     })

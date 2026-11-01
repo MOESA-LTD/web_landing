@@ -1,8 +1,9 @@
 import type { LegalContent } from '../en/legal'
 
 /**
- * Translated by us from content/en/cookie-policy.ts (approved EN); every string is listed in ./unreviewed.ts.
- * Draft: the status chip keeps the md status value and the open items keep the md marker "OPEN / AÇIK - ".
+ * Translated by us from content/en/cookie-policy.ts; every string is listed in ./unreviewed.ts, except the sections
+ * rewritten after the legal review of 2026-11-01, which are listed in ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md).
+ * Draft: the status chip keeps the md status value.
  */
 const content: LegalContent = {
   meta: {
@@ -13,7 +14,7 @@ const content: LegalContent = {
   status: 'DRAFT / TASLAK - LEGAL & TECHNICAL REVIEW REQUIRED',
   hero: {
     title: 'Cookie-Richtlinie',
-    body: 'Entwurf für die Umsetzung. Die endgültige Richtlinie und das Einwilligungsbanner hängen von den Technologien ab, die auf der Website tatsächlich eingesetzt werden.',
+    body: 'Diese Website verwendet ein einziges First-Party-Cookie und keine Analyse-, Werbe- oder Social-Media-Cookies. Diese Seite erklärt, was auf Ihrem Gerät gespeichert wird und wie Sie es steuern können.',
   },
   sections: [
     {
@@ -21,44 +22,39 @@ const content: LegalContent = {
       title: 'Cookie-Kategorien',
       items: [
         'Unbedingt erforderlich',
-        'Präferenzen',
-        'Analyse',
-        'Marketing - nur falls umgesetzt',
+      ],
+      paragraphs: [
+        'Wir verwenden derzeit keine Präferenz-, Analyse- oder Marketing-Cookies.',
       ],
     },
     {
       id: 'consentModel',
       title: 'Einwilligungsmodell',
       paragraphs: [
-        'Nicht erforderliche Cookies dürfen nicht vor einer wirksamen Einwilligung aktiviert werden, wo eine Einwilligung gesetzlich vorgeschrieben ist. Nutzer müssen ihre Auswahl ablehnen und später ändern können.',
+        'Unbedingt erforderliche Cookies und ähnliche Technologien benötigen keine Einwilligung. Wir setzen keine nicht erforderlichen Cookies. Sollten wir solche Cookies einführen, holen wir vorher Ihre Einwilligung ein; Sie können sie ablehnen und Ihre Auswahl später ändern.',
       ],
     },
     {
       id: 'inventory',
       title: 'Cookie-Übersicht',
       paragraphs: [
-        'OPEN / AÇIK - Die endgültige Cookie-Tabelle erstellen, sobald Hosting, Analyse, eingebettete Medien, Formulare und Drittanbieterdienste ausgewählt sind.',
+        'Die folgende Tabelle führt alle Cookies und ähnlichen Technologien auf, die auf dieser Website eingesetzt werden.',
       ],
     },
     {
       id: 'thirdParties',
       title: 'Drittanbieterdienste',
       paragraphs: [
-        'OPEN / AÇIK - Jeden Drittanbieter mit Zweck, Cookie-Laufzeit und Link zur Datenschutzerklärung aufführen.',
+        'Cloudflare Turnstile (Cloudflare, Inc., USA) läuft nur auf der Kontaktseite und schützt das Formular vor Spam. Datenschutzerklärung: https://www.cloudflare.com/privacypolicy/',
+        'Wir binden keine Social-Media-, Video-, Karten- oder Werbedienste ein.',
       ],
     },
     {
       id: 'managing',
       title: 'Cookies verwalten',
       paragraphs: [
-        'Die Browsereinstellungen und den Mechanismus der Website für Einwilligungspräferenzen erläutern.',
-      ],
-    },
-    {
-      id: 'effectiveDate',
-      title: 'Datum des Inkrafttretens',
-      paragraphs: [
-        'OPEN / AÇIK - Das Veröffentlichungsdatum ergänzen.',
+        'Sie können Cookies jederzeit in Ihren Browsereinstellungen löschen oder blockieren. Wenn Sie die Turnstile-Prüfung blockieren, kann das Kontaktformular nicht gesendet werden; Sie können uns stattdessen eine E-Mail schreiben.',
+        'Sollten wir optionale Cookies einführen, können Sie Ihre Einwilligung jederzeit in den Cookie-Einstellungen auf dieser Seite erteilen, ändern oder widerrufen.',
       ],
     },
   ],

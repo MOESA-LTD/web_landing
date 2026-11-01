@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { useContent } from '../../app/composables/useContent'
 import { brand, contactForm, navigation, serviceLabelBySlug, serviceOptionKeys, serviceSlugs, PAGE_KEYS } from '../../content/site'
 import { UNREVIEWED_TR } from '../../content/tr/unreviewed'
+import { LEGAL_REMOVED, LEGAL_REVISIONS } from '../../content/legal-revisions'
 import type { Locale, PageKey } from '../../content/types'
 import { UNREVIEWED_UI_KEYS } from '../../i18n/unreviewed-ui'
 import { renderUnreviewedMd } from '../../scripts/unreviewed-tr'
@@ -113,6 +114,16 @@ const leaves = (value: unknown) => leafPaths(value).map((l) => l.value)
 const unreviewedKey = (page: string, path: string) => `${page}|${path}`
 const unreviewedByKey = new Map(UNREVIEWED_TR.map((e) => [unreviewedKey(e.page, e.path), e]))
 
+/**
+ * Legal pages only (legal review 2026-11-01, content/legal-revisions.ts): the paths whose text we wrote (any locale),
+ * and the approved package strings a page deliberately no longer shows. Nothing else is exempt.
+ */
+const revisedPaths = new Set(LEGAL_REVISIONS.map((r) => unreviewedKey(r.page, r.path)))
+const removedText = (locale: Locale, key: PageKey) =>
+  new Set(LEGAL_REMOVED.filter((r) => r.locale === locale && r.page === key && !r.meta).map((r) => r.text))
+const removedMeta = (locale: Locale, key: PageKey) =>
+  LEGAL_REMOVED.find((r) => r.locale === locale && r.page === key && r.meta)?.text
+
 describe('page meta comes straight from the package md', () => {
   for (const locale of locales) {
     it(`${locale}: every PageKey has the md title, description and URL`, () => {
@@ -121,7 +132,12 @@ describe('page meta comes straight from the package md', () => {
         const md = readMd(locale, key)
         const { meta } = useContent(key, locale)
         expect(meta.title, `${locale} ${key} title`).toBe(metaField(md, 'Page Title'))
-        expect(meta.description, `${locale} ${key} description`).toBe(metaField(md, 'Meta Description'))
+        // A legal meta description that was draft text (legal review B4) is replaced by a translation of the EN one.
+        if (removedMeta(locale, key) === metaField(md, 'Meta Description')) {
+          expect(meta.description, `${locale} ${key} description`).toBe(UNREVIEWED_TR.find((e) => e.page === key && e.path === 'meta.description')?.tr)
+        } else {
+          expect(meta.description, `${locale} ${key} description`).toBe(metaField(md, 'Meta Description'))
+        }
         expect(meta.path, `${locale} ${key} path`).toBe(metaField(md, 'URL').replace(/`/g, ''))
       }
     })
@@ -144,10 +160,17 @@ describe('content is verbatim and complete against the md', () => {
         const own = leafPaths(useContent(key, locale))
         const values = own.map((l) => l.value)
 
-        const missing = units.filter((u) => !values.includes(u))
+        const removed = removedText(locale, key)
+        const missing = units.filter((u) => !values.includes(u) && !removed.has(u))
+        // A listed removal must really be gone (and is an md unit of this page).
+        for (const r of removed) {
+          expect(units, `LEGAL_REMOVED ${locale} ${key}: not an md unit`).toContain(r)
+          expect(values, `LEGAL_REMOVED ${locale} ${key}: still shown`).not.toContain(r)
+        }
         expect(missing, 'md units missing from the content module').toEqual([])
 
-        const listed = (l: Leaf) => locale === 'tr' && unreviewedByKey.has(unreviewedKey(key, l.path))
+        const listed = (l: Leaf) =>
+          (locale === 'tr' && unreviewedByKey.has(unreviewedKey(key, l.path))) || revisedPaths.has(unreviewedKey(key, l.path))
         const invented = own.filter((l) => !approved.has(l.value) && !listed(l)).map((l) => `${l.path}: ${l.value}`)
         expect(invented, 'content strings that are neither in the md nor listed in UNREVIEWED_TR').toEqual([])
       })

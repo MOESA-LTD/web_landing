@@ -1,17 +1,17 @@
 /**
  * The visitor's cookie choice, stored in the strictly necessary `moesa_consent` cookie for 180 days (listed in
  * the Cookie Policy inventory). `state` is `null` until a choice is made. v1 sets no non-essential cookies and
- * loads no analytics: the banner only appears when `runtimeConfig.public.analyticsId` is set, and any future
- * analytics loader must also check `state.value?.analytics === true`.
+ * loads no analytics, so there is nothing to choose and the cookie is never written: the choice (analytics only)
+ * is offered only when `runtimeConfig.public.analyticsId` is set, and any future analytics loader must also check
+ * `state.value?.analytics === true`. There is no "preferences" category: no such cookie exists (legal review S3).
  */
 export interface ConsentState {
   necessary: true
-  preferences: boolean
   analytics: boolean
 }
 
-/** "Reject non-essential", "Accept all", or the ticked categories ("Save choices"). */
-export type ConsentChoice = 'reject' | 'accept' | { preferences: boolean; analytics: boolean }
+/** "Reject non-essential", "Accept all", or the ticked category ("Save choices"). */
+export type ConsentChoice = 'reject' | 'accept' | { analytics: boolean }
 
 export const CONSENT_COOKIE = 'moesa_consent'
 export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60
@@ -20,14 +20,14 @@ export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60
 export function parseConsent(value: unknown): ConsentState | null {
   if (!value || typeof value !== 'object') return null
   const v = value as Record<string, unknown>
-  if (typeof v.preferences !== 'boolean' || typeof v.analytics !== 'boolean') return null
-  return { necessary: true, preferences: v.preferences, analytics: v.analytics }
+  if (typeof v.analytics !== 'boolean') return null
+  return { necessary: true, analytics: v.analytics }
 }
 
 function stateFor(choice: ConsentChoice): ConsentState {
-  if (choice === 'accept') return { necessary: true, preferences: true, analytics: true }
-  if (choice === 'reject') return { necessary: true, preferences: false, analytics: false }
-  return { necessary: true, preferences: !!choice.preferences, analytics: !!choice.analytics }
+  if (choice === 'accept') return { necessary: true, analytics: true }
+  if (choice === 'reject') return { necessary: true, analytics: false }
+  return { necessary: true, analytics: !!choice.analytics }
 }
 
 /** Cookie attributes; `Secure` whenever the page is served over HTTPS (production), not on plain-http dev/e2e. */

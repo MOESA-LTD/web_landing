@@ -6,7 +6,7 @@ There is **no approved German source** in `MOESA_Website_Package_v1.0`. Every Ge
 translation of the approved English (`content/en`, formal "Sie"); it was never taken from the TR copy or from the
 canvas `i18n.js`. All of it is listed below for review before the German site goes live.
 
-## Page copy (637 strings)
+## Page copy (609 strings)
 
 Source: `content/de/unreviewed.ts`; the strings are used verbatim in `content/de/*.ts`. The path is the field in the
 page module (legal sections are addressed by id); `site` is the footer descriptor (`content/de/site.ts`).
@@ -623,7 +623,64 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `finalCta.body` | Start from the home page or contact us directly. | Beginnen Sie auf der Startseite oder kontaktieren Sie uns direkt. |
 | `finalCta.cta.label` | Return Home | Zur Startseite |
 
-### legal-notice (24)
+### privacy-policy (34)
+
+| Path | EN | DE |
+| --- | --- | --- |
+| `meta.title` | Privacy Policy \| MOESA Ltd. | Datenschutzerklärung \| MOESA Ltd. |
+| `meta.description` | Information about how MOESA Ltd. processes personal data through its website. | Informationen darüber, wie MOESA Ltd. über ihre Website personenbezogene Daten verarbeitet. |
+| `status` | DRAFT / TASLAK - LEGAL REVIEW REQUIRED | DRAFT / TASLAK - LEGAL REVIEW REQUIRED |
+| `hero.title` | Privacy Policy | Datenschutzerklärung |
+| `sections[controller].title` | Controller | Verantwortlicher |
+| `sections[controller].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
+| `sections[controller].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
+| `sections[controller].paragraphs[2]` | Email: info@moesaltd.com | E-Mail: info@moesaltd.com |
+| `sections[dataCollected].title` | Data collected | Erhobene Daten |
+| `sections[dataCollected].items[2]` | Business correspondence | Geschäftskorrespondenz |
+| `sections[purposes].title` | Purposes | Zwecke |
+| `sections[purposes].items[0]` | Responding to enquiries | Beantwortung von Anfragen |
+| `sections[purposes].items[1]` | Preparing and managing a potential business relationship | Vorbereitung und Verwaltung einer möglichen Geschäftsbeziehung |
+| `sections[purposes].items[2]` | Website security and operation | Sicherheit und Betrieb der Website |
+| `sections[purposes].items[3]` | Legal and record-keeping obligations | Rechtliche Pflichten und Aufbewahrungspflichten |
+| `sections[legalBases].title` | Legal bases | Rechtsgrundlagen |
+| `sections[recipients].title` | Recipients and processors | Empfänger und Auftragsverarbeiter |
+| `sections[transfers].title` | International transfers | Internationale Übermittlungen |
+| `sections[retention].title` | Retention | Speicherdauer |
+| `sections[rights].title` | Data-subject rights | Rechte der betroffenen Personen |
+| `sections[rights].items[0]` | Access | Auskunft |
+| `sections[rights].items[1]` | Rectification | Berichtigung |
+| `sections[rights].items[2]` | Erasure | Löschung |
+| `sections[rights].items[3]` | Restriction | Einschränkung der Verarbeitung |
+| `sections[rights].items[4]` | Objection | Widerspruch |
+| `sections[rights].items[5]` | Data portability where applicable | Datenübertragbarkeit, soweit anwendbar |
+| `sections[rights].items[7]` | Complaint to a competent supervisory authority | Beschwerde bei einer zuständigen Aufsichtsbehörde |
+| `sections[security].title` | Security | Sicherheit |
+| `sections[privacyContact].title` | Contact for privacy requests | Kontakt für Datenschutzanfragen |
+| `sections[privacyContact].paragraphs[0]` | info@moesaltd.com | info@moesaltd.com |
+| `sections[updates].title` | Policy updates | Aktualisierungen der Erklärung |
+| `finalCta.title` | Privacy question? | Eine Frage zum Datenschutz? |
+| `finalCta.body` | Contact info@moesaltd.com. | Kontaktieren Sie info@moesaltd.com. |
+| `finalCta.cta.label` | Contact MOESA | MOESA kontaktieren |
+
+### cookie-policy (13)
+
+| Path | EN | DE |
+| --- | --- | --- |
+| `meta.title` | Cookie Policy \| MOESA Ltd. | Cookie-Richtlinie \| MOESA Ltd. |
+| `meta.description` | Information about cookies and similar technologies used on the MOESA website. | Informationen über Cookies und ähnliche Technologien, die auf der Website von MOESA verwendet werden. |
+| `status` | DRAFT / TASLAK - LEGAL & TECHNICAL REVIEW REQUIRED | DRAFT / TASLAK - LEGAL & TECHNICAL REVIEW REQUIRED |
+| `hero.title` | Cookie Policy | Cookie-Richtlinie |
+| `sections[categories].title` | Cookie categories | Cookie-Kategorien |
+| `sections[categories].items[0]` | Strictly necessary | Unbedingt erforderlich |
+| `sections[consentModel].title` | Consent model | Einwilligungsmodell |
+| `sections[inventory].title` | Cookie inventory | Cookie-Übersicht |
+| `sections[thirdParties].title` | Third-party services | Drittanbieterdienste |
+| `sections[managing].title` | Managing cookies | Cookies verwalten |
+| `finalCta.title` | Cookie question? | Eine Frage zu Cookies? |
+| `finalCta.body` | Contact info@moesaltd.com. | Kontaktieren Sie info@moesaltd.com. |
+| `finalCta.cta.label` | Contact MOESA | MOESA kontaktieren |
+
+### legal-notice (18)
 
 | Path | EN | DE |
 | --- | --- | --- |
@@ -635,99 +692,14 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | `sections[operator].title` | Website operator | Betreiber der Website |
 | `sections[operator].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
 | `sections[operator].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
-| `sections[operator].paragraphs[2]` | Company ID: 207200475 | Unternehmens-ID (EIK): 207200475 |
 | `sections[operator].paragraphs[3]` | VAT: BG207200475 | USt-IdNr.: BG207200475 |
 | `sections[contact].title` | Contact | Kontakt |
 | `sections[contact].paragraphs[0]` | Email: info@moesaltd.com | E-Mail: info@moesaltd.com |
 | `sections[contact].paragraphs[1]` | Phone: +359 88 501 661 | Telefon: +359 88 501 661 |
 | `sections[representative].title` | Legal representative | Gesetzlicher Vertreter |
-| `sections[representative].paragraphs[0]` | OPEN / AÇIK - Confirm the legal representative or managing director before publication. | OPEN / AÇIK - Den gesetzlichen Vertreter oder Geschäftsführer vor der Veröffentlichung bestätigen. |
-| `sections[contentResponsibility].title` | Content responsibility | Verantwortlichkeit für Inhalte |
-| `sections[contentResponsibility].paragraphs[0]` | OPEN / AÇIK - Confirm the wording required for the publication countries and applicable law. | OPEN / AÇIK - Die für die Veröffentlichungsländer und das anwendbare Recht erforderliche Formulierung bestätigen. |
 | `sections[externalLinks].title` | External links | Externe Links |
-| `sections[externalLinks].paragraphs[0]` | MOESA is not responsible for the content of external websites controlled by third parties. Final wording requires legal review. | MOESA ist nicht für die Inhalte externer Websites verantwortlich, die von Dritten kontrolliert werden. Die endgültige Formulierung erfordert eine rechtliche Prüfung. |
 | `sections[intellectualProperty].title` | Intellectual property | Geistiges Eigentum |
-| `sections[intellectualProperty].paragraphs[0]` | Website content, design and brand assets may not be reproduced without permission, except where permitted by applicable law. Final wording requires legal review. | Inhalte, Gestaltung und Markenelemente der Website dürfen ohne Genehmigung nicht vervielfältigt werden, soweit dies nicht nach geltendem Recht zulässig ist. Die endgültige Formulierung erfordert eine rechtliche Prüfung. |
 | `finalCta.title` | Questions about the company information? | Fragen zu den Unternehmensangaben? |
-| `finalCta.body` | Contact info@moesaltd.com. | Kontaktieren Sie info@moesaltd.com. |
-| `finalCta.cta.label` | Contact MOESA | MOESA kontaktieren |
-
-### privacy-policy (46)
-
-| Path | EN | DE |
-| --- | --- | --- |
-| `meta.title` | Privacy Policy \| MOESA Ltd. | Datenschutzerklärung \| MOESA Ltd. |
-| `meta.description` | Information about how MOESA Ltd. processes personal data through its website. | Informationen darüber, wie MOESA Ltd. über ihre Website personenbezogene Daten verarbeitet. |
-| `status` | DRAFT / TASLAK - LEGAL REVIEW REQUIRED | DRAFT / TASLAK - LEGAL REVIEW REQUIRED |
-| `hero.title` | Privacy Policy | Datenschutzerklärung |
-| `hero.body` | Implementation draft. The final policy must be updated after hosting, analytics, form, email, cookie and third-party services are confirmed and must receive legal review before publication. | Entwurf für die Umsetzung. Die endgültige Erklärung muss aktualisiert werden, sobald Hosting, Analyse, Formular, E-Mail, Cookies und Drittanbieterdienste feststehen, und muss vor der Veröffentlichung rechtlich geprüft werden. |
-| `sections[controller].title` | Controller | Verantwortlicher |
-| `sections[controller].paragraphs[0]` | MOESA LTD. | MOESA LTD. |
-| `sections[controller].paragraphs[1]` | 1 Petyofi Str., Plovdiv 4000, Bulgaria | 1 Petyofi Str., Plovdiv 4000, Bulgaria |
-| `sections[controller].paragraphs[2]` | Email: info@moesaltd.com | E-Mail: info@moesaltd.com |
-| `sections[dataCollected].title` | Data collected | Erhobene Daten |
-| `sections[dataCollected].items[0]` | Contact-form data | Daten aus dem Kontaktformular |
-| `sections[dataCollected].items[1]` | Files submitted by users | Von Nutzern übermittelte Dateien |
-| `sections[dataCollected].items[2]` | Technical server logs | Technische Server-Logs |
-| `sections[dataCollected].items[3]` | Cookie and analytics data if enabled | Cookie- und Analysedaten, sofern aktiviert |
-| `sections[dataCollected].items[4]` | Business correspondence | Geschäftskorrespondenz |
-| `sections[purposes].title` | Purposes | Zwecke |
-| `sections[purposes].items[0]` | Responding to enquiries | Beantwortung von Anfragen |
-| `sections[purposes].items[1]` | Preparing and managing a potential business relationship | Vorbereitung und Verwaltung einer möglichen Geschäftsbeziehung |
-| `sections[purposes].items[2]` | Website security and operation | Sicherheit und Betrieb der Website |
-| `sections[purposes].items[3]` | Legal and record-keeping obligations | Rechtliche Pflichten und Aufbewahrungspflichten |
-| `sections[purposes].items[4]` | Analytics only if lawfully implemented | Analyse nur bei rechtmäßiger Umsetzung |
-| `sections[legalBases].title` | Legal bases | Rechtsgrundlagen |
-| `sections[legalBases].paragraphs[0]` | OPEN / AÇIK - Final legal bases must be confirmed with counsel for each processing activity. | OPEN / AÇIK - Die endgültigen Rechtsgrundlagen müssen für jede Verarbeitungstätigkeit mit einem Rechtsbeistand bestätigt werden. |
-| `sections[recipients].title` | Recipients and processors | Empfänger und Auftragsverarbeiter |
-| `sections[recipients].paragraphs[0]` | OPEN / AÇIK - Add hosting provider, form provider, email provider, analytics tools, CRM and other processors after the technical stack is final. | OPEN / AÇIK - Hosting-Anbieter, Formularanbieter, E-Mail-Anbieter, Analysetools, CRM und weitere Auftragsverarbeiter ergänzen, sobald der technische Stack feststeht. |
-| `sections[transfers].title` | International transfers | Internationale Übermittlungen |
-| `sections[transfers].paragraphs[0]` | OPEN / AÇIK - Confirm whether any provider processes data outside the EEA and document the transfer mechanism. | OPEN / AÇIK - Bestätigen, ob ein Anbieter Daten außerhalb des EWR verarbeitet, und den Übermittlungsmechanismus dokumentieren. |
-| `sections[retention].title` | Retention | Speicherdauer |
-| `sections[retention].paragraphs[0]` | OPEN / AÇIK - Define retention periods for enquiries, files, logs, analytics and business correspondence. | OPEN / AÇIK - Speicherfristen für Anfragen, Dateien, Logs, Analysedaten und Geschäftskorrespondenz festlegen. |
-| `sections[rights].title` | Data-subject rights | Rechte der betroffenen Personen |
-| `sections[rights].items[0]` | Access | Auskunft |
-| `sections[rights].items[1]` | Rectification | Berichtigung |
-| `sections[rights].items[2]` | Erasure | Löschung |
-| `sections[rights].items[3]` | Restriction | Einschränkung der Verarbeitung |
-| `sections[rights].items[4]` | Objection | Widerspruch |
-| `sections[rights].items[5]` | Data portability where applicable | Datenübertragbarkeit, soweit anwendbar |
-| `sections[rights].items[6]` | Complaint to a competent supervisory authority | Beschwerde bei einer zuständigen Aufsichtsbehörde |
-| `sections[security].title` | Security | Sicherheit |
-| `sections[security].paragraphs[0]` | Use appropriate technical and organisational measures. Final wording must match the actual system. | Geeignete technische und organisatorische Maßnahmen einsetzen. Die endgültige Formulierung muss dem tatsächlichen System entsprechen. |
-| `sections[privacyContact].title` | Contact for privacy requests | Kontakt für Datenschutzanfragen |
-| `sections[privacyContact].paragraphs[0]` | info@moesaltd.com | info@moesaltd.com |
-| `sections[updates].title` | Policy updates | Aktualisierungen der Erklärung |
-| `sections[updates].paragraphs[0]` | State the effective date and explain that the policy may be updated when services or legal requirements change. | Das Datum des Inkrafttretens angeben und erläutern, dass die Erklärung aktualisiert werden kann, wenn sich Dienste oder rechtliche Anforderungen ändern. |
-| `finalCta.title` | Privacy question? | Eine Frage zum Datenschutz? |
-| `finalCta.body` | Contact info@moesaltd.com. | Kontaktieren Sie info@moesaltd.com. |
-| `finalCta.cta.label` | Contact MOESA | MOESA kontaktieren |
-
-### cookie-policy (23)
-
-| Path | EN | DE |
-| --- | --- | --- |
-| `meta.title` | Cookie Policy \| MOESA Ltd. | Cookie-Richtlinie \| MOESA Ltd. |
-| `meta.description` | Information about cookies and similar technologies used on the MOESA website. | Informationen über Cookies und ähnliche Technologien, die auf der Website von MOESA verwendet werden. |
-| `status` | DRAFT / TASLAK - LEGAL & TECHNICAL REVIEW REQUIRED | DRAFT / TASLAK - LEGAL & TECHNICAL REVIEW REQUIRED |
-| `hero.title` | Cookie Policy | Cookie-Richtlinie |
-| `hero.body` | Implementation draft. The final policy and consent banner depend on the technologies actually used on the website. | Entwurf für die Umsetzung. Die endgültige Richtlinie und das Einwilligungsbanner hängen von den Technologien ab, die auf der Website tatsächlich eingesetzt werden. |
-| `sections[categories].title` | Cookie categories | Cookie-Kategorien |
-| `sections[categories].items[0]` | Strictly necessary | Unbedingt erforderlich |
-| `sections[categories].items[1]` | Preferences | Präferenzen |
-| `sections[categories].items[2]` | Analytics | Analyse |
-| `sections[categories].items[3]` | Marketing - only if implemented | Marketing - nur falls umgesetzt |
-| `sections[consentModel].title` | Consent model | Einwilligungsmodell |
-| `sections[consentModel].paragraphs[0]` | Non-essential cookies must not be activated before valid consent where consent is legally required. Users must be able to reject and later change their choices. | Nicht erforderliche Cookies dürfen nicht vor einer wirksamen Einwilligung aktiviert werden, wo eine Einwilligung gesetzlich vorgeschrieben ist. Nutzer müssen ihre Auswahl ablehnen und später ändern können. |
-| `sections[inventory].title` | Cookie inventory | Cookie-Übersicht |
-| `sections[inventory].paragraphs[0]` | OPEN / AÇIK - Create the final cookie table after hosting, analytics, embedded media, forms and third-party services are selected. | OPEN / AÇIK - Die endgültige Cookie-Tabelle erstellen, sobald Hosting, Analyse, eingebettete Medien, Formulare und Drittanbieterdienste ausgewählt sind. |
-| `sections[thirdParties].title` | Third-party services | Drittanbieterdienste |
-| `sections[thirdParties].paragraphs[0]` | OPEN / AÇIK - List each third-party provider, purpose, cookie duration and privacy link. | OPEN / AÇIK - Jeden Drittanbieter mit Zweck, Cookie-Laufzeit und Link zur Datenschutzerklärung aufführen. |
-| `sections[managing].title` | Managing cookies | Cookies verwalten |
-| `sections[managing].paragraphs[0]` | Explain browser controls and the website consent-preference mechanism. | Die Browsereinstellungen und den Mechanismus der Website für Einwilligungspräferenzen erläutern. |
-| `sections[effectiveDate].title` | Effective date | Datum des Inkrafttretens |
-| `sections[effectiveDate].paragraphs[0]` | OPEN / AÇIK - Add the publication date. | OPEN / AÇIK - Das Veröffentlichungsdatum ergänzen. |
-| `finalCta.title` | Cookie question? | Eine Frage zu Cookies? |
 | `finalCta.body` | Contact info@moesaltd.com. | Kontaktieren Sie info@moesaltd.com. |
 | `finalCta.cta.label` | Contact MOESA | MOESA kontaktieren |
 
@@ -737,7 +709,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | --- | --- | --- |
 | `descriptor` | International Procurement, Product Development & Commercial Operations | Internationale Beschaffung, Produktentwicklung & Commercial Operations |
 
-## UI microcopy (112 strings)
+## UI microcopy (120 strings)
 
 Source: every key of `i18n/locales/de.json`, next to its EN value from `i18n/locales/en.json`. The `nav.header.*`
 keys are the labels of the desktop header bar; `{…}` are placeholders filled in at runtime.
@@ -778,6 +750,8 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `cards.capability` | Cross-functional capability | Bereichsübergreifende Kompetenz |
 | `status.draft` | Draft | Entwurf |
 | `status.open` | Open | Offen |
+| `legal.lastUpdated` | Last updated: {date} | Stand: {date} |
+| `legal.seeAlso` | See also: | Siehe auch: |
 | `footer.servicesTitle` | Services | Leistungen |
 | `footer.companyTitle` | Company | Unternehmen |
 | `footer.contactTitle` | Contact | Kontakt |
@@ -805,7 +779,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `form.optional` | (optional) | (optional) |
 | `form.servicePlaceholder` | Select a service | Leistung auswählen |
 | `form.briefHelp` | What the business needs, what is already confirmed and what remains open. | Was Ihr Unternehmen braucht, was bereits bestätigt ist und was offen bleibt. |
-| `form.consent` | I agree that MOESA may process the information I submit to respond to this enquiry. See the {link}. | Ich bin damit einverstanden, dass MOESA die von mir übermittelten Informationen verarbeitet, um diese Anfrage zu beantworten. Weitere Informationen finden Sie in der {link}. |
+| `form.consent` | I have read the {link} and understand that MOESA will use my details to respond to this enquiry. | Ich habe die {link} gelesen und weiß, dass MOESA meine Angaben zur Beantwortung dieser Anfrage verwendet. |
 | `form.submit` | Send Project Brief | Projektbriefing senden |
 | `form.disclaimer` | A submitted form does not create a contractual engagement. | Ein übermitteltes Formular begründet kein Vertragsverhältnis. |
 | `form.sending` | Sending… | Wird gesendet… |
@@ -828,7 +802,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `form.errors.country` | Enter your country. | Geben Sie Ihr Land ein. |
 | `form.errors.service` | Choose how we can support you. | Wählen Sie aus, wie wir Sie unterstützen können. |
 | `form.errors.projectBrief` | Describe the project briefly. | Beschreiben Sie das Projekt kurz. |
-| `form.errors.consent` | Confirm consent so we can respond to your enquiry. | Bestätigen Sie Ihre Einwilligung, damit wir Ihre Anfrage beantworten können. |
+| `form.errors.consent` | Confirm that you have read the privacy policy so we can respond to your enquiry. | Bestätigen Sie, dass Sie die Datenschutzerklärung gelesen haben, damit wir Ihre Anfrage beantworten können. |
 | `form.errors.tooLong` | Use {max} characters or fewer. | Verwenden Sie höchstens {max} Zeichen. |
 | `form.errors.briefTooShort` | Describe the project in at least {min} characters. | Beschreiben Sie das Projekt in mindestens {min} Zeichen. |
 | `form.errors.generic` | Some details could not be accepted. Please check the form and send it again. | Einige Angaben konnten nicht angenommen werden. Bitte prüfen Sie das Formular und senden Sie es erneut. |
@@ -838,20 +812,26 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `cookie.title` | Cookie preferences | Cookie-Einstellungen |
 | `cookie.strictlyNecessary` | Strictly necessary | Unbedingt erforderlich |
 | `cookie.alwaysOn` | (always on) | (immer aktiv) |
-| `cookie.preferences` | Preferences | Präferenzen |
+| `cookie.noOptional` | We currently use no preference, analytics or marketing cookies, so there is nothing to choose. | Wir verwenden derzeit keine Präferenz-, Analyse- oder Marketing-Cookies; Sie müssen daher nichts auswählen. |
 | `cookie.analytics` | Analytics | Analyse |
 | `cookie.rejectNonEssential` | Reject non-essential | Nicht erforderliche ablehnen |
 | `cookie.acceptAll` | Accept all | Alle akzeptieren |
 | `cookie.saveChoices` | Save choices | Auswahl speichern |
 | `cookie.chooseSettings` | Choose settings | Einstellungen wählen |
 | `cookie.saved` | Your choices have been saved. | Ihre Auswahl wurde gespeichert. |
-| `cookie.inventory.caption` | Cookies set by this website | Von dieser Website gesetzte Cookies |
+| `cookie.inventory.caption` | Cookies and similar technologies on this website | Cookies und ähnliche Technologien auf dieser Website |
 | `cookie.inventory.name` | Name | Name |
+| `cookie.inventory.provider` | Provider | Anbieter |
 | `cookie.inventory.category` | Category | Kategorie |
 | `cookie.inventory.purpose` | Purpose | Zweck |
 | `cookie.inventory.duration` | Duration | Speicherdauer |
-| `cookie.inventory.consentPurpose` | Stores your cookie choices. | Speichert Ihre Cookie-Auswahl. |
+| `cookie.inventory.privacy` | Privacy | Datenschutz |
+| `cookie.inventory.consentProvider` | MOESA (first party) | MOESA (First Party) |
+| `cookie.inventory.consentPurpose` | Stores your cookie choice. Set only when you save a choice; while this website uses no optional cookies, no choice is asked for. | Speichert Ihre Cookie-Auswahl. Wird nur gesetzt, wenn Sie eine Auswahl speichern; solange diese Website keine optionalen Cookies verwendet, wird keine Auswahl abgefragt. |
 | `cookie.inventory.consentDuration` | 180 days | 180 Tage |
+| `cookie.inventory.turnstileProvider` | Cloudflare, Inc. (third party, challenges.cloudflare.com), contact page only | Cloudflare, Inc. (Drittanbieter, challenges.cloudflare.com), nur auf der Kontaktseite |
+| `cookie.inventory.turnstilePurpose` | Checks that a contact-form submission comes from a person, not a bot. It evaluates technical browser signals and your IP address and may store short-lived technical data in its frame. | Prüft, ob eine Anfrage über das Kontaktformular von einem Menschen und nicht von einem Bot stammt. Dazu werden technische Browsermerkmale und Ihre IP-Adresse ausgewertet; im eigenen Frame können kurzlebige technische Daten gespeichert werden. |
+| `cookie.inventory.turnstileDuration` | Set by Cloudflare (see its privacy policy) | Von Cloudflare festgelegt (siehe dessen Datenschutzerklärung) |
 | `stats.digitalCommerce` | years in digital commerce | Jahre im Digital Commerce |
 | `stats.ecommerceOperations` | years in professional e-commerce operations | Jahre professionelle E-Commerce-Operations |
 | `error.title` | Something went wrong. | Etwas ist schiefgelaufen. |

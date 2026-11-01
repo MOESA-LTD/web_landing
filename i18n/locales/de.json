@@ -55,6 +55,10 @@
     "draft": "Entwurf",
     "open": "Offen"
   },
+  "legal": {
+    "lastUpdated": "Stand: {date}",
+    "seeAlso": "Siehe auch:"
+  },
   "footer": {
     "servicesTitle": "Leistungen",
     "companyTitle": "Unternehmen",
@@ -91,7 +95,7 @@
     "optional": "(optional)",
     "servicePlaceholder": "Leistung auswählen",
     "briefHelp": "Was Ihr Unternehmen braucht, was bereits bestätigt ist und was offen bleibt.",
-    "consent": "Ich bin damit einverstanden, dass MOESA die von mir übermittelten Informationen verarbeitet, um diese Anfrage zu beantworten. Weitere Informationen finden Sie in der {link}.",
+    "consent": "Ich habe die {link} gelesen und weiß, dass MOESA meine Angaben zur Beantwortung dieser Anfrage verwendet.",
     "submit": "Projektbriefing senden",
     "disclaimer": "Ein übermitteltes Formular begründet kein Vertragsverhältnis.",
     "sending": "Wird gesendet…",
@@ -117,7 +121,7 @@
       "country": "Geben Sie Ihr Land ein.",
       "service": "Wählen Sie aus, wie wir Sie unterstützen können.",
       "projectBrief": "Beschreiben Sie das Projekt kurz.",
-      "consent": "Bestätigen Sie Ihre Einwilligung, damit wir Ihre Anfrage beantworten können.",
+      "consent": "Bestätigen Sie, dass Sie die Datenschutzerklärung gelesen haben, damit wir Ihre Anfrage beantworten können.",
       "tooLong": "Verwenden Sie höchstens {max} Zeichen.",
       "briefTooShort": "Beschreiben Sie das Projekt in mindestens {min} Zeichen.",
       "generic": "Einige Angaben konnten nicht angenommen werden. Bitte prüfen Sie das Formular und senden Sie es erneut.",
@@ -130,7 +134,7 @@
     "title": "Cookie-Einstellungen",
     "strictlyNecessary": "Unbedingt erforderlich",
     "alwaysOn": "(immer aktiv)",
-    "preferences": "Präferenzen",
+    "noOptional": "Wir verwenden derzeit keine Präferenz-, Analyse- oder Marketing-Cookies; Sie müssen daher nichts auswählen.",
     "analytics": "Analyse",
     "rejectNonEssential": "Nicht erforderliche ablehnen",
     "acceptAll": "Alle akzeptieren",
@@ -138,13 +142,19 @@
     "chooseSettings": "Einstellungen wählen",
     "saved": "Ihre Auswahl wurde gespeichert.",
     "inventory": {
-      "caption": "Von dieser Website gesetzte Cookies",
+      "caption": "Cookies und ähnliche Technologien auf dieser Website",
       "name": "Name",
+      "provider": "Anbieter",
       "category": "Kategorie",
       "purpose": "Zweck",
       "duration": "Speicherdauer",
-      "consentPurpose": "Speichert Ihre Cookie-Auswahl.",
-      "consentDuration": "180 Tage"
+      "privacy": "Datenschutz",
+      "consentProvider": "MOESA (First Party)",
+      "consentPurpose": "Speichert Ihre Cookie-Auswahl. Wird nur gesetzt, wenn Sie eine Auswahl speichern; solange diese Website keine optionalen Cookies verwendet, wird keine Auswahl abgefragt.",
+      "consentDuration": "180 Tage",
+      "turnstileProvider": "Cloudflare, Inc. (Drittanbieter, challenges.cloudflare.com), nur auf der Kontaktseite",
+      "turnstilePurpose": "Prüft, ob eine Anfrage über das Kontaktformular von einem Menschen und nicht von einem Bot stammt. Dazu werden technische Browsermerkmale und Ihre IP-Adresse ausgewertet; im eigenen Frame können kurzlebige technische Daten gespeichert werden.",
+      "turnstileDuration": "Von Cloudflare festgelegt (siehe dessen Datenschutzerklärung)"
     }
   },
   "stats": {

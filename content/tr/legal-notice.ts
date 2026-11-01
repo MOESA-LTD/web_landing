@@ -1,6 +1,11 @@
 import type { LegalContent } from '../en/legal'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/legal-notice.md, plus the translations listed in ./unreviewed.ts. Legal pages stay drafts until legal review. */
+/**
+ * From MOESA_Website_Package_v1.0/content/tr/legal-notice.md, plus the translations listed in ./unreviewed.ts.
+ * The draft notes were rewritten after the legal review of 2026-11-01, in step with EN, and the register labels are
+ * Turkish: those strings are listed in ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md), as are the removed package
+ * strings. Legal pages stay drafts until legal review.
+ */
 const content: LegalContent = {
   meta: {
     path: '/legal-notice',
@@ -16,12 +21,12 @@ const content: LegalContent = {
     {
       id: 'operator',
       title: 'Şirket',
-      condensed: 'MOESA LTD. | 1 Petyofi Str., Plovdiv 4000, Bulgaria | Company ID 207200475 | VAT BG207200475',
       paragraphs: [
         'MOESA LTD.',
         '1 Petyofi Str., Plovdiv 4000, Bulgaria',
-        'Company ID 207200475',
-        'VAT BG207200475',
+        'Şirket sicil no (EIK): 207200475',
+        'KDV no: BG207200475',
+        'OPEN / AÇIK - Hukuki şekil (EOOD veya OOD) ve Bulgaristan Tescil Ajansı Ticaret Sicili’ndeki kayıt teyit edilecek.',
       ],
     },
     {
@@ -31,41 +36,28 @@ const content: LegalContent = {
       paragraphs: [
         'E-posta: info@moesaltd.com',
         'Telefon: +359 88 501 661',
+        'OPEN / AÇIK - Telefon numarası teyit edilecek.',
       ],
     },
     {
       id: 'representative',
       title: 'Yasal temsilci',
       paragraphs: [
-        'OPEN / AÇIK - Yayından önce yasal temsilciyi veya genel müdürü teyit edin.',
-      ],
-    },
-    {
-      id: 'contentResponsibility',
-      title: 'İçerik sorumluluğu',
-      paragraphs: [
-        'OPEN / AÇIK - Yayın yapılan ülkeler ve uygulanacak hukuk için gerekli ifadeyi teyit edin.',
+        'OPEN / AÇIK - Genel müdür (upravitel) teyit edilecek.',
       ],
     },
     {
       id: 'externalLinks',
       title: 'Harici bağlantılar',
       paragraphs: [
-        'MOESA, üçüncü tarafların kontrolündeki harici web sitelerinin içeriğinden sorumlu değildir. Nihai ifade hukuki inceleme gerektirir.',
+        'MOESA, üçüncü tarafların kontrolündeki harici web sitelerinin içeriğinden sorumlu değildir.',
       ],
     },
     {
       id: 'intellectualProperty',
       title: 'Fikri mülkiyet',
       paragraphs: [
-        'Web sitesinin içeriği, tasarımı ve marka varlıkları, uygulanacak hukukun izin verdiği durumlar dışında izinsiz çoğaltılamaz. Nihai ifade hukuki inceleme gerektirir.',
-      ],
-    },
-    {
-      id: 'openFields',
-      title: 'Açık alanlar',
-      paragraphs: [
-        'Yasal temsilci ve ülke bazlı zorunlu metinler yayından önce doğrulanmalı.',
+        'Web sitesinin içeriği, tasarımı ve marka varlıkları, uygulanacak hukukun izin verdiği durumlar dışında izinsiz çoğaltılamaz.',
       ],
     },
   ],

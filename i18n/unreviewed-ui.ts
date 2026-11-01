@@ -65,21 +65,31 @@ export const UNREVIEWED_UI_KEYS: string[] = [
   'form.errors.sendFailed',
   'cookie.title',
   'cookie.alwaysOn',
-  'cookie.preferences',
+  'cookie.noOptional',
   'cookie.analytics',
   'cookie.rejectNonEssential',
   'cookie.acceptAll',
   'cookie.saveChoices',
   'cookie.chooseSettings',
   'cookie.saved',
-  // The moesa_consent row of the Cookie Policy inventory (the rest of the inventory stays OPEN in the md).
+  // The Cookie Policy inventory table (moesa_consent and Cloudflare Turnstile). The legal wording is also listed in
+  // i18n/UNREVIEWED_LEGAL.md for the lawyer.
   'cookie.inventory.caption',
   'cookie.inventory.name',
+  'cookie.inventory.provider',
   'cookie.inventory.category',
   'cookie.inventory.purpose',
   'cookie.inventory.duration',
+  'cookie.inventory.privacy',
+  'cookie.inventory.consentProvider',
   'cookie.inventory.consentPurpose',
   'cookie.inventory.consentDuration',
+  'cookie.inventory.turnstileProvider',
+  'cookie.inventory.turnstilePurpose',
+  'cookie.inventory.turnstileDuration',
+  // Legal pages: the last-updated line and the cross-link label.
+  'legal.lastUpdated',
+  'legal.seeAlso',
   // Generic error page (500 and other non-404 errors); 404 copy comes from 404.md.
   'error.title',
   'error.body',

@@ -1,69 +1,61 @@
 import type { LegalContent } from '../en/legal'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/cookie-policy.md, plus the translations listed in ./unreviewed.ts. Legal pages stay drafts until legal review. */
+/**
+ * From MOESA_Website_Package_v1.0/content/tr/cookie-policy.md, plus the translations listed in ./unreviewed.ts.
+ * The draft sections were rewritten after the legal review of 2026-11-01, in step with EN: those strings are listed in
+ * ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md), as are the removed package strings. Legal pages stay drafts until
+ * legal review.
+ */
 const content: LegalContent = {
   meta: {
     path: '/cookie-policy',
     title: 'Çerez Politikası | MOESA Ltd.',
-    description: 'Sitede gerçekten kullanılacak teknolojiler kesinleşince tamamlanacak uygulama taslağı.',
+    description: 'MOESA web sitesinde kullanılan çerezler ve benzer teknolojiler hakkında bilgiler.',
   },
   status: 'DRAFT / TASLAK - LEGAL REVIEW REQUIRED',
   hero: {
     title: 'Çerez Politikası',
-    body: 'Sitede gerçekten kullanılacak teknolojiler kesinleşince tamamlanacak uygulama taslağı.',
+    body: 'Bu web sitesi tek bir birinci taraf çerezi kullanır; analitik, reklam veya sosyal medya çerezi kullanmaz. Bu sayfa, cihazınızda neyin saklandığını ve bunu nasıl kontrol edebileceğinizi açıklar.',
   },
   sections: [
     {
       id: 'categories',
       title: 'Kategoriler',
-      condensed: 'Zorunlu; tercih; analytics; marketing yalnızca uygulanırsa.',
       items: [
         'Zorunlu',
-        'Tercihler',
-        'Analitik',
-        'Pazarlama - yalnızca uygulanırsa',
+      ],
+      paragraphs: [
+        'Şu anda tercih, analitik veya pazarlama çerezi kullanmıyoruz.',
       ],
     },
     {
       id: 'consentModel',
       title: 'Onay modeli',
       paragraphs: [
-        'Onayın yasal olarak gerekli olduğu durumlarda zorunlu olmayan çerezler geçerli onaydan önce etkinleştirilmemelidir. Kullanıcılar tercihlerini reddedebilmeli ve daha sonra değiştirebilmelidir.',
+        'Zorunlu çerezler ve benzer teknolojiler onayınızı gerektirmez. Zorunlu olmayan hiçbir çerez kullanmıyoruz. Böyle bir çerez eklersek önce onayınızı isteriz; onayı reddedebilir ve tercihinizi daha sonra değiştirebilirsiniz.',
       ],
     },
     {
       id: 'inventory',
       title: 'Çerez envanteri',
       paragraphs: [
-        'OPEN / AÇIK - Hosting, analitik, gömülü medya, formlar ve üçüncü taraf hizmetler seçildikten sonra nihai çerez tablosunu oluşturun.',
+        'Aşağıdaki tablo, bu web sitesinde kullanılan tüm çerezleri ve benzer teknolojileri listeler.',
       ],
     },
     {
       id: 'thirdParties',
       title: 'Üçüncü taraf hizmetler',
       paragraphs: [
-        'OPEN / AÇIK - Her üçüncü taraf sağlayıcıyı, amacını, çerez süresini ve gizlilik bağlantısını listeleyin.',
+        'Cloudflare Turnstile (Cloudflare, Inc., ABD) yalnızca iletişim sayfasında, formu spama karşı korumak için çalışır. Gizlilik politikası: https://www.cloudflare.com/privacypolicy/',
+        'Sosyal medya, video, harita veya reklam hizmetleri yerleştirmiyoruz.',
       ],
     },
     {
       id: 'managing',
       title: 'Çerezlerin yönetimi',
       paragraphs: [
-        'Tarayıcı kontrollerini ve web sitesinin onay tercihi mekanizmasını açıklayın.',
-      ],
-    },
-    {
-      id: 'effectiveDate',
-      title: 'Yürürlük tarihi',
-      paragraphs: [
-        'OPEN / AÇIK - Yayın tarihini ekleyin.',
-      ],
-    },
-    {
-      id: 'openFields',
-      title: 'Açık alanlar',
-      paragraphs: [
-        'Cookie inventory; provider; amaç; süre; consent mekanizması; yürürlük tarihi; legal/technical review.',
+        'Çerezleri tarayıcı ayarlarınızdan istediğiniz zaman silebilir veya engelleyebilirsiniz. Turnstile kontrolünü engellerseniz iletişim formu gönderilemez; bunun yerine bize e-posta gönderebilirsiniz.',
+        'İsteğe bağlı çerezler eklersek onayınızı bu sayfadaki çerez ayarlarından istediğiniz zaman verebilir, değiştirebilir veya geri çekebilirsiniz.',
       ],
     },
   ],

@@ -168,7 +168,7 @@ describe('ContactForm', () => {
       'Enter your country.',
       'Choose how we can support you.',
       'Describe the project briefly.',
-      'Confirm consent so we can respond to your enquiry.',
+      'Confirm that you have read the privacy policy so we can respond to your enquiry.',
     ])
     for (const a of links) {
       const target = w.find(a.attributes('href')!)

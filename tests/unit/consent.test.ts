@@ -31,22 +31,22 @@ describe('useConsent', () => {
   it('stores a choice in the moesa_consent cookie for 180 days and shares the state', async () => {
     expect(CONSENT_COOKIE).toBe('moesa_consent')
     expect(CONSENT_MAX_AGE).toBe(180 * 24 * 60 * 60)
-    useConsent().save({ preferences: true, analytics: false })
+    useConsent().save({ analytics: true })
     await flushPromises()
-    expect(useConsent().state.value).toEqual({ necessary: true, preferences: true, analytics: false })
-    expect(decodeURIComponent(cookieValue() ?? '')).toContain('"preferences":true')
+    expect(useConsent().state.value).toEqual({ necessary: true, analytics: true })
+    expect(decodeURIComponent(cookieValue() ?? '')).toContain('"analytics":true')
   })
 
-  it('"Reject non-essential" keeps preferences and analytics off', () => {
+  it('"Reject non-essential" keeps analytics off', () => {
     const { save, state } = useConsent()
     save('reject')
-    expect(state.value).toEqual({ necessary: true, preferences: false, analytics: false })
+    expect(state.value).toEqual({ necessary: true, analytics: false })
   })
 
-  it('"Accept all" turns every category on; necessary is always true', () => {
+  it('"Accept all" turns analytics on; necessary is always true', () => {
     const { save, state } = useConsent()
     save('accept')
-    expect(state.value).toEqual({ necessary: true, preferences: true, analytics: true })
+    expect(state.value).toEqual({ necessary: true, analytics: true })
   })
 
   it('reset() forgets the choice', () => {
@@ -61,11 +61,12 @@ describe('useConsent', () => {
     expect(consentCookieOptions('http:').secure).toBe(false)
   })
 
-  it('parseConsent rejects a tampered or malformed cookie value', () => {
+  it('parseConsent rejects a tampered or malformed cookie value, and ignores the retired "preferences" field', () => {
     expect(parseConsent(undefined)).toBeNull()
     expect(parseConsent('nonsense')).toBeNull()
-    expect(parseConsent({ necessary: true, preferences: 'yes', analytics: false })).toBeNull()
-    expect(parseConsent({ preferences: true, analytics: true })).toEqual({ necessary: true, preferences: true, analytics: true })
+    expect(parseConsent({ necessary: true, analytics: 'yes' })).toBeNull()
+    expect(parseConsent({ analytics: true })).toEqual({ necessary: true, analytics: true })
+    expect(parseConsent({ preferences: true, analytics: false })).toEqual({ necessary: true, analytics: false })
   })
 })
 
@@ -88,7 +89,7 @@ describe('CookieConsent', () => {
     expect(buttons).toEqual(expect.arrayContaining(['Reject non-essential', 'Accept all', 'Choose settings']))
     await panel.findAll('button').find((b) => b.text() === 'Reject non-essential')!.trigger('click')
     await flushPromises()
-    expect(useConsent().state.value).toEqual({ necessary: true, preferences: false, analytics: false })
+    expect(useConsent().state.value).toEqual({ necessary: true, analytics: false })
     expect(w.find('[data-cookie-consent]').exists()).toBe(false)
   })
 
@@ -100,25 +101,42 @@ describe('CookieConsent', () => {
     expect(w.find('[data-cookie-consent]').exists()).toBe(false)
   })
 
-  it('panel: always renders expanded, with Strictly necessary locked on, and saves the ticked choices', async () => {
+  it('panel (v1, no optional cookies): only Strictly necessary, locked on, a "nothing to choose" note and no buttons', async () => {
     config().analyticsId = ''
-    useConsent().save('accept')
     const w = await mountSuspended(CookieConsent, { props: { mode: 'panel' }, route: '/cookie-policy' })
     await flushPromises()
     const panel = w.find('[data-cookie-consent]')
     expect(panel.exists()).toBe(true)
     const boxes = panel.findAll('input[type="checkbox"]')
-    expect(boxes).toHaveLength(3)
+    expect(boxes).toHaveLength(1)
     expect((boxes[0]!.element as HTMLInputElement).checked).toBe(true)
     expect(boxes[0]!.attributes('disabled')).toBeDefined()
+    expect(panel.text()).toContain('Strictly necessary')
+    expect(panel.text()).not.toContain('Preferences')
+    expect(panel.text()).not.toContain('Analytics')
+    expect(panel.find('[data-cookie-none]').text()).toBe('We currently use no preference, analytics or marketing cookies, so there is nothing to choose.')
+    expect(panel.findAll('button')).toHaveLength(0)
+    // Nothing to choose, so nothing is stored.
+    expect(cookieValue()).toBeUndefined()
+  })
+
+  it('panel with an analytics id: Analytics can be ticked and saved, and the panel stays for later changes', async () => {
+    config().analyticsId = 'G-TEST'
+    useConsent().save('accept')
+    const w = await mountSuspended(CookieConsent, { props: { mode: 'panel' }, route: '/cookie-policy' })
+    await flushPromises()
+    const panel = w.find('[data-cookie-consent]')
+    const boxes = panel.findAll('input[type="checkbox"]')
+    expect(boxes).toHaveLength(2)
+    expect(boxes[0]!.attributes('disabled')).toBeDefined()
     // The panel shows the stored choice.
-    expect((boxes[2]!.element as HTMLInputElement).checked).toBe(true)
-    await boxes[2]!.setValue(false)
+    expect((boxes[1]!.element as HTMLInputElement).checked).toBe(true)
+    expect(panel.find('[data-cookie-none]').exists()).toBe(false)
+    await boxes[1]!.setValue(false)
     await panel.findAll('button').find((b) => b.text() === 'Save choices')!.trigger('click')
     await flushPromises()
-    expect(useConsent().state.value).toEqual({ necessary: true, preferences: true, analytics: false })
+    expect(useConsent().state.value).toEqual({ necessary: true, analytics: false })
     expect(panel.find('[role="status"]').text()).not.toBe('')
-    // Still shown after a choice: choices can be changed later on the Cookie Policy.
     expect(w.find('[data-cookie-consent]').exists()).toBe(true)
   })
 
@@ -126,6 +144,7 @@ describe('CookieConsent', () => {
     const w = await mountSuspended(CookieConsent, { props: { mode: 'panel' }, route: '/tr/cerez-politikasi' })
     await flushPromises()
     expect(w.text()).toContain('Zorunlu')
+    expect(w.text()).toContain('Şu anda tercih, analitik veya pazarlama çerezi kullanmıyoruz')
     expect(w.text()).not.toContain('Reject non-essential')
   })
 })

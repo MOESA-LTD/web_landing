@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { useContent } from '../../app/composables/useContent'
 import { siteDe } from '../../content/de/site'
 import { UNREVIEWED_DE } from '../../content/de/unreviewed'
+import { LEGAL_REVISIONS } from '../../content/legal-revisions'
 import { PAGE_KEYS, brand, serviceOptionKeys } from '../../content/site'
 import { renderUnreviewedDeMd } from '../../scripts/unreviewed-de'
 import { allLeaves, flattenMessages, getAt, norm, shapeDiff, type Leaf } from './helpers/content-tree'
@@ -35,6 +36,8 @@ const SAME_AS_EN = new Set([
 
 const key = (page: string, path: string) => `${page}|${path}`
 const byKey = new Map(UNREVIEWED_DE.map((e) => [key(e.page, e.path), e]))
+/** Legal strings written after the legal review (content/legal-revisions.ts, i18n/UNREVIEWED_LEGAL.md), not UNREVIEWED_DE. */
+const revised = new Set(LEGAL_REVISIONS.map((r) => key(r.page, r.path)))
 
 /** The EN and DE trees of every flagged unit: the 16 pages plus the site-wide strings (`site`). */
 const UNITS: { page: string; en: unknown; de: unknown }[] = [
@@ -52,8 +55,8 @@ describe('DE page modules', () => {
       for (const l of allLeaves(de).filter(isStructural)) expect(l.value, l.path).toBe(getAt(en, l.path))
     })
 
-    it(`${page}: every copy string is listed in UNREVIEWED_DE with its EN source, and nothing else is listed`, () => {
-      const copy = allLeaves(de).filter((l) => !isStructural(l))
+    it(`${page}: every copy string is listed in UNREVIEWED_DE (or LEGAL_REVISIONS) with its EN source, and nothing else is listed`, () => {
+      const copy = allLeaves(de).filter((l) => !isStructural(l) && !revised.has(key(page, l.path)))
       expect(copy.length).toBeGreaterThan(0)
       const unlisted = copy.filter((l) => !byKey.has(key(page, l.path))).map((l) => `${l.path}: ${l.value}`)
       expect(unlisted, 'DE strings missing from UNREVIEWED_DE').toEqual([])
@@ -92,7 +95,8 @@ describe('DE page modules', () => {
       expect(de.status).toBe(en.status)
       const open = (c: unknown) => allLeaves(c).filter((l) => l.value.startsWith('OPEN / AÇIK - ')).map((l) => l.path)
       expect(open(de), page).toEqual(open(en))
-      expect(open(de).length).toBeGreaterThan(0)
+      // The cookie policy has none left (its inventory is complete); the privacy policy and legal notice still miss owner facts.
+      if (page !== 'cookie-policy') expect(open(de).length).toBeGreaterThan(0)
     }
   })
 
