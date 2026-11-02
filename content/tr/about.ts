@@ -18,7 +18,7 @@ const content: AboutContent = {
   manages: {
     title: 'Neleri yönetiyoruz',
     items: [
-      'Uluslararası marka ve ürün tedariki',
+      'Uluslararası marka ve ürün sourcing’i',
       'Yönetilen satın alma',
       'Ürün ve private-label geliştirme',
       'Pazara giriş ve ticari temsil',
@@ -30,7 +30,7 @@ const content: AboutContent = {
     title: 'Neden MOESA',
     condensed: 'Koordineli görünüm; esnek modeller; net karar hakları; kontrollü ürün bilgisi; ticari hazırlık ve operasyonun bağlantısı; sürekli gelişim.',
     items: [
-      'Ürün, tedarikçi, pazar ve operasyon genelinde tek koordineli görünüm',
+      'Ürün, supplier, pazar ve operasyon genelinde tek koordineli görünüm',
       'Tek ve sabit bir hizmet paketi yerine esnek çalışma modelleri',
       'Müşterinin karar hakları net kalır',
       'Açık sorular varsayımlarla gizlenmez, kontrol altında tutulur',
@@ -55,15 +55,15 @@ const content: AboutContent = {
   },
   europeanBase: {
     title: 'Avrupa tabanı, uluslararası kapsam',
-    body: 'MOESA Ltd. Plovdiv, Bulgaristan’da kayıtlıdır ve uluslararası tedarik, pazara giriş ve ticari operasyonlar için AB tabanı sağlar. AB dışındaki çalışmalar proje, pazar ve sorumlu taraflara göre yapılandırılır.',
+    body: 'MOESA Ltd. Plovdiv, Bulgaristan’da kayıtlıdır ve uluslararası sourcing, pazara giriş ve ticari operasyonlar için AB tabanı sağlar. AB dışındaki çalışmalar proje, pazar ve sorumlu taraflara göre yapılandırılır.',
   },
   isNot: {
     title: 'Ne değiliz',
     condensed: 'Yalnızca e-commerce ajansı, yalnızca sourcing agent, yalnızca trading company veya tüm hukuki rolleri üstlenen bir yapı değiliz.',
     items: [
       'Yalnızca e-ticaret şirketleriyle sınırlı değil',
-      'Yalnızca bir tedarik aracısı değil',
-      'Yalnızca bir ticaret şirketi değil',
+      'Yalnızca bir sourcing agent değil',
+      'Yalnızca bir trading company değil',
       'Mevzuatın öngördüğü ekonomik operatörlerin yerine geçen hukuki bir yapı değil',
       'Ayrı bir teknoloji hizmeti teyit edilmedikçe bir yazılım platformu değil',
     ],

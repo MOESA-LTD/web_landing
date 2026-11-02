@@ -41,9 +41,9 @@ export const BG_FIDELITY_EXCLUSIONS: Partial<Record<PageKey, (FidelityExclusion 
   home: [
     {
       path: /^operatingModel\.items\[4\]$/,
-      text: 'Дигитална търговия и бизнес анализи като междуфункционална компетентност',
+      text: 'Дигитална търговия и Commercial Intelligence като междуфункционална компетентност',
       reason: 'As EN: rendered as the DS capability ServiceCard, eyebrow (cards.capability) above the service title.',
-      renderedAs: [bgJson.cards.capability, 'Дигитална търговия и бизнес анализи'],
+      renderedAs: [bgJson.cards.capability, 'Дигитална търговия и Commercial Intelligence'],
     },
   ],
   contact: [

@@ -361,11 +361,11 @@ describe('locale switches (enableTr / enableDe / enableBg)', () => {
 const EXPECTED_BG: [string, string][] = [
   ['/', '/bg'],
   ['/services', '/bg/uslugi'],
-  ['/services/sourcing-managed-procurement', '/bg/uslugi/sorsing-i-upravlenie-na-snabdyavaneto'],
+  ['/services/sourcing-managed-procurement', '/bg/uslugi/sourcing-i-upravlenie-na-snabdyavaneto'],
   ['/services/product-private-label-development', '/bg/uslugi/razrabotka-na-produkti-i-sobstveni-marki'],
   ['/services/market-access-commercial-representation', '/bg/uslugi/dostap-do-pazari-i-targovsko-predstavitelstvo'],
   ['/services/operations-supply-chain', '/bg/uslugi/operatsii-i-veriga-na-dostavki'],
-  ['/services/digital-commerce-commercial-intelligence', '/bg/uslugi/digitalna-targoviya-i-biznes-analizi'],
+  ['/services/digital-commerce-commercial-intelligence', '/bg/uslugi/digitalna-targoviya-i-commercial-intelligence'],
   ['/how-we-work', '/bg/kak-rabotim'],
   ['/who-we-work-with', '/bg/s-kogo-rabotim'],
   ['/about', '/bg/za-nas'],
@@ -436,11 +436,11 @@ describe('buildI18nPages (BG)', () => {
 
 describe('serviceSlugFromLocaleSlug (BG)', () => {
   const PAIRS: [string, string][] = [
-    ['sourcing-managed-procurement', 'sorsing-i-upravlenie-na-snabdyavaneto'],
+    ['sourcing-managed-procurement', 'sourcing-i-upravlenie-na-snabdyavaneto'],
     ['product-private-label-development', 'razrabotka-na-produkti-i-sobstveni-marki'],
     ['market-access-commercial-representation', 'dostap-do-pazari-i-targovsko-predstavitelstvo'],
     ['operations-supply-chain', 'operatsii-i-veriga-na-dostavki'],
-    ['digital-commerce-commercial-intelligence', 'digitalna-targoviya-i-biznes-analizi'],
+    ['digital-commerce-commercial-intelligence', 'digitalna-targoviya-i-commercial-intelligence'],
   ]
 
   it('maps each BG slug to its EN service slug and back', () => {

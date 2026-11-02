@@ -27,7 +27,7 @@ const content: ServicePageContent = {
     title: 'Typische Mandate',
     items: [
       'In den europäischen Markt eintreten',
-      'Einen Distributor oder Handelspartner finden',
+      'Einen Distributor oder Einzelhandelspartner finden',
       'Eine Vertriebsrepräsentanz aufbauen',
       'Eine internationale Marke für einen Markt beschaffen',
       'Einen neuen Vertriebskanal im Einzelhandel, Großhandel oder digital aufbauen',

@@ -99,7 +99,7 @@ need a German legal review before launch.
 | `services[3].items[2]` | Multi-supplier operations | Operations mit mehreren Lieferanten |
 | `services[3].items[3]` | Inventory and replenishment coordination | Koordination von Bestand und Nachschub |
 | `services[4].title` | Digital Commerce & Commercial Intelligence | Digital Commerce & Commercial Intelligence |
-| `services[4].summary` | Product positioning, creative coordination, SEO, listings, catalog, marketplace and D2C operations, inventory planning, reporting and customer intelligence. | Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundeneinblicke. |
+| `services[4].summary` | Product positioning, creative coordination, SEO, listings, catalog, marketplace and D2C operations, inventory planning, reporting and customer intelligence. | Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Customer Insights. |
 | `services[4].items[0]` | Digital launch preparation | Vorbereitung digitaler Markteinführungen |
 | `services[4].items[1]` | Catalog and content operations | Katalog- und Content-Operations |
 | `services[4].items[2]` | Managed marketplace or D2C operations | Betreute Marktplatz- oder D2C-Operations |
@@ -219,7 +219,7 @@ need a German legal review before launch.
 | `twoSides.items[1]` | For retailers, distributors and buyers seeking international brands, manufacturers or suppliers | Für Händler, Distributoren und Einkäufer, die internationale Marken, Hersteller oder Lieferanten suchen |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Enter the European market | In den europäischen Markt eintreten |
-| `typicalMandates.items[1]` | Find a distributor or retail partner | Einen Distributor oder Handelspartner finden |
+| `typicalMandates.items[1]` | Find a distributor or retail partner | Einen Distributor oder Einzelhandelspartner finden |
 | `typicalMandates.items[2]` | Establish commercial representation | Eine Vertriebsrepräsentanz aufbauen |
 | `typicalMandates.items[3]` | Source an international brand for a market | Eine internationale Marke für einen Markt beschaffen |
 | `typicalMandates.items[4]` | Build a new retail, wholesale or digital sales channel | Einen neuen Vertriebskanal im Einzelhandel, Großhandel oder digital aufbauen |
@@ -253,7 +253,7 @@ need a German legal review before launch.
 | `meta.description` | MOESA coordinates purchasing, production follow-up, documentation, international logistics, import operations, warehousing, inventory and delivery. | MOESA koordiniert Einkauf, Produktionsverfolgung, Dokumentation, internationale Logistik, Importabwicklung, Lagerhaltung, Bestandsführung und Lieferung. |
 | `hero.title` | From purchase order to destination. | Von der Bestellung bis zum Bestimmungsort. |
 | `hero.body` | MOESA coordinates the operational process across purchasing, production, product documentation, international logistics, import, warehousing, inventory and delivery. | MOESA koordiniert den operativen Prozess über Einkauf, Produktion, Produktdokumentation, internationale Logistik, Import, Lagerhaltung, Bestandsführung und Lieferung hinweg. |
-| `intro.title` | A commercial agreement still requires operational execution. | Auch eine getroffene Handelsvereinbarung muss operativ umgesetzt werden. |
+| `intro.title` | A commercial agreement still requires operational execution. | Auch ein Geschäftsabschluss muss operativ umgesetzt werden. |
 | `intro.body` | After the product, supplier and purchasing conditions have been agreed, the project must move through production, documentation, shipment, import, storage and delivery. MOESA connects these stages in one operating view. | Nachdem Produkt, Lieferant und Einkaufsbedingungen vereinbart sind, muss das Projekt Produktion, Dokumentation, Versand, Import, Lagerung und Lieferung durchlaufen. MOESA verbindet diese Phasen in einer gemeinsamen operativen Sicht. |
 | `typicalMandates.title` | Typical mandates | Typische Mandate |
 | `typicalMandates.items[0]` | Manage production after purchase | Die Produktion nach dem Kauf steuern |
@@ -305,9 +305,9 @@ need a German legal review before launch.
 | Path | EN | DE |
 | --- | --- | --- |
 | `meta.title` | Digital Commerce Operations & Commercial Intelligence \| MOESA Ltd. | Digital Commerce & Commercial Intelligence \| MOESA Ltd. |
-| `meta.description` | MOESA supports marketplace and D2C operations across product positioning, content, SEO, listings, catalog, inventory, performance and customer intelligence. | MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundeneinblicken. |
+| `meta.description` | MOESA supports marketplace and D2C operations across product positioning, content, SEO, listings, catalog, inventory, performance and customer intelligence. | MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Customer Insights. |
 | `hero.title` | Operate the product. Understand the market. Improve the business. | Das Produkt betreiben. Den Markt verstehen. Das Geschäft verbessern. |
-| `hero.body` | MOESA supports ongoing commercial operations across marketplaces, direct-to-consumer websites and other digital sales channels, connecting product presentation, catalog, inventory, performance and customer intelligence. | MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundeneinblicke. |
+| `hero.body` | MOESA supports ongoing commercial operations across marketplaces, direct-to-consumer websites and other digital sales channels, connecting product presentation, catalog, inventory, performance and customer intelligence. | MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Customer Insights. |
 | `intro.title` | The work does not end when the product goes live. | Die Arbeit endet nicht, wenn das Produkt online geht. |
 | `intro.body` | Product information must remain accurate. Listings and catalogs must be maintained. Inventory must reflect sales demand. Pricing, promotions, customer feedback and channel performance must be reviewed. | Produktinformationen müssen korrekt bleiben. Listings und Kataloge müssen gepflegt werden. Der Bestand muss die Absatznachfrage widerspiegeln. Preise, Aktionen, Kundenfeedback und Kanal-Performance müssen überprüft werden. |
 | `broader.title` | More than an e-commerce agency. | Mehr als eine E-Commerce-Agentur. |
@@ -344,7 +344,7 @@ need a German legal review before launch.
 | `framework.items[4]` | Content and catalog gaps | Lücken in Content und Katalog |
 | `framework.items[5]` | Product and portfolio opportunities | Chancen für Produkte und Portfolio |
 | `productTruth.title` | One product truth | Eine einheitliche Produktdatenbasis |
-| `productTruth.body` | Every channel should reflect the same approved product. Unresolved information remains open and is not replaced with assumptions to complete a listing or creative asset. | Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein kreatives Asset fertigzustellen. |
+| `productTruth.body` | Every channel should reflect the same approved product. Unresolved information remains open and is not replaced with assumptions to complete a listing or creative asset. | Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein Werbemittel fertigzustellen. |
 | `managedModel.title` | Managed commerce model | Managed-Commerce-Modell |
 | `managedModel.body` | The client retains account ownership, brand strategy, budgets, pricing and final risk decisions. MOESA manages the agreed recurring commercial operation and cross-functional follow-up. | Der Kunde bleibt Inhaber der Konten und behält Markenstrategie, Budgets, Preise und endgültige Risikoentscheidungen. MOESA steuert den vereinbarten laufenden Geschäftsbetrieb und die bereichsübergreifende Nachverfolgung. |
 | `technology.title` | Current technology position | Aktueller Technologiestand |
@@ -468,11 +468,11 @@ need a German legal review before launch.
 | `audiences[4].items[1]` | Listing and catalog operations | Listing- und Katalog-Operations |
 | `audiences[4].items[2]` | Marketplace and D2C management | Marktplatz- und D2C-Management |
 | `audiences[4].items[3]` | Inventory and replenishment | Bestand und Nachschub |
-| `audiences[4].items[4]` | Performance and customer intelligence | Performance und Kundeneinblicke |
+| `audiences[4].items[4]` | Performance and customer intelligence | Performance und Customer Insights |
 | `seekingBrands.title` | Buyers seeking international brands | Einkäufer auf der Suche nach internationalen Marken |
 | `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Ein Kunde kennt die Marke oder das Produkt, das er kaufen möchte, möglicherweise bereits. MOESA ermittelt den zuständigen Geschäftspartner, stellt den Kontakt her und koordiniert Sourcing, Verhandlung und Einkauf. |
 | `noInternalProcurement.title` | Businesses without a full internal procurement team | Unternehmen ohne vollständiges internes Beschaffungsteam |
-| `noInternalProcurement.body` | MOESA can operate as an external procurement and product-operations function within a defined mandate while the client retains strategy, budget and approvals. | MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Produkt-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält. |
+| `noInternalProcurement.body` | MOESA can operate as an external procurement and product-operations function within a defined mandate while the client retains strategy, budget and approvals. | MOESA kann innerhalb eines definierten Mandats als externe Funktion für Beschaffung und Product Operations arbeiten, während der Kunde Strategie, Budget und Freigaben behält. |
 | `selectionGuide.title` | Engagement selection guide | Wegweiser: Welche Leistung passt? |
 | `selectionGuide.rows[0].need` | Need a specific brand or supplier | Sie benötigen eine bestimmte Marke oder einen bestimmten Lieferanten |
 | `selectionGuide.rows[0].target` | Sourcing & Managed Procurement | Sourcing & Beschaffungsmanagement |

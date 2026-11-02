@@ -13,7 +13,7 @@ const content: ServicePageContent = {
     body: 'MOESA koordiniert den operativen Prozess über Einkauf, Produktion, Produktdokumentation, internationale Logistik, Import, Lagerhaltung, Bestandsführung und Lieferung hinweg.',
   },
   intro: {
-    title: 'Auch eine getroffene Handelsvereinbarung muss operativ umgesetzt werden.',
+    title: 'Auch ein Geschäftsabschluss muss operativ umgesetzt werden.',
     body: 'Nachdem Produkt, Lieferant und Einkaufsbedingungen vereinbart sind, muss das Projekt Produktion, Dokumentation, Versand, Import, Lagerung und Lieferung durchlaufen. MOESA verbindet diese Phasen in einer gemeinsamen operativen Sicht.',
   },
   typicalMandates: {

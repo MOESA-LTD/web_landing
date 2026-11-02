@@ -71,7 +71,7 @@ const content: WhoWeWorkWithContent = {
         'Listing- und Katalog-Operations',
         'Marktplatz- und D2C-Management',
         'Bestand und Nachschub',
-        'Performance und Kundeneinblicke',
+        'Performance und Customer Insights',
       ],
     },
   ],
@@ -81,7 +81,7 @@ const content: WhoWeWorkWithContent = {
   },
   noInternalProcurement: {
     title: 'Unternehmen ohne vollständiges internes Beschaffungsteam',
-    body: 'MOESA kann innerhalb eines definierten Mandats als externe Beschaffungs- und Produkt-Operations-Funktion arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
+    body: 'MOESA kann innerhalb eines definierten Mandats als externe Funktion für Beschaffung und Product Operations arbeiten, während der Kunde Strategie, Budget und Freigaben behält.',
   },
   selectionGuide: {
     title: 'Wegweiser: Welche Leistung passt?',

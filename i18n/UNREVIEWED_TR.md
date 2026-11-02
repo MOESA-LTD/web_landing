@@ -5,10 +5,10 @@
 Every Turkish string below has **no source** in `MOESA_Website_Package_v1.0/content/tr`. We translated it from the
 approved English (formal Turkish, "siz" form). Please review it before launch.
 
-**Terminology decision needed.** The approved TR files use loanwords (sourcing, supplier, PO, replenishment); these
-translations deliberately use Turkish terms (tedarik, tedarikçi, satın alma siparişi, stok yenileme), so both can appear
-in one section (approved `condensed` sentence above a translated list). Please choose one vocabulary (translation review
-2026-11-01, TR-S1); the strings are not aligned until you decide.
+**Terminology.** Owner decision 2026-11-03 (TR-S1): these translations follow the approved TR loanwords (sourcing,
+supplier, PO, replenishment, trading). Where the approved `condensed` sentence of a section uses a Turkish word
+(e.g. "tedarikçi değerlendirmesi", "Belirli marka tedariki"), the list item below it uses the same word. The glossary is
+`docs/superpowers/reviews/2026-11-03-terminology-glossary.md`.
 
 Approved TR text from the package is not changed and is not listed here, with two exceptions: the TR register labels
 (`footer.companyLine`, `company.*`, listed below) and the draft legal text replaced after the legal review (listed in
@@ -27,22 +27,22 @@ need legal review like the EN ones.
 
 | Path | EN | TR |
 | --- | --- | --- |
-| `services[0].items[0]` | Specific brand or product sourcing | Belirli bir marka veya ürünün tedariki |
-| `services[0].items[1]` | Alternative supplier development | Alternatif tedarikçi geliştirme |
+| `services[0].items[0]` | Specific brand or product sourcing | Belirli bir marka veya ürün için sourcing |
+| `services[0].items[1]` | Alternative supplier development | Alternatif supplier geliştirme |
 | `services[0].items[2]` | Outsourced procurement capacity | Dış kaynaklı satın alma kapasitesi |
-| `services[0].items[3]` | Supplier and purchase-order management | Tedarikçi ve satın alma siparişi yönetimi |
+| `services[0].items[3]` | Supplier and purchase-order management | Supplier ve PO yönetimi |
 | `services[1].items[0]` | Individual products | Bireysel ürünler |
 | `services[1].items[1]` | Private-label portfolios | Private-label portföyler |
 | `services[1].items[2]` | Existing-product adaptation | Mevcut ürünlerin uyarlanması |
-| `services[1].items[3]` | Product improvement and supplier transition | Ürün iyileştirme ve tedarikçi geçişi |
+| `services[1].items[3]` | Product improvement and supplier transition | Ürün iyileştirme ve supplier geçişi |
 | `services[2].items[0]` | European market entry | Avrupa pazarına giriş |
 | `services[2].items[1]` | Commercial representation | Ticari temsil |
 | `services[2].items[2]` | Distributor and retailer development | Distribütör ve perakendeci ağı geliştirme |
 | `services[2].items[3]` | International buyer representation | Uluslararası alıcı temsili |
 | `services[3].items[0]` | Single-order coordination | Tek sipariş koordinasyonu |
 | `services[3].items[1]` | Recurring production and logistics | Tekrarlayan üretim ve lojistik |
-| `services[3].items[2]` | Multi-supplier operations | Çoklu tedarikçi operasyonları |
-| `services[3].items[3]` | Inventory and replenishment coordination | Stok yönetimi ve stok yenileme koordinasyonu |
+| `services[3].items[2]` | Multi-supplier operations | Çoklu supplier operasyonları |
+| `services[3].items[3]` | Inventory and replenishment coordination | Stok ve replenishment koordinasyonu |
 | `services[4].items[0]` | Digital launch preparation | Dijital lansman hazırlığı |
 | `services[4].items[1]` | Catalog and content operations | Katalog ve içerik operasyonları |
 | `services[4].items[2]` | Managed marketplace or D2C operations | Yönetilen marketplace veya D2C operasyonları |
@@ -54,29 +54,29 @@ need legal review like the EN ones.
 
 | Path | EN | TR |
 | --- | --- | --- |
-| `intro.title` | You define what the business needs. We manage how it gets sourced. | İşletmenin neye ihtiyacı olduğunu siz belirlersiniz. Nasıl tedarik edileceğini biz yönetiriz. |
-| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Bir tedarik projesi belirli bir marka, bilinen bir ürün, hedef bir kategori veya ticari bir hedefle başlayabilir. Stratejik kararlar ve onaylar müşteride kalır. MOESA araştırmayı, iletişimi, görüşmeleri ve operasyonel takibi yönetir. |
+| `intro.title` | You define what the business needs. We manage how it gets sourced. | İşletmenin neye ihtiyacı olduğunu siz belirlersiniz. Sourcing sürecini biz yönetiriz. |
+| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Bir sourcing projesi belirli bir marka, bilinen bir ürün, hedef bir kategori veya ticari bir hedefle başlayabilir. Stratejik kararlar ve onaylar müşteride kalır. MOESA araştırmayı, iletişimi, görüşmeleri ve operasyonel takibi yönetir. |
 | `typicalMandates.items[0]` | Source a specific international brand | Belirli bir uluslararası markayı tedarik etmek |
 | `typicalMandates.items[1]` | Find a product or manufacturer | Bir ürün veya üretici bulmak |
 | `typicalMandates.items[2]` | Replace or diversify a supplier | Bir tedarikçiyi değiştirmek veya tedarikçi yapısını çeşitlendirmek |
 | `typicalMandates.items[3]` | Outsource recurring procurement operations | Tekrarlayan satın alma operasyonlarını dış kaynakla yürütmek |
 | `typicalMandates.items[4]` | Coordinate purchasing across multiple suppliers | Birden fazla tedarikçiyle yürütülen satın almayı koordine etmek |
 | `manages.items[0]` | Sourcing brief and requirement structure | Tedarik briefi ve ihtiyaç yapısı |
-| `manages.items[1]` | Brand, product, manufacturer and supplier research | Marka, ürün, üretici ve tedarikçi araştırması |
+| `manages.items[1]` | Brand, product, manufacturer and supplier research | Marka, ürün, üretici ve supplier araştırması |
 | `manages.items[2]` | Supplier assessment | Tedarikçi değerlendirmesi |
 | `manages.items[3]` | Commercial negotiation | Ticari görüşme |
 | `manages.items[4]` | Samples and commercial feasibility | Numuneler ve ticari fizibilite |
-| `manages.items[5]` | Purchase-order and supplier coordination | Satın alma siparişi ve tedarikçi koordinasyonu |
+| `manages.items[5]` | Purchase-order and supplier coordination | PO ve supplier koordinasyonu |
 | `manages.items[6]` | Supply-chain handover | Tedarik zincirine devir |
-| `managedModel.items[0]` | Ongoing supplier communication | Sürekli tedarikçi iletişimi |
-| `managedModel.items[1]` | Purchase-order follow-up | Satın alma siparişi takibi |
+| `managedModel.items[0]` | Ongoing supplier communication | Sürekli supplier iletişimi |
+| `managedModel.items[1]` | Purchase-order follow-up | PO takibi |
 | `managedModel.items[2]` | Pricing and term coordination | Fiyat ve koşulların koordinasyonu |
 | `managedModel.items[3]` | Production-status monitoring | Üretim durumunun izlenmesi |
 | `managedModel.items[4]` | Documentation follow-up | Dokümantasyon takibi |
 | `managedModel.items[5]` | Reorder and continuity planning | Yeniden sipariş ve süreklilik planlaması |
-| `models.items[0]` | Project-Based Sourcing | Proje Bazlı Tedarik |
+| `models.items[0]` | Project-Based Sourcing | Proje Bazlı Sourcing |
 | `models.items[1]` | Managed Procurement Service | Yönetilen Satın Alma Hizmeti |
-| `models.items[2]` | Trading Arrangement | Ticaret (Trading) Düzenlemesi |
+| `models.items[2]` | Trading Arrangement | Trading Düzeni |
 | `models.items[3]` | Commercial Representation | Ticari Temsil |
 | `suitableFor.title` | Suitable for | Kimler için uygun |
 | `suitableFor.items[0]` | Retail groups and corporate buyers | Perakende grupları ve kurumsal alıcılar |
@@ -84,7 +84,7 @@ need legal review like the EN ones.
 | `suitableFor.items[2]` | Brands and manufacturers | Markalar ve üreticiler |
 | `suitableFor.items[3]` | Digital commerce businesses | Dijital ticaret işletmeleri |
 | `responsibilities.title` | Clear responsibilities | Net sorumluluklar |
-| `responsibilities.body` | Final business decisions, supplier approvals and purchasing authority remain with the client unless a separate trading arrangement has been agreed. Where technical or regulatory requirements apply, MOESA coordinates the workflow with the relevant parties. | Ayrı bir ticaret (trading) düzenlemesi kararlaştırılmadıkça final iş kararları, tedarikçi onayları ve satın alma yetkisi müşteride kalır. Teknik veya mevzuat gereklilikleri söz konusu olduğunda MOESA süreci ilgili taraflarla koordine eder. |
+| `responsibilities.body` | Final business decisions, supplier approvals and purchasing authority remain with the client unless a separate trading arrangement has been agreed. Where technical or regulatory requirements apply, MOESA coordinates the workflow with the relevant parties. | Ayrı bir trading düzeni kararlaştırılmadıkça final iş kararları, supplier onayları ve satın alma yetkisi müşteride kalır. Teknik veya mevzuat gereklilikleri söz konusu olduğunda MOESA süreci ilgili taraflarla koordine eder. |
 
 ### services/product-private-label-development (28)
 
@@ -99,7 +99,7 @@ need legal review like the EN ones.
 | `typicalMandates.items[4]` | Develop products for a specific sales channel | Belirli bir satış kanalı için ürün geliştirmek |
 | `manages.items[0]` | Commercial and product brief | Ticari ve ürün briefi |
 | `manages.items[1]` | Category and market assessment | Kategori ve pazar değerlendirmesi |
-| `manages.items[3]` | Supplier and manufacturer selection | Tedarikçi ve üretici seçimi |
+| `manages.items[3]` | Supplier and manufacturer selection | Supplier ve üretici seçimi |
 | `manages.items[4]` | Specification and technical preparation | Spesifikasyon ve teknik hazırlık |
 | `manages.items[5]` | Samples and development rounds | Numuneler ve geliştirme turları |
 | `manages.items[6]` | QA and compliance coordination | Kalite güvencesi (QA) ve uygunluk koordinasyonu |
@@ -109,7 +109,7 @@ need legal review like the EN ones.
 | `architecture.body` | MOESA structures the relationship between the category, product family, quality tier, model, material or design, size, pack count and market status. | MOESA; kategori, ürün ailesi, kalite seviyesi, model, malzeme veya tasarım, ölçü, paket adedi ve pazar statüsü arasındaki ilişkiyi yapılandırır. |
 | `architecture.items[0]` | Prevents unnecessary duplication | Gereksiz tekrarları önler |
 | `architecture.items[1]` | Supports future portfolio expansion | Gelecekteki portföy genişlemesini destekler |
-| `architecture.items[2]` | Improves supplier communication | Tedarikçi iletişimini iyileştirir |
+| `architecture.items[2]` | Improves supplier communication | Supplier iletişimini iyileştirir |
 | `architecture.items[3]` | Simplifies catalog and inventory management | Katalog ve stok yönetimini kolaylaştırır |
 | `models.title` | Development models | Geliştirme modelleri |
 | `models.items[0]` | Manufacturer-Standard Product | Üretici Standardı Ürün |
@@ -117,7 +117,7 @@ need legal review like the EN ones.
 | `models.items[2]` | Custom-Developed Product | Özel Geliştirilmiş Ürün |
 | `models.items[3]` | Portfolio Development | Portföy Geliştirme |
 | `responsibilities.title` | Client and MOESA responsibilities | Müşterinin ve MOESA’nın sorumlulukları |
-| `responsibilities.body` | The client retains brand strategy, budget, target-market decisions and final product, supplier, sample, packaging and production approvals. MOESA manages the development structure and cross-functional execution. | Marka stratejisi, bütçe, hedef pazar kararları ve ürün, tedarikçi, numune, ambalaj ve üretimle ilgili final onaylar müşteride kalır. MOESA geliştirme yapısını ve fonksiyonlar arası uygulamayı yönetir. |
+| `responsibilities.body` | The client retains brand strategy, budget, target-market decisions and final product, supplier, sample, packaging and production approvals. MOESA manages the development structure and cross-functional execution. | Marka stratejisi, bütçe, hedef pazar kararları ve ürün, supplier, numune, ambalaj ve üretimle ilgili final onaylar müşteride kalır. MOESA geliştirme yapısını ve fonksiyonlar arası uygulamayı yönetir. |
 
 ### services/market-access-commercial-representation (24)
 
@@ -126,7 +126,7 @@ need legal review like the EN ones.
 | `intro.title` | A new market requires more than a new customer. | Yeni bir pazar, yeni bir müşteriden fazlasını gerektirir. |
 | `intro.body` | Entering a new market requires the right commercial relationships, product preparation, channel strategy and operational structure. MOESA acts as a local commercial and operating partner within an agreed mandate. | Yeni bir pazara girmek; doğru ticari ilişkileri, ürün hazırlığını, kanal stratejisini ve operasyonel yapıyı gerektirir. MOESA, kararlaştırılan görev kapsamında yerel ticari ve operasyon partneri olarak çalışır. |
 | `twoSides.items[0]` | For manufacturers and brand owners entering or expanding in Europe | Avrupa’ya giren veya Avrupa’da büyüyen üreticiler ve marka sahipleri için |
-| `twoSides.items[1]` | For retailers, distributors and buyers seeking international brands, manufacturers or suppliers | Uluslararası marka, üretici veya tedarikçi arayan perakendeciler, distribütörler ve alıcılar için |
+| `twoSides.items[1]` | For retailers, distributors and buyers seeking international brands, manufacturers or suppliers | Uluslararası marka, üretici veya supplier arayan perakendeciler, distribütörler ve alıcılar için |
 | `typicalMandates.items[0]` | Enter the European market | Avrupa pazarına girmek |
 | `typicalMandates.items[1]` | Find a distributor or retail partner | Bir distribütör veya perakende partneri bulmak |
 | `typicalMandates.items[2]` | Establish commercial representation | Ticari temsil yapısı kurmak |
@@ -143,7 +143,7 @@ need legal review like the EN ones.
 | `models.title` | Representation structures | Temsil yapıları |
 | `models.items[0]` | Project-Based Market Entry | Proje Bazlı Pazara Giriş |
 | `models.items[1]` | Ongoing Commercial Representation | Sürekli Ticari Temsil |
-| `models.items[2]` | Trading and Distribution Arrangement | Ticaret (Trading) ve Dağıtım Düzenlemesi |
+| `models.items[2]` | Trading and Distribution Arrangement | Trading ve Dağıtım Düzeni |
 | `models.items[3]` | Local Operations Partner | Yerel Operasyon Partneri |
 | `europeanBase.title` | European operating base | Avrupa operasyon tabanı |
 | `europeanBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria. The exact scope and responsibilities are defined separately for each market, product and commercial relationship. | MOESA Ltd. Plovdiv, Bulgaristan merkezlidir. Kesin kapsam ve sorumluluklar her pazar, ürün ve ticari ilişki için ayrıca tanımlanır. |
@@ -153,25 +153,25 @@ need legal review like the EN ones.
 | Path | EN | TR |
 | --- | --- | --- |
 | `intro.title` | A commercial agreement still requires operational execution. | Ticari bir anlaşmanın da operasyonel olarak hayata geçirilmesi gerekir. |
-| `intro.body` | After the product, supplier and purchasing conditions have been agreed, the project must move through production, documentation, shipment, import, storage and delivery. MOESA connects these stages in one operating view. | Ürün, tedarikçi ve satın alma koşulları kararlaştırıldıktan sonra proje üretim, dokümantasyon, sevkiyat, ithalat, depolama ve teslimat aşamalarından geçmelidir. MOESA bu aşamaları tek bir operasyon görünümünde birleştirir. |
+| `intro.body` | After the product, supplier and purchasing conditions have been agreed, the project must move through production, documentation, shipment, import, storage and delivery. MOESA connects these stages in one operating view. | Ürün, supplier ve satın alma koşulları kararlaştırıldıktan sonra proje üretim, dokümantasyon, sevkiyat, ithalat, depolama ve teslimat aşamalarından geçmelidir. MOESA bu aşamaları tek bir operasyon görünümünde birleştirir. |
 | `typicalMandates.items[0]` | Manage production after purchase | Satın alma sonrasında üretimi yönetmek |
 | `typicalMandates.items[1]` | Coordinate international delivery | Uluslararası teslimatı koordine etmek |
 | `typicalMandates.items[2]` | Build an import and warehousing structure | İthalat ve depolama yapısı kurmak |
 | `typicalMandates.items[3]` | Manage recurring supply operations | Tekrarlayan tedarik operasyonlarını yönetmek |
-| `typicalMandates.items[4]` | Consolidate multiple suppliers | Birden fazla tedarikçiyi konsolide etmek |
+| `typicalMandates.items[4]` | Consolidate multiple suppliers | Birden fazla supplier’ı konsolide etmek |
 | `manages.items[0]` | Commercial handover | Ticari devir |
-| `manages.items[1]` | Purchase-order coordination | Satın alma siparişi koordinasyonu |
+| `manages.items[1]` | Purchase-order coordination | PO koordinasyonu |
 | `manages.items[2]` | Production planning and follow-up | Üretim planlama ve takibi |
 | `manages.items[3]` | Quality and documentation coordination | Kalite ve dokümantasyon koordinasyonu |
 | `manages.items[4]` | Shipment readiness | Sevkiyata hazırlık |
 | `manages.items[5]` | International logistics | Uluslararası lojistik |
 | `manages.items[6]` | Import and customs coordination | İthalat ve gümrük koordinasyonu |
 | `manages.items[7]` | Warehousing and inbound operations | Depolama ve mal kabul operasyonları |
-| `manages.items[8]` | Inventory and replenishment coordination | Stok yönetimi ve stok yenileme koordinasyonu |
+| `manages.items[8]` | Inventory and replenishment coordination | Stok ve replenishment koordinasyonu |
 | `manages.items[9]` | Final delivery | Final teslimat |
 | `flow.title` | End-to-end operating flow | Uçtan uca operasyon akışı |
 | `flow.steps[0]` | Commercial Approval | Ticari Onay |
-| `flow.steps[1]` | Purchase Order | Satın Alma Siparişi |
+| `flow.steps[1]` | Purchase Order | PO |
 | `flow.steps[2]` | Production | Üretim |
 | `flow.steps[3]` | Product and Document Checks | Ürün ve Belge Kontrolleri |
 | `flow.steps[4]` | Shipment Readiness | Sevkiyata Hazırlık |
@@ -184,7 +184,7 @@ need legal review like the EN ones.
 | `visibility.items[1]` | Next milestone | Sonraki kilometre taşı |
 | `visibility.items[2]` | Open decisions | Açık kararlar |
 | `visibility.items[3]` | Required client action | Müşteriden beklenen aksiyon |
-| `visibility.items[4]` | Supplier action | Tedarikçiden beklenen aksiyon |
+| `visibility.items[4]` | Supplier action | Supplier’dan beklenen aksiyon |
 | `visibility.items[5]` | Risk or delay | Risk veya gecikme |
 | `visibility.items[6]` | Estimated completion | Tahmini tamamlanma tarihi |
 | `visibility.items[7]` | Supporting documents | Destekleyici belgeler |
@@ -211,7 +211,7 @@ need legal review like the EN ones.
 | `manages.items[6]` | Marketplace operations | Marketplace operasyonları |
 | `manages.items[7]` | D2C website operations | D2C web sitesi operasyonları |
 | `manages.items[8]` | Pricing and promotion support | Fiyatlandırma ve promosyon desteği |
-| `manages.items[9]` | Inventory and replenishment | Stok yönetimi ve stok yenileme |
+| `manages.items[9]` | Inventory and replenishment | Stok ve replenishment |
 | `manages.items[10]` | Performance and commercial intelligence | Performans ve ticari içgörü |
 | `manages.items[11]` | Voice of customer | Müşteri sesi |
 | `framework.title` | Commercial intelligence framework | Ticari içgörü çerçevesi |
@@ -236,7 +236,7 @@ need legal review like the EN ones.
 | Path | EN | TR |
 | --- | --- | --- |
 | `intro.title` | One operating model across different commercial needs. | Farklı ticari ihtiyaçlar için tek çalışma modeli. |
-| `intro.body` | A project may begin with a product, a brand, a supplier, a private-label concept, a new market or an operational challenge. The starting point may differ, but the decisions are connected. | Bir proje bir ürün, bir marka, bir tedarikçi, bir private-label konsepti, yeni bir pazar veya operasyonel bir zorlukla başlayabilir. Başlangıç noktası farklı olabilir, ancak kararlar birbirine bağlıdır. |
+| `intro.body` | A project may begin with a product, a brand, a supplier, a private-label concept, a new market or an operational challenge. The starting point may differ, but the decisions are connected. | Bir proje bir ürün, bir marka, bir supplier, bir private-label konsepti, yeni bir pazar veya operasyonel bir zorlukla başlayabilir. Başlangıç noktası farklı olabilir, ancak kararlar birbirine bağlıdır. |
 | `operatingFlow.items[0]` | Define the commercial objective | Ticari hedefi tanımlamak |
 | `operatingFlow.items[1]` | Source or develop the solution | Çözümü tedarik etmek veya geliştirmek |
 | `operatingFlow.items[2]` | Prepare commercial, product, packaging and documentation requirements | Ticari, ürün, ambalaj ve dokümantasyon gerekliliklerini hazırlamak |
@@ -252,7 +252,7 @@ need legal review like the EN ones.
 | `nonLinear.body` | Every completed project should improve the next one. | Tamamlanan her proje bir sonrakini geliştirmelidir. |
 | `startAnywhere.items[0]` | Commercial idea | Ticari fikir |
 | `startAnywhere.items[1]` | Known product or brand | Bilinen ürün veya marka |
-| `startAnywhere.items[2]` | Existing supplier | Mevcut tedarikçi |
+| `startAnywhere.items[2]` | Existing supplier | Mevcut supplier |
 | `startAnywhere.items[3]` | Existing product requiring improvement | İyileştirilmesi gereken mevcut ürün |
 | `startAnywhere.items[4]` | Active commercial operation requiring management | Yönetilmesi gereken aktif ticari operasyon |
 | `openQuestions.title` | Open questions and risks | Açık sorular ve riskler |
@@ -262,13 +262,13 @@ need legal review like the EN ones.
 | `visibility.items[1]` | Completed actions | Tamamlanan aksiyonlar |
 | `visibility.items[2]` | Open decisions | Açık kararlar |
 | `visibility.items[3]` | Required client action | Müşteriden beklenen aksiyon |
-| `visibility.items[4]` | Supplier action | Tedarikçiden beklenen aksiyon |
+| `visibility.items[4]` | Supplier action | Supplier’dan beklenen aksiyon |
 | `visibility.items[5]` | Documents and samples | Belgeler ve numuneler |
 | `visibility.items[6]` | Production or shipment status | Üretim veya sevkiyat durumu |
 | `visibility.items[7]` | Risks and next milestone | Riskler ve sonraki kilometre taşı |
 | `partnershipModels.items[0]` | Managed Procurement Partner | Yönetilen Satın Alma Partneri |
 | `partnershipModels.items[1]` | Product Development Partner | Ürün Geliştirme Partneri |
-| `partnershipModels.items[2]` | Trading Partner | Ticaret Partneri |
+| `partnershipModels.items[2]` | Trading Partner | Trading Partneri |
 | `partnershipModels.items[3]` | Market Entry & Commercial Representation Partner | Pazara Giriş ve Ticari Temsil Partneri |
 | `partnershipModels.items[4]` | Managed Commerce Partner | Yönetilen Ticaret Partneri |
 | `partnershipModels.items[5]` | Integrated Operations Partner | Entegre Operasyon Partneri |
@@ -291,39 +291,39 @@ need legal review like the EN ones.
 | `audiences[0].items[0]` | Category and assortment development | Kategori ve ürün çeşitliliği geliştirme |
 | `audiences[0].items[1]` | Private-label portfolios | Private-label portföyler |
 | `audiences[0].items[2]` | Managed procurement | Yönetilen satın alma |
-| `audiences[0].items[3]` | Multi-supplier coordination | Çoklu tedarikçi koordinasyonu |
+| `audiences[0].items[3]` | Multi-supplier coordination | Çoklu supplier koordinasyonu |
 | `audiences[0].items[4]` | Continuity of supply | Tedarik sürekliliği |
 | `audiences[0].items[5]` | International logistics and delivery | Uluslararası lojistik ve teslimat |
-| `audiences[1].body` | For national or regional distributors, category specialists, importers, B2B suppliers, cash-and-carry operators and multi-brand portfolio businesses. | Ulusal veya bölgesel distribütörler, kategori uzmanları, ithalatçılar, B2B tedarikçiler, cash-and-carry işletmecileri ve çok markalı portföy işletmeleri için. |
-| `audiences[1].items[0]` | International brand sourcing | Uluslararası marka tedariki |
+| `audiences[1].body` | For national or regional distributors, category specialists, importers, B2B suppliers, cash-and-carry operators and multi-brand portfolio businesses. | Ulusal veya bölgesel distribütörler, kategori uzmanları, ithalatçılar, B2B supplier’lar, cash-and-carry işletmecileri ve çok markalı portföy işletmeleri için. |
+| `audiences[1].items[0]` | International brand sourcing | Uluslararası marka sourcing’i |
 | `audiences[1].items[1]` | Portfolio expansion | Portföy genişletme |
 | `audiences[1].items[2]` | Commercial and territory agreements | Ticari ve bölge anlaşmaları |
 | `audiences[1].items[3]` | Exclusive or own-brand products | Münhasır veya kendi markalı ürünler |
 | `audiences[1].items[4]` | Purchasing and logistics | Satın alma ve lojistik |
-| `audiences[1].items[5]` | Inventory and replenishment | Stok yönetimi ve stok yenileme |
+| `audiences[1].items[5]` | Inventory and replenishment | Stok ve replenishment |
 | `audiences[2].body` | For established brands, new brand owners, private-label businesses, marketplace-native brands, D2C brands and corporate-owned product brands. | Köklü markalar, yeni marka sahipleri, private-label işletmeleri, marketplace odaklı markalar, D2C markaları ve kurumsal şirketlere ait ürün markaları için. |
 | `audiences[2].items[0]` | New product and category development | Yeni ürün ve kategori geliştirme |
 | `audiences[2].items[1]` | Product-family architecture | Ürün ailesi mimarisi |
-| `audiences[2].items[2]` | Supplier and manufacturer coordination | Tedarikçi ve üretici koordinasyonu |
+| `audiences[2].items[2]` | Supplier and manufacturer coordination | Supplier ve üretici koordinasyonu |
 | `audiences[2].items[3]` | Packaging and positioning | Ambalaj ve konumlandırma |
 | `audiences[2].items[4]` | Commerce operations | E-ticaret operasyonları |
 | `audiences[2].items[5]` | Customer-feedback and portfolio improvement | Müşteri geri bildirimi ve portföy iyileştirme |
-| `audiences[3].body` | For finished-goods manufacturers, OEM and private-label producers, component suppliers and export-focused manufacturers seeking European buyers or operations. | Avrupa’da alıcı veya operasyon arayan nihai ürün üreticileri, OEM ve private-label üreticileri, bileşen tedarikçileri ve ihracat odaklı üreticiler için. |
+| `audiences[3].body` | For finished-goods manufacturers, OEM and private-label producers, component suppliers and export-focused manufacturers seeking European buyers or operations. | Avrupa’da alıcı veya operasyon arayan nihai ürün üreticileri, OEM ve private-label üreticileri, bileşen supplier’ları ve ihracat odaklı üreticiler için. |
 | `audiences[3].items[0]` | European market entry | Avrupa pazarına giriş |
 | `audiences[3].items[1]` | Distributor and retailer development | Distribütör ve perakendeci ağı geliştirme |
 | `audiences[3].items[2]` | Commercial representation | Ticari temsil |
 | `audiences[3].items[3]` | Market-specific portfolio preparation | Pazara özel portföy hazırlığı |
 | `audiences[3].items[4]` | Import, warehousing and local operations | İthalat, depolama ve yerel operasyonlar |
 | `audiences[4].body` | For Amazon operators, multi-marketplace businesses, D2C brands, online retailers, omnichannel companies and cross-border e-commerce operators. | Amazon üzerinde faaliyet gösteren işletmeler, çoklu marketplace işletmeleri, D2C markaları, online perakendeciler, omnichannel şirketler ve sınır ötesi e-ticaret işletmecileri için. |
-| `audiences[4].items[0]` | Product sourcing and private label | Ürün tedariki ve private label |
+| `audiences[4].items[0]` | Product sourcing and private label | Ürün sourcing’i ve private label |
 | `audiences[4].items[1]` | Listing and catalog operations | Listing ve katalog operasyonları |
 | `audiences[4].items[2]` | Marketplace and D2C management | Marketplace ve D2C yönetimi |
-| `audiences[4].items[3]` | Inventory and replenishment | Stok yönetimi ve stok yenileme |
+| `audiences[4].items[3]` | Inventory and replenishment | Stok ve replenishment |
 | `audiences[4].items[4]` | Performance and customer intelligence | Performans ve müşteri içgörüsü |
 | `seekingBrands.title` | Buyers seeking international brands | Uluslararası marka arayan alıcılar |
-| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Müşteri satın almak istediği markayı veya ürünü zaten biliyor olabilir. MOESA ilgili ticari tarafı belirler, iletişimi başlatır ve tedarik, görüşme ve satın alma süreçlerini koordine eder. |
+| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Müşteri satın almak istediği markayı veya ürünü zaten biliyor olabilir. MOESA ilgili ticari tarafı belirler, iletişimi başlatır ve sourcing, görüşme ve satın alma süreçlerini koordine eder. |
 | `selectionGuide.title` | Engagement selection guide | Çalışma modeli seçim rehberi |
-| `selectionGuide.rows[0].need` | Need a specific brand or supplier | Belirli bir marka veya tedarikçiye ihtiyacınız var |
+| `selectionGuide.rows[0].need` | Need a specific brand or supplier | Belirli bir marka veya supplier’a ihtiyacınız var |
 | `selectionGuide.rows[0].target` | Sourcing & Managed Procurement | Tedarik ve Yönetilen Satın Alma |
 | `selectionGuide.rows[1].need` | Need a product or category under your own brand | Kendi markanız altında bir ürün veya kategoriye ihtiyacınız var |
 | `selectionGuide.rows[1].target` | Product & Private Label Development | Ürün ve Private Label Geliştirme |
@@ -343,13 +343,13 @@ need legal review like the EN ones.
 | Path | EN | TR |
 | --- | --- | --- |
 | `manages.title` | What we manage | Neleri yönetiyoruz |
-| `manages.items[0]` | International brand and product sourcing | Uluslararası marka ve ürün tedariki |
+| `manages.items[0]` | International brand and product sourcing | Uluslararası marka ve ürün sourcing’i |
 | `manages.items[1]` | Managed procurement | Yönetilen satın alma |
 | `manages.items[2]` | Product and private-label development | Ürün ve private-label geliştirme |
 | `manages.items[3]` | Market access and commercial representation | Pazara giriş ve ticari temsil |
 | `manages.items[4]` | Operations and supply chain | Operasyon ve tedarik zinciri |
 | `manages.items[5]` | Digital commerce and commercial intelligence | Dijital ticaret ve ticari içgörü |
-| `why.items[0]` | One coordinated view across product, supplier, market and operation | Ürün, tedarikçi, pazar ve operasyon genelinde tek koordineli görünüm |
+| `why.items[0]` | One coordinated view across product, supplier, market and operation | Ürün, supplier, pazar ve operasyon genelinde tek koordineli görünüm |
 | `why.items[1]` | Flexible partnership models rather than one fixed service package | Tek ve sabit bir hizmet paketi yerine esnek çalışma modelleri |
 | `why.items[2]` | Client decision rights remain clear | Müşterinin karar hakları net kalır |
 | `why.items[3]` | Open questions are controlled instead of hidden by assumptions | Açık sorular varsayımlarla gizlenmez, kontrol altında tutulur |
@@ -363,10 +363,10 @@ need legal review like the EN ones.
 | `principles.items[4]` | Long-term partnership | Uzun vadeli partnerlik |
 | `principles.items[5]` | Continuous improvement | Sürekli gelişim |
 | `europeanBase.title` | European base, international scope | Avrupa tabanı, uluslararası kapsam |
-| `europeanBase.body` | MOESA Ltd. is registered in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, market access and commercial operations. Work outside the EU is structured according to the project, market and responsible parties. | MOESA Ltd. Plovdiv, Bulgaristan’da kayıtlıdır ve uluslararası tedarik, pazara giriş ve ticari operasyonlar için AB tabanı sağlar. AB dışındaki çalışmalar proje, pazar ve sorumlu taraflara göre yapılandırılır. |
+| `europeanBase.body` | MOESA Ltd. is registered in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, market access and commercial operations. Work outside the EU is structured according to the project, market and responsible parties. | MOESA Ltd. Plovdiv, Bulgaristan’da kayıtlıdır ve uluslararası sourcing, pazara giriş ve ticari operasyonlar için AB tabanı sağlar. AB dışındaki çalışmalar proje, pazar ve sorumlu taraflara göre yapılandırılır. |
 | `isNot.items[0]` | Not limited to e-commerce companies | Yalnızca e-ticaret şirketleriyle sınırlı değil |
-| `isNot.items[1]` | Not only a sourcing agent | Yalnızca bir tedarik aracısı değil |
-| `isNot.items[2]` | Not only a trading company | Yalnızca bir ticaret şirketi değil |
+| `isNot.items[1]` | Not only a sourcing agent | Yalnızca bir sourcing agent değil |
+| `isNot.items[2]` | Not only a trading company | Yalnızca bir trading company değil |
 | `isNot.items[3]` | Not a legal substitute for the economic operators assigned by law | Mevzuatın öngördüğü ekonomik operatörlerin yerine geçen hukuki bir yapı değil |
 | `isNot.items[4]` | Not a software platform unless a separate technology service is confirmed | Ayrı bir teknoloji hizmeti teyit edilmedikçe bir yazılım platformu değil |
 

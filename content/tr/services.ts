@@ -17,10 +17,10 @@ const content: ServicesContent = {
       title: 'Tedarik ve Yönetilen Satın Alma',
       summary: 'Marka/ürün tedariki, üretici ve tedarikçi bulma, ticari görüşme, satın alma ve sürekli satın alma yönetimi.',
       items: [
-        'Belirli bir marka veya ürünün tedariki',
-        'Alternatif tedarikçi geliştirme',
+        'Belirli bir marka veya ürün için sourcing',
+        'Alternatif supplier geliştirme',
         'Dış kaynaklı satın alma kapasitesi',
-        'Tedarikçi ve satın alma siparişi yönetimi',
+        'Supplier ve PO yönetimi',
       ],
     },
     {
@@ -31,7 +31,7 @@ const content: ServicesContent = {
         'Bireysel ürünler',
         'Private-label portföyler',
         'Mevcut ürünlerin uyarlanması',
-        'Ürün iyileştirme ve tedarikçi geçişi',
+        'Ürün iyileştirme ve supplier geçişi',
       ],
     },
     {
@@ -52,8 +52,8 @@ const content: ServicesContent = {
       items: [
         'Tek sipariş koordinasyonu',
         'Tekrarlayan üretim ve lojistik',
-        'Çoklu tedarikçi operasyonları',
-        'Stok yönetimi ve stok yenileme koordinasyonu',
+        'Çoklu supplier operasyonları',
+        'Stok ve replenishment koordinasyonu',
       ],
     },
     {

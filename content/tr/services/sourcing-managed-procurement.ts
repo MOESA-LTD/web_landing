@@ -13,8 +13,8 @@ const content: ServicePageContent = {
     body: 'Belirli bir uluslararası marka, yeni tedarikçi veya tekrarlayan satın alma operasyonlarını yönetecek dış ekip ihtiyacını uygulanabilir bir satın alma sürecine dönüştürürüz.',
   },
   intro: {
-    title: 'İşletmenin neye ihtiyacı olduğunu siz belirlersiniz. Nasıl tedarik edileceğini biz yönetiriz.',
-    body: 'Bir tedarik projesi belirli bir marka, bilinen bir ürün, hedef bir kategori veya ticari bir hedefle başlayabilir. Stratejik kararlar ve onaylar müşteride kalır. MOESA araştırmayı, iletişimi, görüşmeleri ve operasyonel takibi yönetir.',
+    title: 'İşletmenin neye ihtiyacı olduğunu siz belirlersiniz. Sourcing sürecini biz yönetiriz.',
+    body: 'Bir sourcing projesi belirli bir marka, bilinen bir ürün, hedef bir kategori veya ticari bir hedefle başlayabilir. Stratejik kararlar ve onaylar müşteride kalır. MOESA araştırmayı, iletişimi, görüşmeleri ve operasyonel takibi yönetir.',
   },
   typicalMandates: {
     title: 'Tipik görevler',
@@ -32,11 +32,11 @@ const content: ServicePageContent = {
     condensed: 'Tedarik briefi; marka/ürün/üretici araştırması; tedarikçi değerlendirmesi; ticari görüşme; numune ve fizibilite; PO ve supplier koordinasyonu; tedarik zincirine devir.',
     items: [
       'Tedarik briefi ve ihtiyaç yapısı',
-      'Marka, ürün, üretici ve tedarikçi araştırması',
+      'Marka, ürün, üretici ve supplier araştırması',
       'Tedarikçi değerlendirmesi',
       'Ticari görüşme',
       'Numuneler ve ticari fizibilite',
-      'Satın alma siparişi ve tedarikçi koordinasyonu',
+      'PO ve supplier koordinasyonu',
       'Tedarik zincirine devir',
     ],
   },
@@ -44,8 +44,8 @@ const content: ServicePageContent = {
     title: 'Yönetilen satın alma modeli',
     body: 'Müşteri strateji, bütçe ve final onayları elinde tutar; MOESA günlük supplier, satın alma ve takip operasyonunu yönetir.',
     items: [
-      'Sürekli tedarikçi iletişimi',
-      'Satın alma siparişi takibi',
+      'Sürekli supplier iletişimi',
+      'PO takibi',
       'Fiyat ve koşulların koordinasyonu',
       'Üretim durumunun izlenmesi',
       'Dokümantasyon takibi',
@@ -56,9 +56,9 @@ const content: ServicePageContent = {
     title: 'Çalışma modelleri',
     condensed: 'Proje bazlı sourcing; yönetilen satın alma hizmeti; trading düzeni; ticari temsil.',
     items: [
-      'Proje Bazlı Tedarik',
+      'Proje Bazlı Sourcing',
       'Yönetilen Satın Alma Hizmeti',
-      'Ticaret (Trading) Düzenlemesi',
+      'Trading Düzeni',
       'Ticari Temsil',
     ],
   },
@@ -73,7 +73,7 @@ const content: ServicePageContent = {
   },
   responsibilities: {
     title: 'Net sorumluluklar',
-    body: 'Ayrı bir ticaret (trading) düzenlemesi kararlaştırılmadıkça final iş kararları, tedarikçi onayları ve satın alma yetkisi müşteride kalır. Teknik veya mevzuat gereklilikleri söz konusu olduğunda MOESA süreci ilgili taraflarla koordine eder.',
+    body: 'Ayrı bir trading düzeni kararlaştırılmadıkça final iş kararları, supplier onayları ve satın alma yetkisi müşteride kalır. Teknik veya mevzuat gereklilikleri söz konusu olduğunda MOESA süreci ilgili taraflarla koordine eder.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

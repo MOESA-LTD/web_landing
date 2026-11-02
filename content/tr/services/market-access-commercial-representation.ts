@@ -21,7 +21,7 @@ const content: ServicePageContent = {
     condensed: 'Üretici ve markaların Avrupa’ya girişi; perakendeci/distribütör/alıcıların uluslararası marka ve üreticilere erişimi.',
     items: [
       'Avrupa’ya giren veya Avrupa’da büyüyen üreticiler ve marka sahipleri için',
-      'Uluslararası marka, üretici veya tedarikçi arayan perakendeciler, distribütörler ve alıcılar için',
+      'Uluslararası marka, üretici veya supplier arayan perakendeciler, distribütörler ve alıcılar için',
     ],
   },
   typicalMandates: {
@@ -54,7 +54,7 @@ const content: ServicePageContent = {
     items: [
       'Proje Bazlı Pazara Giriş',
       'Sürekli Ticari Temsil',
-      'Ticaret (Trading) ve Dağıtım Düzenlemesi',
+      'Trading ve Dağıtım Düzeni',
       'Yerel Operasyon Partneri',
     ],
   },

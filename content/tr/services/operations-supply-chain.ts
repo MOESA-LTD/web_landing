@@ -14,7 +14,7 @@ const content: ServicePageContent = {
   },
   intro: {
     title: 'Ticari bir anlaşmanın da operasyonel olarak hayata geçirilmesi gerekir.',
-    body: 'Ürün, tedarikçi ve satın alma koşulları kararlaştırıldıktan sonra proje üretim, dokümantasyon, sevkiyat, ithalat, depolama ve teslimat aşamalarından geçmelidir. MOESA bu aşamaları tek bir operasyon görünümünde birleştirir.',
+    body: 'Ürün, supplier ve satın alma koşulları kararlaştırıldıktan sonra proje üretim, dokümantasyon, sevkiyat, ithalat, depolama ve teslimat aşamalarından geçmelidir. MOESA bu aşamaları tek bir operasyon görünümünde birleştirir.',
   },
   typicalMandates: {
     title: 'Tipik görevler',
@@ -24,7 +24,7 @@ const content: ServicePageContent = {
       'Uluslararası teslimatı koordine etmek',
       'İthalat ve depolama yapısı kurmak',
       'Tekrarlayan tedarik operasyonlarını yönetmek',
-      'Birden fazla tedarikçiyi konsolide etmek',
+      'Birden fazla supplier’ı konsolide etmek',
     ],
   },
   manages: {
@@ -32,14 +32,14 @@ const content: ServicePageContent = {
     condensed: 'Ticari devir; PO; üretim takibi; kalite ve belge koordinasyonu; sevkiyat hazırlığı; lojistik; ithalat/gümrük akışı; depo; stok/replenishment; final teslimat.',
     items: [
       'Ticari devir',
-      'Satın alma siparişi koordinasyonu',
+      'PO koordinasyonu',
       'Üretim planlama ve takibi',
       'Kalite ve dokümantasyon koordinasyonu',
       'Sevkiyata hazırlık',
       'Uluslararası lojistik',
       'İthalat ve gümrük koordinasyonu',
       'Depolama ve mal kabul operasyonları',
-      'Stok yönetimi ve stok yenileme koordinasyonu',
+      'Stok ve replenishment koordinasyonu',
       'Final teslimat',
     ],
   },
@@ -47,7 +47,7 @@ const content: ServicePageContent = {
     title: 'Uçtan uca operasyon akışı',
     steps: [
       'Ticari Onay',
-      'Satın Alma Siparişi',
+      'PO',
       'Üretim',
       'Ürün ve Belge Kontrolleri',
       'Sevkiyata Hazırlık',
@@ -66,7 +66,7 @@ const content: ServicePageContent = {
       'Sonraki kilometre taşı',
       'Açık kararlar',
       'Müşteriden beklenen aksiyon',
-      'Tedarikçiden beklenen aksiyon',
+      'Supplier’dan beklenen aksiyon',
       'Risk veya gecikme',
       'Tahmini tamamlanma tarihi',
       'Destekleyici belgeler',

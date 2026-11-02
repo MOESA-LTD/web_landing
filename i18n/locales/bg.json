@@ -29,11 +29,11 @@
     "openMenu": "Отваряне на менюто",
     "closeMenu": "Затваряне на менюто",
     "serviceLinks": {
-      "sourcing-managed-procurement": "Сорсинг и управление на снабдяването",
+      "sourcing-managed-procurement": "Sourcing и управление на снабдяването",
       "product-private-label-development": "Разработка на продукти и собствени марки",
       "market-access-commercial-representation": "Достъп до пазари и търговско представителство",
       "operations-supply-chain": "Операции и верига на доставки",
-      "digital-commerce-commercial-intelligence": "Дигитална търговия и бизнес анализи"
+      "digital-commerce-commercial-intelligence": "Дигитална търговия и Commercial Intelligence"
     }
   },
   "logo": {
@@ -102,7 +102,7 @@
     "sending": "Изпращане…",
     "honeypot": "Оставете това поле празно",
     "serviceOptions": {
-      "sourcing": "Сорсинг на марки или продукти",
+      "sourcing": "Sourcing на марки или продукти",
       "procurement": "Управление на снабдяването",
       "productPrivateLabel": "Разработка на продукти и собствени марки",
       "marketAccess": "Достъп до пазари",

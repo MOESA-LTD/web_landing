@@ -13,7 +13,7 @@ const content: HowWeWorkContent = {
   },
   intro: {
     title: 'Farklı ticari ihtiyaçlar için tek çalışma modeli.',
-    body: 'Bir proje bir ürün, bir marka, bir tedarikçi, bir private-label konsepti, yeni bir pazar veya operasyonel bir zorlukla başlayabilir. Başlangıç noktası farklı olabilir, ancak kararlar birbirine bağlıdır.',
+    body: 'Bir proje bir ürün, bir marka, bir supplier, bir private-label konsepti, yeni bir pazar veya operasyonel bir zorlukla başlayabilir. Başlangıç noktası farklı olabilir, ancak kararlar birbirine bağlıdır.',
   },
   operatingFlow: {
     title: 'MOESA çalışma akışı',
@@ -56,7 +56,7 @@ const content: HowWeWorkContent = {
     items: [
       'Ticari fikir',
       'Bilinen ürün veya marka',
-      'Mevcut tedarikçi',
+      'Mevcut supplier',
       'İyileştirilmesi gereken mevcut ürün',
       'Yönetilmesi gereken aktif ticari operasyon',
     ],
@@ -80,7 +80,7 @@ const content: HowWeWorkContent = {
       'Tamamlanan aksiyonlar',
       'Açık kararlar',
       'Müşteriden beklenen aksiyon',
-      'Tedarikçiden beklenen aksiyon',
+      'Supplier’dan beklenen aksiyon',
       'Belgeler ve numuneler',
       'Üretim veya sevkiyat durumu',
       'Riskler ve sonraki kilometre taşı',
@@ -92,7 +92,7 @@ const content: HowWeWorkContent = {
     items: [
       'Yönetilen Satın Alma Partneri',
       'Ürün Geliştirme Partneri',
-      'Ticaret Partneri',
+      'Trading Partneri',
       'Pazara Giriş ve Ticari Temsil Partneri',
       'Yönetilen Ticaret Partneri',
       'Entegre Operasyon Partneri',

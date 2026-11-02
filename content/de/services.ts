@@ -59,7 +59,7 @@ const content: ServicesContent = {
     {
       slug: 'digital-commerce-commercial-intelligence',
       title: 'Digital Commerce & Commercial Intelligence',
-      summary: 'Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Kundeneinblicke.',
+      summary: 'Produktpositionierung, Kreativkoordination, SEO, Listings, Katalog-, Marktplatz- und D2C-Operations, Bestandsplanung, Reporting und Customer Insights.',
       items: [
         'Vorbereitung digitaler Markteinführungen',
         'Katalog- und Content-Operations',
