@@ -9,13 +9,18 @@ pages_build_output_dir = "./dist"
 compatibility_date = "2026-07-01"
 compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
 
-# Runtime variables of the Pages Function (non-secret). `vars` is not inherited, so the preview list repeats it.
+# Non-secret variables (the Pages build and the Function both get them). `vars` is not inherited, so the preview list
+# repeats it. The Turnstile site key is public (it is in the page HTML); its secret key is a dashboard Secret.
 [vars]
+NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAAFwcaNF6v9eZLOmy"
 NUXT_PUBLIC_ENABLE_DE = "false"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
 
 [env.preview.vars]
+NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAAFwcaNF6v9eZLOmy"
+# Preview deployments are not indexed: robots.txt disallows everything and pages get noindex.
+NUXT_SITE_INDEXABLE = "false"
 NUXT_PUBLIC_ENABLE_DE = "false"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
