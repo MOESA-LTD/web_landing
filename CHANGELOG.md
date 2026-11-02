@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.3.1...moesa-website-v0.4.0) (2026-11-02)
+
+
+### Features
+
+* **i18n:** publish the German and Bulgarian sites ([cd588cf](https://github.com/MOESA-LTD/web_landing/commit/cd588cf4f3933d0fc3bbd0fc8b72ab5729d980e2))
+
 ## [0.3.1](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.3.0...moesa-website-v0.3.1) (2026-11-02)
 
 
