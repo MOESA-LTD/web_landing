@@ -122,6 +122,35 @@ test.describe('contact form', () => {
     await expect(page.locator('[data-error-summary]')).toContainText('Einige Angaben konnten nicht angenommen werden.')
   })
 
+  test('BG: a valid submit sends the EN service value and lands on /bg/blagodarim', async ({ page }) => {
+    const bodies = await mockApi(page)
+    await page.goto('/bg/kontakti')
+    await hydrated(page)
+    await fillValid(page, 'Market Access')
+    await expect(page.locator('select[name="service"] option:checked')).toHaveText('Достъп до пазари')
+    await page.getByRole('button', { name: 'Изпратете описание на проекта' }).click()
+    await expect(page).toHaveURL(/\/bg\/blagodarim$/)
+    await expect(page.locator('h1')).toHaveText('Благодарим Ви. Описанието на Вашия проект е получено.')
+    expect(bodies[0]).toMatchObject({ service: 'Market Access', locale: 'bg' })
+  })
+
+  test('BG: an empty submit shows the Bulgarian error summary; ?error=1 shows the Bulgarian generic error', async ({ page }) => {
+    await page.goto('/bg/kontakti')
+    await hydrated(page)
+    await page.getByRole('button', { name: 'Изпратете описание на проекта' }).click()
+    await expect(page.locator('[data-error-summary]')).toContainText('Моля, проверете 7 полета')
+    await expect(page.locator('[data-error-summary]')).toContainText('Въведете Вашето име.')
+    await page.goto('/bg/kontakti?error=1')
+    await expect(page.locator('[data-error-summary]')).toContainText('Някои от данните не могат да бъдат приети.')
+  })
+
+  test('the BG service deep link preselects the EN option value', async ({ page }) => {
+    await page.goto('/bg/kontakti?service=operations-supply-chain')
+    await hydrated(page)
+    await expect(page.locator('select[name="service"]')).toHaveValue('Operations & Supply Chain')
+    await expect(page.locator('select[name="service"] option:checked')).toHaveText('Операции и верига на доставки')
+  })
+
   test('the DE service deep link preselects the EN option value', async ({ page }) => {
     await page.goto('/de/kontakt?service=operations-supply-chain')
     await hydrated(page)
@@ -160,7 +189,7 @@ test.describe('contact form', () => {
   })
 
   test('the thank-you pages are noindex', async ({ page }) => {
-    for (const path of ['/thank-you', '/tr/tesekkurler', '/de/danke']) {
+    for (const path of ['/thank-you', '/tr/tesekkurler', '/de/danke', '/bg/blagodarim']) {
       const res = await page.goto(path)
       expect(res?.status()).toBe(200)
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/)
@@ -192,5 +221,11 @@ test.describe('POST /api/contact (server route in the build)', () => {
     const res = await request.post('/api/contact', { form: { name: '', locale: 'de' }, maxRedirects: 0, headers: uniqueIp() })
     expect(res.status()).toBe(303)
     expect(res.headers()['location']).toBe('/de/kontakt?error=1')
+  })
+
+  test('an invalid non-JS BG form post is redirected (303) to /bg/kontakti?error=1', async ({ request }) => {
+    const res = await request.post('/api/contact', { form: { name: '', locale: 'bg' }, maxRedirects: 0, headers: uniqueIp() })
+    expect(res.status()).toBe(303)
+    expect(res.headers()['location']).toBe('/bg/kontakti?error=1')
   })
 })

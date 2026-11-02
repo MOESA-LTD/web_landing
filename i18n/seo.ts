@@ -9,6 +9,12 @@ export const SITE_ORIGIN = 'https://www.moesaltd.com'
 export const SITE_NAME = 'MOESA Ltd.'
 export const OG_IMAGE = `${SITE_ORIGIN}/og-default.png`
 
+/**
+ * Open Graph locale of each site locale (`og:locale`, language_TERRITORY). EN is British English (the approved copy
+ * spells "organisation", "centres"); TR, DE and BG are the languages of Türkiye, Germany and Bulgaria.
+ */
+export const OG_LOCALE: Record<Locale, string> = { en: 'en_GB', tr: 'tr_TR', de: 'de_DE', bg: 'bg_BG' }
+
 export interface SeoMeta {
   name?: string
   property?: string
@@ -31,7 +37,7 @@ export interface SeoHead {
 /**
  * @param meta     the page meta, where `path` is the EN path
  * @param locale   the locale the page is rendered in (self-referencing canonical)
- * @param options  `enableTr: false` / `enableDe: false` drops the TR / DE alternate
+ * @param options  `enableTr: false` / `enableDe: false` / `enableBg: false` drops the TR / DE / BG alternate
  *
  * A path that is not a route (the 404 page) gets no canonical, no alternates and no og:url.
  */
@@ -57,6 +63,14 @@ export function buildPageSeo(
     { name: 'twitter:image', content: OG_IMAGE },
   ]
   if (known) tags.splice(4, 0, { property: 'og:url', content: canonical })
+  // og:locale for the page's locale, og:locale:alternate for the other enabled locales (after og:site_name).
+  const siteNameAt = tags.findIndex((t) => t.property === 'og:site_name') + 1
+  tags.splice(
+    siteNameAt,
+    0,
+    { property: 'og:locale', content: OG_LOCALE[locale] },
+    ...(known ? enabledLocales(options).filter((l) => l !== locale) : []).map((l) => ({ property: 'og:locale:alternate', content: OG_LOCALE[l] })),
+  )
 
   const link: SeoLink[] = []
   if (known) {

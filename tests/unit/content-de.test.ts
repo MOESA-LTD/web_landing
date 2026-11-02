@@ -137,7 +137,7 @@ describe('DE UI microcopy (i18n/locales/de.json)', () => {
   const de = read('de')
 
   /** UI strings that are the same in German: language names, and words German uses unchanged. */
-  const SAME_AS_EN_UI = new Set(['language.names.en', 'language.names.tr', 'language.names.de', 'form.labels.name', 'cookie.inventory.name', 'form.optional', 'nav.serviceLinks.digital-commerce-commercial-intelligence'])
+  const SAME_AS_EN_UI = new Set(['language.names.en', 'language.names.tr', 'language.names.de', 'language.names.bg', 'form.labels.name', 'cookie.inventory.name', 'form.optional', 'nav.serviceLinks.digital-commerce-commercial-intelligence'])
 
   it('has exactly the keys of en.json (and tr.json), none empty', () => {
     expect(Object.keys(de).sort()).toEqual(Object.keys(en).sort())
@@ -155,11 +155,12 @@ describe('DE UI microcopy (i18n/locales/de.json)', () => {
     expect(same).toEqual([])
   })
 
-  it('names the three languages natively in every locale', () => {
+  it('names the four languages natively in every locale', () => {
     for (const msgs of [en, tr, de]) {
       expect(msgs['language.names.en']).toBe('English')
       expect(msgs['language.names.tr']).toBe('Türkçe')
       expect(msgs['language.names.de']).toBe('Deutsch')
+      expect(msgs['language.names.bg']).toBe('Български')
     }
   })
 

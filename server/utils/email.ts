@@ -1,5 +1,5 @@
 /**
- * The enquiry email to MOESA: always in English, whatever the site language (`Locale: tr` / `Locale: de` marks TR and DE enquiries).
+ * The enquiry email to MOESA: always in English, whatever the site language (`Locale: tr` / `Locale: de` / `Locale: bg` marks TR, DE and BG enquiries).
  * Every submitted value is HTML-escaped in the HTML part. The sender's address is only ever the Reply-To.
  */
 import { Resend } from 'resend'

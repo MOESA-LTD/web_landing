@@ -3,13 +3,13 @@
  * `npm run build && npm run test:acceptance`. Without `.output` the build-dependent tests fail with a message saying
  * so (they never pass silently on a missing build).
  *
- * 1. Forbidden claims (build spec §11, global constraints): no page of any locale (EN/TR/DE) contains a forbidden
+ * 1. Forbidden claims (build spec §11, global constraints): no page of any locale (EN/TR/DE/BG) contains a forbidden
  *    phrase, and claim-sensitive words (AI, platform, portal, dashboard, guarantee ...) only appear in text that is
  *    approved copy OF THAT PAGE: its package md (EN/TR, incl. Page Title / Meta Description), the flagged TR
- *    translations of its approved EN (content/tr/unreviewed.ts), or for DE (no package source) its flagged DE
- *    translations (content/de/unreviewed.ts). Checked: visible text runs, the `content`, `alt`, `aria-label` and
+ *    translations of its approved EN (content/tr/unreviewed.ts), or for DE and BG (no package source) their flagged
+ *    translations (content/de/unreviewed.ts, content/bg/unreviewed.ts). Checked: visible text runs, the `content`, `alt`, `aria-label` and
  *    `title` attributes, `<title>` and every JSON-LD string value.
- *    Pages: the prerendered HTML in `.output/public/**` plus all 45 routes rendered by the built server
+ *    Pages: the prerendered HTML in `.output/public/**` plus all 60 routes rendered by the built server
  *    (`node .output/server/index.mjs` on a free port), since most pages are server-rendered on request.
  * 2. No source comment leaks: comment texts from app/, server/, i18n/ and content/ (`<!-- -->` in .vue, `//`,
  *    `/* *\/`; licence comments `/*!` excluded) never appear in `.output/public/**\/*.{html,js}`,
@@ -23,6 +23,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ROUTES, routeNameForPath, type RouteName } from '../../i18n/routes'
 import { UNREVIEWED_TR } from '../../content/tr/unreviewed'
 import { UNREVIEWED_DE } from '../../content/de/unreviewed'
+import { UNREVIEWED_BG } from '../../content/bg/unreviewed'
 import { extractApprovedStrings, readPageMeta } from '../e2e/fidelity/extract'
 
 const ROOT = resolve(import.meta.dirname, '../..')
@@ -32,7 +33,7 @@ const SERVER_ENTRY = join(OUTPUT, 'server', 'index.mjs')
 const PKG = join(ROOT, 'MOESA_Website_Package_v1.0', 'MOESA_Website_Package_v1.0')
 const PKG_CONTENT = join(PKG, 'content')
 
-type Locale = 'en' | 'tr' | 'de'
+type Locale = 'en' | 'tr' | 'de' | 'bg'
 
 function walk(dir: string, keep: (file: string) => boolean, skip: (dir: string) => boolean = () => false): string[] {
   if (!existsSync(dir)) return []
@@ -138,6 +139,17 @@ const FORBIDDEN = [
   'in jedem Land',
   'in allen Ländern',
   'Kundenportal',
+  // BG equivalents (our translation of the EN claims)
+  'гарантирано пълно съответствие',
+  'гарантираме пълно съответствие',
+  'гарантира пълно съответствие',
+  'пълното съответствие е гарантирано',
+  'цялата правна отговорност',
+  'всяка правна отговорност',
+  'пълната правна отговорност',
+  'във всяка държава',
+  'във всички държави',
+  'клиентски портал',
 ]
 
 /**
@@ -148,7 +160,12 @@ const FORBIDDEN = [
 const SENSITIVE = /\bAI\b|yapay zek|\bplatform|plattform|portal|dashboard|guarant|garanti|\bcertif|sertifika|zertifi/i
 /** German "KI" (AI), case-sensitive so that the Turkish word "ki" does not count. */
 const SENSITIVE_CASED = /\bKI\b/
-const isSensitive = (run: string) => SENSITIVE.test(run) || SENSITIVE_CASED.test(run)
+/**
+ * Bulgarian: ИИ (AI, as a word), платформа, портал, табло/табла (dashboard), гаранция/гарантира, сертифи-. `\b` does
+ * not see Cyrillic word boundaries, so the word checks use letter lookarounds.
+ */
+const SENSITIVE_BG = /(?<!\p{L})ИИ(?!\p{L})|платформ|портал|(?<!\p{L})табл[оа](?!\p{L})|гаранц|гарантир|сертифи/iu
+const isSensitive = (run: string) => SENSITIVE.test(run) || SENSITIVE_CASED.test(run) || SENSITIVE_BG.test(run)
 
 /**
  * A text matches when it IS one approved string, or is a sentence-sized part of one (at least MIN_PART characters:
@@ -186,6 +203,7 @@ const SHARED: Partial<Record<RouteName, RouteName[]>> = {
 
 function ownApproved(name: RouteName, locale: Locale): string[] {
   if (locale === 'de') return UNREVIEWED_DE.filter((u) => u.page === name).map((u) => u.de)
+  if (locale === 'bg') return UNREVIEWED_BG.filter((u) => u.page === name).map((u) => u.bg)
   const md = mdOf(name, locale)
   const meta = readPageMeta(md)
   const strings = [...extractApprovedStrings(md), meta.title, meta.description]
@@ -195,12 +213,17 @@ function ownApproved(name: RouteName, locale: Locale): string[] {
 
 /** The approved strings a page may show: its own plus those of the pages it reuses, folded. */
 function approvedFor(name: RouteName, locale: Locale): string[] {
-  const site = locale === 'de' ? UNREVIEWED_DE.filter((u) => u.page === 'site').map((u) => u.de) : []
+  const site =
+    locale === 'de'
+      ? UNREVIEWED_DE.filter((u) => u.page === 'site').map((u) => u.de)
+      : locale === 'bg'
+        ? UNREVIEWED_BG.filter((u) => u.page === 'site').map((u) => u.bg)
+        : []
   return [name, ...(SHARED[name] ?? [])].flatMap((n) => ownApproved(n, locale)).concat(site).map(fold)
 }
 
 const PAGE_LIST = (Object.entries(ROUTES) as [RouteName, Record<Locale, string>][]).flatMap(([name, p]) =>
-  (['en', 'tr', 'de'] as const).map((locale) => ({ name, locale, path: p[locale] })),
+  (['en', 'tr', 'de', 'bg'] as const).map((locale) => ({ name, locale, path: p[locale] })),
 )
 const PAGE_PATHS = PAGE_LIST.map((p) => p.path)
 
@@ -257,15 +280,15 @@ afterAll(() => {
   server?.kill()
 })
 
-describe('forbidden claims (built site, EN + TR + DE)', () => {
+describe('forbidden claims (built site, EN + TR + DE + BG)', () => {
   it('the production build exists', () => {
     if (buildError) throw buildError
     expect(pages.size).toBeGreaterThanOrEqual(PAGE_PATHS.length)
   })
 
-  it('renders all 45 routes from the built server', () => {
+  it('renders all 60 routes from the built server', () => {
     if (buildError) throw buildError
-    expect(PAGE_PATHS).toHaveLength(45)
+    expect(PAGE_PATHS).toHaveLength(60)
     for (const p of PAGE_PATHS) expect(pages.has(`ssr:${p}`), p).toBe(true)
   })
 

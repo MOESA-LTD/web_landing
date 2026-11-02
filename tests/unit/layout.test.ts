@@ -10,12 +10,12 @@ import { CONSENT_COOKIE, useConsent } from '~/composables/useConsent'
  * Dedicated stub-only routes for the <html lang> tests: no real page exists at these paths, so only app.vue
  * (not a page's usePageSeo) can set the lang. Named `<base>___<locale>` like the i18n module names routes.
  */
-const LANG_STUB = { en: '/__lang-stub', tr: '/tr/__lang-stub', de: '/de/__lang-stub' } as const
+const LANG_STUB = { en: '/__lang-stub', tr: '/tr/__lang-stub', de: '/de/__lang-stub', bg: '/bg/__lang-stub' } as const
 
 beforeAll(() => {
   addPageStubs()
   const router = useRouter()
-  for (const locale of ['en', 'tr', 'de'] as const) {
+  for (const locale of ['en', 'tr', 'de', 'bg'] as const) {
     router.addRoute({ name: `lang-stub___${locale}`, path: LANG_STUB[locale], component: { render: () => null } })
   }
 })
@@ -57,6 +57,11 @@ describe('default layout', () => {
   it('translates the skip link in DE', async () => {
     const w = await mountLayout('/de')
     expect(w.find('a[href="#main"]').text()).toBe('Zum Inhalt springen')
+  })
+
+  it('translates the skip link in BG', async () => {
+    const w = await mountLayout('/bg')
+    expect(w.find('a[href="#main"]').text()).toBe('Към съдържанието')
   })
 
   it('translates the skip link in TR', async () => {
@@ -141,6 +146,13 @@ describe('<html lang>', () => {
     await mountSuspended(App, { route: LANG_STUB.de })
     await flushPromises()
     await expectLang('de')
+  })
+
+  it('is "bg" on BG pages', async () => {
+    expect(useRouter().resolve(LANG_STUB.bg).matched[0]?.name).toBe('lang-stub___bg')
+    await mountSuspended(App, { route: LANG_STUB.bg })
+    await flushPromises()
+    await expectLang('bg')
   })
 
   it('follows the locale when navigating between EN and TR', async () => {

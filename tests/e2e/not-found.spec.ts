@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 /**
  * Unknown paths answer a real HTTP 404 from the production build (not a 200 soft-404), in the locale of the
- * requested path: `/tr/*` gives the TR 404 copy, `/de/*` the DE copy, everything else EN. The 404 page is not indexable.
+ * requested path: `/tr/*` gives the TR 404 copy, `/de/*` the DE copy, `/bg/*` the BG copy, everything else EN. The 404 page is not indexable.
  */
 test.describe('404', () => {
   test('GET /this-does-not-exist returns 404 with the EN 404 copy', async ({ request }) => {
@@ -78,6 +78,40 @@ test.describe('404', () => {
     await expect(page.locator('h1')).toHaveText('Die Seite wurde nicht gefunden.')
     await expect(page.locator('#main')).toContainText('Benötigen Sie Hilfe bei der Suche nach den richtigen Informationen?')
     await expect(page.locator('[data-message-list] a', { hasText: 'Leistungen entdecken' })).toHaveAttribute('href', '/de/leistungen')
+  })
+
+  test('GET /bg/nyama-takava-stranitsa returns 404 with the BG 404 copy, lang bg and noindex', async ({ request }) => {
+    const res = await request.get('/bg/nyama-takava-stranitsa', { headers: { accept: 'text/html' } })
+    expect(res.status()).toBe(404)
+    expect(res.headers()['x-robots-tag']).toMatch(/^noindex/)
+    const body = await res.text()
+    expect(body).toContain('Страницата не може да бъде намерена.')
+    expect(body).toMatch(/<html[^>]*lang="bg"/)
+    expect(body).toContain('<meta name="robots" content="noindex, follow">')
+  })
+
+  test('BG 404 page: BG title, BG links, no canonical', async ({ page }) => {
+    const res = await page.goto('/bg/nyama-takava-stranitsa')
+    expect(res?.status()).toBe(404)
+    await expect(page).toHaveTitle('Страницата не е намерена | MOESA Ltd.')
+    await expect(page.locator('html')).toHaveAttribute('lang', 'bg')
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)
+    await expect(page.locator('h1')).toHaveText('Страницата не може да бъде намерена.')
+    await expect(page.locator('#main')).toContainText('Нужна Ви е помощ, за да намерите точната информация?')
+    await expect(page.locator('[data-message-list] a', { hasText: 'Разгледайте услугите' })).toHaveAttribute('href', '/bg/uslugi')
+  })
+
+  test('unknown or wrong-locale BG service slugs answer 404', async ({ request }) => {
+    for (const path of [
+      '/bg/uslugi/nyama-takava-usluga',
+      '/bg/uslugi/operations-supply-chain',
+      '/bg/uslugi/operations-und-lieferkette',
+      '/bg/uslugi/operasyon-ve-tedarik-zinciri',
+      '/services/operatsii-i-veriga-na-dostavki',
+      '/de/leistungen/operatsii-i-veriga-na-dostavki',
+    ]) {
+      expect((await request.get(path)).status(), path).toBe(404)
+    }
   })
 
   test('unknown or wrong-locale DE service slugs answer 404', async ({ request }) => {

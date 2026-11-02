@@ -62,6 +62,12 @@ describe('LanguageSwitcher dropdown button', () => {
     expect(button(w).attributes('aria-label')).toBe('Sprache: Deutsch')
   })
 
+  it('shows the BG code and a Bulgarian label on a BG page', async () => {
+    const w = await mount('/bg')
+    expect(button(w).text()).toBe('BG')
+    expect(button(w).attributes('aria-label')).toBe('Език: Български')
+  })
+
   it('has the canvas spec: 44px button, min 64px, 2px radius, line border; absolute 76px slot, 64px / 68px on mobile', async () => {
     const w = await mount('/')
     expect(button(w).classes()).toEqual(
@@ -82,7 +88,7 @@ describe('LanguageSwitcher dropdown button', () => {
 })
 
 describe('LanguageSwitcher dropdown menu', () => {
-  it('opens on click and lists native name plus code as EN / TR / DE links only', async () => {
+  it('opens on click and lists native name plus code as EN / TR / DE / BG links only', async () => {
     const w = await mount('/')
     await open(w)
     expect(button(w).attributes('aria-expanded')).toBe('true')
@@ -91,9 +97,10 @@ describe('LanguageSwitcher dropdown menu', () => {
       ['English', 'EN'],
       ['Türkçe', 'TR'],
       ['Deutsch', 'DE'],
+      ['Български', 'BG'],
     ])
-    expect(links(w).map((a) => a.attributes('lang'))).toEqual(['en', 'tr', 'de'])
-    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr', 'de'])
+    expect(links(w).map((a) => a.attributes('lang'))).toEqual(['en', 'tr', 'de', 'bg'])
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr', 'de', 'bg'])
     expect(menu(w).findAll('button')).toHaveLength(0)
   })
 
@@ -124,6 +131,16 @@ describe('LanguageSwitcher dropdown menu', () => {
     expect(tr!.attributes('href')).toBe('/tr/iletisim?service=operations-supply-chain')
   })
 
+  it('on a BG page marks BG current and links EN, TR and DE', async () => {
+    const w = await open(await mount('/bg/kontakti?service=operations-supply-chain'))
+    const [en, tr, de, bg] = links(w)
+    expect(bg!.attributes('aria-current')).toBe('true')
+    for (const other of [en, tr, de]) expect(other!.attributes('aria-current')).toBeUndefined()
+    expect(en!.attributes('href')).toBe('/contact?service=operations-supply-chain')
+    expect(de!.attributes('href')).toBe('/de/kontakt?service=operations-supply-chain')
+    expect(bg!.attributes('href')).toBe('/bg/kontakti?service=operations-supply-chain')
+  })
+
   it('has the canvas menu spec: right-aligned under the button, min 168px, 4px padding, menu shadow, 44px rows', async () => {
     const w = await open(await mount('/'))
     expect(menu(w).classes()).toEqual(
@@ -135,14 +152,15 @@ describe('LanguageSwitcher dropdown menu', () => {
 
 describe('LanguageSwitcher links', () => {
   it('link to the other locale of the current page', async () => {
-    expect(hrefs(await mount('/about'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
-    expect(hrefs(await mount('/de/ueber-uns'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
+    expect(hrefs(await mount('/about'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns', '/bg/za-nas'])
+    expect(hrefs(await mount('/de/ueber-uns'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns', '/bg/za-nas'])
+    expect(hrefs(await mount('/bg/za-nas'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns', '/bg/za-nas'])
   })
 
   it('render the same hrefs in the closed (server-rendered) menu', async () => {
     const w = await mount('/how-we-work')
     expect(menu(w).attributes('hidden')).toBeDefined()
-    expect(hrefs(w)).toEqual(['/how-we-work', '/tr/nasil-calisiyoruz', '/de/so-arbeiten-wir'])
+    expect(hrefs(w)).toEqual(['/how-we-work', '/tr/nasil-calisiyoruz', '/de/so-arbeiten-wir', '/bg/kak-rabotim'])
   })
 
   it('keep the query on the TR link of /contact?service=...', async () => {
@@ -151,17 +169,19 @@ describe('LanguageSwitcher links', () => {
       '/contact?service=operations-supply-chain',
       '/tr/iletisim?service=operations-supply-chain',
       '/de/kontakt?service=operations-supply-chain',
+      '/bg/kontakti?service=operations-supply-chain',
     ])
   })
 
   // The layout renders the switcher before the page's setup (and its useSetI18nParams) runs on the server, so the
   // counterpart must come from ROUTES for every service page, in both directions.
-  it.each(serviceSlugs)('link service page %s to its counterpart slug in every direction (en/tr/de), without any i18n params set', async (slug) => {
+  it.each(serviceSlugs)('link service page %s to its counterpart slug in every direction (en/tr/de/bg), without any i18n params set', async (slug) => {
     const name = `services/${slug}` as keyof typeof ROUTES
-    const { en, tr, de } = ROUTES[name]
-    expect(hrefs(await mount(en))).toEqual([en, tr, de])
-    expect(hrefs(await mount(tr))).toEqual([en, tr, de])
-    expect(hrefs(await mount(de))).toEqual([en, tr, de])
+    const { en, tr, de, bg } = ROUTES[name]
+    expect(hrefs(await mount(en))).toEqual([en, tr, de, bg])
+    expect(hrefs(await mount(tr))).toEqual([en, tr, de, bg])
+    expect(hrefs(await mount(de))).toEqual([en, tr, de, bg])
+    expect(hrefs(await mount(bg))).toEqual([en, tr, de, bg])
   })
 
   it('cover exactly the five service pages', () => {
@@ -254,24 +274,34 @@ describe('LanguageSwitcher with TR disabled', () => {
   afterEach(() => {
     config().enableTr = true
     config().enableDe = true
+    config().enableBg = true
   })
 
-  it('lists only EN and DE when enableTr is false', async () => {
+  it('lists only EN, DE and BG when enableTr is false', async () => {
     config().enableTr = false
     const w = await mount('/about')
-    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'de'])
-    expect(hrefs(w)).toEqual(['/about', '/de/ueber-uns'])
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'de', 'bg'])
+    expect(hrefs(w)).toEqual(['/about', '/de/ueber-uns', '/bg/za-nas'])
   })
 
-  it('lists only EN and TR when enableDe is false', async () => {
+  it('lists only EN, TR and BG when enableDe is false', async () => {
     config().enableDe = false
     const w = await mount('/about')
-    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr'])
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr', 'bg'])
   })
 
-  it('renders nothing when both enableTr and enableDe are false', async () => {
+  it('lists only EN, TR and DE when enableBg is false (BG absent from the switcher)', async () => {
+    config().enableBg = false
+    const w = await mount('/about')
+    expect(links(w).map((a) => a.attributes('hreflang'))).toEqual(['en', 'tr', 'de'])
+    expect(hrefs(w).some((h) => h?.startsWith('/bg'))).toBe(false)
+    expect(w.text()).not.toContain('Български')
+  })
+
+  it('renders nothing when enableTr, enableDe and enableBg are all false', async () => {
     config().enableTr = false
     config().enableDe = false
+    config().enableBg = false
     const w = await mount('/')
     expect(w.find('button').exists()).toBe(false)
     expect(w.findAll('a')).toHaveLength(0)
@@ -293,6 +323,7 @@ describe('LanguageSwitcher on an unmatched path (404)', () => {
         ['en', '/'],
         ['tr', '/tr'],
         ['de', '/de'],
+        ['bg', '/bg'],
       ])
     } finally {
       remove()

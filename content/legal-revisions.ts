@@ -1,10 +1,10 @@
 /**
  * Legal text we wrote ourselves after the legal-pages review of 2026-11-01
  * (docs/superpowers/reviews/2026-11-01-legal-pages-review.md). None of it is owner-approved package copy: the EN is
- * our draft for the lawyer, TR and DE translate that draft. `npm run unreviewed:legal` renders every entry with its
- * EN, TR and DE text (read from the content modules and the locale json files) to i18n/UNREVIEWED_LEGAL.md.
+ * our draft for the lawyer, TR, DE and BG translate that draft. `npm run unreviewed:legal` renders every entry with its
+ * EN, TR, DE and BG text (read from the content modules and the locale json files) to i18n/UNREVIEWED_LEGAL.md.
  *
- * Tests hold the lists to the content (tests/unit/legal-revisions.test.ts): every listed path exists in all three
+ * Tests hold the lists to the content (tests/unit/legal-revisions.test.ts): every listed path exists in all four
  * locales and its EN is not package text; the content tests accept a non-package legal string only when its path is
  * listed here; every removed package string below is really gone from the page and is the only package text a legal
  * page may drop (tests/unit/content.test.ts, tests/e2e/fidelity/extract.ts).
@@ -64,7 +64,7 @@ export const LEGAL_REVISIONS: LegalRevision[] = [
 ]
 
 /**
- * UI microcopy keys (i18n/locales/{en,tr,de}.json) written for the legal fixes: the contact-form acknowledgement (S2),
+ * UI microcopy keys (i18n/locales/{en,tr,de,bg}.json) written for the legal fixes: the contact-form acknowledgement (S2),
  * the cookie inventory rows and settings note (B2, S3), the last-updated line (S5) and the cross-links (N3).
  */
 export const LEGAL_REVISION_UI_KEYS: { key: string; finding: string }[] = [

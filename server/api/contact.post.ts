@@ -29,7 +29,8 @@ const MAX_BODY_BYTES = 32 * 1024
 const isDev = () => import.meta.dev === true
 
 /**
- * Whether a locale is switched on (NUXT_PUBLIC_ENABLE_TR / NUXT_PUBLIC_ENABLE_DE, read at request time). A redirect
+ * Whether a locale is switched on (NUXT_PUBLIC_ENABLE_TR / NUXT_PUBLIC_ENABLE_DE / NUXT_PUBLIC_ENABLE_BG, read at
+ * request time). A redirect
  * for a disabled locale goes to the EN path instead.
  */
 const localeEnabled = (env: RuntimeEnv, l: Locale) => enabledLocales(localeOptionsFromEnv(env)).includes(l)
