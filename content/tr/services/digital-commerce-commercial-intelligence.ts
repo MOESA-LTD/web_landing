@@ -44,7 +44,7 @@ const content: ServicePageContent = {
       'Marketplace operasyonları',
       'D2C web sitesi operasyonları',
       'Fiyatlandırma ve promosyon desteği',
-      'Stok yönetimi ve stok yenileme',
+      'Stok ve replenishment',
       'Performans ve ticari içgörü',
       'Müşteri sesi',
     ],

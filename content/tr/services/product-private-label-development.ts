@@ -34,7 +34,7 @@ const content: ServicePageContent = {
       'Ticari ve ürün briefi',
       'Kategori ve pazar değerlendirmesi',
       'Ürün mimarisi',
-      'Tedarikçi ve üretici seçimi',
+      'Supplier ve üretici seçimi',
       'Spesifikasyon ve teknik hazırlık',
       'Numuneler ve geliştirme turları',
       'Kalite güvencesi (QA) ve uygunluk koordinasyonu',
@@ -49,7 +49,7 @@ const content: ServicePageContent = {
     items: [
       'Gereksiz tekrarları önler',
       'Gelecekteki portföy genişlemesini destekler',
-      'Tedarikçi iletişimini iyileştirir',
+      'Supplier iletişimini iyileştirir',
       'Katalog ve stok yönetimini kolaylaştırır',
     ],
     steps: [
@@ -78,7 +78,7 @@ const content: ServicePageContent = {
   },
   responsibilities: {
     title: 'Müşterinin ve MOESA’nın sorumlulukları',
-    body: 'Marka stratejisi, bütçe, hedef pazar kararları ve ürün, tedarikçi, numune, ambalaj ve üretimle ilgili final onaylar müşteride kalır. MOESA geliştirme yapısını ve fonksiyonlar arası uygulamayı yönetir.',
+    body: 'Marka stratejisi, bütçe, hedef pazar kararları ve ürün, supplier, numune, ambalaj ve üretimle ilgili final onaylar müşteride kalır. MOESA geliştirme yapısını ve fonksiyonlar arası uygulamayı yönetir.',
   },
   finalCta: {
     title: 'Projeyi görüşelim.',

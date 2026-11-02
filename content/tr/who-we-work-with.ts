@@ -24,7 +24,7 @@ const content: WhoWeWorkWithContent = {
         'Kategori ve ürün çeşitliliği geliştirme',
         'Private-label portföyler',
         'Yönetilen satın alma',
-        'Çoklu tedarikçi koordinasyonu',
+        'Çoklu supplier koordinasyonu',
         'Tedarik sürekliliği',
         'Uluslararası lojistik ve teslimat',
       ],
@@ -32,14 +32,14 @@ const content: WhoWeWorkWithContent = {
     {
       title: 'Toptancılar ve Distribütörler',
       condensed: 'Uluslararası marka sourcing, portföy genişletme, ticari anlaşmalar, özel/private-label ürünler, satın alma, stok ve replenishment.',
-      body: 'Ulusal veya bölgesel distribütörler, kategori uzmanları, ithalatçılar, B2B tedarikçiler, cash-and-carry işletmecileri ve çok markalı portföy işletmeleri için.',
+      body: 'Ulusal veya bölgesel distribütörler, kategori uzmanları, ithalatçılar, B2B supplier’lar, cash-and-carry işletmecileri ve çok markalı portföy işletmeleri için.',
       items: [
-        'Uluslararası marka tedariki',
+        'Uluslararası marka sourcing’i',
         'Portföy genişletme',
         'Ticari ve bölge anlaşmaları',
         'Münhasır veya kendi markalı ürünler',
         'Satın alma ve lojistik',
-        'Stok yönetimi ve stok yenileme',
+        'Stok ve replenishment',
       ],
     },
     {
@@ -49,7 +49,7 @@ const content: WhoWeWorkWithContent = {
       items: [
         'Yeni ürün ve kategori geliştirme',
         'Ürün ailesi mimarisi',
-        'Tedarikçi ve üretici koordinasyonu',
+        'Supplier ve üretici koordinasyonu',
         'Ambalaj ve konumlandırma',
         'E-ticaret operasyonları',
         'Müşteri geri bildirimi ve portföy iyileştirme',
@@ -58,7 +58,7 @@ const content: WhoWeWorkWithContent = {
     {
       title: 'Üreticiler',
       condensed: 'Avrupa pazara giriş, distribütör/perakendeci, ticari temsil, pazar uyarlaması, ithalat/depo ve yerel operasyon.',
-      body: 'Avrupa’da alıcı veya operasyon arayan nihai ürün üreticileri, OEM ve private-label üreticileri, bileşen tedarikçileri ve ihracat odaklı üreticiler için.',
+      body: 'Avrupa’da alıcı veya operasyon arayan nihai ürün üreticileri, OEM ve private-label üreticileri, bileşen supplier’ları ve ihracat odaklı üreticiler için.',
       items: [
         'Avrupa pazarına giriş',
         'Distribütör ve perakendeci ağı geliştirme',
@@ -72,17 +72,17 @@ const content: WhoWeWorkWithContent = {
       condensed: 'Ürün/private label, listing/katalog, marketplace/D2C, stok/replenishment, performans ve müşteri içgörüsü.',
       body: 'Amazon üzerinde faaliyet gösteren işletmeler, çoklu marketplace işletmeleri, D2C markaları, online perakendeciler, omnichannel şirketler ve sınır ötesi e-ticaret işletmecileri için.',
       items: [
-        'Ürün tedariki ve private label',
+        'Ürün sourcing’i ve private label',
         'Listing ve katalog operasyonları',
         'Marketplace ve D2C yönetimi',
-        'Stok yönetimi ve stok yenileme',
+        'Stok ve replenishment',
         'Performans ve müşteri içgörüsü',
       ],
     },
   ],
   seekingBrands: {
     title: 'Uluslararası marka arayan alıcılar',
-    body: 'Müşteri satın almak istediği markayı veya ürünü zaten biliyor olabilir. MOESA ilgili ticari tarafı belirler, iletişimi başlatır ve tedarik, görüşme ve satın alma süreçlerini koordine eder.',
+    body: 'Müşteri satın almak istediği markayı veya ürünü zaten biliyor olabilir. MOESA ilgili ticari tarafı belirler, iletişimi başlatır ve sourcing, görüşme ve satın alma süreçlerini koordine eder.',
   },
   noInternalProcurement: {
     title: 'Dış kaynaklı satın alma',
@@ -92,7 +92,7 @@ const content: WhoWeWorkWithContent = {
     title: 'Çalışma modeli seçim rehberi',
     rows: [
       {
-        need: 'Belirli bir marka veya tedarikçiye ihtiyacınız var',
+        need: 'Belirli bir marka veya supplier’a ihtiyacınız var',
         target: 'Tedarik ve Yönetilen Satın Alma',
         service: 'sourcing-managed-procurement',
       },
