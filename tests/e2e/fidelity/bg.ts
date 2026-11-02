@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { content as bg } from '../../../content/bg/index'
 import type { PageKey } from '../../../content/types'
-import { OPEN_PREFIX, type FidelityExclusion } from './extract'
+import { isLegalReviewNote, type FidelityExclusion } from './extract'
 
 const here: string = import.meta.dirname ?? __dirname
 const bgJson = JSON.parse(readFileSync(resolve(here, '../../../i18n/locales/bg.json'), 'utf8'))
@@ -61,15 +61,22 @@ export const BG_FIDELITY_EXCLUSIONS: Partial<Record<PageKey, (FidelityExclusion 
   ],
 }
 
+const LEGAL_PAGES = new Set<PageKey>(['privacy-policy', 'cookie-policy', 'legal-notice'])
+
+/** Legal review notes, as for DE (fidelity/de.ts): the `status` leaf and the OPEN paragraphs show on Preview only. */
+const isBgLegalReviewNote = (page: PageKey, l: Leaf) => LEGAL_PAGES.has(page) && (l.path === 'status' || isLegalReviewNote(l.value))
+
 /** The strings a BG page must show inside `<main>`: every copy leaf of its module, minus exclusions, plus their renderedAs. */
 export function bgStringsFor(page: PageKey): string[] {
   const exclusions = BG_FIDELITY_EXCLUSIONS[page] ?? []
   const copy = leaves(bg[page]).filter(
-    (l) => !STRUCTURAL_KEYS.has(l.key) && !l.path.startsWith('meta.') && !exclusions.some((e) => e.path.test(l.path)),
+    (l) =>
+      !STRUCTURAL_KEYS.has(l.key) &&
+      !l.path.startsWith('meta.') &&
+      !exclusions.some((e) => e.path.test(l.path)) &&
+      !isBgLegalReviewNote(page, l),
   )
-  // Legal OPEN items show the "Открито" chip instead of the md marker "OPEN / AÇIK - " (see approvedStringsFor).
-  const shown = copy.map((l) => (l.value.startsWith(OPEN_PREFIX) ? l.value.slice(OPEN_PREFIX.length) : l.value))
-  return [...new Set([...shown, ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
+  return [...new Set([...copy.map((l) => l.value), ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
 }
 
 /** The BG meta title and description of a page. */

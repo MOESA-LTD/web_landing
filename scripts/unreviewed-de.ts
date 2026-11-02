@@ -54,7 +54,8 @@ export function renderUnreviewedDeMd(): string {
     `${same} strings are deliberately the same as in EN (company name, address, email, the legal draft status, established`,
     'English terms such as "Digital Commerce & Commercial Intelligence"). Links, slugs and ids are not translated and',
     'not listed. Legal pages remain drafts: they keep the package status line in the draft chip and every',
-    '"OPEN / AÇIK - " item, and the German Impressum and Datenschutzerklärung need a German legal review before launch.',
+    '"OPEN / AÇIK - " item (both shown on Preview deployments only), and the German Impressum and Datenschutzerklärung',
+    'need a German legal review before launch.',
   ]
   for (const page of pages) {
     const entries = UNREVIEWED_DE.filter((e) => e.page === page)

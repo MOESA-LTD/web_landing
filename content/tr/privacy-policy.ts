@@ -68,7 +68,7 @@ const content: LegalContent = {
       ],
       paragraphs: [
         'Her sağlayıcı, bir veri işleme sözleşmesi kapsamında veri işleyenimiz olarak hareket eder.',
-        'OPEN / AÇIK - Talebinizin ulaştığı info@moesaltd.com posta kutusunu barındıran sağlayıcı teyit edilecek.',
+        'Talebinizin ulaştığı info@moesaltd.com posta kutusu Namecheap, Inc. (Private Email, ABD) tarafından barındırılır.',
       ],
     },
     {

@@ -68,7 +68,7 @@ const content: LegalContent = {
       ],
       paragraphs: [
         'Jeder Anbieter ist auf Grundlage eines Auftragsverarbeitungsvertrags für uns tätig.',
-        'OPEN / AÇIK - Der Anbieter des Postfachs info@moesaltd.com, bei dem Ihre Anfrage eingeht, ist noch zu bestätigen.',
+        'Das Postfach info@moesaltd.com, bei dem Ihre Anfrage eingeht, wird von Namecheap, Inc. (Private Email, USA) bereitgestellt.',
       ],
     },
     {

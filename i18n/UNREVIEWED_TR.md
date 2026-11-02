@@ -20,7 +20,8 @@ Approved TR text from the package is not changed and is not listed here, with tw
 Source: `content/tr/unreviewed.ts`; the strings are used verbatim in `content/tr/*.ts`. The path is the field in the
 page module (legal sections are addressed by id). Where the TR package condensed an EN list into one sentence, that
 approved sentence is kept (field `condensed`) and the list items below are added next to it. Legal pages remain
-drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections need legal review like the EN ones.
+drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED", shown on Preview deployments only); their translated sections
+need legal review like the EN ones.
 
 ### services (22)
 

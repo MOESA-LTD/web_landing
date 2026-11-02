@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { content as de } from '../../../content/de/index'
 import type { PageKey } from '../../../content/types'
-import { OPEN_PREFIX, type FidelityExclusion } from './extract'
+import { isLegalReviewNote, type FidelityExclusion } from './extract'
 
 const here: string = import.meta.dirname ?? __dirname
 const deJson = JSON.parse(readFileSync(resolve(here, '../../../i18n/locales/de.json'), 'utf8'))
@@ -61,15 +61,26 @@ export const DE_FIDELITY_EXCLUSIONS: Partial<Record<PageKey, (FidelityExclusion 
   ],
 }
 
+const LEGAL_PAGES = new Set<PageKey>(['privacy-policy', 'cookie-policy', 'legal-notice'])
+
+/**
+ * Legal review notes (as `isLegalReviewNote` in extract.ts): on the three legal pages, the `status` leaf (the Draft
+ * chip text) and every "OPEN / AÇIK - " paragraph are shown on Preview deployments only, so they are not checked
+ * against the production build. Exactly those leaves; every other DE legal string still is.
+ */
+const isDeLegalReviewNote = (page: PageKey, l: Leaf) => LEGAL_PAGES.has(page) && (l.path === 'status' || isLegalReviewNote(l.value))
+
 /** The strings a DE page must show inside `<main>`: every copy leaf of its module, minus exclusions, plus their renderedAs. */
 export function deStringsFor(page: PageKey): string[] {
   const exclusions = DE_FIDELITY_EXCLUSIONS[page] ?? []
   const copy = leaves(de[page]).filter(
-    (l) => !STRUCTURAL_KEYS.has(l.key) && !l.path.startsWith('meta.') && !exclusions.some((e) => e.path.test(l.path)),
+    (l) =>
+      !STRUCTURAL_KEYS.has(l.key) &&
+      !l.path.startsWith('meta.') &&
+      !exclusions.some((e) => e.path.test(l.path)) &&
+      !isDeLegalReviewNote(page, l),
   )
-  // Legal OPEN items show the "Offen" chip instead of the md marker "OPEN / AÇIK - " (see approvedStringsFor).
-  const shown = copy.map((l) => (l.value.startsWith(OPEN_PREFIX) ? l.value.slice(OPEN_PREFIX.length) : l.value))
-  return [...new Set([...shown, ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
+  return [...new Set([...copy.map((l) => l.value), ...exclusions.flatMap((e) => e.renderedAs ?? [])])]
 }
 
 /** The DE meta title and description of a page. */

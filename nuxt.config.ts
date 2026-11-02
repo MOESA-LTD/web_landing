@@ -125,6 +125,11 @@ export default defineNuxtConfig({
       // NUXT_PUBLIC_ANALYTICS_ID. Empty in v1: the cookie banner (layouts/default.vue) shows only when it is set and
       // no choice is stored. No analytics script is loaded either way; a future loader must also check the consent.
       analyticsId: process.env.NUXT_PUBLIC_ANALYTICS_ID ?? '',
+      // NUXT_PUBLIC_LEGAL_REVIEW_NOTES. "true" shows the legal pages' review notes (the Draft status chip and the OPEN
+      // notes) for the lawyer and the owner: set in the Pages Preview environment only (wrangler.toml
+      // [env.preview.vars]). Unset (production) → hidden. The legal pages are rendered by the server per request (not
+      // prerendered), where Nitro's NUXT_PUBLIC_* override applies; the build-time value covers a prerendered page.
+      legalReviewNotes: process.env.NUXT_PUBLIC_LEGAL_REVIEW_NOTES === 'true',
     },
   },
   nitro: {
