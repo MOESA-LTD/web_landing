@@ -1,7 +1,7 @@
 import type { LegalContent } from './legal'
 
 /**
- * From MOESA_Website_Package_v1.0/content/en/privacy-policy.md, with the draft sections rewritten after the legal
+ * From content/approved/en/privacy-policy.md, with the draft sections rewritten after the legal
  * review of 2026-11-01 (B1, S1, S4, B4) to describe what the website actually does. Every string that is not
  * verbatim package text is listed in ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md) for the lawyer; the removed
  * package strings are listed there too. OPEN items still need owner facts.

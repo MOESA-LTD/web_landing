@@ -16,7 +16,7 @@ export interface AboutContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/about.md */
+/** Verbatim from content/approved/en/about.md */
 const content: AboutContent = {
   meta: {
     path: '/about',

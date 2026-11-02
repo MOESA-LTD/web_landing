@@ -1,7 +1,7 @@
 import type { LegalContent } from '../en/legal'
 
 /**
- * From MOESA_Website_Package_v1.0/content/tr/legal-notice.md, plus the translations listed in ./unreviewed.ts.
+ * From content/approved/tr/legal-notice.md, plus the translations listed in ./unreviewed.ts.
  * The draft notes were rewritten after the legal review of 2026-11-01, in step with EN, and the register labels are
  * Turkish: those strings are listed in ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md), as are the removed package
  * strings. Legal pages stay drafts until legal review.

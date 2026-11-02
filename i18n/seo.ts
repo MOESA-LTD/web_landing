@@ -82,7 +82,7 @@ export function buildPageSeo(
   return { title: meta.title, htmlAttrs: { lang: locale }, meta: tags, link }
 }
 
-/** The brand fields the Organization JSON-LD is built from (data/brand_tokens.json). */
+/** The brand fields the Organization JSON-LD is built from (content/data/brand_tokens.json). */
 export interface OrganizationSource {
   email: string
   phone: string

@@ -7,7 +7,9 @@ hosted on Cloudflare Pages.
 
 ## Content
 
-- English copy comes verbatim from the approved package in `MOESA_Website_Package_v1.0/`.
+- The approved copy lives in `content/approved/{en,tr}/*.md` and the site data (brand tokens, navigation, contact
+  form, page map) in `content/data/*.json`, both taken unchanged from MOESA_Website_Package v1.0. English copy comes
+  verbatim from the approved copy; the page modules in `content/<locale>/` name their source md.
 - TR, DE and BG are our translations where no approved text exists; every such string is listed in
   `i18n/UNREVIEWED_{TR,DE,BG}.md`. Legal text we wrote is listed in `i18n/UNREVIEWED_LEGAL.md`.
   Regenerate the lists with `npm run unreviewed:tr|de|bg|legal`.

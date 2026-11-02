@@ -11,7 +11,7 @@ export interface UnreviewedTr {
 }
 
 /**
- * Every TR page string that is not a whole approved unit of its page's MOESA_Website_Package_v1.0/content/tr md
+ * Every TR page string that is not a whole approved unit of its page's content/approved/tr md
  * (heading, paragraph, list item, arrow step, CTA, metadata value): translated by us from the approved EN, or a
  * fragment cut from an approved line (e.g. the 404 page names), awaiting the user's review. Approved TR text is
  * never listed here and never edited.

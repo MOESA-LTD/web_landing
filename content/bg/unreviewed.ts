@@ -5,7 +5,7 @@ export interface UnreviewedBg {
   page: PageKey | 'site'
   /** Dotted content path in the page module, e.g. `audiences[0].items[2]`; legal sections by id: `sections[controller].title`. */
   path: string
-  /** The approved EN string at the same path (content/en, verbatim from MOESA_Website_Package_v1.0/content/en). */
+  /** The approved EN string at the same path (content/en, verbatim from content/approved/en). */
   en: string
   /** Our Bulgarian translation, used verbatim in content/bg. */
   bg: string

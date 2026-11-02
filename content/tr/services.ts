@@ -1,6 +1,6 @@
 import type { ServicesContent } from '../en/services'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/services.md, plus the translations listed in ./unreviewed.ts. */
+/** Verbatim from content/approved/tr/services.md, plus the translations listed in ./unreviewed.ts. */
 const content: ServicesContent = {
   meta: {
     path: '/services',

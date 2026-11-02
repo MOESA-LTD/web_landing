@@ -1,6 +1,6 @@
 import type { ContactContent } from '../en/contact'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/contact.md, plus the translations listed in ./unreviewed.ts. */
+/** Verbatim from content/approved/tr/contact.md, plus the translations listed in ./unreviewed.ts. */
 const content: ContactContent = {
   meta: {
     path: '/contact',

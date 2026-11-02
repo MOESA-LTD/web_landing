@@ -1,6 +1,6 @@
 import type { WhoWeWorkWithContent } from '../en/who-we-work-with'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/who-we-work-with.md, plus the translations listed in ./unreviewed.ts. */
+/** Verbatim from content/approved/tr/who-we-work-with.md, plus the translations listed in ./unreviewed.ts. */
 const content: WhoWeWorkWithContent = {
   meta: {
     path: '/who-we-work-with',

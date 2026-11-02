@@ -1,7 +1,7 @@
 import type { LegalContent } from './legal'
 
 /**
- * From MOESA_Website_Package_v1.0/content/en/cookie-policy.md, with the draft sections rewritten after the legal
+ * From content/approved/en/cookie-policy.md, with the draft sections rewritten after the legal
  * review of 2026-11-01 (B2, S3, B4) to describe the cookies and similar technologies the website actually uses. Every
  * string that is not verbatim package text is listed in ../legal-revisions.ts (i18n/UNREVIEWED_LEGAL.md) for the
  * lawyer; the removed package strings are listed there too. The inventory table itself is rendered by

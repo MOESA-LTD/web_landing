@@ -9,7 +9,7 @@ export interface FidelityRoute {
 
 /**
  * Routes checked by content-fidelity.spec.ts against their approved md. EN pages are checked against
- * PKG/content/en and TR pages against PKG/content/tr. Page tasks append their routes here.
+ * content/approved/en and TR pages against content/approved/tr. Page tasks append their routes here.
  */
 export const FIDELITY_ROUTES: FidelityRoute[] = [
   { route: '/', md: 'home.md', locale: 'en' },

@@ -23,7 +23,7 @@ export interface WhoWeWorkWithContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/who-we-work-with.md */
+/** Verbatim from content/approved/en/who-we-work-with.md */
 const content: WhoWeWorkWithContent = {
   meta: {
     path: '/who-we-work-with',

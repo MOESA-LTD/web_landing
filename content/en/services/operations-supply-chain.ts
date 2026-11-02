@@ -1,6 +1,6 @@
 import type { ServicePageContent } from '../service-page'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/services__operations-supply-chain.md */
+/** Verbatim from content/approved/en/services__operations-supply-chain.md */
 const content: ServicePageContent = {
   meta: {
     path: '/services/operations-supply-chain',
