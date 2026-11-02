@@ -1,6 +1,6 @@
 import type { MessageContent } from './message'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/404.md */
+/** Verbatim from content/approved/en/404.md */
 const content: MessageContent = {
   meta: {
     path: '/404',

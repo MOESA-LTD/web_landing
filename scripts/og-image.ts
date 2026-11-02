@@ -2,7 +2,7 @@
  * Renders public/og-default.png (1200×630), the default Open Graph / Twitter image of every page.
  *
  * An HTML template on the dark navy ground (#102C49) with the DS `bars` motif (LineMotif.vue: two slanted bars,
- * cyan over blue) and the typeset name "MOESA LTD." plus the EN descriptor from data/brand_tokens.json, in Manrope
+ * cyan over blue) and the typeset name "MOESA LTD." plus the EN descriptor from content/data/brand_tokens.json, in Manrope
  * (the self-hosted @fontsource-variable/manrope file, embedded as a data URI). No network access: everything the
  * page uses comes from the repo. Screenshot by Playwright's Chromium.
  *
@@ -16,7 +16,7 @@ import { chromium } from '@playwright/test'
 
 const root = resolve(import.meta.dirname, '..')
 const brand = JSON.parse(
-  readFileSync(resolve(root, 'MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0/data/brand_tokens.json'), 'utf8'),
+  readFileSync(resolve(root, 'content/data/brand_tokens.json'), 'utf8'),
 ) as { name: string; descriptor_en: string; colors: Record<string, string> }
 const font = readFileSync(
   resolve(root, 'node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'),

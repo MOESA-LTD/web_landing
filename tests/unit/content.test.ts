@@ -10,7 +10,7 @@ import { UNREVIEWED_UI_KEYS } from '../../i18n/unreviewed-ui'
 import { renderUnreviewedMd } from '../../scripts/unreviewed-tr'
 
 const root = resolve(__dirname, '../..')
-const PKG = resolve(root, 'MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0')
+const CONTENT = resolve(root, 'content')
 
 interface PageMapRow {
   URL: string
@@ -18,7 +18,7 @@ interface PageMapRow {
   'Turkish File': string
 }
 
-const readJson = <T>(rel: string): T => JSON.parse(readFileSync(resolve(PKG, rel), 'utf8')) as T
+const readJson = <T>(rel: string): T => JSON.parse(readFileSync(resolve(CONTENT, rel), 'utf8')) as T
 const pageMap = readJson<PageMapRow[]>('data/page_map.json')
 const navigationJson = readJson<{
   primary: { label: string; href: string }[]
@@ -34,7 +34,7 @@ const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
 function readMd(locale: Locale, key: PageKey) {
   const row = pageMap.find((r) => keyOf(r.URL) === key)!
   const file = locale === 'en' ? row['English File'] : row['Turkish File']
-  return readFileSync(resolve(PKG, 'content', locale, file), 'utf8')
+  return readFileSync(resolve(CONTENT, 'approved', locale, file), 'utf8')
 }
 
 function metaField(md: string, label: string): string {
@@ -324,8 +324,8 @@ describe('UI microcopy json', () => {
 
   const unreviewed = new Set<string>(UNREVIEWED_UI_KEYS)
 
-  const trCorpus = readdirSync(resolve(PKG, 'content/tr'))
-    .map((f) => readFileSync(resolve(PKG, 'content/tr', f), 'utf8'))
+  const trCorpus = readdirSync(resolve(CONTENT, 'approved/tr'))
+    .map((f) => readFileSync(resolve(CONTENT, 'approved/tr', f), 'utf8'))
     .join('\n')
     .toLowerCase()
 

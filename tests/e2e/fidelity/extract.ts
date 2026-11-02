@@ -1,5 +1,5 @@
 /**
- * Content-fidelity oracle: the approved strings of a package md (MOESA_Website_Package_v1.0/content/{en,tr}/*.md)
+ * Content-fidelity oracle: the approved strings of a package md (content/approved/{en,tr}/*.md)
  * that a rendered page must contain. Used by tests/e2e/content-fidelity.spec.ts for every route.
  */
 import { readFileSync } from 'node:fs'
@@ -10,11 +10,11 @@ export type FidelityLocale = 'en' | 'tr'
 
 /** `import.meta.dirname` under Node/Playwright; vitest's nuxt environment provides `__dirname` instead. */
 const here: string = import.meta.dirname ?? __dirname
-const PKG_CONTENT = resolve(here, '../../../MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0/content')
+const APPROVED = resolve(here, '../../../content/approved')
 
 /** Absolute path of a package md, e.g. `mdPath('tr', 'home.md')`. */
 export function mdPath(locale: FidelityLocale, file: string): string {
-  return resolve(PKG_CONTENT, locale, file)
+  return resolve(APPROVED, locale, file)
 }
 
 const normalise = (s: string) => s.replace(/\s+/g, ' ').trim()

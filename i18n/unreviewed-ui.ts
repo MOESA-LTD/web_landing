@@ -1,5 +1,5 @@
 /**
- * Keys of i18n/locales/{en,tr}.json whose TR value has no source in MOESA_Website_Package_v1.0/content/tr:
+ * Keys of i18n/locales/{en,tr}.json whose TR value has no source in content/approved/tr:
  * we translated them, and they are listed in i18n/UNREVIEWED_TR.md for the user to review.
  * The rendered file takes the EN and TR values from the json files, so it cannot drift from them.
  */

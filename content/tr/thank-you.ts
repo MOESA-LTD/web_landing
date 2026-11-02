@@ -1,6 +1,6 @@
 import type { MessageContent } from '../en/message'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/thank-you.md, plus the translations listed in ./unreviewed.ts. */
+/** Verbatim from content/approved/tr/thank-you.md, plus the translations listed in ./unreviewed.ts. */
 const content: MessageContent = {
   meta: {
     path: '/thank-you',

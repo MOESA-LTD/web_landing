@@ -1,6 +1,6 @@
 import type { HowWeWorkContent } from '../en/how-we-work'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/how-we-work.md, plus the translations listed in ./unreviewed.ts. */
+/** Verbatim from content/approved/tr/how-we-work.md, plus the translations listed in ./unreviewed.ts. */
 const content: HowWeWorkContent = {
   meta: {
     path: '/how-we-work',

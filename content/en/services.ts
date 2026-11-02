@@ -17,7 +17,7 @@ export interface ServicesContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/services.md */
+/** Verbatim from content/approved/en/services.md */
 const content: ServicesContent = {
   meta: {
     path: '/services',

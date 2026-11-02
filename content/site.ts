@@ -1,10 +1,10 @@
 /**
- * Site-wide data from the approved package (data/*.json). Labels here are the EN labels;
+ * Site-wide data from the approved site data (content/data/*.json). Labels here are the EN labels;
  * TR UI labels live in i18n/locales/tr.json.
  */
-import brandTokens from '#pkg/data/brand_tokens.json'
-import contactFormJson from '#pkg/data/contact_form.json'
-import navigationJson from '#pkg/data/navigation.json'
+import brandTokens from './data/brand_tokens.json'
+import contactFormJson from './data/contact_form.json'
+import navigationJson from './data/navigation.json'
 import type { Cta, PageKey, ServiceSlug } from './types'
 
 export const brand = brandTokens

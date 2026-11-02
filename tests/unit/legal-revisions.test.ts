@@ -15,7 +15,7 @@ import { flattenMessages } from './helpers/content-tree'
  * direction: a non-package legal string must be listed here.)
  */
 const root = resolve(__dirname, '../..')
-const PKG = resolve(root, 'MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0/content')
+const APPROVED = resolve(root, 'content/approved')
 const key = (page: string, path: string) => `${page}|${path}`
 const messages = (l: string) => flattenMessages(JSON.parse(readFileSync(resolve(root, `i18n/locales/${l}.json`), 'utf8')))
 
@@ -33,7 +33,7 @@ describe('LEGAL_REVISIONS', () => {
   it('lists only text we wrote: the EN is not package text, and TR/DE/BG differ from EN', () => {
     for (const r of LEGAL_REVISIONS) {
       // Whole md lines (headings, list items, paragraphs), so a shortened package sentence still counts as ours.
-      const mdLines = readFileSync(resolve(PKG, 'en', `${r.page}.md`), 'utf8')
+      const mdLines = readFileSync(resolve(APPROVED, 'en', `${r.page}.md`), 'utf8')
         .split(/\r?\n/)
         .map((l) => l.replace(/^(#{1,6}|-)\s+/, '').trim())
       const en = legalAt(r.page, 'en', r.path) as string
@@ -75,7 +75,7 @@ describe('LEGAL_REVISION_UI_KEYS', () => {
 describe('LEGAL_REMOVED', () => {
   it('names package strings of that locale and page', () => {
     for (const r of LEGAL_REMOVED) {
-      const md = readFileSync(resolve(PKG, r.locale, `${r.page}.md`), 'utf8')
+      const md = readFileSync(resolve(APPROVED, r.locale, `${r.page}.md`), 'utf8')
       expect(md.includes(r.text), `${r.locale} ${r.page}: ${r.text}`).toBe(true)
     }
   })

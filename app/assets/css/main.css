@@ -3,7 +3,7 @@
 
 /*
  * MOESA design tokens (Tailwind v4, CSS-first).
- * Colour source: MOESA_Website_Package_v1.0/data/brand_tokens.json plus the newer design system
+ * Colour source: content/data/brand_tokens.json plus the newer design system
  * (line-strong, danger, danger-tint, mist-blue, navy-line). Pinned by tests/unit/tokens.test.ts.
  */
 @theme {

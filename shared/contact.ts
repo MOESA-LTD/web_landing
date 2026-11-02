@@ -3,7 +3,7 @@
  * field names, limits, error codes and the `?service=` preselect table. Plain TypeScript, no Nuxt or zod imports,
  * so the client bundle stays small. The server validates again with zod; both produce the same error codes.
  */
-import contactFormJson from '../MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0/data/contact_form.json'
+import contactFormJson from '../content/data/contact_form.json'
 import type { ServiceSlug } from '../content/types'
 
 /** The only accepted `service` values: contact_form.json `service_options` (EN), whatever the UI locale. */

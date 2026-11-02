@@ -16,7 +16,7 @@ export interface HomeContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/home.md */
+/** Verbatim from content/approved/en/home.md */
 const content: HomeContent = {
   meta: {
     path: '/',

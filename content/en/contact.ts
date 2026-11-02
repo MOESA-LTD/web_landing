@@ -24,7 +24,7 @@ export interface ContactContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/contact.md */
+/** Verbatim from content/approved/en/contact.md */
 const content: ContactContent = {
   meta: {
     path: '/contact',

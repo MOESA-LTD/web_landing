@@ -1,6 +1,6 @@
 import type { HomeContent } from '../en/home'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/tr/home.md */
+/** Verbatim from content/approved/tr/home.md */
 const content: HomeContent = {
   meta: {
     path: '/',

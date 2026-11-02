@@ -25,7 +25,7 @@ export interface HowWeWorkContent {
   finalCta: FinalCtaContent
 }
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/how-we-work.md */
+/** Verbatim from content/approved/en/how-we-work.md */
 const content: HowWeWorkContent = {
   meta: {
     path: '/how-we-work',

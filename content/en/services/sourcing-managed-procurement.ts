@@ -1,6 +1,6 @@
 import type { ServicePageContent } from '../service-page'
 
-/** Verbatim from MOESA_Website_Package_v1.0/content/en/services__sourcing-managed-procurement.md */
+/** Verbatim from content/approved/en/services__sourcing-managed-procurement.md */
 const content: ServicePageContent = {
   meta: {
     path: '/services/sourcing-managed-procurement',
