@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.1](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.3.0...moesa-website-v0.3.1) (2026-11-02)
+
+
+### Bug Fixes
+
+* **i18n:** align TR translations with the approved loanword terminology ([0702e1e](https://github.com/MOESA-LTD/web_landing/commit/0702e1e11f54d37d46d5a377bbfda8b85faf827c))
+* **i18n:** rename the BG Sourcing and Commercial Intelligence service slugs ([aa52495](https://github.com/MOESA-LTD/web_landing/commit/aa52495ade8e95cae7d0d77a0cf361d32a033516))
+* **i18n:** TR/DE/BG terminology pass (English industry terms where no precise equivalent) ([cfd7ef6](https://github.com/MOESA-LTD/web_landing/commit/cfd7ef61bf7f2a40cbdcd877ed7850c3174c427d))
+* **i18n:** use established DE industry terms and remove term collisions ([107d999](https://github.com/MOESA-LTD/web_landing/commit/107d99945cc3cb091cac7bfd8a3ef3d296fddd02))
+* **i18n:** use Latin-script industry terms in BG and fix translation errors ([3eee644](https://github.com/MOESA-LTD/web_landing/commit/3eee644ceefcca62966776d6be469c0f50f0d31b))
+
 ## [0.3.0](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.2.0...moesa-website-v0.3.0) (2026-11-02)
 
 
