@@ -13,9 +13,9 @@ compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
 # repeats it. The Turnstile site key is public (it is in the page HTML); its secret key is a dashboard Secret.
 [vars]
 NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAAFwcaNF6v9eZLOmy"
-NUXT_PUBLIC_ENABLE_DE = "false"
-# Bulgarian stays off in production until its copy (i18n/UNREVIEWED_BG.md) and legal pages are reviewed.
-NUXT_PUBLIC_ENABLE_BG = "false"
+# All four locales are live (owner decision 2026-11-03; DE/BG copy and legal pages are still listed as unreviewed).
+NUXT_PUBLIC_ENABLE_DE = "true"
+NUXT_PUBLIC_ENABLE_BG = "true"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
 
@@ -26,8 +26,7 @@ NUXT_SITE_INDEXABLE = "false"
 # Preview deployments show the legal pages' review notes (Draft status chip, OPEN notes) for the lawyer and the owner.
 # Production leaves it unset: the live legal pages show neither.
 NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"
-NUXT_PUBLIC_ENABLE_DE = "false"
-# Previews show Bulgarian for review.
+NUXT_PUBLIC_ENABLE_DE = "true"
 NUXT_PUBLIC_ENABLE_BG = "true"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
