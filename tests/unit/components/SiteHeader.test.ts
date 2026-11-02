@@ -261,6 +261,38 @@ describe('SiteHeader (DE)', () => {
   })
 })
 
+describe('SiteHeader (BG)', () => {
+  it('shows BG labels, the BG CTA and Bulgarian paths on /bg', async () => {
+    const w = await track('/bg')
+    // Short header-only label (nav.header.about "За нас", flagged) instead of "За MOESA", like DE "Über uns"; the bar
+    // must fit the 1160px breakpoint (measured in tests/e2e/header-language.spec.ts).
+    expect(
+      desktopNav(w)
+        .findAll(':scope > ul > li')
+        .map((li) => li.find('a, button').text()),
+    ).toEqual(['Услуги', 'Как работим', 'С кого работим', 'За нас', 'Контакти'])
+    expect(
+      desktopNav(w)
+        .findAll(':scope > ul > li > a')
+        .map((a) => a.attributes('href')),
+    ).toEqual(['/bg/kak-rabotim', '/bg/s-kogo-rabotim', '/bg/za-nas', '/bg/kontakti'])
+    expect(w.find('[data-header-cta] a').attributes('href')).toBe('/bg/kontakti')
+    expect(w.find('[data-header-cta] a').text()).toBe('Обсъдете проект')
+    await desktopNav(w).find('button').trigger('click')
+    const links = w.findAll('#services-menu a')
+    expect(links[0]!.text()).toBe('Сорсинг и управление на снабдяването')
+    expect(links[0]!.attributes('href')).toBe('/bg/uslugi/sorsing-i-upravlenie-na-snabdyavaneto')
+    expect(links.at(-1)!.text()).toBe('Всички услуги')
+    expect(links.at(-1)!.attributes('href')).toBe('/bg/uslugi')
+  })
+
+  it('marks Services current on a BG service page', async () => {
+    const w = await track('/bg/uslugi/operatsii-i-veriga-na-dostavki')
+    expect(desktopNav(w).find('button').classes()).toContain('is-current')
+    expect(desktopNav(w).findAll(':scope > ul > li > [aria-current]')).toHaveLength(1)
+  })
+})
+
 describe('SiteHeader language dropdown', () => {
   const langBtn = (w: Wrapper) => w.find('button#lang-button')
   const servicesBtn = (w: Wrapper) => desktopNav(w).find('button#services-button')
@@ -311,7 +343,7 @@ describe('SiteHeader language dropdown', () => {
 
   it('lists the TR counterpart of the current page, and is Turkish on /tr/*', async () => {
     const w = await track('/about')
-    expect(w.findAll('#lang-menu a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns'])
+    expect(w.findAll('#lang-menu a').map((a) => a.attributes('href'))).toEqual(['/about', '/tr/hakkimizda', '/de/ueber-uns', '/bg/za-nas'])
     const tr = await track('/tr/hakkimizda')
     expect(langBtn(tr).attributes('aria-label')).toBe('Dil: Türkçe')
   })

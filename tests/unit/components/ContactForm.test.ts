@@ -127,6 +127,43 @@ describe('ContactForm', () => {
     expect(received).toMatchObject({ ...VALID, privacy_consent: 'on', locale: 'de', website: '' })
   })
 
+  it('shows BG labels on BG pages but keeps the EN option values', async () => {
+    const w = await mountAt('/bg/kontakti?service=operations-supply-chain')
+    const options = w.findAll('select[name="service"] option').slice(1)
+    expect(options.map((o) => o.attributes('value'))).toEqual(contactForm.service_options)
+    expect(options[5]!.text()).toBe('Операции и верига на доставки')
+    expect((w.find('select[name="service"]').element as HTMLSelectElement).value).toBe('Operations & Supply Chain')
+    expect(w.find('input[name="locale"]').attributes('value')).toBe('bg')
+    expect(w.text()).toContain('Служебен имейл')
+    expect(w.text()).toContain('Как можем да Ви помогнем?')
+    expect(w.text()).toContain('(по избор)')
+    // The consent sentence quotes the privacy-policy link, which goes to the BG policy.
+    expect(w.find('[name="privacy_consent"]').element.closest('label, div')!.textContent).toContain('Прочетох „Политика за поверителност“')
+    expect(w.find('a[href="/bg/politika-za-poveritelnost"]').exists()).toBe(true)
+  })
+
+  it('shows the BG error texts and posts the EN service value from the BG page, then goes to /bg/blagodarim', async () => {
+    let received: Record<string, unknown> | undefined
+    registerEndpoint('/api/contact', {
+      method: 'POST',
+      handler: async (event) => {
+        received = await readBody(event)
+        return { ok: true }
+      },
+    })
+    const empty = await mountAt('/bg/kontakti')
+    await empty.find('form').trigger('submit')
+    await flushPromises()
+    expect(empty.text()).toContain('Моля, проверете 7 полета')
+    expect(empty.text()).toContain('Въведете Вашето име.')
+    const w = await mountAt('/bg/kontakti')
+    await fill(w, VALID)
+    await w.find('[name="privacy_consent"]').setValue(true)
+    await w.find('form').trigger('submit')
+    await vi.waitFor(() => expect(useRoute().path).toBe('/bg/blagodarim'))
+    expect(received).toMatchObject({ ...VALID, privacy_consent: 'on', locale: 'bg', website: '' })
+  })
+
   it('preselects the service from ?service=operations-supply-chain', async () => {
     const w = await mountAt('/contact?service=operations-supply-chain')
     const select = w.find('select[name="service"]').element as HTMLSelectElement

@@ -185,7 +185,25 @@ describe('POST /api/contact', () => {
     expect(tr.headers.get('location')).toBe('/tr/iletisim?error=1')
     const de = await postForm({ ...VALID, name: '', locale: 'de' })
     expect(de.headers.get('location')).toBe('/de/kontakt?error=1')
+    const bg = await postForm({ ...VALID, name: '', locale: 'bg' })
+    expect(bg.headers.get('location')).toBe('/bg/kontakti?error=1')
     expect(send).not.toHaveBeenCalled()
+  })
+
+  it('a form post with locale=bg is answered with 303 to /bg/blagodarim and the email notes `Locale: bg`', async () => {
+    const res = await postForm({ ...VALID, locale: 'bg' })
+    expect(res.status).toBe(303)
+    expect(res.headers.get('location')).toBe('/bg/blagodarim')
+    expect(send).toHaveBeenCalledTimes(1)
+    expect(send.mock.calls[0]![0].text).toContain('Locale: bg')
+  })
+
+  it('a BG post with a BG service label returns 422: only the EN option values are accepted', async () => {
+    const res = await postJson({ ...VALID, locale: 'bg', service: 'Операции и верига на доставки' })
+    expect(res.status).toBe(422)
+    expect((await res.json()).errors.service).toBe('invalid_option')
+    const ok = await postJson({ ...VALID, locale: 'bg' })
+    expect(ok.status).toBe(200)
   })
 
   it('a form post with locale=de is answered with 303 to /de/danke and the email notes `Locale: de`', async () => {
@@ -302,6 +320,8 @@ describe('POST /api/contact hardening', () => {
     expect(de.headers.get('location')).toBe('/de/kontakt?error=rate_limited')
     const notDe = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/demo' })
     expect(notDe.headers.get('location')).toBe('/contact?error=rate_limited')
+    const bg = await postForm(VALID, '192.0.2.60', { referer: 'https://www.moesaltd.com/bg/kontakti' })
+    expect(bg.headers.get('location')).toBe('/bg/kontakti?error=rate_limited')
   })
 
   it('keys the rate limit on CF-Connecting-IP on Cloudflare, not on a spoofable X-Forwarded-For', async () => {
@@ -396,6 +416,14 @@ describe('POST /api/contact hardening', () => {
     expect((await postForm({ ...VALID, name: '', locale: 'de' })).headers.get('location')).toBe('/contact?error=1')
     expect((await postForm({ ...VALID, locale: 'tr' })).headers.get('location')).toBe('/tr/tesekkurler')
   })
+
+  it('with BG disabled (the production setting), a locale=bg form post is redirected to EN paths (TR, DE unaffected)', async () => {
+    vi.stubEnv('NUXT_PUBLIC_ENABLE_BG', 'false')
+    expect((await postForm({ ...VALID, locale: 'bg' })).headers.get('location')).toBe('/thank-you')
+    expect((await postForm({ ...VALID, name: '', locale: 'bg' })).headers.get('location')).toBe('/contact?error=1')
+    expect((await postForm({ ...VALID, locale: 'tr' })).headers.get('location')).toBe('/tr/tesekkurler')
+    expect((await postForm({ ...VALID, locale: 'de' })).headers.get('location')).toBe('/de/danke')
+  })
 })
 
 describe('rateLimit', () => {
@@ -457,6 +485,10 @@ describe('composeEmail', () => {
     expect(de.text).toContain('Locale: de')
     expect(de.html).toContain('Locale: de')
     expect(de.text).toContain('Service: Operations & Supply Chain')
+    const bg = composeEmail({ ...data, locale: 'bg' })
+    expect(bg.text).toContain('Locale: bg')
+    expect(bg.html).toContain('Locale: bg')
+    expect(bg.text).toContain('Service: Operations & Supply Chain')
     expect(en.text).not.toContain('Locale:')
   })
 

@@ -12,6 +12,7 @@
  *   shell or a static 404 page instead).
  * - prerendered pages are `<route>.html` (Pages redirects `/about` to `/about/` for `about/index.html`).
  * - `_worker.js/wrangler.json`: `nodejs_compat` and a compatibility date on or after 2025-04-01.
+ * - the self-hosted Manrope font ships its Cyrillic subset (the Bulgarian pages), served from the site itself.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
@@ -91,7 +92,7 @@ describe('Cloudflare Pages build (dist/)', () => {
   it('_headers keeps the thank-you pages out of search results (X-Robots-Tag: noindex, follow)', () => {
     requireBuild()
     const rules = parseHeaders(readFileSync(join(DIST, '_headers'), 'utf8'))
-    for (const path of ['/thank-you', '/tr/tesekkurler', '/de/danke']) {
+    for (const path of ['/thank-you', '/tr/tesekkurler', '/de/danke', '/bg/blagodarim']) {
       expect(rules.get(path)?.['X-Robots-Tag'], path).toBe('noindex, follow')
     }
   })
@@ -108,7 +109,7 @@ describe('Cloudflare Pages build (dist/)', () => {
       }
       expect(built.has(path), `${path} is a built file`).toBe(true)
     }
-    for (const path of ['/nope', '/services/not-a-service', '/tr/olmayan-sayfa', '/de/gibt-es-nicht', '/api/contact']) {
+    for (const path of ['/nope', '/services/not-a-service', '/tr/olmayan-sayfa', '/de/gibt-es-nicht', '/bg/nyama-takava-stranitsa', '/api/contact']) {
       expect(routes.exclude, path).not.toContain(path)
     }
   })
@@ -124,6 +125,24 @@ describe('Cloudflare Pages build (dist/)', () => {
     requireBuild()
     const html = files(DIST).filter((f) => f.endsWith('.html'))
     expect(html).toEqual(expect.arrayContaining(['contact.html', 'thank-you.html', 'services/operations-supply-chain.html']))
+    expect(html).toEqual(expect.arrayContaining(['bg/kontakti.html', 'bg/blagodarim.html', 'bg/uslugi/operatsii-i-veriga-na-dostavki.html']))
     expect(html.filter((f) => f.endsWith('/index.html'))).toEqual([])
+  })
+
+  it('self-hosts the Cyrillic subset of Manrope (Bulgarian text) with no external font origin', () => {
+    requireBuild()
+    const all = files(DIST)
+    const css = all.filter((f) => f.startsWith('_nuxt/') && f.endsWith('.css')).map((f) => readFileSync(join(DIST, f), 'utf8')).join('\n')
+    const faces = [...css.matchAll(/@font-face\s*{([^}]*)}/g)].map((m) => m[1]!)
+    // The face whose unicode-range covers the basic Cyrillic block (U+0400-045F) used by Bulgarian.
+    const cyrillic = faces.find((f) => /unicode-range:[^;]*U\+0?400-0?45F/i.test(f))
+    expect(cyrillic, 'a @font-face for U+0400-045F').toBeTruthy()
+    const url = /url\(([^)]+)\)/.exec(cyrillic!)![1]!.replace(/["']/g, '')
+    expect(url).not.toMatch(/^(https?:)?\/\//)
+    expect(url).not.toMatch(/^data:/)
+    const file = url.replace(/^\//, '').replace(/^\.\//, '_nuxt/')
+    expect(all, file).toContain(file)
+    // No @font-face anywhere loads from another origin (CSP font-src 'self').
+    expect(css).not.toMatch(/url\((["']?)(https?:)?\/\//)
   })
 })

@@ -37,6 +37,15 @@ describe('errorLocale', () => {
     expect(errorLocale('/de/x', { enableDe: false })).toBe('en')
     expect(errorLocale('/de/x', { enableTr: false })).toBe('de')
   })
+
+  it('is BG for /bg and /bg/* only, unless BG is disabled', () => {
+    expect(errorLocale('/bg/nyama-takava-stranitsa')).toBe('bg')
+    expect(errorLocale('/bg')).toBe('bg')
+    expect(errorLocale('/bg/')).toBe('bg')
+    expect(errorLocale('/bgx')).toBe('en')
+    expect(errorLocale('/bg/x', { enableBg: false })).toBe('en')
+    expect(errorLocale('/bg/x', { enableDe: false })).toBe('bg')
+  })
 })
 
 describe('error.vue', () => {
@@ -85,7 +94,7 @@ describe('error.vue', () => {
 
 /**
  * I1: with a locale switched off, a 404 under its prefix (`/tr/...` with enableTr false, `/de/...` with enableDe
- * false) is rendered entirely in EN: page copy, layout chrome (skip link, header, footer), the in-page links and the
+ * false, `/bg/...` with enableBg false) is rendered entirely in EN: page copy, layout chrome (skip link, header, footer), the in-page links and the
  * switcher. No link may lead back into the disabled locale (every such path answers 404 too).
  */
 describe('error.vue with a locale disabled', () => {
@@ -93,6 +102,7 @@ describe('error.vue with a locale disabled', () => {
   afterEach(() => {
     config().enableTr = true
     config().enableDe = true
+    config().enableBg = true
     useNuxtApp().$i18n.locale.value = 'en'
     document.documentElement.removeAttribute('lang')
   })
@@ -100,6 +110,7 @@ describe('error.vue with a locale disabled', () => {
   it.each([
     ['tr', '/tr/hakkimizda', 'enableTr'],
     ['de', '/de/ueber-uns', 'enableDe'],
+    ['bg', '/bg/za-nas', 'enableBg'],
   ] as const)('%s off: the 404 at %s is EN throughout, with no link into the disabled locale', async (code, url, flag) => {
     config()[flag] = false
     const w = await mountSuspended(ErrorPage as never, {
