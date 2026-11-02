@@ -1,0 +1,68 @@
+name: pr-preview-link
+
+# When the Cloudflare Pages GitHub app reports a successful deployment (its "Cloudflare Pages" check run), write the
+# preview links into the description of every open pull request for that commit. The links sit between two markers
+# at the end of the body, so each new deployment replaces them instead of adding another block.
+# Runs on GitHub-hosted runners: free for this public repository. check_run workflows run from the default branch.
+on:
+  check_run:
+    types: [completed]
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: pr-preview-link-${{ github.event.check_run.head_sha }}
+  cancel-in-progress: true
+
+jobs:
+  link:
+    if: github.event.check_run.name == 'Cloudflare Pages' && github.event.check_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.check_run
+            const summary = run.output?.summary ?? ''
+            // The summary is an HTML table: "Preview URL" (this deployment) and "Branch Preview URL" (the branch alias).
+            const url = (label) => summary.match(new RegExp(`${label}:</strong>[\\s\\S]*?href='(https://[^']+)'`))?.[1]
+            const commitUrl = url('Preview URL')
+            const branchUrl = url('Branch Preview URL')
+            if (!commitUrl && !branchUrl) {
+              core.info('No preview URL in the check run summary (production deployment?); nothing to do.')
+              return
+            }
+
+            // check_run.pull_requests is empty for some events; ask for the open PRs of the commit instead.
+            const { owner, repo } = context.repo
+            const { data: pulls } = await github.rest.repos.listPullRequestsAssociatedWithCommit({ owner, repo, commit_sha: run.head_sha })
+            const open = pulls.filter((p) => p.state === 'open' && p.head.sha === run.head_sha)
+            if (open.length === 0) {
+              core.info(`No open pull request has ${run.head_sha} as its head; nothing to do.`)
+              return
+            }
+
+            const START = '<!-- preview-link:start -->'
+            const END = '<!-- preview-link:end -->'
+            const lines = [
+              START,
+              '---',
+              `**Cloudflare Pages preview** (\`${run.head_sha.slice(0, 7)}\`)`,
+              ...(branchUrl ? [`- Branch: ${branchUrl}`] : []),
+              ...(commitUrl ? [`- This commit: ${commitUrl}`] : []),
+              END,
+            ]
+            const block = lines.join('\n')
+
+            for (const pr of open) {
+              const body = pr.body ?? ''
+              const start = body.indexOf(START)
+              const end = body.indexOf(END)
+              const next = start >= 0 && end > start
+                ? body.slice(0, start) + block + body.slice(end + END.length)
+                : `${body.trimEnd()}\n\n${block}`
+              if (next === body) continue
+              await github.rest.pulls.update({ owner, repo, pull_number: pr.number, body: next })
+              core.info(`Updated #${pr.number}: ${branchUrl ?? commitUrl}`)
+            }
