@@ -63,9 +63,8 @@ const content: LegalContent = {
       id: 'recipients',
       title: 'Alıcılar ve veri işleyenler',
       items: [
-        'Vercel Inc. (ABD): web sitesi barındırma, içerik dağıtımı ve sunucu kayıtları',
+        'Cloudflare, Inc. (ABD): küresel ağı üzerinden web sitesi barındırma ve içerik dağıtımı (Cloudflare Pages ve Workers), sunucu kayıtları ve iletişim sayfasında Turnstile spam koruması',
         'Plus Five Five, Inc. (Resend, ABD): iletişim formu taleplerinin e-postayla iletilmesi',
-        'Cloudflare, Inc. (ABD): iletişim sayfasında Turnstile spam koruması',
       ],
       paragraphs: [
         'Her sağlayıcı, bir veri işleme sözleşmesi kapsamında veri işleyenimiz olarak hareket eder.',
@@ -76,7 +75,7 @@ const content: LegalContent = {
       id: 'transfers',
       title: 'Uluslararası aktarımlar',
       paragraphs: [
-        'Bu sağlayıcılar verileri Amerika Birleşik Devletleri’nde işleyebilir. Aktarımlar, sağlayıcının katıldığı durumlarda AB–ABD Veri Gizliliği Çerçevesi’ne (Data Privacy Framework), diğer durumlarda Avrupa Komisyonu’nun Standart Sözleşme Maddeleri’ne (GDPR md. 46(2)(c)) dayanır.',
+        'Bu sağlayıcılar verileri Amerika Birleşik Devletleri’nde işleyebilir; Cloudflare web sitesini AB dışındakiler de dahil olmak üzere birçok ülkedeki veri merkezlerinden sunar. Aktarımlar, sağlayıcının katıldığı durumlarda AB–ABD Veri Gizliliği Çerçevesi’ne (Data Privacy Framework), diğer durumlarda Avrupa Komisyonu’nun Standart Sözleşme Maddeleri’ne (GDPR md. 46(2)(c)) dayanır.',
         'Dayandığımız Standart Sözleşme Maddeleri’nin bir kopyasını info@moesaltd.com adresinden talep edebilirsiniz.',
       ],
     },
@@ -86,7 +85,7 @@ const content: LegalContent = {
       paragraphs: [
         'Talepleri ve ilgili yazışmaları yalnızca yanıtlamak ve ardından gelen bir iş ilişkisini yönetmek için gerektiği sürece, yasal saklama sürelerinin gerektirdiği durumlarda ise daha uzun süre saklarız.',
         'İstek sınırlaması için kullanılan IP adresi sunucu belleğinde en fazla 10 dakika tutulur.',
-        'OPEN / AÇIK - Devamı gelmeyen talepler, sunucu kayıtları (Vercel) ve gönderilen e-postalar (Resend) için saklama süreleri teyit edilecek.',
+        'OPEN / AÇIK - Devamı gelmeyen talepler, sunucu kayıtları (Cloudflare) ve gönderilen e-postalar (Resend) için saklama süreleri teyit edilecek.',
       ],
     },
     {

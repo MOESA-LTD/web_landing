@@ -63,9 +63,8 @@ const content: LegalContent = {
       id: 'recipients',
       title: 'Empfänger und Auftragsverarbeiter',
       items: [
-        'Vercel Inc. (USA): Hosting der Website, Auslieferung der Inhalte und Server-Logs',
+        'Cloudflare, Inc. (USA): Hosting der Website und Auslieferung der Inhalte über das globale Netzwerk (Cloudflare Pages und Workers), Server-Logs sowie Turnstile-Spamschutz auf der Kontaktseite',
         'Plus Five Five, Inc. (Resend, USA): Zustellung der Kontaktformular-Anfragen per E-Mail',
-        'Cloudflare, Inc. (USA): Turnstile-Spamschutz auf der Kontaktseite',
       ],
       paragraphs: [
         'Jeder Anbieter ist auf Grundlage eines Auftragsverarbeitungsvertrags für uns tätig.',
@@ -76,7 +75,7 @@ const content: LegalContent = {
       id: 'transfers',
       title: 'Internationale Übermittlungen',
       paragraphs: [
-        'Diese Anbieter können Daten in den USA verarbeiten. Übermittlungen stützen sich auf das EU-US Data Privacy Framework, soweit der Anbieter daran teilnimmt, und andernfalls auf die Standardvertragsklauseln der Europäischen Kommission (Art. 46 Abs. 2 lit. c DSGVO).',
+        'Diese Anbieter können Daten in den USA verarbeiten; Cloudflare liefert die Website aus Rechenzentren in vielen Ländern aus, auch außerhalb der EU. Übermittlungen stützen sich auf das EU-US Data Privacy Framework, soweit der Anbieter daran teilnimmt, und andernfalls auf die Standardvertragsklauseln der Europäischen Kommission (Art. 46 Abs. 2 lit. c DSGVO).',
         'Eine Kopie der von uns verwendeten Standardvertragsklauseln können Sie unter info@moesaltd.com anfordern.',
       ],
     },
@@ -86,7 +85,7 @@ const content: LegalContent = {
       paragraphs: [
         'Anfragen und die zugehörige Korrespondenz speichern wir nur so lange, wie es für ihre Beantwortung und die Abwicklung einer daraus entstehenden Geschäftsbeziehung erforderlich ist, und darüber hinaus nur, soweit gesetzliche Aufbewahrungsfristen bestehen.',
         'Die für die Ratenbegrenzung verwendete IP-Adresse wird bis zu 10 Minuten im Arbeitsspeicher des Servers gehalten.',
-        'OPEN / AÇIK - Die Speicherfristen für Anfragen ohne weiteren Kontakt, Server-Logs (Vercel) und versendete E-Mails (Resend) sind noch zu bestätigen.',
+        'OPEN / AÇIK - Die Speicherfristen für Anfragen ohne weiteren Kontakt, Server-Logs (Cloudflare) und versendete E-Mails (Resend) sind noch zu bestätigen.',
       ],
     },
     {

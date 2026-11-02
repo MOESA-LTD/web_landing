@@ -63,9 +63,8 @@ const content: LegalContent = {
       id: 'recipients',
       title: 'Recipients and processors',
       items: [
-        'Vercel Inc. (USA): website hosting, content delivery and server logs',
+        'Cloudflare, Inc. (USA): website hosting and content delivery through its global network (Cloudflare Pages and Workers), server logs, and Turnstile spam protection on the contact page',
         'Plus Five Five, Inc. (Resend, USA): delivery of contact-form enquiries by email',
-        'Cloudflare, Inc. (USA): Turnstile spam protection on the contact page',
       ],
       paragraphs: [
         'Each provider acts as our processor under a data processing agreement.',
@@ -76,7 +75,7 @@ const content: LegalContent = {
       id: 'transfers',
       title: 'International transfers',
       paragraphs: [
-        'These providers may process data in the United States. Transfers rely on the EU–US Data Privacy Framework where the provider participates in it, and otherwise on the European Commission’s Standard Contractual Clauses (Art. 46(2)(c) GDPR).',
+        'These providers may process data in the United States, and Cloudflare serves the website from data centres in many countries, including outside the EU. Transfers rely on the EU–US Data Privacy Framework where the provider participates in it, and otherwise on the European Commission’s Standard Contractual Clauses (Art. 46(2)(c) GDPR).',
         'You can request a copy of the Standard Contractual Clauses we rely on at info@moesaltd.com.',
       ],
     },
@@ -86,7 +85,7 @@ const content: LegalContent = {
       paragraphs: [
         'We keep enquiries and related correspondence only as long as needed to answer them and to manage a business relationship that follows, and longer only where statutory retention periods apply.',
         'The IP address used for rate limiting is held in server memory for up to 10 minutes.',
-        'OPEN / AÇIK - Retention periods for enquiries without follow-up, server logs (Vercel) and sent emails (Resend) are to be confirmed.',
+        'OPEN / AÇIK - Retention periods for enquiries without follow-up, server logs (Cloudflare) and sent emails (Resend) are to be confirmed.',
       ],
     },
     {

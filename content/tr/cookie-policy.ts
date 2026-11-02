@@ -46,7 +46,7 @@ const content: LegalContent = {
       id: 'thirdParties',
       title: 'Üçüncü taraf hizmetler',
       paragraphs: [
-        'Cloudflare Turnstile (Cloudflare, Inc., ABD) yalnızca iletişim sayfasında, formu spama karşı korumak için çalışır. Gizlilik politikası: https://www.cloudflare.com/privacypolicy/',
+        'Cloudflare, Inc. (ABD) bu web sitesini barındırır ve küresel ağı üzerinden sunar; barındırma çerez yerleştirmez. Cloudflare Turnstile yalnızca iletişim sayfasında, formu spama karşı korumak için çalışır. Gizlilik politikası: https://www.cloudflare.com/privacypolicy/',
         'Sosyal medya, video, harita veya reklam hizmetleri yerleştirmiyoruz.',
       ],
     },

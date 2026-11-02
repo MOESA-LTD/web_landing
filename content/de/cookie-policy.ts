@@ -45,7 +45,7 @@ const content: LegalContent = {
       id: 'thirdParties',
       title: 'Drittanbieterdienste',
       paragraphs: [
-        'Cloudflare Turnstile (Cloudflare, Inc., USA) läuft nur auf der Kontaktseite und schützt das Formular vor Spam. Datenschutzerklärung: https://www.cloudflare.com/privacypolicy/',
+        'Cloudflare, Inc. (USA) hostet diese Website und liefert sie über sein globales Netzwerk aus; das Hosting setzt keine Cookies. Cloudflare Turnstile läuft nur auf der Kontaktseite und schützt das Formular vor Spam. Datenschutzerklärung: https://www.cloudflare.com/privacypolicy/',
         'Wir binden keine Social-Media-, Video-, Karten- oder Werbedienste ein.',
       ],
     },
