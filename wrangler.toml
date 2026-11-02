@@ -21,6 +21,9 @@ CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
 NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAAFwcaNF6v9eZLOmy"
 # Preview deployments are not indexed: robots.txt disallows everything and pages get noindex.
 NUXT_SITE_INDEXABLE = "false"
+# Preview deployments show the legal pages' review notes (Draft status chip, OPEN notes) for the lawyer and the owner.
+# Production leaves it unset: the live legal pages show neither.
+NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"
 NUXT_PUBLIC_ENABLE_DE = "false"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"

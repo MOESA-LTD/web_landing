@@ -10,14 +10,18 @@ import { brand } from '#content/site'
  *
  * - The article sits inside `.container-site`, lined up with the breadcrumbs (the DS column hugs the viewport's
  *   left edge: DESIGN_NOTES §7.5).
- * - Status: the md `**Status:**` value is the Draft chip's text, the same in every locale. It stays until the lawyer
- *   signs the final text off.
+ * - Review notes (`runtimeConfig.public.legalReviewNotes`, NUXT_PUBLIC_LEGAL_REVIEW_NOTES="true"): the status chip and
+ *   the OPEN notes are for the lawyer and the owner. They render only when the flag is on (Pages Preview deployments,
+ *   wrangler.toml `[env.preview.vars]`); with it off (production, the default) there is no status note and every OPEN
+ *   paragraph is left out entirely (no empty wrapper). Everything else renders the same either way.
+ * - Status (flag on): the md `**Status:**` value is the Draft chip's text, the same in every locale. It stays in the
+ *   content until the lawyer signs the final text off.
  * - Last updated (legal review S5): `updated` (ISO, from `LEGAL_UPDATED`) formatted for the page locale.
- * - OPEN items: a paragraph starting "OPEN / AÇIK - " (the md marker, the same in every locale's content and only the
- *   detection key) renders as the DS open note: Chip kind="open" with the page locale's label (`status.open`: EN "Open",
- *   TR "Açık", DE "Offen", uppercased by the chip), then the rest of the text. The chip conveys the marker, so the
- *   prefix is not repeated; a visually hidden " - " separates the two for screen readers. They mark owner facts that
- *   are still missing.
+ * - OPEN items (flag on): a paragraph starting "OPEN / AÇIK - " (the md marker, the same in every locale's content and
+ *   only the detection key) renders as the DS open note: Chip kind="open" with the page locale's label (`status.open`:
+ *   EN "Open", TR "Açık", DE "Offen", uppercased by the chip), then the rest of the text. The chip conveys the marker,
+ *   so the prefix is not repeated; a visually hidden " - " separates the two for screen readers. They mark owner facts
+ *   that are still missing.
  * - TR `condensed` (an approved one-line form): an intro paragraph above the translated list or the per-line values
  *   (TR Legal Notice "İletişim"). Approved text is never hidden.
  * - Items render before paragraphs, so a section can list facts and then explain them.
@@ -28,6 +32,8 @@ import { brand } from '#content/site'
  */
 const props = defineProps<{ content: LegalContent; updated: string; related?: { label: string; href: string } }>()
 const { t, locale } = useI18n()
+/** Strictly `true`: any other value (unset, "false", a stray number) keeps the review notes hidden. */
+const reviewNotes = useRuntimeConfig().public.legalReviewNotes === true
 
 /** Detection key only: never displayed (the chip shows the locale's `status.open`). */
 const OPEN_PREFIX = 'OPEN / AÇIK - '
@@ -42,13 +48,16 @@ const relatedHref = props.related ? useLocalizedHref(props.related.href) : ''
 
 type Part = { open: boolean; text: string; before: string; email: string; after: string }
 const parts = (s: LegalSection): Part[] =>
-  (s.paragraphs ?? []).map((p) => {
+  (s.paragraphs ?? []).flatMap((p) => {
     const open = p.startsWith(OPEN_PREFIX)
+    if (open && !reviewNotes) return []
     const text = open ? p.slice(OPEN_PREFIX.length) : p
     const at = text.indexOf(brand.email)
-    return at < 0
-      ? { open, text, before: text, email: '', after: '' }
-      : { open, text, before: text.slice(0, at), email: brand.email, after: text.slice(at + brand.email.length) }
+    return [
+      at < 0
+        ? { open, text, before: text, email: '', after: '' }
+        : { open, text, before: text.slice(0, at), email: brand.email, after: text.slice(at + brand.email.length) },
+    ]
   })
 </script>
 
@@ -60,7 +69,7 @@ const parts = (s: LegalSection): Part[] =>
       </div>
 
       <article data-legal-page class="grid max-w-[68ch] gap-6 pt-16 max-[719.98px]:pt-12">
-        <p data-legal-status role="note" class="m-0 flex items-center gap-3 rounded-sm border border-line bg-pale px-4 py-3">
+        <p v-if="reviewNotes" data-legal-status role="note" class="m-0 flex items-center gap-3 rounded-sm border border-line bg-pale px-4 py-3">
           <Chip kind="draft" :label="props.content.status" />
         </p>
 
