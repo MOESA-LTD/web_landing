@@ -7,25 +7,29 @@
  */
 const hits = new Map<string, number[]>()
 
-/** Above this many tracked keys, expired entries are swept so the map cannot grow without bound. */
-const SWEEP_AT = 5_000
-
-/** Records a hit for `key` and returns whether it is allowed (true) or over the limit (false). */
+/**
+ * Records a hit for `key` and returns whether it is allowed (true) or over the limit (false).
+ * Every call drops keys with no hit inside the window, so a key (the client IP) is kept no longer than `windowMs`
+ * after its last hit, as the privacy policy states.
+ */
 export function rateLimit(
   key: string,
   opts: { limit: number; windowMs: number } = { limit: 5, windowMs: 600_000 },
   now: number = Date.now(),
 ): boolean {
   const since = now - opts.windowMs
+  for (const [k, times] of hits) if (!times.some((t) => t > since)) hits.delete(k)
+
   const recent = (hits.get(key) ?? []).filter((t) => t > since)
   const allowed = recent.length < opts.limit
   if (allowed) recent.push(now)
-  hits.set(key, recent)
-
-  if (hits.size > SWEEP_AT) {
-    for (const [k, times] of hits) if (!times.some((t) => t > since)) hits.delete(k)
-  }
+  if (recent.length) hits.set(key, recent)
   return allowed
+}
+
+/** Test helper: the number of keys currently held. */
+export function rateLimitSize(): number {
+  return hits.size
 }
 
 /** Test helper: forget every recorded hit. */

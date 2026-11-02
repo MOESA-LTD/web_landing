@@ -17,7 +17,7 @@ const fetchMock = vi.fn()
 vi.mock('ofetch', () => ({ $fetch: (...args: unknown[]) => fetchMock(...args) }))
 
 const { default: handler } = await import('../../../server/api/contact.post')
-const { resetRateLimit, rateLimit } = await import('../../../server/utils/rate-limit')
+const { resetRateLimit, rateLimit, rateLimitSize } = await import('../../../server/utils/rate-limit')
 const { composeEmail } = await import('../../../server/utils/email')
 const { contactSchema, validateContact } = await import('../../../server/utils/contact-schema')
 const { shouldBypassTurnstile } = await import('../../../server/utils/turnstile')
@@ -356,6 +356,18 @@ describe('rateLimit', () => {
     for (let i = 0; i < 5; i++) expect(rateLimit('k', opts, t0 + i)).toBe(true)
     expect(rateLimit('k', opts, t0 + 10)).toBe(false)
     expect(rateLimit('k', opts, t0 + 600_001)).toBe(true)
+  })
+
+  it('forgets a key (the client IP) once it has no hit inside the window', () => {
+    const opts = { limit: 5, windowMs: 600_000 } as const
+    const t0 = 1_000_000
+    rateLimit('a', opts, t0)
+    rateLimit('b', opts, t0 + 1)
+    expect(rateLimitSize()).toBe(2)
+    rateLimit('c', opts, t0 + 600_000)
+    expect(rateLimitSize()).toBe(2)
+    rateLimit('c', opts, t0 + 1_200_002)
+    expect(rateLimitSize()).toBe(1)
   })
 })
 

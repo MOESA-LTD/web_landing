@@ -1,10 +1,11 @@
 name: ci
 
-# Test gate for every push and pull request: unit tests, typecheck, production build, acceptance checks on the build.
+# Test gate for pushes to main and every pull request: unit tests, typecheck, production build, acceptance checks on the build.
 # The Playwright e2e suite (tests/e2e) is not run here: it builds the site again and runs ~400 browser tests in two
 # viewports plus a Chromium download, which is too slow for every push. Run `npm run test:e2e` locally before merging.
 on:
   push:
+    branches: [main]
   pull_request:
 
 permissions:

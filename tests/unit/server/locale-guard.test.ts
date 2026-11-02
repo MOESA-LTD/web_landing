@@ -27,6 +27,14 @@ describe('disabledLocaleOfPath', () => {
     expect(disabledLocaleOfPath('/demo', { enableDe: false })).toBeNull()
     expect(disabledLocaleOfPath('/tr/hizmetler', {})).toBeNull()
   })
+
+  it('matches the prefix regardless of case or percent-encoding, as the router does', () => {
+    expect(disabledLocaleOfPath('/DE', { enableDe: false })).toBe('de')
+    expect(disabledLocaleOfPath('/De/ueber-uns', { enableDe: false })).toBe('de')
+    expect(disabledLocaleOfPath('/%64e/kontakt', { enableDe: false })).toBe('de')
+    expect(disabledLocaleOfPath('/TR/hizmetler', { enableTr: false })).toBe('tr')
+    expect(disabledLocaleOfPath('/%E0%A4%A/x', { enableDe: false })).toBeNull()
+  })
 })
 
 describe('localeOptionsFromEnv (shared by the locale guard and the contact route)', () => {

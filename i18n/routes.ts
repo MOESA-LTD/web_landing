@@ -52,9 +52,19 @@ export function disabledLocaleOfPath(path: string, options: LocaleOptions): Loca
   return locale !== 'en' && !enabledLocales(options).includes(locale) ? locale : null
 }
 
-/** The locale prefix of a path (`/tr`, `/tr/...` → tr; `/de`, `/de/...` → de; anything else, e.g. `/tracking`, → en). */
+/**
+ * The locale prefix of a path (`/tr`, `/tr/...` → tr; `/de`, `/de/...` → de; anything else, e.g. `/tracking`, → en).
+ * Case- and percent-encoding-insensitive, like the router: `/DE/...` and `/%64e/...` still render the DE pages.
+ */
 export function localeOfPath(path: string): Locale {
-  for (const l of LOCALES) if (l !== 'en' && (path === `/${l}` || path.startsWith(`/${l}/`))) return l
+  let p = path
+  try {
+    p = decodeURIComponent(path)
+  } catch {
+    // Malformed escapes: match the raw path.
+  }
+  p = p.toLowerCase()
+  for (const l of LOCALES) if (l !== 'en' && (p === `/${l}` || p.startsWith(`/${l}/`))) return l
   return 'en'
 }
 
