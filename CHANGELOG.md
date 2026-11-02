@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.2.0...moesa-website-v0.3.0) (2026-11-02)
+
+
+### Features
+
+* **i18n:** add Bulgarian locale (unreviewed, off in production) ([fd23ff0](https://github.com/MOESA-LTD/web_landing/commit/fd23ff072793931009051a102b4faac316673623))
+* **legal:** hide review notes on production ([6379288](https://github.com/MOESA-LTD/web_landing/commit/63792881d1e2d7a5b1ed6d6e59a6df1d5974fdb2))
+* **legal:** hide review notes on production ([bb4fb44](https://github.com/MOESA-LTD/web_landing/commit/bb4fb445770e93a4245dd3b3ccb6e1bdd65a8074))
+
+
+### Bug Fixes
+
+* **legal:** name the mailbox provider ([5315be7](https://github.com/MOESA-LTD/web_landing/commit/5315be7ed413c6debb6f45f7b85939a76d626139))
+
 ## [0.2.0](https://github.com/MOESA-LTD/web_landing/compare/moesa-website-v0.1.0...moesa-website-v0.2.0) (2026-11-02)
 
 
