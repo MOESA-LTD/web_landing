@@ -70,7 +70,11 @@ use (Fulfilment, Due Diligence, MOQ, RFQ, Lead Time, Incoterms, KPI, QC) are not
   "Разгледайте още за MOESA." → "Научете повече за MOESA."; who-we-work-with meta description shortened to 155
   characters.
 - **Legal pages:** no sector terms in the TR/DE/BG legal text; nothing changed there (UNREVIEWED_LEGAL.md unchanged).
-- **Slugs (not changed, site is live):** BG `/bg/uslugi/digitalna-targoviya-i-biznes-analizi` now differs from the
-  page name "Дигитална търговия и Commercial Intelligence"; BG `sorsing-i-upravlenie-na-snabdyavaneto` is the
-  transliteration of the now Latin "Sourcing" (still recognisable); DE `marktzugang-und-handelsvertretung` (known,
-  DE-S3). TR slugs still match.
+- **Slugs:** BG was not live yet, so the two BG service slugs follow the new names without a redirect:
+  `/bg/uslugi/sourcing-i-upravlenie-na-snabdyavaneto` (was `sorsing-…`) and
+  `/bg/uslugi/digitalna-targoviya-i-commercial-intelligence` (was `…-biznes-analizi`). DE
+  `marktzugang-und-handelsvertretung` is unchanged (known, DE-S3; DE is live-gated, rename separately if wanted).
+  TR slugs still match.
+- **Owner decisions (2026-11-03):** keep the TR section rule (lists follow the word of the approved line above them);
+  keep "Trading Partneri" (how-we-work, matches its approved line) and the approved "Ticaret Partneri" (home); keep BG
+  "собствени марки"; keep DE "Customer Insights".

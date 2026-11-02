@@ -94,7 +94,7 @@ export const ROUTES: Record<RouteName, LocalePaths> = {
     en: '/services/sourcing-managed-procurement',
     tr: '/tr/hizmetler/tedarik-ve-yonetilen-satin-alma',
     de: '/de/leistungen/sourcing-und-beschaffungsmanagement',
-    bg: '/bg/uslugi/sorsing-i-upravlenie-na-snabdyavaneto',
+    bg: '/bg/uslugi/sourcing-i-upravlenie-na-snabdyavaneto',
   },
   'services/product-private-label-development': {
     en: '/services/product-private-label-development',
@@ -118,7 +118,7 @@ export const ROUTES: Record<RouteName, LocalePaths> = {
     en: '/services/digital-commerce-commercial-intelligence',
     tr: '/tr/hizmetler/dijital-ticaret-ve-ticari-icgoru',
     de: '/de/leistungen/digital-commerce-und-commercial-intelligence',
-    bg: '/bg/uslugi/digitalna-targoviya-i-biznes-analizi',
+    bg: '/bg/uslugi/digitalna-targoviya-i-commercial-intelligence',
   },
   'how-we-work': {
     en: '/how-we-work',
