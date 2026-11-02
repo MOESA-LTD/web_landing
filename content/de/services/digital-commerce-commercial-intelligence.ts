@@ -5,12 +5,12 @@ const content: ServicePageContent = {
   meta: {
     path: '/services/digital-commerce-commercial-intelligence',
     title: 'Digital Commerce & Commercial Intelligence | MOESA Ltd.',
-    description: 'MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Kundeneinblicken.',
+    description: 'MOESA unterstützt Marktplatz- und D2C-Operations in Produktpositionierung, Content, SEO, Listings, Katalog, Bestand, Performance und Customer Insights.',
   },
   slug: 'digital-commerce-commercial-intelligence',
   hero: {
     title: 'Das Produkt betreiben. Den Markt verstehen. Das Geschäft verbessern.',
-    body: 'MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Kundeneinblicke.',
+    body: 'MOESA unterstützt laufende Commercial Operations auf Marktplätzen, Direct-to-Consumer-Websites und anderen digitalen Vertriebskanälen und verbindet Produktpräsentation, Katalog, Bestand, Performance und Customer Insights.',
   },
   intro: {
     title: 'Die Arbeit endet nicht, wenn das Produkt online geht.',
@@ -67,7 +67,7 @@ const content: ServicePageContent = {
   },
   productTruth: {
     title: 'Eine einheitliche Produktdatenbasis',
-    body: 'Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein kreatives Asset fertigzustellen.',
+    body: 'Jeder Kanal sollte dasselbe freigegebene Produkt abbilden. Ungeklärte Informationen bleiben offen und werden nicht durch Annahmen ersetzt, nur um ein Listing oder ein Werbemittel fertigzustellen.',
   },
   managedModel: {
     title: 'Managed-Commerce-Modell',
