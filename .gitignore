@@ -6,7 +6,8 @@ node_modules/
 .nitro/
 .cache/
 dist/
-.vercel/
+.wrangler/
+.dev.vars*
 
 # Env
 .env
@@ -18,3 +19,14 @@ dist/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Test output
+tests/e2e/__screens__/
+test-results/
+playwright-report/
+
+# Reference material kept locally only. Tests need just the approved copy (content/) and brand tokens (data/).
+/design-reference/
+/MOESA_Website_Package_v1.0/*/*
+!/MOESA_Website_Package_v1.0/*/content/
+!/MOESA_Website_Package_v1.0/*/data/

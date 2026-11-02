@@ -1,0 +1,168 @@
+{
+  "skipLink": "Skip to content",
+  "language": {
+    "label": "Language",
+    "names": {
+      "en": "English",
+      "tr": "Türkçe",
+      "de": "Deutsch"
+    }
+  },
+  "cta": {
+    "discussProject": "Discuss a Project",
+    "exploreServices": "Explore Services"
+  },
+  "nav": {
+    "label": "Primary",
+    "home": "Home",
+    "services": "Services",
+    "howWeWork": "How We Work",
+    "whoWeWorkWith": "Who We Work With",
+    "about": "About MOESA",
+    "contact": "Contact",
+    "header": {
+      "whoWeWorkWith": "Who We Work With",
+      "about": "About MOESA"
+    },
+    "allServices": "All services",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "serviceLinks": {
+      "sourcing-managed-procurement": "Sourcing & Managed Procurement",
+      "product-private-label-development": "Product & Private Label Development",
+      "market-access-commercial-representation": "Market Access & Commercial Representation",
+      "operations-supply-chain": "Operations & Supply Chain",
+      "digital-commerce-commercial-intelligence": "Digital Commerce & Commercial Intelligence"
+    }
+  },
+  "logo": {
+    "homeLabel": "MOESA Ltd. home"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb",
+    "home": "Home",
+    "services": "Services",
+    "allServices": "All services"
+  },
+  "related": {
+    "services": "Related services"
+  },
+  "cards": {
+    "exploreService": "Explore service",
+    "capability": "Cross-functional capability"
+  },
+  "status": {
+    "draft": "Draft",
+    "open": "Open"
+  },
+  "legal": {
+    "lastUpdated": "Last updated: {date}",
+    "seeAlso": "See also:"
+  },
+  "footer": {
+    "servicesTitle": "Services",
+    "companyTitle": "Company",
+    "contactTitle": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Registered address",
+    "companyLine": "MOESA Ltd. · Company ID {companyId} · VAT {vat}",
+    "legal": {
+      "privacyPolicy": "Privacy Policy",
+      "cookiePolicy": "Cookie Policy",
+      "legalNotice": "Legal Notice"
+    }
+  },
+  "company": {
+    "companyId": "Company ID",
+    "vat": "VAT"
+  },
+  "form": {
+    "heading": "Project form",
+    "labels": {
+      "name": "Name",
+      "company": "Company",
+      "workEmail": "Work Email",
+      "country": "Country",
+      "service": "How Can We Support You?",
+      "projectBrief": "Short Project Brief",
+      "productCategory": "Product Category",
+      "targetMarket": "Target Market",
+      "estimatedVolume": "Estimated Volume",
+      "targetTimeline": "Target Timeline"
+    },
+    "projectDetails": "Project details",
+    "optional": "(optional)",
+    "servicePlaceholder": "Select a service",
+    "briefHelp": "What the business needs, what is already confirmed and what remains open.",
+    "consent": "I have read the {link} and understand that MOESA will use my details to respond to this enquiry.",
+    "submit": "Send Project Brief",
+    "disclaimer": "A submitted form does not create a contractual engagement.",
+    "sending": "Sending…",
+    "honeypot": "Leave this field empty",
+    "serviceOptions": {
+      "sourcing": "Brand or Product Sourcing",
+      "procurement": "Managed Procurement",
+      "productPrivateLabel": "Product & Private Label Development",
+      "marketAccess": "Market Access",
+      "commercialRepresentation": "Commercial Representation",
+      "operations": "Operations & Supply Chain",
+      "digitalCommerce": "Digital Commerce Operations",
+      "integrated": "Integrated / Multiple Services",
+      "notSure": "Not Sure Yet",
+      "other": "Other"
+    },
+    "errorSummaryOne": "Please check 1 field",
+    "errorSummaryMany": "Please check {count} fields",
+    "errors": {
+      "name": "Enter your name.",
+      "company": "Enter your company name.",
+      "workEmail": "Enter a work email address, like name{'@'}company.com.",
+      "country": "Enter your country.",
+      "service": "Choose how we can support you.",
+      "projectBrief": "Describe the project briefly.",
+      "consent": "Confirm that you have read the privacy policy so we can respond to your enquiry.",
+      "tooLong": "Use {max} characters or fewer.",
+      "briefTooShort": "Describe the project in at least {min} characters.",
+      "generic": "Some details could not be accepted. Please check the form and send it again.",
+      "rateLimited": "Too many submissions from this connection. Please wait 10 minutes and try again, or email us directly.",
+      "verificationFailed": "The spam check could not be completed. Please try again.",
+      "sendFailed": "The form could not be sent. Please try again or email info{'@'}moesaltd.com."
+    }
+  },
+  "cookie": {
+    "title": "Cookie preferences",
+    "strictlyNecessary": "Strictly necessary",
+    "alwaysOn": "(always on)",
+    "noOptional": "We currently use no preference, analytics or marketing cookies, so there is nothing to choose.",
+    "analytics": "Analytics",
+    "rejectNonEssential": "Reject non-essential",
+    "acceptAll": "Accept all",
+    "saveChoices": "Save choices",
+    "chooseSettings": "Choose settings",
+    "saved": "Your choices have been saved.",
+    "inventory": {
+      "caption": "Cookies and similar technologies on this website",
+      "name": "Name",
+      "provider": "Provider",
+      "category": "Category",
+      "purpose": "Purpose",
+      "duration": "Duration",
+      "privacy": "Privacy",
+      "consentProvider": "MOESA (first party)",
+      "consentPurpose": "Stores your cookie choice. Set only when you save a choice; while this website uses no optional cookies, no choice is asked for.",
+      "consentDuration": "180 days",
+      "turnstileProvider": "Cloudflare, Inc. (third party, challenges.cloudflare.com), contact page only",
+      "turnstilePurpose": "Checks that a contact-form submission comes from a person, not a bot. It evaluates technical browser signals and your IP address and may store short-lived technical data in its frame.",
+      "turnstileDuration": "Set by Cloudflare (see its privacy policy)"
+    }
+  },
+  "stats": {
+    "digitalCommerce": "years in digital commerce",
+    "ecommerceOperations": "years in professional e-commerce operations"
+  },
+  "error": {
+    "title": "Something went wrong.",
+    "body": "The page could not be loaded. Please try again later."
+  }
+}

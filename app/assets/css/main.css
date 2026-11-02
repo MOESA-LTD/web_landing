@@ -1,1 +1,287 @@
 @import "tailwindcss";
+@import "@fontsource-variable/manrope";
+
+/*
+ * MOESA design tokens (Tailwind v4, CSS-first).
+ * Colour source: MOESA_Website_Package_v1.0/data/brand_tokens.json plus the newer design system
+ * (line-strong, danger, danger-tint, mist-blue, navy-line). Pinned by tests/unit/tokens.test.ts.
+ */
+@theme {
+  --color-white: #FFFFFF;
+  --color-navy: #19324A;
+  --color-navy-dark: #102C49;
+  --color-blue-dark: #003B72;
+  --color-blue: #0069B2;
+  --color-cyan: #14A3DB;
+  --color-slate: #536B7D;
+  --color-pale: #EBF5FB;
+  --color-mist: #F7FAFC;
+  --color-line: #D5E3ED;
+  --color-line-strong: #748CA0;
+  --color-mist-blue: #B4CFE0;
+  --color-navy-line: #1B4264;
+  --color-danger: #B42318;
+  --color-danger-tint: #FEF3F2;
+
+  --font-sans: "Manrope Variable", Manrope, Arial, "Segoe UI", sans-serif;
+
+  --radius-sm: 2px;
+  --shadow-menu: 0 12px 32px rgba(16,44,73,.14);
+}
+
+/* ---- Type roles (DESIGN_NOTES 1.3, newer-DS weights) ---- */
+@utility text-display {
+  font-size: 56px;
+  line-height: 60px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  @media (max-width: 719.98px) {
+    font-size: 38px;
+    line-height: 44px;
+  }
+}
+
+@utility text-h1 {
+  font-size: 44px;
+  line-height: 52px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  @media (max-width: 719.98px) {
+    font-size: 34px;
+    line-height: 40px;
+  }
+}
+
+@utility text-h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  @media (max-width: 719.98px) {
+    font-size: 26px;
+    line-height: 34px;
+  }
+}
+
+@utility text-h3 {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+@utility text-h4 {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+}
+
+@utility text-lead {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: 400;
+  @media (max-width: 719.98px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+@utility text-body {
+  font-size: 17px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+@utility text-body-sm {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+@utility text-label {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+@utility text-eyebrow {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility text-caption {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+@utility text-numeral {
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+@utility text-stat {
+  font-size: 72px;
+  line-height: 72px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Layout helpers ---- */
+@utility container-site {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  @media (max-width: 719.98px) {
+    padding-inline: 16px;
+  }
+}
+
+@utility section {
+  padding-block: 96px;
+  @media (max-width: 719.98px) {
+    padding-block: 64px;
+  }
+}
+
+/* ---- Base ---- */
+@layer base {
+  :root {
+    --focus-ring: var(--color-blue);
+  }
+
+  /* Inverse (navy) grounds switch the focus ring to cyan. */
+  .surface-inverse,
+  footer {
+    --focus-ring: var(--color-cyan);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-navy);
+  }
+
+  /* Long German compounds ("Vertriebsrepräsentanz", "Beschaffungsmanagement") can overflow narrow cards, chips and
+     mobile headings: let the browser hyphenate them. Relies on `<html lang="de">` (app.vue), so EN and TR are unchanged. */
+  :lang(de) :is(h1, h2, h3, h4, h5, h6, li, dt, [data-chip]) {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---- Component CSS that utilities would make unreadable (connectors with container queries) ---- */
+@layer components {
+  /* ProcessTimeline (bundle.css `.ms-process*`): a 2px blue connector from each disc to the next. */
+  .timeline-row {
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  }
+  .timeline-row > .timeline-step {
+    flex-direction: column;
+  }
+  .timeline-row > .timeline-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: 44px;
+    right: -24px;
+    height: 2px;
+    background: var(--color-blue);
+  }
+  .timeline-column > .timeline-step {
+    align-items: flex-start;
+  }
+  .timeline-column .timeline-text {
+    padding-top: 9px;
+  }
+  .timeline-column > .timeline-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    bottom: -24px;
+    width: 2px;
+    background: var(--color-blue);
+  }
+  /* A row timeline becomes a vertical list in narrow containers. */
+  @container (max-width: 720px) {
+    .timeline-row {
+      grid-template-columns: 1fr;
+    }
+    .timeline-row > .timeline-step {
+      flex-direction: row;
+    }
+    .timeline-row .timeline-text {
+      padding-top: 9px;
+    }
+    .timeline-row > .timeline-step:not(:last-child)::after {
+      left: 21px;
+      right: auto;
+      top: 44px;
+      bottom: -24px;
+      width: 2px;
+      height: auto;
+    }
+  }
+  /* Form controls (bundle.css `.ms-input`, `select.ms-input`, `textarea.ms-input`): hover, focus and invalid states
+     and the select chevron would be unreadable as utilities. */
+  .form-control {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 2px;
+    background-color: var(--color-white);
+    font: 400 16px/24px var(--font-sans);
+    color: var(--color-navy);
+  }
+  .form-control:hover {
+    border-color: var(--color-slate);
+  }
+  .form-control:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-color: var(--color-blue);
+  }
+  .form-control[aria-invalid="true"] {
+    border: 2px solid var(--color-danger);
+  }
+  textarea.form-control {
+    resize: vertical;
+    min-height: 132px;
+  }
+  select.form-control {
+    appearance: none;
+    padding-right: 44px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2319324A' stroke-width='1.75'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+}

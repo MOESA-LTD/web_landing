@@ -1,5 +1,6 @@
 {
   "name": "moesa-website",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +9,21 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run",
+    "test:acceptance": "vitest run --config vitest.acceptance.config.ts",
+    "test:cloudflare": "vitest run --config vitest.cloudflare.config.ts",
+    "test:e2e": "playwright test",
+    "unreviewed:tr": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-tr.ts",
+    "unreviewed:de": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-de.ts",
+    "unreviewed:legal": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-legal.ts",
+    "og:image": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/og-image.ts"
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/robots": "^6.2.4",
+    "@nuxtjs/sitemap": "^8.6.2",
     "@tailwindcss/vite": "^4.3.3",
     "nuxt": "^4.6.3",
     "resend": "^6.35.0",
@@ -18,5 +31,16 @@
     "vue": "^3.5.44",
     "vue-router": "^5.4.0",
     "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@nuxt/test-utils": "^4.3.4",
+    "@playwright/test": "^1.64.1",
+    "@vue/test-utils": "^2.5.1",
+    "happy-dom": "^21.0.4",
+    "vitest": "^5.0.5",
+    "vue-tsc": "^3.3.14"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

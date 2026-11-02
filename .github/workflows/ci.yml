@@ -1,0 +1,37 @@
+name: ci
+
+# Test gate for pushes to main and every pull request: unit tests, typecheck, production build, acceptance checks on the build,
+# then the Cloudflare Pages build (the deploy target) and its output checks (_headers, _routes.json, wrangler config).
+# The Playwright e2e suite (tests/e2e) is not run here: it builds the site again and runs ~400 browser tests in two
+# viewports plus a Chromium download, which is too slow for every push. Run `npm run test:e2e` locally before merging.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npx nuxt typecheck
+      - run: npm run build
+      - run: npm run test:acceptance
+      - run: npm run build
+        env:
+          NITRO_PRESET: cloudflare-pages
+      - run: npm run test:cloudflare

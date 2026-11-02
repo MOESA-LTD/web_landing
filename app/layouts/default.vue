@@ -1,0 +1,31 @@
+<script setup lang="ts">
+import { routeNameForLocalePath } from '~~/i18n/routes'
+
+/**
+ * Default layout: skip link, header (with the language dropdown), `<main id="main">`, footer, then the global cookie
+ * banner (`<CookieConsent mode="banner">`, fixed to the bottom of the viewport). The banner renders only when
+ * `runtimeConfig.public.analyticsId` (NUXT_PUBLIC_ANALYTICS_ID) is set and no choice is stored, so v1 shows none.
+ * The footer CTA shows on Home and About only (DESIGN_NOTES §3.2), in every locale.
+ */
+const { t } = useI18n()
+const route = useRoute()
+const showCta = computed(() => {
+  const name = routeNameForLocalePath(route.path)
+  return name === 'home' || name === 'about'
+})
+</script>
+
+<template>
+  <div class="flex min-h-screen flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-navy focus:px-4 focus:py-3 focus:text-label focus:text-white focus:no-underline focus:[--focus-ring:var(--color-cyan)]"
+    >{{ t('skipLink') }}</a>
+    <SiteHeader />
+    <main id="main" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+    <SiteFooter :show-cta="showCta" />
+    <CookieConsent mode="banner" />
+  </div>
+</template>
