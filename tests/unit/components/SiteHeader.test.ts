@@ -280,7 +280,7 @@ describe('SiteHeader (BG)', () => {
     expect(w.find('[data-header-cta] a').text()).toBe('Обсъдете проект')
     await desktopNav(w).find('button').trigger('click')
     const links = w.findAll('#services-menu a')
-    expect(links[0]!.text()).toBe('Сорсинг и управление на снабдяването')
+    expect(links[0]!.text()).toBe('Sourcing и управление на снабдяването')
     expect(links[0]!.attributes('href')).toBe('/bg/uslugi/sorsing-i-upravlenie-na-snabdyavaneto')
     expect(links.at(-1)!.text()).toBe('Всички услуги')
     expect(links.at(-1)!.attributes('href')).toBe('/bg/uslugi')
