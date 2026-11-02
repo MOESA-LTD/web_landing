@@ -6,7 +6,8 @@ node_modules/
 .nitro/
 .cache/
 dist/
-.vercel/
+.wrangler/
+.dev.vars*
 
 # Env
 .env

@@ -82,6 +82,18 @@ describe('nuxt.config', () => {
     expect(config.site.url).toBe('https://www.moesaltd.com')
   })
 
+  it('configures the Cloudflare Pages build: Node.js compatibility, a generated wrangler config, a date >= 2025-04-01', async () => {
+    const config = await loadConfig({})
+    const cf = config.nitro.cloudflare
+    expect(cf.nodeCompat).toBe(true)
+    expect(cf.deployConfig).toBe(true)
+    // With nodejs_compat and a date on or after 2025-04-01 the Workers runtime fills process.env from the bindings.
+    expect(cf.wrangler.compatibility_flags).toContain('nodejs_compat')
+    expect(cf.wrangler.compatibility_date >= '2025-04-01').toBe(true)
+    // The optional resend peer is stubbed so the Workers bundle resolves every import.
+    expect(config.nitro.alias['@react-email/render']).toMatch(/server[\\/]stubs[\\/]react-email-render\.ts$/)
+  })
+
   // No apple-touch-icon: public/favicon.png is 64x64 and iOS wants 180x180; add one when such an asset exists.
   it('links the favicon (public/favicon.png) in every page head', async () => {
     const config = await loadConfig({})
