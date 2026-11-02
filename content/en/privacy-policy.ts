@@ -68,7 +68,7 @@ const content: LegalContent = {
       ],
       paragraphs: [
         'Each provider acts as our processor under a data processing agreement.',
-        'OPEN / AÇIK - The provider that hosts the info@moesaltd.com mailbox, which receives your enquiry, is to be confirmed.',
+        'The info@moesaltd.com mailbox, which receives your enquiry, is hosted by Namecheap, Inc. (Private Email, USA).',
       ],
     },
     {

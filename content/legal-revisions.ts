@@ -31,7 +31,7 @@ export const LEGAL_REVISIONS: LegalRevision[] = [
   { page: 'privacy-policy', path: 'sections[recipients].items[0]', finding: 'B1/S6' },
   { page: 'privacy-policy', path: 'sections[recipients].items[1]', finding: 'B1' },
   { page: 'privacy-policy', path: 'sections[recipients].paragraphs[0]', finding: 'B1/O9' },
-  { page: 'privacy-policy', path: 'sections[recipients].paragraphs[1]', finding: 'B1/O3 (OPEN)' },
+  { page: 'privacy-policy', path: 'sections[recipients].paragraphs[1]', finding: 'B1/O3' },
   { page: 'privacy-policy', path: 'sections[transfers].paragraphs[0]', finding: 'B1/O9' },
   { page: 'privacy-policy', path: 'sections[transfers].paragraphs[1]', finding: 'B1' },
   { page: 'privacy-policy', path: 'sections[retention].paragraphs[0]', finding: 'B1/O4' },
