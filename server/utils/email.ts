@@ -65,7 +65,7 @@ export interface MailConfig {
 }
 
 /** Read at request time, so a deploy only needs the env vars (see .env.example). */
-export function mailConfig(env: NodeJS.ProcessEnv = process.env): MailConfig {
+export function mailConfig(env: Record<string, string | undefined> = process.env): MailConfig {
   return {
     apiKey: env.RESEND_API_KEY || undefined,
     to: env.CONTACT_TO || DEFAULT_TO,

@@ -3,7 +3,7 @@
  * POST /api/contact, run through a real h3 app (the same handler Nitro mounts). Resend and the Turnstile
  * `$fetch` (ofetch) are mocked: no real email, no network.
  */
-import { createApp, toWebHandler } from 'h3'
+import { createApp, eventHandler, toWebHandler } from 'h3'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const send = vi.fn()
@@ -22,7 +22,18 @@ const { composeEmail } = await import('../../../server/utils/email')
 const { contactSchema, validateContact } = await import('../../../server/utils/contact-schema')
 const { shouldBypassTurnstile } = await import('../../../server/utils/turnstile')
 
+/**
+ * The Cloudflare request context Nitro's cloudflare-pages entry puts on every event (`event.context.cloudflare`), with
+ * the project's variables and secrets as `env` bindings. `undefined` simulates any other host (node server, dev).
+ */
+let cloudflare: { env: Record<string, unknown> } | undefined
+
 const app = createApp()
+app.use(
+  eventHandler((event) => {
+    if (cloudflare) event.context.cloudflare = cloudflare
+  }),
+)
 app.use('/api/contact', handler)
 const call = toWebHandler(app)
 
@@ -47,7 +58,7 @@ function postJson(body: unknown, clientIp = nextIp(), headers: Record<string, st
   return call(
     new Request('http://localhost/api/contact', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-real-ip': clientIp, ...headers },
+      headers: { 'content-type': 'application/json', 'cf-connecting-ip': clientIp, ...headers },
       body: typeof body === 'string' ? body : JSON.stringify(body),
     }),
   )
@@ -57,7 +68,7 @@ function postForm(body: Record<string, string>, clientIp = nextIp(), headers: Re
   return call(
     new Request('http://localhost/api/contact', {
       method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-real-ip': clientIp, ...headers },
+      headers: { 'content-type': 'application/x-www-form-urlencoded', 'cf-connecting-ip': clientIp, ...headers },
       body: new URLSearchParams(body).toString(),
       redirect: 'manual',
     }),
@@ -76,8 +87,9 @@ beforeEach(() => {
   vi.stubEnv('NUXT_TURNSTILE_SECRET_KEY', 'secret-test')
   vi.stubEnv('CONTACT_DEV_BYPASS_TURNSTILE', '')
   vi.stubEnv('CONTACT_TRUST_XFF', '')
-  // The tests key requests on x-real-ip, which is only trusted on Vercel (VERCEL=1 is set by its runtime).
-  vi.stubEnv('VERCEL', '1')
+  // The tests key requests on CF-Connecting-IP, which is only trusted on Cloudflare (the request carries the Cloudflare
+  // context). No bindings: the env comes from process.env above.
+  cloudflare = { env: {} }
   vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', '')
   vi.stubEnv('NUXT_PUBLIC_ENABLE_DE', '')
 })
@@ -292,27 +304,35 @@ describe('POST /api/contact hardening', () => {
     expect(notDe.headers.get('location')).toBe('/contact?error=rate_limited')
   })
 
-  it('keys the rate limit on x-vercel-forwarded-for / x-real-ip, not on a spoofable X-Forwarded-For', async () => {
+  it('keys the rate limit on CF-Connecting-IP on Cloudflare, not on a spoofable X-Forwarded-For', async () => {
     const spoof = (i: number) => ({ 'x-forwarded-for': `203.0.113.${i}` })
     for (let i = 0; i < 5; i++) expect((await postJson(VALID, '192.0.2.70', spoof(i))).status).toBe(200)
     expect((await postJson(VALID, '192.0.2.70', spoof(99))).status).toBe(429)
-    // x-vercel-forwarded-for wins over x-real-ip.
-    for (let i = 0; i < 5; i++) await postJson(VALID, `192.0.2.${80 + i}`, { 'x-vercel-forwarded-for': '192.0.2.99' })
-    expect((await postJson(VALID, '192.0.2.90', { 'x-vercel-forwarded-for': '192.0.2.99' })).status).toBe(429)
-  })
-
-  it('off Vercel ignores x-vercel-forwarded-for and x-real-ip (client-controlled there) and keys on the socket address', async () => {
-    vi.stubEnv('VERCEL', '')
-    // A plain h3 app has no socket: every request falls back to the same key, whatever headers the client sends.
+    // Vercel's headers mean nothing on Cloudflare: a client can send them, so they never pick the key.
     for (let i = 0; i < 5; i++) {
-      const res = await postJson(VALID, `192.0.2.${100 + i}`, { 'x-vercel-forwarded-for': `198.51.100.${i}` })
+      const res = await postJson(VALID, `192.0.2.${80 + i}`, { 'x-vercel-forwarded-for': '192.0.2.99', 'x-real-ip': '192.0.2.99' })
       expect(res.status).toBe(200)
     }
-    expect((await postJson(VALID, '192.0.2.110', { 'x-vercel-forwarded-for': '198.51.100.50' })).status).toBe(429)
   })
 
-  it('off Vercel trusts the first X-Forwarded-For entry only with CONTACT_TRUST_XFF=true', async () => {
-    vi.stubEnv('VERCEL', '')
+  it('on Cloudflare ignores X-Forwarded-For even with CONTACT_TRUST_XFF=true when CF-Connecting-IP is present', async () => {
+    vi.stubEnv('CONTACT_TRUST_XFF', 'true')
+    for (let i = 0; i < 5; i++) await postJson(VALID, '192.0.2.150', { 'x-forwarded-for': `198.51.100.${i}` })
+    expect((await postJson(VALID, '192.0.2.150', { 'x-forwarded-for': '198.51.100.77' })).status).toBe(429)
+  })
+
+  it('off Cloudflare ignores CF-Connecting-IP, x-real-ip and x-vercel-forwarded-for (client-controlled there) and keys on the socket address', async () => {
+    cloudflare = undefined
+    // A plain h3 app has no socket: every request falls back to the same key, whatever headers the client sends.
+    for (let i = 0; i < 5; i++) {
+      const res = await postJson(VALID, `192.0.2.${100 + i}`, { 'x-real-ip': `198.51.100.${i}`, 'x-vercel-forwarded-for': `198.51.100.${i}` })
+      expect(res.status).toBe(200)
+    }
+    expect((await postJson(VALID, '192.0.2.110', { 'x-real-ip': '198.51.100.50' })).status).toBe(429)
+  })
+
+  it('off Cloudflare trusts the first X-Forwarded-For entry only with CONTACT_TRUST_XFF=true', async () => {
+    cloudflare = undefined
     vi.stubEnv('CONTACT_TRUST_XFF', 'true')
     for (let i = 0; i < 6; i++) {
       const res = await postJson(VALID, '192.0.2.120', { 'x-forwarded-for': `198.51.100.${i}, 10.0.0.1` })
@@ -320,6 +340,35 @@ describe('POST /api/contact hardening', () => {
     }
     for (let i = 0; i < 5; i++) await postJson(VALID, `192.0.2.${130 + i}`, { 'x-forwarded-for': '198.51.100.200' })
     expect((await postJson(VALID, '192.0.2.140', { 'x-forwarded-for': '198.51.100.200' })).status).toBe(429)
+  })
+
+  it('on Cloudflare reads the secrets from the env bindings, also when process.env lacks them', async () => {
+    vi.stubEnv('RESEND_API_KEY', '')
+    vi.stubEnv('CONTACT_FROM', '')
+    vi.stubEnv('NUXT_TURNSTILE_SECRET_KEY', '')
+    cloudflare = {
+      env: {
+        RESEND_API_KEY: 're_binding',
+        CONTACT_FROM: 'MOESA Website <website@binding.example>',
+        CONTACT_TO: 'enquiries@binding.example',
+        NUXT_TURNSTILE_SECRET_KEY: 'secret-binding',
+        // A non-string binding (e.g. a KV namespace) is not an env value.
+        ASSETS: { fetch: () => undefined },
+      },
+    }
+    const res = await postJson(VALID, '203.0.113.20')
+    expect(res.status).toBe(200)
+    expect(fetchMock.mock.calls[0]![1].body).toMatchObject({ secret: 'secret-binding', remoteip: '203.0.113.20' })
+    const msg = send.mock.calls[0]![0]
+    expect(msg.from).toBe('MOESA Website <website@binding.example>')
+    expect(msg.to).toEqual(['enquiries@binding.example'])
+  })
+
+  it('on Cloudflare a binding wins over process.env (NUXT_PUBLIC_ENABLE_TR=false sends TR form posts to EN paths)', async () => {
+    vi.stubEnv('NUXT_PUBLIC_ENABLE_TR', 'true')
+    cloudflare = { env: { NUXT_PUBLIC_ENABLE_TR: 'false' } }
+    const ok = await postForm({ ...VALID, locale: 'tr' })
+    expect(ok.headers.get('location')).toBe('/thank-you')
   })
 
   it('rejects a display-name or multi-address work email (Reply-To injection) with 422', async () => {

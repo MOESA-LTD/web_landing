@@ -18,8 +18,8 @@ export default defineConfig({
     command: 'npm run build && npm run preview',
     url: baseURL,
     // Nitro's node-server output reads PORT; NITRO_PORT wins over it if set, so set both.
-    // CONTACT_TRUST_XFF lets the direct API tests give each call its own client IP (X-Forwarded-For): off Vercel the
-    // contact route ignores x-real-ip / x-vercel-forwarded-for, and every call would share the socket address.
+    // CONTACT_TRUST_XFF lets the direct API tests give each call its own client IP (X-Forwarded-For): off Cloudflare the
+    // contact route ignores CF-Connecting-IP, and every call would share the socket address.
     env: { PORT: String(PORT), NITRO_PORT: String(PORT), CONTACT_TRUST_XFF: 'true' },
     reuseExistingServer: false,
     timeout: 300_000,

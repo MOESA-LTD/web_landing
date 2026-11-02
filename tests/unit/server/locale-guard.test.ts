@@ -67,4 +67,18 @@ describe('server/middleware/locale-guard', () => {
     for (const p of ['/de', '/de/leistungen', '/de/impressum']) expect((await get(p)).status, p).toBe(404)
     for (const p of ['/', '/demo', '/tr/iletisim']) expect((await get(p)).status, p).toBe(200)
   })
+
+  it('on Cloudflare reads the flag from the env bindings (event.context.cloudflare.env)', async () => {
+    const cfApp = createApp()
+    cfApp.use(
+      eventHandler((event) => {
+        event.context.cloudflare = { env: { NUXT_PUBLIC_ENABLE_DE: 'false' } }
+      }),
+    )
+    cfApp.use(guard)
+    cfApp.use(eventHandler(() => 'page'))
+    const cfCall = toWebHandler(cfApp)
+    expect((await cfCall(new Request('http://localhost/de/kontakt'))).status).toBe(404)
+    expect((await cfCall(new Request('http://localhost/tr/iletisim'))).status).toBe(200)
+  })
 })

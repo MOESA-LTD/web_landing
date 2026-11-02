@@ -1,9 +1,10 @@
 /**
  * Sliding-window rate limit, in memory.
  *
- * Caveat (serverless): on Vercel each function instance has its own memory and instances come and go, so the
- * limit holds per warm instance, not globally. It stops bursts from one client against one instance; a global
- * limit would need a shared store (e.g. Vercel KV / Upstash). Turnstile is the main spam control.
+ * Caveat (serverless): on Cloudflare Pages each Workers isolate has its own memory, isolates run in many data centres
+ * and come and go, so the limit holds per warm isolate, not globally. It stops bursts from one client against one
+ * isolate; a global limit would need a shared store (e.g. Workers KV, a Durable Object or Cloudflare's rate limiting
+ * rules). Turnstile is the main spam control.
  */
 const hits = new Map<string, number[]>()
 

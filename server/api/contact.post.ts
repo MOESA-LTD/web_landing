@@ -9,7 +9,8 @@
  * with `?error=1` (validation) or `?error=<code>`. Error texts live in i18n/locales; the server only sends codes.
  *
  * h3 helpers are imported explicitly (not Nitro auto-imports) so the handler also runs in a plain h3 app (unit tests).
- * Secrets come from env only (see .env.example). This route is never prerendered.
+ * Secrets come from env only (see .env.example), read per request through `runtimeEnv` (the Cloudflare bindings, else
+ * process.env). This route is never prerendered; on Cloudflare Pages it runs in the Pages Function.
  */
 import { defineEventHandler, getRequestHeader, readBody, sendRedirect, setResponseStatus, type H3Event } from 'h3'
 import { ROUTES, enabledLocales, localeOfPath, localeOptionsFromEnv } from '../../i18n/routes'
@@ -17,6 +18,7 @@ import { CONTACT_LOCALES, type ContactFailure, type ContactLocale } from '../../
 import { validateContact } from '../utils/contact-schema'
 import { mailConfig, sendContactEmail } from '../utils/email'
 import { rateLimit } from '../utils/rate-limit'
+import { cloudflareContext, runtimeEnv, type RuntimeEnv } from '../utils/runtime-env'
 import { shouldBypassTurnstile, verifyTurnstile } from '../utils/turnstile'
 
 type Locale = ContactLocale
@@ -30,23 +32,22 @@ const isDev = () => import.meta.dev === true
  * Whether a locale is switched on (NUXT_PUBLIC_ENABLE_TR / NUXT_PUBLIC_ENABLE_DE, read at request time). A redirect
  * for a disabled locale goes to the EN path instead.
  */
-const localeEnabled = (l: Locale) => enabledLocales(localeOptionsFromEnv()).includes(l)
+const localeEnabled = (env: RuntimeEnv, l: Locale) => enabledLocales(localeOptionsFromEnv(env)).includes(l)
 
 /**
  * The client IP for the rate limit.
- * Trust: on Vercel (`VERCEL` is set by its runtime) the edge network sets `x-vercel-forwarded-for` and `x-real-ip`
- * itself and overwrites any value the client sent, so they identify the real client. Anywhere else those headers are
- * client-controlled and ignored. The first `X-Forwarded-For` entry is client-controlled too and is only used when
- * `CONTACT_TRUST_XFF=true`, i.e. behind another proxy that is documented to overwrite it. Otherwise the socket
- * address is used (direct `node .output/server` hosting).
+ * Trust: on Cloudflare (the request runs in the Pages Function, so Nitro has put the Cloudflare context on the event)
+ * the edge sets `CF-Connecting-IP` itself and overwrites any value the client sent, so it identifies the real client.
+ * Anywhere else that header is client-controlled and ignored. The first `X-Forwarded-For` entry is client-controlled
+ * too and is only used when `CONTACT_TRUST_XFF=true`, i.e. behind another proxy that is documented to overwrite it.
+ * Otherwise the socket address is used (direct `node .output/server` hosting).
  */
-function clientIp(event: H3Event): string {
+function clientIp(event: H3Event, env: RuntimeEnv): string {
   const first = (v: string | undefined) => v?.split(',')[0]?.trim() || undefined
-  const onVercel = !!process.env.VERCEL
+  const onCloudflare = cloudflareContext(event) !== undefined
   return (
-    (onVercel ? first(getRequestHeader(event, 'x-vercel-forwarded-for')) : undefined) ??
-    (onVercel ? first(getRequestHeader(event, 'x-real-ip')) : undefined) ??
-    (process.env.CONTACT_TRUST_XFF === 'true' ? first(getRequestHeader(event, 'x-forwarded-for')) : undefined) ??
+    (onCloudflare ? first(getRequestHeader(event, 'cf-connecting-ip')) : undefined) ??
+    (env.CONTACT_TRUST_XFF === 'true' ? first(getRequestHeader(event, 'x-forwarded-for')) : undefined) ??
     event.node?.req?.socket?.remoteAddress ??
     'unknown'
   )
@@ -64,9 +65,10 @@ function localeFromReferer(event: H3Event): Locale {
 }
 
 export default defineEventHandler(async (event: H3Event) => {
+  const env = runtimeEnv(event)
   const isJson = (getRequestHeader(event, 'content-type') ?? '').includes('application/json')
-  const ip = clientIp(event)
-  const pathLocale = (l: Locale): Locale => (localeEnabled(l) ? l : 'en')
+  const ip = clientIp(event, env)
+  const pathLocale = (l: Locale): Locale => (localeEnabled(env, l) ? l : 'en')
 
   const fail = (status: number, code: ContactFailure, locale: Locale) => {
     if (!isJson) return sendRedirect(event, `${ROUTES.contact[pathLocale(locale)]}?error=${code}`, 303)
@@ -105,13 +107,13 @@ export default defineEventHandler(async (event: H3Event) => {
   }
   const data = result.data
 
-  const bypass = shouldBypassTurnstile({ dev: isDev(), flag: process.env.CONTACT_DEV_BYPASS_TURNSTILE })
+  const bypass = shouldBypassTurnstile({ dev: isDev(), flag: env.CONTACT_DEV_BYPASS_TURNSTILE })
   if (!bypass) {
-    const ok = await verifyTurnstile(data['cf-turnstile-response'], process.env.NUXT_TURNSTILE_SECRET_KEY, ip === 'unknown' ? undefined : ip)
+    const ok = await verifyTurnstile(data['cf-turnstile-response'], env.NUXT_TURNSTILE_SECRET_KEY, ip === 'unknown' ? undefined : ip)
     if (!ok) return fail(400, 'verification_failed', data.locale)
   }
 
-  const config = mailConfig()
+  const config = mailConfig(env)
   if (isDev() && !config.apiKey) {
     // Local development without Resend: show the email in the terminal instead of sending it.
     console.info('[contact] RESEND_API_KEY not set (dev): email not sent', { to: config.to, replyTo: data.work_email, data })
@@ -120,7 +122,8 @@ export default defineEventHandler(async (event: H3Event) => {
   try {
     await sendContactEmail(data, config)
   } catch (err) {
-    // Message only (no stack, no request): Vercel keeps runtime logs, and they must not hold form data.
+    // Message only (no stack, no request): Cloudflare keeps the function's logs when logging is on, and they must not
+    // hold form data.
     console.error('[contact] sending the enquiry email failed:', err instanceof Error ? err.message : 'unknown error')
     return fail(500, 'send_failed', data.locale)
   }
