@@ -11,7 +11,7 @@ All page copy comes verbatim from the approved package in `MOESA_Website_Package
 Turkish strings that have no approved source are listed in `i18n/UNREVIEWED_TR.md`. The German site has no approved
 source at all: every German string is our translation of the approved EN and is listed in `i18n/UNREVIEWED_DE.md`.
 The Bulgarian site is the same: every Bulgarian string is our translation of the approved EN, listed in
-`i18n/UNREVIEWED_BG.md`. Production ships with BG switched off (`wrangler.toml`); preview deployments show it for review.
+`i18n/UNREVIEWED_BG.md`. All four locales are live: `wrangler.toml` sets DE and BG on for production and preview.
 
 ## Requirements
 
@@ -85,7 +85,7 @@ pages are prerendered), so a change needs a redeploy; runtime variables are read
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
 | `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Pages project variables (they reach the build and the function) and **redeploy after changing it**: pages prerendered while the locale was on are static files the guard never sees, so flipping the flag at runtime alone leaves them reachable. Default: TR on. |
 | `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With TR, DE and BG all off the switcher is not shown. Default: DE on. |
-| `NUXT_PUBLIC_ENABLE_BG` | public, **build + runtime** | no | `false` hides the Bulgarian site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR (every `/bg` path answers 404, no BG switcher entry, sitemap URL or hreflang alternate). Default in code: BG on. `wrangler.toml` sets it to `false` for production and `true` for preview deployments until the BG copy and legal pages are reviewed. |
+| `NUXT_PUBLIC_ENABLE_BG` | public, **build + runtime** | no | `false` hides the Bulgarian site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR (every `/bg` path answers 404, no BG switcher entry, sitemap URL or hreflang alternate). Default in code: BG on. `wrangler.toml` sets it to `true` for production and preview deployments. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it adds the Analytics category and its buttons to the consent panel and shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1, so add one (and update the Cookie Policy) before setting it. Prerendered pages carry the build-time value, so redeploy after changing it. |
 | `NUXT_PUBLIC_LEGAL_REVIEW_NOTES` | public, **build + runtime** | no — Preview only | `runtimeConfig.public.legalReviewNotes`. `true` shows the legal pages' review notes: the "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" status chip and the dashed OPEN notes (owner facts still missing), for the lawyer and the owner. Any other value or unset → hidden: no chip, and the OPEN paragraphs are left out entirely. Set to `true` in `wrangler.toml` `[env.preview.vars]` only; production `[vars]` leaves it unset. The legal pages are rendered per request (not prerendered), so the runtime value applies. Default: off. |
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Cloudflare. On Cloudflare (the request runs in the Pages Function) the IP comes from `CF-Connecting-IP`, which Cloudflare sets and overwrites; anywhere else that header is ignored and the socket address is used. |
@@ -144,9 +144,8 @@ Draft status chip and OPEN notes for the lawyer and the owner; production (`[var
    `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or after 2025-04-01
    the runtime also fills `process.env` from the variables and secrets (the contact route reads the bindings directly
    as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ENABLE_BG`, `CONTACT_TO` and
-   `CONTACT_FROM` are in `[vars]`. BG is `"false"` in `[vars]` (production) and `"true"` in `[env.preview.vars]`, so
-   preview deployments show the Bulgarian site for review while production does not; set the dashboard build-time
-   value of each environment to match. `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"` is in `[env.preview.vars]` only (do not
+   `CONTACT_FROM` are in `[vars]`. DE and BG are `"true"` in `[vars]` (production) and in `[env.preview.vars]`; to take a
+   locale offline set it to `"false"` in both and redeploy. `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"` is in `[env.preview.vars]` only (do not
    add it to Production).
 5. **Custom domains** (*Project → Custom domains*): add `www.moesaltd.com` and `moesaltd.com`. Cloudflare creates the
    proxied `CNAME` records to `moesa-website.pages.dev` itself and issues the certificates.

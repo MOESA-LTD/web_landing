@@ -116,14 +116,15 @@ describe('nuxt.config', () => {
     expect(config.routeRules['/bg/blagodarim']).toEqual({ robots: 'noindex, follow' })
   })
 
-  it('wrangler.toml ships BG off in production and on in preview deployments (DE unchanged)', () => {
+  it('wrangler.toml ships DE and BG on in production and in preview deployments', () => {
     const toml = readFileSync(resolve(process.cwd(), 'wrangler.toml'), 'utf8').replace(/\r\n/g, '\n')
     const [prod, preview] = toml.split('[env.preview.vars]')
     expect(prod).toContain('[vars]')
-    expect(prod).toMatch(/^NUXT_PUBLIC_ENABLE_BG = "false"$/m)
-    expect(preview).toMatch(/^NUXT_PUBLIC_ENABLE_BG = "true"$/m)
-    expect(prod).toMatch(/^NUXT_PUBLIC_ENABLE_DE = "false"$/m)
-    expect(preview).toMatch(/^NUXT_PUBLIC_ENABLE_DE = "false"$/m)
+    for (const part of [prod!, preview!]) {
+      expect(part).toMatch(/^NUXT_PUBLIC_ENABLE_DE = "true"$/m)
+      expect(part).toMatch(/^NUXT_PUBLIC_ENABLE_BG = "true"$/m)
+      expect(part).not.toMatch(/^NUXT_PUBLIC_ENABLE_TR = /m)
+    }
   })
 
   it('sets the security headers on every route and does not pin a Nitro preset', async () => {
