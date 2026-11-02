@@ -200,18 +200,22 @@ export function legalRemovedMetaDescription(locale: FidelityLocale, file: string
 }
 
 /**
- * `extractApprovedStrings` minus the `FIDELITY_EXCLUSIONS` of that locale and file, plus the `renderedAs`
- * strings of those exclusions (what the page shows instead).
- * Legal OPEN items (polish round, controller ruling 2026-10-31): the marker "OPEN / AÇIK" is shown as the Open chip
- * in the page's locale (EN "Open", TR "Açık", DE "Offen"), so the page must show the sentence after the marker; the
- * chip itself is checked by tests/unit/legal-pages.test.ts.
+ * Legal review notes (NUXT_PUBLIC_LEGAL_REVIEW_NOTES, owner request 2026-11-02): the Draft status chip and the OPEN
+ * notes are shown on Preview deployments only, never in production, and the e2e server runs the production default
+ * (flag off). So an approved string marked "OPEN / AÇIK - " is not checked as page text. Exactly those strings: the md
+ * status line is metadata and never checked anyway, and every other approved string is. Both notes, with the flag on
+ * and off, are checked by tests/unit/legal-pages.test.ts and tests/e2e/legal-review-notes.spec.ts.
+ */
+export const isLegalReviewNote = (s: string) => s.startsWith(OPEN_PREFIX)
+
+/**
+ * `extractApprovedStrings` minus the `FIDELITY_EXCLUSIONS` of that locale and file and the legal review notes, plus
+ * the `renderedAs` strings of those exclusions (what the page shows instead).
  */
 export function approvedStringsFor(locale: FidelityLocale, file: string): string[] {
   const exclusions = FIDELITY_EXCLUSIONS[`${locale}/${file}`] ?? []
   const excluded = new Set([...exclusions.map((e) => e.text), ...legalRemoved(locale, file)])
-  const kept = extractApprovedStrings(mdPath(locale, file))
-    .filter((s) => !excluded.has(s))
-    .map((s) => (s.startsWith(OPEN_PREFIX) ? s.slice(OPEN_PREFIX.length) : s))
+  const kept = extractApprovedStrings(mdPath(locale, file)).filter((s) => !excluded.has(s) && !isLegalReviewNote(s))
   return [...kept, ...exclusions.flatMap((e) => e.renderedAs ?? [])]
 }
 

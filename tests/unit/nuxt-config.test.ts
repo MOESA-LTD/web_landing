@@ -56,6 +56,23 @@ describe('nuxt.config', () => {
     expect(config.runtimeConfig.public.enableDe).toBe(true)
   })
 
+  it('hides the legal review notes unless NUXT_PUBLIC_LEGAL_REVIEW_NOTES is exactly "true", and prerenders no legal page', async () => {
+    for (const v of [undefined, '', 'false', '1', 'TRUE']) {
+      const config = await loadConfig({ NUXT_PUBLIC_LEGAL_REVIEW_NOTES: v })
+      expect(config.runtimeConfig.public.legalReviewNotes, String(v)).toBe(false)
+    }
+    const config = await loadConfig({ NUXT_PUBLIC_LEGAL_REVIEW_NOTES: 'true' })
+    expect(config.runtimeConfig.public.legalReviewNotes).toBe(true)
+    // The legal pages render per request, so the runtime value (Nitro's NUXT_PUBLIC_* override) is what they show.
+    const legal = /^\/((tr|de)\/)?(privacy-policy|cookie-policy|legal-notice|gizlilik-politikasi|cerez-politikasi|yasal-bildirim|datenschutz|cookie-richtlinie|impressum)$/
+    expect(config.nitro.prerender.routes.filter((r: string) => legal.test(r))).toEqual([])
+    // wrangler.toml turns them on for Preview deployments only; production `[vars]` leaves the flag unset.
+    const toml = readFileSync(resolve(process.cwd(), 'wrangler.toml'), 'utf8').replace(/\r\n?/g, '\n')
+    const [prod, preview] = toml.split('[env.preview.vars]')
+    expect(prod).not.toContain('NUXT_PUBLIC_LEGAL_REVIEW_NOTES')
+    expect(preview).toContain('NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"')
+  })
+
   it('with NUXT_PUBLIC_ENABLE_DE=false prerenders no /de route and lists no /de URL or alternate in the sitemap', async () => {
     const config = await loadConfig({ NUXT_PUBLIC_ENABLE_DE: 'false' })
     expect(config.nitro.prerender.routes.filter(isDe)).toEqual([])

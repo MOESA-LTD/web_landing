@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { addPageStubs } from './helpers/page-stubs'
 import PrivacyPage from '~/pages/privacy-policy.vue'
 import CookiePage from '~/pages/cookie-policy.vue'
@@ -12,12 +12,25 @@ import { LEGAL_UPDATED, type LegalContent } from '#content/en/legal'
 
 beforeAll(addPageStubs)
 
+/**
+ * NUXT_PUBLIC_LEGAL_REVIEW_NOTES: off by default (production), so the status chip and the OPEN notes are hidden;
+ * `mountWithNotes` turns it on for one mount (Preview deployments). Reset after every test.
+ */
+const config = () => useRuntimeConfig().public as Record<string, unknown>
+afterEach(() => {
+  config().legalReviewNotes = false
+})
+
 type Wrapper = Awaited<ReturnType<typeof mountSuspended>>
 
 const mountAt = async (component: unknown, route: string) => {
   const w = await mountSuspended(component as never, { route })
   await flushPromises()
   return w
+}
+const mountWithNotes = async (component: unknown, route: string) => {
+  config().legalReviewNotes = true
+  return mountAt(component, route)
 }
 
 const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
@@ -50,18 +63,44 @@ const PAGES = [
 const OPEN_LABEL = { en: 'Open', tr: 'Açık', de: 'Offen' } as const
 /** An OPEN item is shown as the chip plus the md sentence after the marker. */
 const display = (t: string) => (t.startsWith(OPEN_PREFIX) ? t.slice(OPEN_PREFIX.length) : t)
-/** Every display string of a section, as the page must show it. */
+/** Every display string of a section, as the page must show it with the review notes on. */
 const sectionStrings = (s: LegalContent['sections'][number]) => [s.title, ...(s.paragraphs ?? []), ...(s.items ?? [])].map(display)
+/** The same with the review notes off (production): OPEN paragraphs are not shown at all. */
+const publicStrings = (s: LegalContent['sections'][number]) =>
+  [s.title, ...(s.paragraphs ?? []).filter((t) => !t.startsWith(OPEN_PREFIX)), ...(s.items ?? [])]
+const openTexts = (c: LegalContent) => c.sections.flatMap((s) => s.paragraphs ?? []).filter((t) => t.startsWith(OPEN_PREFIX)).map(display)
 
 /** Every OPEN item: one `[data-open]` note per md OPEN paragraph, chip in the page locale, then the md sentence. */
 async function expectOpenNotes(w: Wrapper, c: LegalContent, locale: keyof typeof OPEN_LABEL) {
-  const opens = c.sections.flatMap((s) => s.paragraphs ?? []).filter((t) => t.startsWith(OPEN_PREFIX))
+  const opens = openTexts(c)
   const rendered = w.findAll('[data-open]')
   expect(rendered).toHaveLength(opens.length)
   rendered.forEach((el, i) => {
     expect(el.find('[data-chip="open"]').text()).toBe(OPEN_LABEL[locale])
-    expect(norm(el.text())).toBe(`${OPEN_LABEL[locale]} - ${display(opens[i]!)}`)
+    expect(norm(el.text())).toBe(`${OPEN_LABEL[locale]} - ${opens[i]!}`)
   })
+}
+
+/**
+ * Production (flag off): no status note, no OPEN note, no chip and none of the OPEN sentences; every section still
+ * has exactly its other paragraphs (no empty wrapper left where an OPEN note was).
+ */
+async function expectNoReviewNotes(w: Wrapper, c: LegalContent, locale: keyof typeof OPEN_LABEL) {
+  expect(w.find('[data-legal-status]').exists()).toBe(false)
+  expect(w.find('[data-open]').exists()).toBe(false)
+  expect(w.find('[data-chip]').exists()).toBe(false)
+  const text = norm(w.find('[data-legal-page]').text())
+  for (const phrase of ['DRAFT', 'TASLAK', 'LEGAL REVIEW REQUIRED', 'is to be confirmed', 'teyit edilecek', 'noch zu bestätigen', c.status]) {
+    expect(text).not.toContain(phrase)
+  }
+  for (const o of openTexts(c)) expect(text).not.toContain(o)
+  // The chip label as a word of its own (EN "Open", TR "Açık", DE "Offen"), case-sensitive like the chip text.
+  expect(` ${text} `).not.toContain(` ${OPEN_LABEL[locale]} `)
+  for (const s of c.sections) {
+    const shown = (s.paragraphs ?? []).filter((t) => !t.startsWith(OPEN_PREFIX))
+    const ps = w.findAll(`[data-legal-section="${s.id}"] > p:not([data-condensed])`)
+    expect(ps.map((p) => norm(p.text())), s.id).toEqual(shown)
+  }
 }
 
 for (const p of PAGES) {
@@ -92,23 +131,31 @@ for (const p of PAGES) {
       expect(norm(w.find('[data-legal-crumbs] nav').text())).toBe(`Home/${c.hero.title}`)
     })
 
-    it('shows the md status as the Draft chip text', async () => {
-      const w = await mountAt(p.component, p.en)
+    it('with the review notes on (Preview), shows the md status as the Draft chip text', async () => {
+      const w = await mountWithNotes(p.component, p.en)
       const status = w.find('[data-legal-status]')
       expect(status.attributes('role')).toBe('note')
       expect(norm(status.text())).toContain(c.status)
     })
 
-    it('renders every approved md section (h2 + all text) in md order', async () => {
+    it('renders every approved md section (h2 + all text but the OPEN notes) in md order', async () => {
       const w = await mountAt(p.component, p.en)
       const h2s = w.findAll('[data-legal-section] h2').map((h) => norm(h.text()))
       expect(h2s).toEqual(c.sections.map((s) => s.title))
       const text = norm(w.find('[data-legal-page]').text())
-      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      for (const s of c.sections) for (const str of publicStrings(s)) expect(text).toContain(str)
     })
 
-    it('marks every OPEN item (a missing owner fact) with the EN "Open" chip, followed by its sentence', async () => {
-      await expectOpenNotes(await mountAt(p.component, p.en), c, 'en')
+    it('by default (production) shows no status chip and no OPEN note', async () => {
+      expect(config().legalReviewNotes).toBe(false)
+      await expectNoReviewNotes(await mountAt(p.component, p.en), c, 'en')
+    })
+
+    it('with the review notes on, renders every section string and marks every OPEN item with the EN "Open" chip', async () => {
+      const w = await mountWithNotes(p.component, p.en)
+      const text = norm(w.find('[data-legal-page]').text())
+      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      await expectOpenNotes(w, c, 'en')
     })
 
     it('shows the last-updated date under the lead (legal review S5)', async () => {
@@ -142,8 +189,8 @@ for (const p of PAGES) {
   describe(`${p.key} (TR ${p.tr})`, () => {
     const c = tr[p.key] as LegalContent
 
-    it('has the TR h1, the TR status, and the TR final CTA to /tr/iletisim', async () => {
-      const w = await mountAt(p.component, p.tr)
+    it('has the TR h1, the TR status (review notes on), and the TR final CTA to /tr/iletisim', async () => {
+      const w = await mountWithNotes(p.component, p.tr)
       expect(w.findAll('h1')).toHaveLength(1)
       expect(norm(w.find('h1').text())).toBe(c.hero.title)
       expect(norm(w.find('[data-legal-status]').text())).toContain(c.status)
@@ -169,23 +216,35 @@ for (const p of PAGES) {
     it('renders the translated sections, with an approved condensed line above the translated list or values', async () => {
       const w = await mountAt(p.component, p.tr)
       const text = norm(w.find('[data-legal-page]').text())
-      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      for (const s of c.sections) for (const str of publicStrings(s)) expect(text).toContain(str)
       for (const s of c.sections.filter((x) => x.condensed)) {
         const sec = w.find(`[data-legal-section="${s.id}"]`)
         expect(norm(sec.find('[data-condensed]').text())).toBe(s.condensed)
       }
     })
 
-    it('marks every OPEN item with the TR "Açık" chip', async () => {
-      await expectOpenNotes(await mountAt(p.component, p.tr), c, 'tr')
+    it('by default (production) shows no status chip and no OPEN note', async () => {
+      await expectNoReviewNotes(await mountAt(p.component, p.tr), c, 'tr')
+    })
+
+    it('with the review notes on, marks every OPEN item with the TR "Açık" chip', async () => {
+      await expectOpenNotes(await mountWithNotes(p.component, p.tr), c, 'tr')
     })
   })
 
   describe(`${p.key} (DE ${p.de})`, () => {
     const c = de[p.key] as LegalContent
 
-    it('has the DE h1, the md status in the draft chip, every section, and the "Offen" chip on every OPEN item', async () => {
+    it('by default (production) has the DE h1 and every section, but no status chip and no OPEN note', async () => {
       const w = await mountAt(p.component, p.de)
+      expect(norm(w.find('h1').text())).toBe(c.hero.title)
+      const text = norm(w.find('[data-legal-page]').text())
+      for (const s of c.sections) for (const str of publicStrings(s)) expect(text).toContain(str)
+      await expectNoReviewNotes(w, c, 'de')
+    })
+
+    it('with the review notes on, has the DE h1, the md status in the draft chip, every section, and the "Offen" chip on every OPEN item', async () => {
+      const w = await mountWithNotes(p.component, p.de)
       expect(norm(w.find('h1').text())).toBe(c.hero.title)
       expect(norm(w.find('[data-legal-status]').text())).toContain(c.status)
       const text = norm(w.find('[data-legal-page]').text())

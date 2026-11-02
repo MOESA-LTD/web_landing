@@ -7,6 +7,8 @@ import {
   mdPath,
   readPageMeta,
 } from '../e2e/fidelity/extract'
+import { deStringsFor } from '../e2e/fidelity/de'
+import { content as de } from '#content/de'
 
 const enHome = mdPath('en', 'home.md')
 
@@ -97,9 +99,12 @@ describe('FIDELITY_EXCLUSIONS', () => {
     expect(home).toContain('Digital Commerce & Commercial Intelligence')
   })
 
-  it('never checks the md OPEN marker itself (it is shown as the localised Open chip)', () => {
-    const notice = approvedStringsFor('en', 'legal-notice.md')
-    expect(notice.some((s) => s.startsWith('OPEN / AÇIK'))).toBe(false)
+  it('never checks an OPEN note (a legal review note, shown on Preview deployments only)', () => {
+    for (const locale of ['en', 'tr'] as const) {
+      for (const md of ['privacy-policy.md', 'cookie-policy.md', 'legal-notice.md']) {
+        expect(approvedStringsFor(locale, md).some((s) => s.includes('OPEN / AÇIK') || s.includes('TASLAK')), `${locale}/${md}`).toBe(false)
+      }
+    }
   })
 
   it('skips exactly the package strings a legal page dropped after the legal review (LEGAL_REMOVED), nothing else', () => {
@@ -135,5 +140,20 @@ describe('findMissing', () => {
 
   it('matches CSS-uppercased English text case-insensitively', () => {
     expect(findMissing('CROSS-FUNCTIONAL CAPABILITY', ['Cross-functional capability'], 'en')).toEqual([])
+  })
+})
+
+describe('deStringsFor (DE legal review notes)', () => {
+  it('skips exactly the status chip text and the OPEN notes of the DE legal pages, and still checks the rest', () => {
+    for (const page of ['privacy-policy', 'cookie-policy', 'legal-notice'] as const) {
+      const strings = deStringsFor(page)
+      expect(strings).not.toContain(de[page].status)
+      expect(strings.some((s) => s.startsWith('OPEN / AÇIK') || s.includes('noch zu bestätigen')), page).toBe(false)
+      expect(strings).toContain(de[page].hero.title)
+      for (const sec of de[page].sections) expect(strings).toContain(sec.title)
+    }
+    expect(deStringsFor('privacy-policy')).toContain(
+      'Das Postfach info@moesaltd.com, bei dem Ihre Anfrage eingeht, wird von Namecheap, Inc. (Private Email, USA) bereitgestellt.',
+    )
   })
 })
