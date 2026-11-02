@@ -202,6 +202,14 @@ Use a **subdomain** for sending, so none of the Namecheap Private Email records 
 - Merge feature PRs with a **merge commit or rebase, not squash** (unless the squash title is itself a Conventional
   Commit), so the individual `feat:` / `fix:` messages reach `main` and the changelog.
 
+### Preview links on pull requests
+
+`.github/workflows/pr-preview-link.yml` runs when the Cloudflare Pages GitHub app finishes its **Cloudflare Pages**
+check run with success. It reads the "Branch Preview URL" and "Preview URL" from the check run summary and writes them
+at the end of the description of every open PR whose head is that commit, between `<!-- preview-link:start -->` and
+`<!-- preview-link:end -->`; each new deployment replaces that block. Production deployments (no open PR) are skipped.
+`check_run` workflows run from the default branch only, so changes to this file take effect after they reach `main`.
+
 ## Post-deploy verification checklist
 
 Run against a preview deployment (and again on production). `BASE=https://<branch>.moesa-website.pages.dev`, then
