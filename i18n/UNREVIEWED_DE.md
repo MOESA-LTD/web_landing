@@ -709,7 +709,7 @@ not listed. Legal pages remain drafts: they keep the package status line in the 
 | --- | --- | --- |
 | `descriptor` | International Procurement, Product Development & Commercial Operations | Internationale Beschaffung, Produktentwicklung & Commercial Operations |
 
-## UI microcopy (120 strings)
+## UI microcopy (121 strings)
 
 Source: every key of `i18n/locales/de.json`, next to its EN value from `i18n/locales/en.json`. The `nav.header.*`
 keys are the labels of the desktop header bar; `{…}` are placeholders filled in at runtime.
@@ -721,6 +721,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `language.names.en` | English | English |
 | `language.names.tr` | Türkçe | Türkçe |
 | `language.names.de` | Deutsch | Deutsch |
+| `language.names.bg` | Български | Български |
 | `cta.discussProject` | Discuss a Project | Projekt besprechen |
 | `cta.exploreServices` | Explore Services | Leistungen entdecken |
 | `nav.label` | Primary | Hauptnavigation |

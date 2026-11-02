@@ -483,7 +483,7 @@ drafts ("DRAFT / TASLAK - LEGAL REVIEW REQUIRED"); their translated sections nee
 | `sections[externalLinks].title` | External links | Harici bağlantılar |
 | `sections[intellectualProperty].title` | Intellectual property | Fikri mülkiyet |
 
-## UI microcopy (81 strings)
+## UI microcopy (82 strings)
 
 Source: the keys in `i18n/unreviewed-ui.ts`; the values come from `i18n/locales/{en,tr}.json`.
 
@@ -504,6 +504,7 @@ Not listed here, because they come from the package TR md:
 | `language.names.en` | English | English |
 | `language.names.tr` | Türkçe | Türkçe |
 | `language.names.de` | Deutsch | Deutsch |
+| `language.names.bg` | Български | Български |
 | `cta.exploreServices` | Explore Services | Hizmetleri İnceleyin |
 | `nav.label` | Primary | Ana gezinme |
 | `nav.header.whoWeWorkWith` | Who We Work With | Müşterilerimiz |
