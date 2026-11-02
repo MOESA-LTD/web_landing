@@ -1,0 +1,21 @@
+# Cloudflare Pages project settings, read by the Git-connected build (and by `wrangler pages dev`).
+# With this file the dashboard shows these fields read-only: change them here. Secrets (RESEND_API_KEY,
+# NUXT_TURNSTILE_SECRET_KEY) and the build-time variables stay in the dashboard (README → Deploying).
+name = "moesa-website"
+pages_build_output_dir = "./dist"
+# Keep in step with CLOUDFLARE_COMPATIBILITY_DATE in nuxt.config.ts. On or after 2025-04-01 with nodejs_compat the
+# runtime also fills process.env from the variables and secrets. no_nodejs_compat_v2: Nitro bundles its own Node.js
+# polyfills (unenv) and adds the same flag to the config it generates.
+compatibility_date = "2026-07-01"
+compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
+
+# Runtime variables of the Pages Function (non-secret). `vars` is not inherited, so the preview list repeats it.
+[vars]
+NUXT_PUBLIC_ENABLE_DE = "false"
+CONTACT_TO = "info@moesaltd.com"
+CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
+
+[env.preview.vars]
+NUXT_PUBLIC_ENABLE_DE = "false"
+CONTACT_TO = "info@moesaltd.com"
+CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"

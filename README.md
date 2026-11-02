@@ -85,7 +85,7 @@ pages are prerendered), so a change needs a redeploy; runtime variables are read
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Cloudflare. On Cloudflare (the request runs in the Pages Function) the IP comes from `CF-Connecting-IP`, which Cloudflare sets and overwrites; anywhere else that header is ignored and the socket address is used. |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
 | `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` in the Pages **Preview** environment only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
-| `NODE_VERSION` | Pages build | yes (Pages) | `22` (Node for the Pages build; must resolve to 22.21 or newer). |
+| `NODE_VERSION` | Pages build | yes (Pages) | `22.22.3` (Node for the Pages build; Nuxt 4.6 requires `^22.22.3`). |
 | `E2E_PORT` | tests | — | Port for the Playwright web server. Default `3100`. |
 
 ## Deploying to Cloudflare Pages
@@ -101,8 +101,12 @@ Pages build writes (checked by `npm run test:cloudflare`, also in CI):
 - `dist/_routes.json`: the function runs for `/*` except the built files, so unknown and disabled-locale paths reach
   it and answer 404 with the SSR error page. No `404.html` and no `_redirects` fallback is emitted.
 - Prerendered pages as `<route>.html` (Pages would redirect `/about` to `/about/` for `about/index.html`).
-- `dist/_worker.js/wrangler.json` with the runtime settings (`nodejs_compat`, compatibility date `2026-07-01`). Only
-  `wrangler pages dev` / `wrangler pages deploy` read it; a Git-connected project takes them from the dashboard (step 4).
+- `dist/_worker.js/wrangler.json` with the runtime settings, merged from the root `wrangler.toml`.
+
+The root **`wrangler.toml`** is the source of truth for the project's runtime settings: compatibility date
+`2026-07-01`, flags `nodejs_compat` + `no_nodejs_compat_v2`, and the non-secret runtime variables (`[vars]`, repeated
+under `[env.preview.vars]` because `vars` is not inherited). The Git-connected build reads it, and the dashboard then
+shows those fields read-only, so change them in the file. Secrets and the build-time variables stay in the dashboard.
 
 1. **DNS to Cloudflare.** Add the zone `moesaltd.com` to the Cloudflare account (free plan), let Cloudflare import the
    existing records, and **before** switching the nameservers at Namecheap check that every mail record of the
@@ -119,20 +123,19 @@ Pages build writes (checked by `npm run test:cloudflare`, also in CI):
 3. **Variables and secrets** (*Settings → Variables and Secrets*): add them for **Production** and for **Preview**
    (each environment has its own list). Pages gives the same variables to the build and to the function; what matters
    is when they are read:
-   - **Build-time** (read while `nuxt build` prerenders; change → redeploy): `NODE_VERSION=22` (Nuxt 4.6 needs Node
-     22.21 or newer: if the build log shows an older 22.x, set the exact version, e.g. `22.21.1`),
+   - **Build-time** (read while `nuxt build` prerenders; change → redeploy): `NODE_VERSION=22.22.3` (Nuxt 4.6
+     requires `^22.22.3`; Pages installs the exact version),
      `NUXT_PUBLIC_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_ENABLE_TR`, `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ANALYTICS_ID`
      (leave unset in v1), and `NUXT_SITE_INDEXABLE=false` in **Preview only** (preview deployments then serve
      `Disallow: /` and `noindex`; leave it unset in Production).
    - **Runtime** (read by the function per request): `RESEND_API_KEY` and `NUXT_TURNSTILE_SECRET_KEY` as **Secret**
-     (encrypted), `CONTACT_FROM`, `CONTACT_TO` (optional), and again `NUXT_PUBLIC_ENABLE_TR` /
-     `NUXT_PUBLIC_ENABLE_DE` (they are build **and** runtime). Leave `CONTACT_TRUST_XFF` and
-     `CONTACT_DEV_BYPASS_TURNSTILE` unset.
-4. **Runtime settings** (*Settings → Runtime*, for Production and Preview): Compatibility date **`2026-07-01`**,
-   Compatibility flags **`nodejs_compat`** and **`no_nodejs_compat_v2`** (the same as the generated
-   `wrangler.json`). `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or
-   after 2025-04-01 the runtime also fills `process.env` from the variables and secrets (the contact route reads the
-   bindings directly as well, `server/utils/runtime-env.ts`).
+     (encrypted). The non-secret runtime variables (`CONTACT_FROM`, `CONTACT_TO`, `NUXT_PUBLIC_ENABLE_DE`, and
+     `NUXT_PUBLIC_ENABLE_TR` if TR is turned off) live in `wrangler.toml` `[vars]`; a locale flag set there must match
+     the build-time value set here. Leave `CONTACT_TRUST_XFF` and `CONTACT_DEV_BYPASS_TURNSTILE` unset.
+4. **Runtime settings** come from `wrangler.toml` (see above); nothing to set in *Settings → Runtime*.
+   `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or after 2025-04-01
+   the runtime also fills `process.env` from the variables and secrets (the contact route reads the bindings directly
+   as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `CONTACT_TO` and `CONTACT_FROM` are in `[vars]`.
 5. **Custom domains** (*Project → Custom domains*): add `www.moesaltd.com` and `moesaltd.com`. Cloudflare creates the
    proxied `CNAME` records to `moesa-website.pages.dev` itself and issues the certificates.
 6. **Apex → www redirect** (zone `moesaltd.com` → *Rules → Redirect Rules → Create rule*, or the template "Redirect

@@ -1,5 +1,7 @@
 // @vitest-environment node
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 /**
  * Reads nuxt.config.ts itself (with `defineNuxtConfig` stubbed as the identity) under different env values:
@@ -90,6 +92,11 @@ describe('nuxt.config', () => {
     // With nodejs_compat and a date on or after 2025-04-01 the Workers runtime fills process.env from the bindings.
     expect(cf.wrangler.compatibility_flags).toContain('nodejs_compat')
     expect(cf.wrangler.compatibility_date >= '2025-04-01').toBe(true)
+    // wrangler.toml (read by the Git-connected Pages build) carries the same runtime settings.
+    const toml = readFileSync(resolve(process.cwd(), 'wrangler.toml'), 'utf8')
+    expect(toml).toContain(`compatibility_date = "${cf.wrangler.compatibility_date}"`)
+    expect(toml).toContain('compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]')
+    expect(toml).toContain('pages_build_output_dir = "./dist"')
     // The optional resend peer is stubbed so the Workers bundle resolves every import.
     expect(config.nitro.alias['@react-email/render']).toMatch(/server[\\/]stubs[\\/]react-email-render\.ts$/)
   })
