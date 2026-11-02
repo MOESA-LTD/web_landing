@@ -8,7 +8,7 @@ const cssLower = css.toLowerCase()
 
 const brand = JSON.parse(
   readFileSync(
-    resolve(root, 'MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0/data/brand_tokens.json'),
+    resolve(root, 'content/data/brand_tokens.json'),
     'utf8',
   ),
 ) as { colors: Record<string, string> }

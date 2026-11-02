@@ -30,8 +30,8 @@ const ROOT = resolve(import.meta.dirname, '../..')
 const OUTPUT = join(ROOT, '.output')
 const PUBLIC = join(OUTPUT, 'public')
 const SERVER_ENTRY = join(OUTPUT, 'server', 'index.mjs')
-const PKG = join(ROOT, 'MOESA_Website_Package_v1.0', 'MOESA_Website_Package_v1.0')
-const PKG_CONTENT = join(PKG, 'content')
+const CONTENT = join(ROOT, 'content')
+const APPROVED = join(CONTENT, 'approved')
 
 type Locale = 'en' | 'tr' | 'de' | 'bg'
 
@@ -179,12 +179,12 @@ function isApproved(text: string, approved: string[]): boolean {
 }
 
 const PAGE_MAP: { URL: string; 'English File': string; 'Turkish File': string }[] = JSON.parse(
-  readFileSync(join(PKG, 'data', 'page_map.json'), 'utf8'),
+  readFileSync(join(CONTENT, 'data', 'page_map.json'), 'utf8'),
 )
 const mdOf = (name: RouteName, locale: 'en' | 'tr') => {
   const row = PAGE_MAP.find((r) => routeNameForPath(r.URL) === name)
   if (!row) throw new Error(`page_map.json has no row for ${name}`)
-  return join(PKG_CONTENT, locale, locale === 'en' ? row['English File'] : row['Turkish File'])
+  return join(APPROVED, locale, locale === 'en' ? row['English File'] : row['Turkish File'])
 }
 
 /**
@@ -301,7 +301,7 @@ describe('forbidden claims (built site, EN + TR + DE + BG)', () => {
 
   it('the forbidden phrases are not approved copy (so zero matches is the expectation)', () => {
     const md = fold(
-      walk(PKG_CONTENT, (f) => f.endsWith('.md'))
+      walk(APPROVED, (f) => f.endsWith('.md'))
         .map((f) => readFileSync(f, 'utf8'))
         .join('\n'),
     )

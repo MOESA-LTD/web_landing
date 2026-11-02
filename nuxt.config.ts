@@ -103,7 +103,6 @@ export default defineNuxtConfig({
   },
   alias: {
     '#content': fileURLToPath(new URL('./content', import.meta.url)),
-    '#pkg': fileURLToPath(new URL('./MOESA_Website_Package_v1.0/MOESA_Website_Package_v1.0', import.meta.url)),
   },
   app: {
     head: {
