@@ -1,6 +1,7 @@
 /**
- * A disabled locale is not served: with `NUXT_PUBLIC_ENABLE_TR=false` every request under `/tr`, and with
- * `NUXT_PUBLIC_ENABLE_DE=false` every request under `/de`, answers 404 (rendered by error.vue in EN, since
+ * A disabled locale is not served: with `NUXT_PUBLIC_ENABLE_TR=false` every request under `/tr`, with
+ * `NUXT_PUBLIC_ENABLE_DE=false` every request under `/de`, and with `NUXT_PUBLIC_ENABLE_BG=false` every request under
+ * `/bg`, answers 404 (rendered by error.vue in EN, since
  * `errorLocale` falls back to EN for a disabled locale). The flags are read at request time (the Cloudflare bindings,
  * else process.env), like the contact route.
  * Without this guard the pages of a disabled locale would still render on request (only their prerendering, the

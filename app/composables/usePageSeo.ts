@@ -2,7 +2,7 @@ import type { Locale, PageMeta } from '#content/types'
 import { buildPageSeo } from '~~/i18n/seo'
 
 /**
- * Title, description, self-referencing canonical, hreflang alternates (en, tr, de, x-default = EN; a disabled
+ * Title, description, self-referencing canonical, hreflang alternates (en, tr, de, bg, x-default = EN; a disabled
  * locale is left out),
  * OG and Twitter tags, and `<html lang>` for the current locale. `meta.path` is the EN path.
  */

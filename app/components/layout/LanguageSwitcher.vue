@@ -8,7 +8,7 @@ import { ROUTES, enabledLocales, routeNameForLocalePath } from '~~/i18n/routes'
  * native name and the code. Canvas visual, but real links instead of the canvas's JS buttons, and a disclosure:
  * `aria-expanded` / `aria-controls`, Escape closes and returns focus to the button, a mousedown outside and a
  * route change close it (all three are additions to the canvas, which lacks them). The current locale is
- * `aria-current="true"`. A locale switched off (`enableTr` / `enableDe` false) is not listed; with only EN left the
+ * `aria-current="true"`. A locale switched off (`enableTr` / `enableDe` / `enableBg` false) is not listed; with only EN left the
  * dropdown is not rendered at all. The header owns the `open` state (v-model:open) so that
  * opening this menu closes the Services menu and vice versa.
  *
@@ -18,7 +18,7 @@ import { ROUTES, enabledLocales, routeNameForLocalePath } from '~~/i18n/routes'
  * Pages in ROUTES (all of them, including the five service pages) get their counterpart from ROUTES, the single
  * source of page paths: the layout renders the header before the page's setup runs, so on the server the
  * service page's `useSetI18nParams` comes too late for `switchLocalePath` (the SSR HTML would keep the EN slug
- * under /tr/hizmetler/ or /de/leistungen/). Other paths fall back to `switchLocalePath`, and a path without any
+ * under /tr/hizmetler/, /de/leistungen/ or /bg/uslugi/). Other paths fall back to `switchLocalePath`, and a path without any
  * counterpart (the 404 page) to the locale's home, so every link keeps a real href.
  */
 const open = defineModel<boolean>('open', { default: false })

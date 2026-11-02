@@ -3,8 +3,8 @@ import type { Locale, Section, ServiceSlug, TextSection } from '#content/types'
 import { localeOfPath, localeSlugForService, serviceSlugFromLocaleSlug } from '~~/i18n/routes'
 
 /**
- * Service page (EN `/services/[slug]`, TR `/tr/hizmetler/[slug]`, DE `/de/leistungen/[slug]`, with the Turkish or
- * German slug from ROUTES).
+ * Service page (EN `/services/[slug]`, TR `/tr/hizmetler/[slug]`, DE `/de/leistungen/[slug]`, BG `/bg/uslugi/[slug]`,
+ * with the Turkish, German or Bulgarian slug from ROUTES).
  * Skeleton of the canvas artboards Service*.dc.html: page hero (crumbs Home / Services / name, the service CTA),
  * Scope (statement split + Typical mandates panel), "How the work runs", related services, final CTA.
  * The approved md sections the canvas has no layout for are built from the DS patterns between Scope and
@@ -39,6 +39,7 @@ setI18nParams({
   en: { slug: localeSlugForService('en', slug) },
   tr: { slug: localeSlugForService('tr', slug) },
   de: { slug: localeSlugForService('de', slug) },
+  bg: { slug: localeSlugForService('bg', slug) },
 })
 
 const DIGITAL: ServiceSlug = 'digital-commerce-commercial-intelligence'

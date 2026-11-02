@@ -1,14 +1,17 @@
 # MOESA Ltd. website
 
-The public website of MOESA Ltd. (`https://www.moesaltd.com`), in English, Turkish and German.
+The public website of MOESA Ltd. (`https://www.moesaltd.com`), in English, Turkish, German and Bulgarian.
 
-Nuxt 4 · Tailwind CSS v4 · `@nuxtjs/i18n` (EN at `/`, TR under `/tr/` with Turkish slugs, DE under `/de/` with German slugs) · `@nuxtjs/sitemap` and
+Nuxt 4 · Tailwind CSS v4 · `@nuxtjs/i18n` (EN at `/`, TR under `/tr/` with Turkish slugs, DE under `/de/` with German slugs,
+BG under `/bg/` with Bulgarian slugs in Latin transliteration) · `@nuxtjs/sitemap` and
 `@nuxtjs/robots` · contact form via a Nitro server route → Resend, protected by Cloudflare Turnstile. Hosted on Cloudflare Pages
 (static files + one Pages Function).
 
 All page copy comes verbatim from the approved package in `MOESA_Website_Package_v1.0/` (EN) and its TR files.
 Turkish strings that have no approved source are listed in `i18n/UNREVIEWED_TR.md`. The German site has no approved
 source at all: every German string is our translation of the approved EN and is listed in `i18n/UNREVIEWED_DE.md`.
+The Bulgarian site is the same: every Bulgarian string is our translation of the approved EN, listed in
+`i18n/UNREVIEWED_BG.md`. Production ships with BG switched off (`wrangler.toml`); preview deployments show it for review.
 
 ## Requirements
 
@@ -33,10 +36,10 @@ through in `nuxt dev` (the flag is ignored by production builds). The component 
 
 | Command | What it runs |
 |---|---|
-| `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-/DE-disabled builds, headers), DE translation provenance and key parity. |
-| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server; a second `npm run preview` of the same build on **3101** with `NUXT_PUBLIC_LEGAL_REVIEW_NOTES=true` checks the legal review notes as a Preview deployment shows them), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
-| `npm run test:cloudflare` | Checks on the **Cloudflare Pages build** (`tests/cloudflare`, `dist/`): run `NITRO_PRESET=cloudflare-pages npm run build` first. `_headers` carries every security header on `/*` (exactly `routeRules['/**']`) and the noindex `X-Robots-Tag` on the thank-you pages; `_routes.json` leaves every non-file path to the function; no `404.html` or `_redirects` fallback; pages prerendered as `<route>.html`; `wrangler.json` has `nodejs_compat` and a date on or after 2025-04-01. Not part of `npm test`. |
-| `npm run test:acceptance` | Acceptance checks (`tests/acceptance`) against the **built** `.output/`: run `npm run build` first (without a build it fails and says so). Starts the built server on a free port and scans all 45 routes: no forbidden claims (EN/TR/DE); claim-sensitive words (AI, platform, portal, guarantee …) only in approved text of the same page, in visible text, `content`/`alt`/`aria-label`/`title` attributes and JSON-LD; no source comment from `app/`, `server/`, `i18n/`, `content/` in the public HTML/JS, the server bundle or the rendered pages. Not part of `npm test`. |
+| `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-/DE-/BG-disabled builds, headers), DE and BG translation provenance and key parity. |
+| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server; a second `npm run preview` of the same build on **3101** with `NUXT_PUBLIC_LEGAL_REVIEW_NOTES=true` checks the legal review notes as a Preview deployment shows them), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 60 URLs, TR/DE/BG hreflang and links, DE and BG content fidelity (against the DE and BG modules), DE and BG text overflow, the BG header fit and the self-hosted Cyrillic font. |
+| `npm run test:cloudflare` | Checks on the **Cloudflare Pages build** (`tests/cloudflare`, `dist/`): run `NITRO_PRESET=cloudflare-pages npm run build` first. `_headers` carries every security header on `/*` (exactly `routeRules['/**']`) and the noindex `X-Robots-Tag` on the thank-you pages; `_routes.json` leaves every non-file path to the function; no `404.html` or `_redirects` fallback; pages prerendered as `<route>.html`; `wrangler.json` has `nodejs_compat` and a date on or after 2025-04-01; the Cyrillic subset of the self-hosted Manrope ships from the site itself. Not part of `npm test`. |
+| `npm run test:acceptance` | Acceptance checks (`tests/acceptance`) against the **built** `.output/`: run `npm run build` first (without a build it fails and says so). Starts the built server on a free port and scans all 60 routes: no forbidden claims (EN/TR/DE/BG); claim-sensitive words (AI, platform, portal, guarantee …) only in approved text of the same page, in visible text, `content`/`alt`/`aria-label`/`title` attributes and JSON-LD; no source comment from `app/`, `server/`, `i18n/`, `content/` in the public HTML/JS, the server bundle or the rendered pages. Not part of `npm test`. |
 | `npm run typecheck` (`nuxt typecheck`) | `vue-tsc` over the app, server and config. |
 
 CI (`.github/workflows/ci.yml`, every push and pull request, Node 22): `npm ci`, `npm test`, `npx nuxt typecheck`,
@@ -63,8 +66,9 @@ Other scripts:
   (navy ground, bars motif, "MOESA LTD." and the EN descriptor; Manrope from `node_modules`, no network). Commit the PNG.
 - `npm run unreviewed:tr` regenerates `i18n/UNREVIEWED_TR.md`.
 - `npm run unreviewed:de` regenerates `i18n/UNREVIEWED_DE.md` (DE page copy from `content/de/unreviewed.ts` and every key of `i18n/locales/de.json`).
+- `npm run unreviewed:bg` regenerates `i18n/UNREVIEWED_BG.md` (BG page copy from `content/bg/unreviewed.ts` and every key of `i18n/locales/bg.json`).
 - `npm run unreviewed:legal` regenerates `i18n/UNREVIEWED_LEGAL.md`: the legal text we wrote after the legal review
-  (paths in `content/legal-revisions.ts`, EN/TR/DE), the legal UI strings, and the package strings the legal pages dropped.
+  (paths in `content/legal-revisions.ts`, EN/TR/DE/BG), the legal UI strings, and the package strings the legal pages dropped.
 
 ## Environment variables
 
@@ -80,7 +84,8 @@ pages are prerendered), so a change needs a redeploy; runtime variables are read
 | `NUXT_TURNSTILE_SECRET_KEY` | server, runtime | yes | Cloudflare Turnstile secret key. |
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
 | `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Pages project variables (they reach the build and the function) and **redeploy after changing it**: pages prerendered while the locale was on are static files the guard never sees, so flipping the flag at runtime alone leaves them reachable. Default: TR on. |
-| `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
+| `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With TR, DE and BG all off the switcher is not shown. Default: DE on. |
+| `NUXT_PUBLIC_ENABLE_BG` | public, **build + runtime** | no | `false` hides the Bulgarian site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR (every `/bg` path answers 404, no BG switcher entry, sitemap URL or hreflang alternate). Default in code: BG on. `wrangler.toml` sets it to `false` for production and `true` for preview deployments until the BG copy and legal pages are reviewed. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it adds the Analytics category and its buttons to the consent panel and shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1, so add one (and update the Cookie Policy) before setting it. Prerendered pages carry the build-time value, so redeploy after changing it. |
 | `NUXT_PUBLIC_LEGAL_REVIEW_NOTES` | public, **build + runtime** | no — Preview only | `runtimeConfig.public.legalReviewNotes`. `true` shows the legal pages' review notes: the "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" status chip and the dashed OPEN notes (owner facts still missing), for the lawyer and the owner. Any other value or unset → hidden: no chip, and the OPEN paragraphs are left out entirely. Set to `true` in `wrangler.toml` `[env.preview.vars]` only; production `[vars]` leaves it unset. The legal pages are rendered per request (not prerendered), so the runtime value applies. Default: off. |
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Cloudflare. On Cloudflare (the request runs in the Pages Function) the IP comes from `CF-Connecting-IP`, which Cloudflare sets and overwrites; anywhere else that header is ignored and the socket address is used. |
@@ -128,18 +133,21 @@ Draft status chip and OPEN notes for the lawyer and the owner; production (`[var
    is when they are read:
    - **Build-time** (read while `nuxt build` prerenders; change → redeploy): `NODE_VERSION=22.22.3` (Nuxt 4.6
      requires `^22.22.3`; Pages installs the exact version),
-     `NUXT_PUBLIC_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_ENABLE_TR`, `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ANALYTICS_ID`
+     `NUXT_PUBLIC_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_ENABLE_TR`, `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ENABLE_BG`, `NUXT_PUBLIC_ANALYTICS_ID`
      (leave unset in v1), and `NUXT_SITE_INDEXABLE=false` in **Preview only** (preview deployments then serve
      `Disallow: /` and `noindex`; leave it unset in Production).
    - **Runtime** (read by the function per request): `RESEND_API_KEY` and `NUXT_TURNSTILE_SECRET_KEY` as **Secret**
-     (encrypted). The non-secret runtime variables (`CONTACT_FROM`, `CONTACT_TO`, `NUXT_PUBLIC_ENABLE_DE`, and
+     (encrypted). The non-secret runtime variables (`CONTACT_FROM`, `CONTACT_TO`, `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ENABLE_BG`, and
      `NUXT_PUBLIC_ENABLE_TR` if TR is turned off) live in `wrangler.toml` `[vars]`; a locale flag set there must match
      the build-time value set here. Leave `CONTACT_TRUST_XFF` and `CONTACT_DEV_BYPASS_TURNSTILE` unset.
 4. **Runtime settings** come from `wrangler.toml` (see above); nothing to set in *Settings → Runtime*.
    `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or after 2025-04-01
    the runtime also fills `process.env` from the variables and secrets (the contact route reads the bindings directly
-   as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `CONTACT_TO` and `CONTACT_FROM` are in `[vars]`;
-   `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"` is in `[env.preview.vars]` only (do not add it to Production).
+   as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ENABLE_BG`, `CONTACT_TO` and
+   `CONTACT_FROM` are in `[vars]`. BG is `"false"` in `[vars]` (production) and `"true"` in `[env.preview.vars]`, so
+   preview deployments show the Bulgarian site for review while production does not; set the dashboard build-time
+   value of each environment to match. `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"` is in `[env.preview.vars]` only (do not
+   add it to Production).
 5. **Custom domains** (*Project → Custom domains*): add `www.moesaltd.com` and `moesaltd.com`. Cloudflare creates the
    proxied `CNAME` records to `moesa-website.pages.dev` itself and issues the certificates.
 6. **Apex → www redirect** (zone `moesaltd.com` → *Rules → Redirect Rules → Create rule*, or the template "Redirect
@@ -220,8 +228,8 @@ Run against a preview deployment (and again on production). `BASE=https://<branc
   curl -sI "$BASE/nope" | grep -i content-security
   ```
 - [ ] Prerendered pages answer without a trailing-slash redirect: `curl -sI "$BASE/services/operations-supply-chain" | head -1` → 200.
-- [ ] **Sitemap and robots**: `curl -s "$BASE/sitemap.xml" | grep -c '<loc>'` → `42` (no `/thank-you`,
-  `/tr/tesekkurler` or `/de/danke`); `curl -s "$BASE/robots.txt"` has `Disallow: /api/` and `Sitemap: https://www.moesaltd.com/sitemap.xml`
+- [ ] **Sitemap and robots**: `curl -s "$BASE/sitemap.xml" | grep -c '<loc>'` → 14 per enabled locale (56 with all four;
+  no `/thank-you`, `/tr/tesekkurler`, `/de/danke` or `/bg/blagodarim`; no `/bg` URL while BG is off); `curl -s "$BASE/robots.txt"` has `Disallow: /api/` and `Sitemap: https://www.moesaltd.com/sitemap.xml`
   (on a preview deployment with `NUXT_SITE_INDEXABLE=false` robots.txt disallows everything — expected).
 - [ ] `/thank-you` sends `X-Robots-Tag: noindex, follow`.
 - [ ] Open `/contact` in a browser with DevTools: the Turnstile widget renders, **no CSP errors in the console**, and a
@@ -264,6 +272,15 @@ Also:
 - [ ] Review the Turkish strings in `i18n/UNREVIEWED_TR.md` (translated by us, no approved source).
 - [ ] Review the German strings in `i18n/UNREVIEWED_DE.md` (the whole German site is our translation of the approved
   EN; nothing in it is approved yet), or set `NUXT_PUBLIC_ENABLE_DE=false` until it is.
+- [ ] Review the Bulgarian strings in `i18n/UNREVIEWED_BG.md` (the whole Bulgarian site is our translation of the
+  approved EN) on a preview deployment, then set `NUXT_PUBLIC_ENABLE_BG = "true"` in `wrangler.toml` `[vars]` (and the
+  production build-time variable) to publish it.
+- [ ] **Bulgarian legal review before the BG launch:** the Bulgarian Политика за поверителност, Политика за
+  бисквитките and Правна информация (`/bg/politika-za-poveritelnost`, `/bg/politika-za-biskvitkite`,
+  `/bg/pravna-informatsiya`) are translated drafts of the EN drafts with the same open items (legal form and register
+  entry, управител, phone, mailbox provider, retention periods); the legal text written after the legal review is in
+  `i18n/UNREVIEWED_LEGAL.md` with its BG column. The registered address is shown as in the package (Latin script);
+  give its Bulgarian form as entered in the Commercial Register if the BG pages should use it.
 - [ ] **German legal review before the DE launch:** the German Impressum (`/de/impressum`), Datenschutzerklärung
   (`/de/datenschutz`) and Cookie-Richtlinie must meet German requirements. The Impressum needs the § 5 DDG details the
   package does not yet have: the **Geschäftsführer** (managing director / legal representative), the
@@ -282,7 +299,8 @@ Also:
 | **Cloudflare** | DNS; hosting on Pages (static files on the global network, one Pages Function / Worker for the SSR pages and `/api/contact`); the apex → www redirect; Turnstile spam check on `/contact` (script and iframe from `challenges.cloudflare.com`, loaded on the contact pages only) | Request data (IP, user agent) at the edge and in logs if enabled; browser signals for the challenge, the visitor IP on verification |
 | **Resend** | Sends the contact-form enquiry to `CONTACT_TO` | The form fields of each enquiry |
 
-- **Fonts are self-hosted** (`@fontsource-variable/manrope`, served from the site; no Google Fonts).
+- **Fonts are self-hosted** (`@fontsource-variable/manrope`, served from the site; no Google Fonts). Its Cyrillic
+  subset (for the Bulgarian pages) is part of the same package and is loaded only where Cyrillic text is shown.
 - **No analytics** and no non-essential cookies in v1. The only first-party cookie is the strictly necessary
   `moesa_consent`, written only when a visitor saves a cookie choice. A choice is offered (Cookie Policy panel and
   banner) only once `NUXT_PUBLIC_ANALYTICS_ID` is set, so v1 never writes it; the panel shows "Strictly necessary"
@@ -293,8 +311,10 @@ Also:
 ## SEO and security (reference)
 
 - Canonical origin `https://www.moesaltd.com`; every page has a self-referencing canonical and `hreflang` alternates
-  en / tr / de / x-default (EN). Sitemap: 42 URLs (14 per locale) from `i18n/routes.ts`, thank-you pages excluded.
-- Organization JSON-LD on `/`, `/tr` and `/de` (facts from `data/brand_tokens.json` only).
+  en / tr / de / bg / x-default (EN) for the enabled locales, plus `og:locale` (en_GB, tr_TR, de_DE, bg_BG) and
+  `og:locale:alternate`. Sitemap: 14 URLs per enabled locale (56 with all four) from `i18n/routes.ts`, thank-you
+  pages excluded.
+- Organization JSON-LD on `/`, `/tr`, `/de` and `/bg` (facts from `data/brand_tokens.json` only).
 - Security headers on every response (`routeRules['/**']` in `nuxt.config.ts`; on Cloudflare Pages Nitro also writes
   them to `dist/_headers` for the static files): HSTS (2 years, preload),
   `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, and a CSP allowing

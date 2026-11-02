@@ -1,9 +1,9 @@
 /**
- * Renders i18n/UNREVIEWED_LEGAL.md: every legal string we wrote after the legal review of 2026-11-01, in EN, TR and
- * DE, for the lawyer. None of it is owner-approved package copy.
+ * Renders i18n/UNREVIEWED_LEGAL.md: every legal string we wrote after the legal review of 2026-11-01, in EN, TR, DE
+ * and BG, for the lawyer. None of it is owner-approved package copy.
  *   - Page copy: the paths in content/legal-revisions.ts (`LEGAL_REVISIONS`), with the text read from the legal
  *     content modules of each locale.
- *   - UI microcopy: `LEGAL_REVISION_UI_KEYS`, with the values from i18n/locales/{en,tr,de}.json.
+ *   - UI microcopy: `LEGAL_REVISION_UI_KEYS`, with the values from i18n/locales/{en,tr,de,bg}.json.
  *   - Removed package text: `LEGAL_REMOVED`.
  *
  * Run `npm run unreviewed:legal` after changing legal copy and commit the result. A unit test fails when the
@@ -21,17 +21,20 @@ import trNotice from '../content/tr/legal-notice.ts'
 import dePrivacy from '../content/de/privacy-policy.ts'
 import deCookie from '../content/de/cookie-policy.ts'
 import deNotice from '../content/de/legal-notice.ts'
+import bgPrivacy from '../content/bg/privacy-policy.ts'
+import bgCookie from '../content/bg/cookie-policy.ts'
+import bgNotice from '../content/bg/legal-notice.ts'
 
 /** `import.meta.dirname` under Node; vitest's nuxt environment provides `__dirname` instead. */
 const here: string = import.meta.dirname ?? __dirname
 const root = resolve(here, '..')
 export const UNREVIEWED_LEGAL_MD_PATH = resolve(root, 'i18n/UNREVIEWED_LEGAL.md')
 
-const LOCALES = ['en', 'tr', 'de'] as const
+const LOCALES = ['en', 'tr', 'de', 'bg'] as const
 const PAGES: Record<LegalPageKey, Record<(typeof LOCALES)[number], unknown>> = {
-  'privacy-policy': { en: enPrivacy, tr: trPrivacy, de: dePrivacy },
-  'cookie-policy': { en: enCookie, tr: trCookie, de: deCookie },
-  'legal-notice': { en: enNotice, tr: trNotice, de: deNotice },
+  'privacy-policy': { en: enPrivacy, tr: trPrivacy, de: dePrivacy, bg: bgPrivacy },
+  'cookie-policy': { en: enCookie, tr: trCookie, de: deCookie, bg: bgCookie },
+  'legal-notice': { en: enNotice, tr: trNotice, de: deNotice, bg: bgNotice },
 }
 const FILES: Record<LegalPageKey, string> = {
   'privacy-policy': 'privacy-policy.ts',
@@ -68,7 +71,7 @@ const cell = (s: string) => s.replace(/\|/g, '\\|')
 const row = (cells: string[]) => `| ${cells.join(' | ')} |`
 
 export function renderUnreviewedLegalMd(): string {
-  const messages = { en: readMessages('en'), tr: readMessages('tr'), de: readMessages('de') }
+  const messages = { en: readMessages('en'), tr: readMessages('tr'), de: readMessages('de'), bg: readMessages('bg') }
   const text = (page: LegalPageKey, locale: (typeof LOCALES)[number], path: string) => {
     const v = legalAt(page, locale, path)
     if (typeof v !== 'string') throw new Error(`LEGAL_REVISIONS: ${locale} ${page} ${path} is missing`)
@@ -83,12 +86,14 @@ export function renderUnreviewedLegalMd(): string {
     'After the legal-pages review of 2026-11-01 (`docs/superpowers/reviews/2026-11-01-legal-pages-review.md`) we',
     'replaced the draft instructions and OPEN notes of the Privacy Policy, Cookie Policy and Legal Notice with',
     'visitor-facing text that describes what the website actually does. **None of the text below is owner-approved',
-    'package copy:** the EN is our draft for the lawyer (based on the review\'s suggested wording), TR and DE translate',
-    'it. The "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip and the OPEN notes stay in the content until the lawyer',
+    'package copy:** the EN is our draft for the lawyer (based on the review\'s suggested wording), TR, DE and BG',
+    'translate it. The "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip and the OPEN notes stay in the content until the lawyer',
     'signs off, but are shown on Preview deployments only (`NUXT_PUBLIC_LEGAL_REVIEW_NOTES=true`); production hides',
     'them. "OPEN / AÇIK" rows still need owner facts (legal form, register entry, managing director, phone, retention',
-    'periods). Unchanged legal strings are not listed: EN is package text, and the TR/DE',
-    'translations of it are in `i18n/UNREVIEWED_TR.md` / `i18n/UNREVIEWED_DE.md`.',
+    'periods). Unchanged legal strings are not listed: EN is package text, and the TR/DE/BG',
+    'translations of it are in `i18n/UNREVIEWED_TR.md` / `i18n/UNREVIEWED_DE.md` / `i18n/UNREVIEWED_BG.md`. The BG',
+    'privacy policy names the Bulgarian supervisory authority in Bulgarian (Комисия за защита на личните данни) and cites',
+    'the GDPR as its official Bulgarian version does (ОРЗД, "чл. 6, пар. 1, буква „б“").',
     '',
     'Finding ids refer to the review (B = blocker, S = should fix, N = nice to have, O = owner input).',
     '',
@@ -98,13 +103,13 @@ export function renderUnreviewedLegalMd(): string {
     const entries = LEGAL_REVISIONS.filter((e) => e.page === page)
     out.push(
       '',
-      `### ${page} (\`content/{en,tr,de}/${FILES[page]}\`, ${entries.length})`,
+      `### ${page} (\`content/{en,tr,de,bg}/${FILES[page]}\`, ${entries.length})`,
       '',
-      row(['Path', 'Finding', 'EN', 'TR', 'DE']),
-      row(['---', '---', '---', '---', '---']),
+      row(['Path', 'Finding', 'EN', 'TR', 'DE', 'BG']),
+      row(['---', '---', '---', '---', '---', '---']),
     )
     for (const e of entries) {
-      out.push(row([`\`${e.path}\``, e.finding, text(page, 'en', e.path), text(page, 'tr', e.path), text(page, 'de', e.path)]))
+      out.push(row([`\`${e.path}\``, e.finding, ...LOCALES.map((l) => text(page, l, e.path))]))
     }
   }
 
@@ -112,11 +117,11 @@ export function renderUnreviewedLegalMd(): string {
     '',
     `## UI microcopy (${LEGAL_REVISION_UI_KEYS.length} strings)`,
     '',
-    'Source: `i18n/locales/{en,tr,de}.json`. The contact-form checkbox is now an acknowledgement of the privacy policy',
+    'Source: `i18n/locales/{en,tr,de,bg}.json`. The contact-form checkbox is now an acknowledgement of the privacy policy',
     '(the enquiry is answered under Art. 6(1)(b)/(f) GDPR), not consent (review S2).',
     '',
-    row(['Key', 'Finding', 'EN', 'TR', 'DE']),
-    row(['---', '---', '---', '---', '---']),
+    row(['Key', 'Finding', 'EN', 'TR', 'DE', 'BG']),
+    row(['---', '---', '---', '---', '---', '---']),
   )
   for (const { key, finding } of LEGAL_REVISION_UI_KEYS) {
     const v = LOCALES.map((l) => messages[l][key])

@@ -23,13 +23,14 @@ describe('buildPageSeo', () => {
     expect(metaContent(head, 'og:url')).toBe('https://www.moesaltd.com/tr/iletisim')
   })
 
-  it('emits hreflang en, tr, de and x-default (= EN) on every locale', () => {
-    for (const locale of ['en', 'tr', 'de'] as const) {
+  it('emits hreflang en, tr, de, bg and x-default (= EN) on every locale', () => {
+    for (const locale of ['en', 'tr', 'de', 'bg'] as const) {
       const alt = buildPageSeo(meta, locale).link.filter((l) => l.rel === 'alternate')
       expect(alt.map((l) => [l.hreflang, l.href])).toEqual([
         ['en', 'https://www.moesaltd.com/contact'],
         ['tr', 'https://www.moesaltd.com/tr/iletisim'],
         ['de', 'https://www.moesaltd.com/de/kontakt'],
+        ['bg', 'https://www.moesaltd.com/bg/kontakti'],
         ['x-default', 'https://www.moesaltd.com/contact'],
       ])
     }
@@ -45,11 +46,38 @@ describe('buildPageSeo', () => {
     expect(buildPageSeo({ ...meta, path: '/' }, 'de').link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/de')
   })
 
-  it('drops the DE alternate when DE is disabled, and both when both are disabled', () => {
+  it('drops the DE alternate when DE is disabled, and all when all are disabled', () => {
     const noDe = buildPageSeo(meta, 'en', { enableDe: false }).link.filter((l) => l.rel === 'alternate')
-    expect(noDe.map((l) => l.hreflang)).toEqual(['en', 'tr', 'x-default'])
-    const none = buildPageSeo(meta, 'en', { enableTr: false, enableDe: false }).link.filter((l) => l.rel === 'alternate')
+    expect(noDe.map((l) => l.hreflang)).toEqual(['en', 'tr', 'bg', 'x-default'])
+    const none = buildPageSeo(meta, 'en', { enableTr: false, enableDe: false, enableBg: false }).link.filter((l) => l.rel === 'alternate')
     expect(none.map((l) => l.hreflang)).toEqual(['en', 'x-default'])
+  })
+
+  it('drops the BG alternate and og:locale:alternate when BG is disabled', () => {
+    const head = buildPageSeo(meta, 'en', { enableBg: false })
+    expect(head.link.filter((l) => l.rel === 'alternate').map((l) => l.hreflang)).toEqual(['en', 'tr', 'de', 'x-default'])
+    expect(head.meta.filter((m) => m.property === 'og:locale:alternate').map((m) => m.content)).toEqual(['tr_TR', 'de_DE'])
+  })
+
+  it('uses a self-referencing BG canonical, BG html lang and the Bulgarian slug', () => {
+    const head = buildPageSeo(meta, 'bg')
+    expect(head.htmlAttrs).toEqual({ lang: 'bg' })
+    expect(head.link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/bg/kontakti')
+    expect(metaContent(head, 'og:url')).toBe('https://www.moesaltd.com/bg/kontakti')
+    const svc = buildPageSeo({ ...meta, path: '/services/operations-supply-chain' }, 'bg')
+    expect(svc.link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/bg/uslugi/operatsii-i-veriga-na-dostavki')
+    expect(buildPageSeo({ ...meta, path: '/' }, 'bg').link.find((l) => l.rel === 'canonical')?.href).toBe('https://www.moesaltd.com/bg')
+  })
+
+  it('sets og:locale for the page locale (bg_BG on BG pages) and og:locale:alternate for the other enabled locales', () => {
+    expect(metaContent(buildPageSeo(meta, 'en'), 'og:locale')).toBe('en_GB')
+    expect(metaContent(buildPageSeo(meta, 'tr'), 'og:locale')).toBe('tr_TR')
+    expect(metaContent(buildPageSeo(meta, 'de'), 'og:locale')).toBe('de_DE')
+    const bg = buildPageSeo(meta, 'bg')
+    expect(metaContent(bg, 'og:locale')).toBe('bg_BG')
+    expect(bg.meta.filter((m) => m.property === 'og:locale:alternate').map((m) => m.content)).toEqual(['en_GB', 'tr_TR', 'de_DE'])
+    // A page that is not a route (404) has no alternates of any kind.
+    expect(buildPageSeo({ ...meta, path: '/404' }, 'bg').meta.some((m) => m.property === 'og:locale:alternate')).toBe(false)
   })
 
   it('keeps "/" as the only path with a trailing slash; TR home has none', () => {
@@ -81,7 +109,7 @@ describe('buildPageSeo', () => {
 
   it('drops the TR alternate when TR is disabled', () => {
     const alt = buildPageSeo(meta, 'en', { enableTr: false }).link.filter((l) => l.rel === 'alternate')
-    expect(alt.map((l) => l.hreflang)).toEqual(['en', 'de', 'x-default'])
+    expect(alt.map((l) => l.hreflang)).toEqual(['en', 'de', 'bg', 'x-default'])
   })
 
   it('emits no canonical or alternates for a path that is not a route (404)', () => {

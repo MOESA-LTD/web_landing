@@ -14,6 +14,8 @@ compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
 [vars]
 NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAAFwcaNF6v9eZLOmy"
 NUXT_PUBLIC_ENABLE_DE = "false"
+# Bulgarian stays off in production until its copy (i18n/UNREVIEWED_BG.md) and legal pages are reviewed.
+NUXT_PUBLIC_ENABLE_BG = "false"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"
 
@@ -25,5 +27,7 @@ NUXT_SITE_INDEXABLE = "false"
 # Production leaves it unset: the live legal pages show neither.
 NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"
 NUXT_PUBLIC_ENABLE_DE = "false"
+# Previews show Bulgarian for review.
+NUXT_PUBLIC_ENABLE_BG = "true"
 CONTACT_TO = "info@moesaltd.com"
 CONTACT_FROM = "MOESA Website <website@notify.moesaltd.com>"

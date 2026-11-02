@@ -50,7 +50,7 @@ export type ContactFailure = 'rate_limited' | 'verification_failed' | 'send_fail
  */
 export const EMAIL_RE = /^[^\s@<>",;()]+@[^\s@<>",;()]+\.[^\s@<>",;()]+$/
 
-export const CONTACT_LOCALES = ['en', 'tr', 'de'] as const
+export const CONTACT_LOCALES = ['en', 'tr', 'de', 'bg'] as const
 export type ContactLocale = (typeof CONTACT_LOCALES)[number]
 
 /**

@@ -8,6 +8,7 @@ import LegalNoticePage from '~/pages/legal-notice.vue'
 import { content as en } from '#content/en'
 import { content as tr } from '#content/tr'
 import { content as de } from '#content/de'
+import { content as bg } from '#content/bg'
 import { LEGAL_UPDATED, type LegalContent } from '#content/en/legal'
 
 beforeAll(addPageStubs)
@@ -46,7 +47,8 @@ const PAGES = [
     en: '/privacy-policy',
     tr: '/tr/gizlilik-politikasi',
     de: '/de/datenschutz',
-    related: { en: '/cookie-policy', tr: '/tr/cerez-politikasi', de: '/de/cookie-richtlinie' },
+    bg: '/bg/politika-za-poveritelnost',
+    related: { en: '/cookie-policy', tr: '/tr/cerez-politikasi', de: '/de/cookie-richtlinie', bg: '/bg/politika-za-biskvitkite' },
   },
   {
     key: 'cookie-policy',
@@ -54,13 +56,14 @@ const PAGES = [
     en: '/cookie-policy',
     tr: '/tr/cerez-politikasi',
     de: '/de/cookie-richtlinie',
-    related: { en: '/privacy-policy', tr: '/tr/gizlilik-politikasi', de: '/de/datenschutz' },
+    bg: '/bg/politika-za-biskvitkite',
+    related: { en: '/privacy-policy', tr: '/tr/gizlilik-politikasi', de: '/de/datenschutz', bg: '/bg/politika-za-poveritelnost' },
   },
-  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim', de: '/de/impressum', related: null },
+  { key: 'legal-notice', component: LegalNoticePage, en: '/legal-notice', tr: '/tr/yasal-bildirim', de: '/de/impressum', bg: '/bg/pravna-informatsiya', related: null },
 ] as const
 
 /** The OPEN chip label per locale (`status.open`, uppercased by CSS): it stands in for the md marker "OPEN / AÇIK". */
-const OPEN_LABEL = { en: 'Open', tr: 'Açık', de: 'Offen' } as const
+const OPEN_LABEL = { en: 'Open', tr: 'Açık', de: 'Offen', bg: 'Открито' } as const
 /** An OPEN item is shown as the chip plus the md sentence after the marker. */
 const display = (t: string) => (t.startsWith(OPEN_PREFIX) ? t.slice(OPEN_PREFIX.length) : t)
 /** Every display string of a section, as the page must show it with the review notes on. */
@@ -255,6 +258,31 @@ for (const p of PAGES) {
       if (p.related) expect(w.find('[data-legal-related] a').attributes('href')).toBe(p.related.de)
     })
   })
+
+  describe(`${p.key} (BG ${p.bg})`, () => {
+    const c = bg[p.key] as LegalContent
+
+    it('by default (production) has the BG h1 and every section, but no status chip and no OPEN note', async () => {
+      const w = await mountAt(p.component, p.bg)
+      expect(norm(w.find('h1').text())).toBe(c.hero.title)
+      const text = norm(w.find('[data-legal-page]').text())
+      for (const s of c.sections) for (const str of publicStrings(s)) expect(text).toContain(str)
+      await expectNoReviewNotes(w, c, 'bg')
+    })
+
+    it('with the review notes on, has the BG h1, the md status in the draft chip, every section, the "Открито" chip on every OPEN item and a Bulgarian date', async () => {
+      const w = await mountWithNotes(p.component, p.bg)
+      expect(norm(w.find('h1').text())).toBe(c.hero.title)
+      expect(norm(w.find('[data-legal-status]').text())).toContain(c.status)
+      const text = norm(w.find('[data-legal-page]').text())
+      for (const s of c.sections) for (const str of sectionStrings(s)) expect(text).toContain(str)
+      await expectOpenNotes(w, c, 'bg')
+      expect(sections(w).at(-1)!.querySelector('a')!.getAttribute('href')).toBe('/bg/kontakti')
+      expect(norm(w.find('[data-legal-updated]').text())).toBe('Последна актуализация: 2 ноември 2026 г.')
+      expect(w.find('[data-legal-updated] time').attributes('datetime')).toBe(LEGAL_UPDATED[p.key])
+      if (p.related) expect(w.find('[data-legal-related] a').attributes('href')).toBe(p.related.bg)
+    })
+  })
 }
 
 describe('TR legal notice', () => {
@@ -283,6 +311,14 @@ describe('cookie policy consent panel', () => {
     expect(turnstile.find('a').attributes('href')).toBe('https://www.cloudflare.com/privacypolicy/')
     // The inventory is complete for v1 (legal review B2): no OPEN marker left in it.
     expect(w.find('[data-legal-section="inventory"] [data-open]').exists()).toBe(false)
+  })
+
+  it('BG: the panel and the inventory rows are shown in Bulgarian', async () => {
+    const w = await mountAt(CookiePage, '/bg/politika-za-biskvitkite')
+    expect(w.find('[data-cookie-consent]').exists()).toBe(true)
+    expect(w.find('[data-cookie-inventory]').text()).toContain('moesa_consent')
+    expect(w.find('[data-cookie-item="consent"]').text()).toContain('Строго необходими')
+    expect(w.find('[data-cookie-item="turnstile"]').text()).toContain('само на страницата за контакт')
   })
 
   it('TR: the panel and the inventory row are shown in Turkish', async () => {

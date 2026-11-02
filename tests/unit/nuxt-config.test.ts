@@ -22,6 +22,7 @@ async function loadConfig(env: Record<string, string | undefined>): Promise<AnyC
 
 const isTr = (p: string) => p === '/tr' || p.startsWith('/tr/')
 const isDe = (p: string) => p === '/de' || p.startsWith('/de/')
+const isBg = (p: string) => p === '/bg' || p.startsWith('/bg/')
 
 describe('nuxt.config', () => {
   afterEach(() => {
@@ -35,7 +36,7 @@ describe('nuxt.config', () => {
     expect(routes.length).toBeGreaterThan(0)
     expect(routes.filter(isTr)).toEqual([])
     const locs: string[] = config.sitemap.urls.map((u: { loc: string }) => u.loc)
-    expect(locs).toHaveLength(28)
+    expect(locs).toHaveLength(42)
     expect(locs.filter(isTr)).toEqual([])
     expect(locs.filter(isDe)).toHaveLength(14)
     for (const u of config.sitemap.urls) {
@@ -44,16 +45,19 @@ describe('nuxt.config', () => {
     expect(config.runtimeConfig.public.enableTr).toBe(false)
   })
 
-  it('by default prerenders TR and DE routes and lists 42 sitemap URLs (no thank-you page)', async () => {
-    const config = await loadConfig({ NUXT_PUBLIC_ENABLE_TR: undefined, NUXT_PUBLIC_ENABLE_DE: undefined })
+  it('by default prerenders TR, DE and BG routes and lists 56 sitemap URLs (no thank-you page)', async () => {
+    const config = await loadConfig({ NUXT_PUBLIC_ENABLE_TR: undefined, NUXT_PUBLIC_ENABLE_DE: undefined, NUXT_PUBLIC_ENABLE_BG: undefined })
     expect(config.nitro.prerender.routes.filter(isTr).length).toBeGreaterThan(0)
     expect(config.nitro.prerender.routes.filter(isDe)).toHaveLength(8)
+    expect(config.nitro.prerender.routes.filter(isBg)).toHaveLength(8)
     const locs: string[] = config.sitemap.urls.map((u: { loc: string }) => u.loc)
-    expect(locs).toHaveLength(42)
+    expect(locs).toHaveLength(56)
     expect(locs).not.toContain('/thank-you')
     expect(locs).not.toContain('/tr/tesekkurler')
     expect(locs).not.toContain('/de/danke')
+    expect(locs).not.toContain('/bg/blagodarim')
     expect(config.runtimeConfig.public.enableDe).toBe(true)
+    expect(config.runtimeConfig.public.enableBg).toBe(true)
   })
 
   it('hides the legal review notes unless NUXT_PUBLIC_LEGAL_REVIEW_NOTES is exactly "true", and prerenders no legal page', async () => {
@@ -77,7 +81,7 @@ describe('nuxt.config', () => {
     const config = await loadConfig({ NUXT_PUBLIC_ENABLE_DE: 'false' })
     expect(config.nitro.prerender.routes.filter(isDe)).toEqual([])
     const locs: string[] = config.sitemap.urls.map((u: { loc: string }) => u.loc)
-    expect(locs).toHaveLength(28)
+    expect(locs).toHaveLength(42)
     expect(locs.filter(isDe)).toEqual([])
     for (const u of config.sitemap.urls) {
       for (const a of u.alternatives ?? []) expect(isDe(a.href), a.href).toBe(false)
@@ -89,6 +93,37 @@ describe('nuxt.config', () => {
     const config = await loadConfig({})
     expect(config.i18n.locales).toContainEqual({ code: 'de', language: 'de', name: 'DE', file: 'de.json' })
     expect(config.routeRules['/de/danke']).toEqual({ robots: 'noindex, follow' })
+  })
+
+  it('with NUXT_PUBLIC_ENABLE_BG=false prerenders no /bg route and lists no /bg URL or alternate in the sitemap', async () => {
+    const config = await loadConfig({ NUXT_PUBLIC_ENABLE_BG: 'false' })
+    expect(config.nitro.prerender.routes.filter(isBg)).toEqual([])
+    const locs: string[] = config.sitemap.urls.map((u: { loc: string }) => u.loc)
+    expect(locs).toHaveLength(42)
+    expect(locs.filter(isBg)).toEqual([])
+    for (const u of config.sitemap.urls) {
+      for (const a of u.alternatives ?? []) {
+        expect(isBg(a.href), a.href).toBe(false)
+        expect(a.hreflang).not.toBe('bg')
+      }
+    }
+    expect(config.runtimeConfig.public.enableBg).toBe(false)
+  })
+
+  it('registers the bg locale (language bg, name BG) and keeps the BG thank-you page out of search results', async () => {
+    const config = await loadConfig({})
+    expect(config.i18n.locales).toContainEqual({ code: 'bg', language: 'bg', name: 'BG', file: 'bg.json' })
+    expect(config.routeRules['/bg/blagodarim']).toEqual({ robots: 'noindex, follow' })
+  })
+
+  it('wrangler.toml ships BG off in production and on in preview deployments (DE unchanged)', () => {
+    const toml = readFileSync(resolve(process.cwd(), 'wrangler.toml'), 'utf8').replace(/\r\n/g, '\n')
+    const [prod, preview] = toml.split('[env.preview.vars]')
+    expect(prod).toContain('[vars]')
+    expect(prod).toMatch(/^NUXT_PUBLIC_ENABLE_BG = "false"$/m)
+    expect(preview).toMatch(/^NUXT_PUBLIC_ENABLE_BG = "true"$/m)
+    expect(prod).toMatch(/^NUXT_PUBLIC_ENABLE_DE = "false"$/m)
+    expect(preview).toMatch(/^NUXT_PUBLIC_ENABLE_DE = "false"$/m)
   })
 
   it('sets the security headers on every route and does not pin a Nitro preset', async () => {

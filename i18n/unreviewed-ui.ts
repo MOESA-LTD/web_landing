@@ -6,10 +6,11 @@
 export const UNREVIEWED_UI_KEYS: string[] = [
   'skipLink',
   'language.label',
-  // Native language names ("English", "Türkçe", "Deutsch"), the same in every locale.
+  // Native language names ("English", "Türkçe", "Deutsch", "Български"), the same in every locale.
   'language.names.en',
   'language.names.tr',
   'language.names.de',
+  'language.names.bg',
   // EN is the approved thank-you.md CTA; the TR thank-you.md has no counterpart.
   'cta.exploreServices',
   'nav.label',

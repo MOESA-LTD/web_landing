@@ -1,6 +1,6 @@
 {
   "name": "moesa-website",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,6 +16,7 @@
     "test:e2e": "playwright test",
     "unreviewed:tr": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-tr.ts",
     "unreviewed:de": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-de.ts",
+    "unreviewed:bg": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-bg.ts",
     "unreviewed:legal": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/unreviewed-legal.ts",
     "og:image": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/og-image.ts"
   },

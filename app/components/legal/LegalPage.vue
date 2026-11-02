@@ -19,7 +19,8 @@ import { brand } from '#content/site'
  * - Last updated (legal review S5): `updated` (ISO, from `LEGAL_UPDATED`) formatted for the page locale.
  * - OPEN items (flag on): a paragraph starting "OPEN / AÇIK - " (the md marker, the same in every locale's content and
  *   only the detection key) renders as the DS open note: Chip kind="open" with the page locale's label (`status.open`:
- *   EN "Open", TR "Açık", DE "Offen", uppercased by the chip), then the rest of the text. The chip conveys the marker,
+ *   EN "Open", TR "Açık", DE "Offen", BG "Открито",
+ *   uppercased by the chip), then the rest of the text. The chip conveys the marker,
  *   so the prefix is not repeated; a visually hidden " - " separates the two for screen readers. They mark owner facts
  *   that are still missing.
  * - TR `condensed` (an approved one-line form): an intro paragraph above the translated list or the per-line values

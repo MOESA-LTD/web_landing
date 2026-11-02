@@ -39,3 +39,10 @@ Rulings made on the user's behalf while executing docs/superpowers/plans/2026-10
 - Design deviations: cyan→blue "01" numeral (contrast), home capability card eyebrow presentation, About hero note reuse, /services reuses home needs + capability strip, WWWW guide links, header mobile menu below 1160px, home hero text full-width ≤859px.
 - Launch gate: decide the Vercel production env before merging to main (recommended `NUXT_PUBLIC_ENABLE_DE=false` until German legal review; or keep production disconnected).
 - Provide an SVG logo; verify Resend domain, Turnstile keys, and run the README post-deploy checklist on the first Vercel preview.
+
+## Bulgarian locale (2026-11-02, branch feat/bulgarian)
+
+- Owner-approved: BG under `/bg/` with Latin-transliterated Bulgarian slugs (Streamlined System: ъ → a, ц → ts, я → ya), e.g. `/bg/uslugi`, `/bg/za-nas`, `/bg/kontakti`, `/bg/pravna-informatsiya`; table in `i18n/routes.ts` and the README.
+- Owner-approved: `NUXT_PUBLIC_ENABLE_BG` exactly like `NUXT_PUBLIC_ENABLE_DE` (default on in code); `wrangler.toml` ships it `"false"` in `[vars]` (production) and `"true"` in `[env.preview.vars]` (previews show BG for review).
+- Owner-approved: all BG copy is our translation of the approved EN (formal "Вие", capitalised), listed in `i18n/UNREVIEWED_BG.md`; the BG legal pages translate the current EN legal text, and the revised legal strings have a BG column in `i18n/UNREVIEWED_LEGAL.md`. The supervisory authority is named in Bulgarian (Комисия за защита на личните данни, КЗЛД) and the GDPR is cited as ОРЗД.
+- Taken by the implementer: the registered address stays in the package form (Latin script, "1 Petyofi Str., Plovdiv 4000, Bulgaria"), register labels "ЕИК" / "ИН по ДДС", header-only label "За нас" (full "За MOESA"), `og:locale` per locale (en_GB, tr_TR, de_DE, bg_BG) with `og:locale:alternate` for the other enabled locales — cost if wrong: wording swaps.
