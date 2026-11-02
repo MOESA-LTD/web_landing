@@ -3,7 +3,8 @@
 The public website of MOESA Ltd. (`https://www.moesaltd.com`), in English, Turkish and German.
 
 Nuxt 4 · Tailwind CSS v4 · `@nuxtjs/i18n` (EN at `/`, TR under `/tr/` with Turkish slugs, DE under `/de/` with German slugs) · `@nuxtjs/sitemap` and
-`@nuxtjs/robots` · contact form via a Nitro server route → Resend, protected by Cloudflare Turnstile. Hosted on Vercel.
+`@nuxtjs/robots` · contact form via a Nitro server route → Resend, protected by Cloudflare Turnstile. Hosted on Cloudflare Pages
+(static files + one Pages Function).
 
 All page copy comes verbatim from the approved package in `MOESA_Website_Package_v1.0/` (EN) and its TR files.
 Turkish strings that have no approved source are listed in `i18n/UNREVIEWED_TR.md`. The German site has no approved
@@ -11,9 +12,8 @@ source at all: every German string is our translation of the approved EN and is 
 
 ## Requirements
 
-- Node.js **22** (`.nvmrc` = `22`; `package.json` `engines.node` = `22.x`, so Vercel builds with the newest Node 22
-  and never moves to a new major on its own; Nuxt 4.6 needs `>=22.21`). npm. Also set *Node.js Version* to **22.x** in
-  the Vercel project settings (*Project → Settings → Build and Deployment*) so the two never disagree.
+- Node.js **22** (`.nvmrc` = `22`, `package.json` `engines.node` = `22.x`; Nuxt 4.6 needs `>=22.21`). npm. On
+  Cloudflare Pages the `NODE_VERSION` variable sets it (see "Deploying to Cloudflare Pages").
 - For the e2e tests and the OG image script: Playwright's Chromium (`npx playwright install chromium`).
 
 ## Local development
@@ -35,22 +35,27 @@ through in `nuxt dev` (the flag is ignored by production builds). The component 
 |---|---|
 | `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-/DE-disabled builds, headers), DE translation provenance and key parity. |
 | `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
+| `npm run test:cloudflare` | Checks on the **Cloudflare Pages build** (`tests/cloudflare`, `dist/`): run `NITRO_PRESET=cloudflare-pages npm run build` first. `_headers` carries every security header on `/*` (exactly `routeRules['/**']`) and the noindex `X-Robots-Tag` on the thank-you pages; `_routes.json` leaves every non-file path to the function; no `404.html` or `_redirects` fallback; pages prerendered as `<route>.html`; `wrangler.json` has `nodejs_compat` and a date on or after 2025-04-01. Not part of `npm test`. |
 | `npm run test:acceptance` | Acceptance checks (`tests/acceptance`) against the **built** `.output/`: run `npm run build` first (without a build it fails and says so). Starts the built server on a free port and scans all 45 routes: no forbidden claims (EN/TR/DE); claim-sensitive words (AI, platform, portal, guarantee …) only in approved text of the same page, in visible text, `content`/`alt`/`aria-label`/`title` attributes and JSON-LD; no source comment from `app/`, `server/`, `i18n/`, `content/` in the public HTML/JS, the server bundle or the rendered pages. Not part of `npm test`. |
 | `npm run typecheck` (`nuxt typecheck`) | `vue-tsc` over the app, server and config. |
 
 CI (`.github/workflows/ci.yml`, every push and pull request, Node 22): `npm ci`, `npm test`, `npx nuxt typecheck`,
-`npm run build`, `npm run test:acceptance`. The Playwright e2e suite is not run in CI: it builds the site a second
+`npm run build`, `npm run test:acceptance`, then `NITRO_PRESET=cloudflare-pages npm run build` and
+`npm run test:cloudflare`. The Playwright e2e suite is not run in CI: it builds the site a second
 time and runs about 400 browser tests in two viewports (plus a Chromium download), which is slow for every push; run
 `npm run test:e2e` locally before merging.
 
 ## Build and preview
 
 ```bash
-npm run build      # .output/ (node-server output locally; on Vercel the Vercel preset is detected automatically)
+npm run build      # .output/ (node-server output locally; on Cloudflare Pages the cloudflare-pages preset is detected)
 npm run preview    # serves the production build
+NITRO_PRESET=cloudflare-pages npm run build   # dist/: the Cloudflare Pages output, as Cloudflare's build makes it
 ```
 
-Do not set `nitro.preset`: Vercel is auto-detected during its build, and the local preview and e2e use the node server.
+Do not set `nitro.preset`: Nitro detects Cloudflare Pages during its build (`CF_PAGES=1`), and the local preview, e2e
+and acceptance tests use the node server. `NITRO_PRESET=cloudflare-pages` builds the Pages output locally; `dist/` and
+`.wrangler/` are git-ignored.
 
 Other scripts:
 
@@ -63,9 +68,9 @@ Other scripts:
 
 ## Environment variables
 
-Copy `.env.example` to `.env` locally. On Vercel set them in *Project → Settings → Environment Variables* (Production
-and Preview). **Build-time** variables are read while `nuxt build` runs (some pages are prerendered), so a change needs
-a redeploy.
+Copy `.env.example` to `.env` locally. On Cloudflare Pages set them in *Settings → Variables and Secrets*, for
+Production **and** Preview (secrets as type *Secret*). **Build-time** variables are read while `nuxt build` runs (some
+pages are prerendered), so a change needs a redeploy; runtime variables are read by the Pages Function per request.
 
 | Variable | Scope | Required in production | Description |
 |---|---|---|---|
@@ -74,50 +79,101 @@ a redeploy.
 | `CONTACT_FROM` | server, runtime | yes | Sender on a Resend-verified domain, e.g. `MOESA Website <website@moesaltd.com>`. The visitor's address is only used as Reply-To. |
 | `NUXT_TURNSTILE_SECRET_KEY` | server, runtime | yes | Cloudflare Turnstile secret key. |
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | public, **build-time** | yes | Turnstile site key. Empty → no widget and the server rejects submissions. |
-| `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Vercel project env (it applies to both) and **redeploy after changing it**: pages prerendered while the locale was on are static files the guard never sees, so flipping the flag at runtime alone leaves them reachable. Default: TR on. |
+| `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Pages project variables (they reach the build and the function) and **redeploy after changing it**: pages prerendered while the locale was on are static files the guard never sees, so flipping the flag at runtime alone leaves them reachable. Default: TR on. |
 | `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it adds the Analytics category and its buttons to the consent panel and shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1, so add one (and update the Cookie Policy) before setting it. Prerendered pages carry the build-time value, so redeploy after changing it. |
-| `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Vercel. On Vercel (`VERCEL` set by its runtime) the IP comes from `x-vercel-forwarded-for` / `x-real-ip`; anywhere else those headers are ignored and the socket address is used. |
+| `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Cloudflare. On Cloudflare (the request runs in the Pages Function) the IP comes from `CF-Connecting-IP`, which Cloudflare sets and overwrites; anywhere else that header is ignored and the socket address is used. |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
-| `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` on Vercel **Preview** only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
+| `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` in the Pages **Preview** environment only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
+| `NODE_VERSION` | Pages build | yes (Pages) | `22` (Node for the Pages build; must resolve to 22.21 or newer). |
 | `E2E_PORT` | tests | — | Port for the Playwright web server. Default `3100`. |
 
-## Deploying to Vercel
+## Deploying to Cloudflare Pages
 
-1. **Import the repository** `github.com/MOESA-LTD/web_landing` in Vercel (*Add New → Project*). Framework preset:
-   **Nuxt** (detected). Build command `npm run build`, output handled by the preset. Node version comes from
-   `engines.node` (`22.x`); also set *Node.js Version* to **22.x** in the project settings.
-2. **Environment variables**: set the table above for *Production* and *Preview* (use Turnstile test keys or a
-   separate widget hostname for previews if you want the form to work there).
-3. **Domains** (*Project → Settings → Domains*):
-   - Add `www.moesaltd.com` and make it the **primary** domain.
-   - Add `moesaltd.com` and set it to **redirect (308) to `www.moesaltd.com`**. `vercel.json` also redirects any
-     request whose host is `moesaltd.com` to `https://www.moesaltd.com/:path*` (permanent), so the redirect holds
-     even if the domain is attached without a redirect. HTTP → HTTPS is automatic on Vercel.
-4. **DNS** at the registrar of `moesaltd.com` (Vercel shows the exact values for the project; these are the usual ones):
-   - `moesaltd.com` (apex): `A` record → `76.76.21.21`
-   - `www`: `CNAME` → `cname.vercel-dns.com` (or the project-specific value Vercel shows)
-   - Keep the existing `MX` records for `info@moesaltd.com` untouched.
-5. Set `NUXT_SITE_INDEXABLE=false` for the **Preview** environment only, so preview deployments serve
-   `Disallow: /` and `noindex` (`@nuxtjs/robots` does not detect Vercel previews by itself). Leave it unset for
-   Production.
-6. Deploy.
+The site runs on Cloudflare Pages (free plan): the prerendered pages and assets are static files on Cloudflare's
+global network, and everything else (the other pages, the 404 page, `/api/contact`, `sitemap.xml`, `robots.txt`)
+runs in one Pages Function (`dist/_worker.js`, a Worker). Nitro picks its `cloudflare-pages` preset by itself on
+Cloudflare's build (which sets `CF_PAGES=1`); no `nitro.preset` is set, so local builds stay node-server. What the
+Pages build writes (checked by `npm run test:cloudflare`, also in CI):
+
+- `dist/_headers` from `routeRules`: the security headers on every path and `X-Robots-Tag: noindex, follow` on the
+  thank-you pages, so static files get the same headers as function responses.
+- `dist/_routes.json`: the function runs for `/*` except the built files, so unknown and disabled-locale paths reach
+  it and answer 404 with the SSR error page. No `404.html` and no `_redirects` fallback is emitted.
+- Prerendered pages as `<route>.html` (Pages would redirect `/about` to `/about/` for `about/index.html`).
+- `dist/_worker.js/wrangler.json` with the runtime settings (`nodejs_compat`, compatibility date `2026-07-01`). Only
+  `wrangler pages dev` / `wrangler pages deploy` read it; a Git-connected project takes them from the dashboard (step 4).
+
+1. **DNS to Cloudflare.** Add the zone `moesaltd.com` to the Cloudflare account (free plan), let Cloudflare import the
+   existing records, and **before** switching the nameservers at Namecheap check that every mail record of the
+   Namecheap Private Email mailbox (`info@moesaltd.com`) is there unchanged and **DNS only** (grey cloud): the `MX`
+   records (`mx1/mx2.privateemail.com`), the SPF `TXT` on the apex, the DKIM `TXT` (`default._domainkey`) and the
+   `mail` / `autodiscover` / `autoconfig` records if present. Then set the two Cloudflare nameservers at Namecheap
+   (*Domain List → Manage → Nameservers → Custom DNS*). Remove any old Vercel `A` / `CNAME` records for `@` and `www`.
+2. **Create the project:** *Workers & Pages → Create → Pages → Connect to Git* → `MOESA-LTD/web_landing`.
+   - Project name: `moesa-website` (gives `moesa-website.pages.dev`; the name in `nitro.cloudflare.wrangler`).
+   - Production branch: `main` (every other branch and pull request becomes a Preview deployment).
+   - Framework preset: **None** (or Nuxt.js; either way set the two fields below).
+   - Build command: `npm run build` · Build output directory: `dist` · Root directory: empty (repository root).
+   - Build system version: **v3** (the newest).
+3. **Variables and secrets** (*Settings → Variables and Secrets*): add them for **Production** and for **Preview**
+   (each environment has its own list). Pages gives the same variables to the build and to the function; what matters
+   is when they are read:
+   - **Build-time** (read while `nuxt build` prerenders; change → redeploy): `NODE_VERSION=22` (Nuxt 4.6 needs Node
+     22.21 or newer: if the build log shows an older 22.x, set the exact version, e.g. `22.21.1`),
+     `NUXT_PUBLIC_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_ENABLE_TR`, `NUXT_PUBLIC_ENABLE_DE`, `NUXT_PUBLIC_ANALYTICS_ID`
+     (leave unset in v1), and `NUXT_SITE_INDEXABLE=false` in **Preview only** (preview deployments then serve
+     `Disallow: /` and `noindex`; leave it unset in Production).
+   - **Runtime** (read by the function per request): `RESEND_API_KEY` and `NUXT_TURNSTILE_SECRET_KEY` as **Secret**
+     (encrypted), `CONTACT_FROM`, `CONTACT_TO` (optional), and again `NUXT_PUBLIC_ENABLE_TR` /
+     `NUXT_PUBLIC_ENABLE_DE` (they are build **and** runtime). Leave `CONTACT_TRUST_XFF` and
+     `CONTACT_DEV_BYPASS_TURNSTILE` unset.
+4. **Runtime settings** (*Settings → Runtime*, for Production and Preview): Compatibility date **`2026-07-01`**,
+   Compatibility flags **`nodejs_compat`** and **`no_nodejs_compat_v2`** (the same as the generated
+   `wrangler.json`). `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or
+   after 2025-04-01 the runtime also fills `process.env` from the variables and secrets (the contact route reads the
+   bindings directly as well, `server/utils/runtime-env.ts`).
+5. **Custom domains** (*Project → Custom domains*): add `www.moesaltd.com` and `moesaltd.com`. Cloudflare creates the
+   proxied `CNAME` records to `moesa-website.pages.dev` itself and issues the certificates.
+6. **Apex → www redirect** (zone `moesaltd.com` → *Rules → Redirect Rules → Create rule*, or the template "Redirect
+   from root to WWW"). Pages `_redirects` cannot match on the host, so this is a zone rule:
+   - When incoming requests match: *Wildcard pattern*, Request URL `https://moesaltd.com/*`
+   - Then: Target URL `https://www.moesaltd.com/${1}`, status **301**, **Preserve query string** on.
+   Also turn on *SSL/TLS → Edge Certificates → Always Use HTTPS* (HTTP → HTTPS for both hosts).
+7. Leave **Bot Fight Mode** (*Security → Bots*) off: it sets a `__cf_bm` cookie the Cookie Policy does not list and
+   can challenge form posts. If it is ever turned on, update the cookie inventory first.
+8. Deploy (push to `main`, or *Deployments → Retry deployment*). Pages builds with `npm ci` from `package-lock.json`.
+
+Local check of the Pages output (no Cloudflare account needed):
+
+```bash
+NITRO_PRESET=cloudflare-pages npm run build   # dist/ (the Pages build), plus .wrangler/deploy/config.json
+npm run test:cloudflare                       # _headers, _routes.json, wrangler.json, <route>.html
+npx wrangler pages dev --binding RESEND_API_KEY=... --binding NUXT_TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+                                              # from the repository root, http://localhost:8788
+```
 
 ### Resend (contact-form email)
 
-1. In Resend, *Domains → Add domain* `moesaltd.com` (a subdomain such as `mail.moesaltd.com` also works and keeps the
-   root domain's SPF untouched).
-2. Add the DNS records Resend lists — typically an `MX` and a `TXT` (SPF) record on the `send` subdomain and a
-   `TXT` DKIM record (`resend._domainkey`). Optionally add a DMARC `TXT` record on `_dmarc`.
+Use a **subdomain** for sending, so none of the Namecheap Private Email records on the root domain (`MX`, the SPF
+`TXT`, the `default._domainkey` DKIM) is touched:
+
+1. In Resend, *Domains → Add domain* `notify.moesaltd.com` (any unused subdomain works; not `mail`, which Private Email
+   may use).
+2. Add the records Resend lists in the Cloudflare DNS of `moesaltd.com`, all **DNS only** (grey cloud): an `MX` and a
+   `TXT` (SPF) record on `send.notify` and a `TXT` DKIM record on `resend._domainkey.notify`. Do not add a second
+   apex SPF record or change the existing one. A DMARC `TXT` on `_dmarc` is optional and covers the whole domain,
+   including the Private Email mailbox, so start with `p=none`.
 3. Wait until the domain shows **Verified**, create an API key (*Sending access*, this domain) → `RESEND_API_KEY`.
-4. Set `CONTACT_FROM` to an address on the verified domain, e.g. `MOESA Website <website@moesaltd.com>`.
+4. Set `CONTACT_FROM` to an address on the verified subdomain, e.g. `MOESA Website <website@notify.moesaltd.com>`.
 
 ### Cloudflare Turnstile (spam protection)
 
-1. In the Cloudflare dashboard, *Turnstile → Add widget*. Hostnames: `www.moesaltd.com` and `moesaltd.com` (add your
-   Vercel preview hostname if previews should accept submissions). Widget mode: **Managed**.
+1. In the Cloudflare dashboard, *Turnstile → Add widget*. Hostnames: `www.moesaltd.com` and `moesaltd.com`, plus
+   `moesa-website.pages.dev` if preview deployments (`<branch>.moesa-website.pages.dev`, covered as a subdomain)
+   should accept submissions. Widget mode: **Managed**.
 2. Site key → `NUXT_PUBLIC_TURNSTILE_SITE_KEY` (build-time; redeploy after changing). Secret key →
-   `NUXT_TURNSTILE_SECRET_KEY`.
+   `NUXT_TURNSTILE_SECRET_KEY` (Secret).
 3. The Content-Security-Policy already allows `https://challenges.cloudflare.com` for scripts and frames.
 
 ### Releases (release-please)
@@ -134,7 +190,8 @@ a redeploy.
 
 ## Post-deploy verification checklist
 
-Run against the Vercel preview URL (and again on production). `BASE=https://<deployment>.vercel.app`.
+Run against a preview deployment (and again on production). `BASE=https://<branch>.moesa-website.pages.dev`, then
+`BASE=https://www.moesaltd.com`.
 
 - [ ] Unknown paths answer a real **404**:
   ```bash
@@ -148,35 +205,43 @@ Run against the Vercel preview URL (and again on production). `BASE=https://<dep
            /privacy-policy /cookie-policy /legal-notice /tr /tr/hizmetler /tr/iletisim; do
     printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "$BASE$p"; done
   ```
-- [ ] **Security headers** on a page, an asset and a 404:
+- [ ] **Security headers** on a function page, a static page, an asset and a 404:
   ```bash
   curl -sI "$BASE/" | grep -iE 'strict-transport|x-content-type|referrer-policy|x-frame|permissions-policy|content-security'
+  curl -sI "$BASE/contact" | grep -iE 'strict-transport|content-security'     # static file (_headers)
   curl -sI "$BASE/og-default.png" | grep -i x-content-type
   curl -sI "$BASE/nope" | grep -i content-security
   ```
+- [ ] Prerendered pages answer without a trailing-slash redirect: `curl -sI "$BASE/services/operations-supply-chain" | head -1` → 200.
 - [ ] **Sitemap and robots**: `curl -s "$BASE/sitemap.xml" | grep -c '<loc>'` → `42` (no `/thank-you`,
   `/tr/tesekkurler` or `/de/danke`); `curl -s "$BASE/robots.txt"` has `Disallow: /api/` and `Sitemap: https://www.moesaltd.com/sitemap.xml`
   (on a preview deployment with `NUXT_SITE_INDEXABLE=false` robots.txt disallows everything — expected).
 - [ ] `/thank-you` sends `X-Robots-Tag: noindex, follow`.
 - [ ] Open `/contact` in a browser with DevTools: the Turnstile widget renders, **no CSP errors in the console**, and a
   test enquiry arrives at `CONTACT_TO` with the visitor as Reply-To.
-- [ ] After the domain switch: `curl -sI http://moesaltd.com/about` → 308 to `https://www.moesaltd.com/about`.
+- [ ] After the domain switch: `curl -sI "https://moesaltd.com/about?x=1"` → 301 to `https://www.moesaltd.com/about?x=1`
+  (Redirect Rule), and `curl -sI http://www.moesaltd.com/` → 301 to `https://` (Always Use HTTPS).
+- [ ] Mail still works after the nameserver switch: send to and from `info@moesaltd.com`.
 - [ ] Share preview (e.g. a LinkedIn post inspector) shows `og-default.png` and the page title.
 
 ## Before launch
 
 From `MOESA_Website_Package_v1.0/.../legal/LEGAL_IMPLEMENTATION_NOTES.md` and the legal review
-(`docs/superpowers/reviews/2026-11-01-legal-pages-review.md`). The legal pages now describe the real stack (Vercel,
-Resend, Cloudflare Turnstile, the `moesa_consent` cookie; no analytics, no file upload), but they are still our drafts,
+(`docs/superpowers/reviews/2026-11-01-legal-pages-review.md`). The legal pages now describe the real stack (Cloudflare
+Pages hosting and Turnstile, Resend, the `moesa_consent` cookie; no analytics, no file upload), but they are still our drafts,
 not legal advice: every authored string is in `i18n/UNREVIEWED_LEGAL.md`. Before publication:
 
 - [ ] Owner facts for the OPEN notes: legal form (ЕООД/ООД) and Commercial Register entry, managing director, phone
   number (`+359 88 501 661` looks one digit short), the provider hosting the info@moesaltd.com mailbox, retention
-  periods (enquiries, Vercel logs, Resend emails).
+  periods (enquiries, Cloudflare logs, Resend emails).
 - [ ] Lawyer: review `i18n/UNREVIEWED_LEGAL.md` (legal bases, recipients, transfers incl. DPF/SCCs per provider, CPDP
   complaint text, the contact-form acknowledgement instead of consent, Turnstile as strictly necessary without consent).
-- [ ] Decide the Vercel function region: `vercel.json` sets no `regions`, so `/api/contact` runs in the default US
-  region (iad1); `"regions": ["fra1"]` would process form data in the EU (review S6, an owner decision).
+- [ ] Processing location (review S6, an owner decision): the Pages Function for `/api/contact` runs in the Cloudflare
+  data centre that receives the request (usually near the visitor), and the static pages are served from Cloudflare's
+  global network. Pinning processing to the EU (Regional Services / Data Localization Suite) is not part of the free
+  plan. Leave *Smart Placement* off.
+- [ ] Cloudflare logs: check which request and function logs Cloudflare keeps for the Pages project on the free plan
+  (Functions real-time logs are a live stream) and record the retention in the privacy policy OPEN note.
 - [ ] Check in DevTools (Application tab, frame `challenges.cloudflare.com`) whether Turnstile stores anything, and
   adjust the Cookie Policy inventory text if needed.
 - [ ] Record legal review and technical review before changing these pages to FINAL status (then remove the
@@ -203,9 +268,8 @@ Also:
 
 | Service | Purpose | Data |
 |---|---|---|
-| **Vercel** | Hosting, CDN, serverless function for `/api/contact` | Request logs (IP, user agent) |
+| **Cloudflare** | DNS; hosting on Pages (static files on the global network, one Pages Function / Worker for the SSR pages and `/api/contact`); the apex → www redirect; Turnstile spam check on `/contact` (script and iframe from `challenges.cloudflare.com`, loaded on the contact pages only) | Request data (IP, user agent) at the edge and in logs if enabled; browser signals for the challenge, the visitor IP on verification |
 | **Resend** | Sends the contact-form enquiry to `CONTACT_TO` | The form fields of each enquiry |
-| **Cloudflare Turnstile** | Spam check on `/contact` (script and iframe from `challenges.cloudflare.com`, loaded on the contact pages only) | Browser signals for the challenge, the visitor IP on verification |
 
 - **Fonts are self-hosted** (`@fontsource-variable/manrope`, served from the site; no Google Fonts).
 - **No analytics** and no non-essential cookies in v1. The only first-party cookie is the strictly necessary
@@ -213,13 +277,14 @@ Also:
   banner) only once `NUXT_PUBLIC_ANALYTICS_ID` is set, so v1 never writes it; the panel shows "Strictly necessary"
   and a note that there is nothing to choose.
 - **Logs:** the contact route logs only an error message on a failed Resend or Turnstile call (no form data, no stack);
-  Vercel keeps runtime logs per the plan's retention.
+  Cloudflare's function and request logs follow the plan's retention (see "Before launch").
 
 ## SEO and security (reference)
 
 - Canonical origin `https://www.moesaltd.com`; every page has a self-referencing canonical and `hreflang` alternates
   en / tr / de / x-default (EN). Sitemap: 42 URLs (14 per locale) from `i18n/routes.ts`, thank-you pages excluded.
 - Organization JSON-LD on `/`, `/tr` and `/de` (facts from `data/brand_tokens.json` only).
-- Security headers on every response (`routeRules['/**']` in `nuxt.config.ts`): HSTS (2 years, preload),
+- Security headers on every response (`routeRules['/**']` in `nuxt.config.ts`; on Cloudflare Pages Nitro also writes
+  them to `dist/_headers` for the static files): HSTS (2 years, preload),
   `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, and a CSP allowing
   only the site itself plus Cloudflare Turnstile. Fonts are never inlined as `data:` URIs (the CSP's `font-src 'self'`).
