@@ -34,7 +34,7 @@ through in `nuxt dev` (the flag is ignored by production builds). The component 
 | Command | What it runs |
 |---|---|
 | `npm test` (`vitest run`) | Unit tests (`tests/unit`): content fidelity, i18n routes, SEO head builder, components, contact API, consent, `nuxt.config` (TR-/DE-disabled builds, headers), DE translation provenance and key parity. |
-| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
+| `npm run test:e2e` (`playwright test`) | E2E (`tests/e2e`) against the **production build**: Playwright runs `npm run build && npm run preview` on port **3100** (never reuses a running server; a second `npm run preview` of the same build on **3101** with `NUXT_PUBLIC_LEGAL_REVIEW_NOTES=true` checks the legal review notes as a Preview deployment shows them), desktop (1440) and mobile (390) projects. Covers content fidelity, routing, 404 status, forms, SEO (head tags, sitemap, robots, JSON-LD), security headers and zero CSP violations on all 45 URLs, TR/DE hreflang and links, DE content fidelity (against the DE modules) and DE text overflow. |
 | `npm run test:cloudflare` | Checks on the **Cloudflare Pages build** (`tests/cloudflare`, `dist/`): run `NITRO_PRESET=cloudflare-pages npm run build` first. `_headers` carries every security header on `/*` (exactly `routeRules['/**']`) and the noindex `X-Robots-Tag` on the thank-you pages; `_routes.json` leaves every non-file path to the function; no `404.html` or `_redirects` fallback; pages prerendered as `<route>.html`; `wrangler.json` has `nodejs_compat` and a date on or after 2025-04-01. Not part of `npm test`. |
 | `npm run test:acceptance` | Acceptance checks (`tests/acceptance`) against the **built** `.output/`: run `npm run build` first (without a build it fails and says so). Starts the built server on a free port and scans all 45 routes: no forbidden claims (EN/TR/DE); claim-sensitive words (AI, platform, portal, guarantee …) only in approved text of the same page, in visible text, `content`/`alt`/`aria-label`/`title` attributes and JSON-LD; no source comment from `app/`, `server/`, `i18n/`, `content/` in the public HTML/JS, the server bundle or the rendered pages. Not part of `npm test`. |
 | `npm run typecheck` (`nuxt typecheck`) | `vue-tsc` over the app, server and config. |
@@ -82,6 +82,7 @@ pages are prerendered), so a change needs a redeploy; runtime variables are read
 | `NUXT_PUBLIC_ENABLE_TR` | public, **build + runtime** | no | `false` hides the Turkish site. At build time: no TR routes prerendered, no TR entry in the language switcher, no TR URLs or hreflang alternates (sitemap and pages). At runtime: every `/tr` path answers 404 with an all-EN 404 page (locale guard) and contact redirects go to EN paths. Set it once in the Pages project variables (they reach the build and the function) and **redeploy after changing it**: pages prerendered while the locale was on are static files the guard never sees, so flipping the flag at runtime alone leaves them reachable. Default: TR on. |
 | `NUXT_PUBLIC_ENABLE_DE` | public, **build + runtime** | no | `false` hides the German site, exactly like `NUXT_PUBLIC_ENABLE_TR` for TR. With both off the switcher is not shown. Default: DE on. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | public, **build + runtime** | no — leave **empty** in v1 | `runtimeConfig.public.analyticsId`. Setting it adds the Analytics category and its buttons to the consent panel and shows the cookie consent banner (mounted in the default layout, until a choice is stored); no analytics loader exists in v1, so add one (and update the Cookie Policy) before setting it. Prerendered pages carry the build-time value, so redeploy after changing it. |
+| `NUXT_PUBLIC_LEGAL_REVIEW_NOTES` | public, **build + runtime** | no — Preview only | `runtimeConfig.public.legalReviewNotes`. `true` shows the legal pages' review notes: the "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" status chip and the dashed OPEN notes (owner facts still missing), for the lawyer and the owner. Any other value or unset → hidden: no chip, and the OPEN paragraphs are left out entirely. Set to `true` in `wrangler.toml` `[env.preview.vars]` only; production `[vars]` leaves it unset. The legal pages are rendered per request (not prerendered), so the runtime value applies. Default: off. |
 | `CONTACT_TRUST_XFF` | server, runtime | no | `true` also trusts the first `X-Forwarded-For` entry for the rate-limit IP (only behind a proxy that overwrites it). Leave empty on Cloudflare. On Cloudflare (the request runs in the Pages Function) the IP comes from `CF-Connecting-IP`, which Cloudflare sets and overwrites; anywhere else that header is ignored and the socket address is used. |
 | `CONTACT_DEV_BYPASS_TURNSTILE` | server, dev only | no — leave empty | `true` skips the Turnstile check **only in `nuxt dev`**; production builds ignore it. |
 | `NUXT_SITE_INDEXABLE` | **build-time** | no | `false` in the Pages **Preview** environment only: robots.txt disallows everything and pages get `noindex`. Unset in Production. |
@@ -107,6 +108,8 @@ The root **`wrangler.toml`** is the source of truth for the project's runtime se
 `2026-07-01`, flags `nodejs_compat` + `no_nodejs_compat_v2`, and the non-secret runtime variables (`[vars]`, repeated
 under `[env.preview.vars]` because `vars` is not inherited). The Git-connected build reads it, and the dashboard then
 shows those fields read-only, so change them in the file. Secrets and the build-time variables stay in the dashboard.
+`[env.preview.vars]` also sets `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"`: Preview deployments show the legal pages'
+Draft status chip and OPEN notes for the lawyer and the owner; production (`[vars]`, flag unset) shows neither.
 
 1. **DNS to Cloudflare.** Add the zone `moesaltd.com` to the Cloudflare account (free plan), let Cloudflare import the
    existing records, and **before** switching the nameservers at Namecheap check that every mail record of the
@@ -135,7 +138,8 @@ shows those fields read-only, so change them in the file. Secrets and the build-
 4. **Runtime settings** come from `wrangler.toml` (see above); nothing to set in *Settings → Runtime*.
    `nodejs_compat` is required: the function bundle imports Node.js built-ins, and with a date on or after 2025-04-01
    the runtime also fills `process.env` from the variables and secrets (the contact route reads the bindings directly
-   as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `CONTACT_TO` and `CONTACT_FROM` are in `[vars]`.
+   as well, `server/utils/runtime-env.ts`). `NUXT_PUBLIC_ENABLE_DE`, `CONTACT_TO` and `CONTACT_FROM` are in `[vars]`;
+   `NUXT_PUBLIC_LEGAL_REVIEW_NOTES = "true"` is in `[env.preview.vars]` only (do not add it to Production).
 5. **Custom domains** (*Project → Custom domains*): add `www.moesaltd.com` and `moesaltd.com`. Cloudflare creates the
    proxied `CNAME` records to `moesa-website.pages.dev` itself and issues the certificates.
 6. **Apex → www redirect** (zone `moesaltd.com` → *Rules → Redirect Rules → Create rule*, or the template "Redirect
@@ -235,8 +239,10 @@ Pages hosting and Turnstile, Resend, the `moesa_consent` cookie; no analytics, n
 not legal advice: every authored string is in `i18n/UNREVIEWED_LEGAL.md`. Before publication:
 
 - [ ] Owner facts for the OPEN notes: legal form (ЕООД/ООД) and Commercial Register entry, managing director, phone
-  number (`+359 88 501 661` looks one digit short), the provider hosting the info@moesaltd.com mailbox, retention
-  periods (enquiries, Cloudflare logs, Resend emails).
+  number (`+359 88 501 661` looks one digit short), retention periods (enquiries, Cloudflare logs, Resend emails).
+  The OPEN notes and the Draft chip are shown on Preview deployments only (`NUXT_PUBLIC_LEGAL_REVIEW_NOTES`); the
+  live site already hides them, so a missing fact is simply absent there until it is filled in. The mailbox provider
+  is named (Namecheap, Inc., Private Email); the lawyer should confirm its DPA and transfer basis like the others.
 - [ ] Lawyer: review `i18n/UNREVIEWED_LEGAL.md` (legal bases, recipients, transfers incl. DPF/SCCs per provider, CPDP
   complaint text, the contact-form acknowledgement instead of consent, Turnstile as strictly necessary without consent).
 - [ ] Processing location (review S6, an owner decision): the Pages Function for `/api/contact` runs in the Cloudflare
@@ -247,9 +253,11 @@ not legal advice: every authored string is in `i18n/UNREVIEWED_LEGAL.md`. Before
   (Functions real-time logs are a live stream) and record the retention in the privacy policy OPEN note.
 - [ ] Check in DevTools (Application tab, frame `challenges.cloudflare.com`) whether Turnstile stores anything, and
   adjust the Cookie Policy inventory text if needed.
-- [ ] Record legal review and technical review before changing these pages to FINAL status (then remove the
-  "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip and set `LEGAL_UPDATED` in `content/en/legal.ts` to the publication
-  date).
+- [ ] Record legal review and technical review before changing these pages to FINAL status. Production already hides
+  the "DRAFT / TASLAK - LEGAL REVIEW REQUIRED" chip and the OPEN notes (`NUXT_PUBLIC_LEGAL_REVIEW_NOTES` is unset
+  there), so at the lawyer's sign-off nothing changes for production except setting `LEGAL_UPDATED` in
+  `content/en/legal.ts` to the publication date. Preview deployments keep showing the notes until they are removed
+  from the content.
 
 Also:
 
