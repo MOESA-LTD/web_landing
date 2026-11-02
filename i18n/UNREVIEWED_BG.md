@@ -7,6 +7,11 @@ our translation of the approved English (`content/en`, formal "Вие" register)
 copy or from the canvas `i18n.js`. All of it is listed below for review before the Bulgarian site goes live
 (production keeps it off: `NUXT_PUBLIC_ENABLE_BG = "false"` in `wrangler.toml`; preview deployments show it).
 
+**Terminology.** English industry terms without a precise Bulgarian equivalent are written in Latin script, without
+article or inflection ("sourcing", "Commercial Intelligence", "QA", "D2C", "SEO"); established Bulgarian terms stay
+(снабдяване, доставчик, верига на доставки, собствени марки, маркетплейс). See
+`docs/superpowers/reviews/2026-11-03-terminology-glossary.md`.
+
 ## Page copy (609 strings)
 
 Source: `content/bg/unreviewed.ts`; the strings are used verbatim in `content/bg/*.ts`. The path is the field in the
@@ -21,19 +26,19 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | Path | EN | BG |
 | --- | --- | --- |
 | `meta.title` | MOESA Ltd. \| International Procurement, Product Development & Commercial Operations | MOESA Ltd. \| Снабдяване, продукти и търговски операции |
-| `meta.description` | MOESA manages international sourcing, product development, procurement, market access, supply chain and commercial operations for retailers, brands, manufacturers and businesses. | MOESA управлява сорсинг, разработка на продукти, снабдяване, достъп до пазари, верига на доставки и търговски операции за търговци, марки и производители. |
+| `meta.description` | MOESA manages international sourcing, product development, procurement, market access, supply chain and commercial operations for retailers, brands, manufacturers and businesses. | MOESA управлява sourcing, разработка на продукти, снабдяване, достъп до пазари, верига на доставки и търговски операции за търговци, марки и производители. |
 | `hero.title` | From commercial objective to market-ready delivery. | От бизнес целта до доставка, готова за пазара. |
-| `hero.body` | MOESA acts as an external product, procurement and commercial operations partner for companies that want one coordinated team across sourcing, development, execution and delivery. | MOESA е външен партньор за продукти, снабдяване и търговски операции – за компании, които искат един координиран екип, обхващащ сорсинга, разработката, изпълнението и доставката. |
+| `hero.body` | MOESA acts as an external product, procurement and commercial operations partner for companies that want one coordinated team across sourcing, development, execution and delivery. | MOESA е външен партньор за продукти, снабдяване и търговски операции – за компании, които искат един координиран екип, обхващащ sourcing, разработката, изпълнението и доставката. |
 | `hero.tagline` | Based in the European Union. Operating internationally. | Със седалище в Европейския съюз. С международна дейност. |
 | `team.title` | Your external product & procurement team. | Вашият външен екип за продукти и снабдяване. |
 | `team.body` | Our partners define the commercial objective and retain the key decisions. MOESA coordinates execution across suppliers, products, procurement, market preparation, operations and delivery. | Нашите партньори определят бизнес целта и запазват ключовите решения. MOESA координира изпълнението – от доставчиците, продуктите и снабдяването до подготовката за пазара, операциите и доставката. |
 | `team.statement` | One mandate. One coordinated operating partner. | Едно възлагане. Един координиран оперативен партньор. |
 | `operatingModel.title` | One operating model across the commercial process. | Един оперативен модел за целия търговски процес. |
-| `operatingModel.items[0]` | Sourcing & Managed Procurement | Сорсинг и управление на снабдяването |
+| `operatingModel.items[0]` | Sourcing & Managed Procurement | Sourcing и управление на снабдяването |
 | `operatingModel.items[1]` | Product & Private Label Development | Разработка на продукти и собствени марки |
 | `operatingModel.items[2]` | Market Access & Commercial Representation | Достъп до пазари и търговско представителство |
 | `operatingModel.items[3]` | Operations & Supply Chain | Операции и верига на доставки |
-| `operatingModel.items[4]` | Digital Commerce & Commercial Intelligence as a cross-functional capability | Дигитална търговия и бизнес анализи като междуфункционална компетентност |
+| `operatingModel.items[4]` | Digital Commerce & Commercial Intelligence as a cross-functional capability | Дигитална търговия и Commercial Intelligence като междуфункционална компетентност |
 | `businessNeeds.title` | Start with the business need. | Започнете от нуждите на бизнеса. |
 | `businessNeeds.items[0]` | Source a specific brand, product or manufacturer | Намиране на конкретна марка, продукт или производител |
 | `businessNeeds.items[1]` | Develop a product or complete private-label portfolio | Разработване на продукт или цялостно портфолио от собствени марки |
@@ -57,11 +62,11 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `audiences.items[1]` | Wholesalers & Distributors | Търговци на едро и дистрибутори |
 | `audiences.items[2]` | Brands & Manufacturers | Марки и производители |
 | `audiences.items[3]` | Digital Commerce Businesses | Компании в дигиталната търговия |
-| `capability.title` | Commercial capability beyond sourcing. | Търговски компетенции отвъд сорсинга. |
+| `capability.title` | Commercial capability beyond sourcing. | Търговски компетенции отвъд sourcing. |
 | `capability.paragraphs[0]` | MOESA can continue supporting the product after it reaches the warehouse - across marketplaces, direct-to-consumer websites and other digital sales channels. | MOESA може да продължи да подкрепя продукта и след като той пристигне в склада – в маркетплейси, уебсайтове за директни продажби към потребители и други дигитални канали за продажба. |
 | `capability.paragraphs[1]` | Digital commerce is a capability within our operating model, not a limitation on the businesses we serve. | Дигиталната търговия е компетентност в рамките на нашия оперативен модел, а не ограничение за компаниите, с които работим. |
 | `euBase.title` | Based in the European Union. Operating internationally. | Със седалище в Европейския съюз. С международна дейност. |
-| `euBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, procurement, market access and commercial operations. | MOESA Ltd. е със седалище в Пловдив, България, и предлага оперативна база в ЕС за международен сорсинг, снабдяване, достъп до пазари и търговски операции. |
+| `euBase.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, procurement, market access and commercial operations. | MOESA Ltd. е със седалище в Пловдив, България, и предлага оперативна база в ЕС за международен sourcing, снабдяване, достъп до пазари и търговски операции. |
 | `finalCta.title` | Let us discuss what your business needs. | Нека обсъдим от какво се нуждае Вашият бизнес. |
 | `finalCta.body` | Whether you need to source an international brand, develop a private-label portfolio, outsource procurement or build a new commercial operation, start with the objective. | Независимо дали искате да намерите международна марка, да разработите портфолио от собствени марки, да възложите снабдяването на външен партньор или да изградите нова търговска дейност – започнете от целта. |
 | `finalCta.cta.label` | Discuss a Project | Обсъдете проект |
@@ -71,17 +76,17 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | Path | EN | BG |
 | --- | --- | --- |
 | `meta.title` | Services \| MOESA Ltd. | Услуги \| MOESA Ltd. |
-| `meta.description` | Explore MOESA services across international sourcing, managed procurement, product development, market access, supply chain and digital commerce operations. | Услугите на MOESA: международен сорсинг, управление на снабдяването, разработка на продукти, достъп до пазари, верига на доставки и дигитална търговия. |
+| `meta.description` | Explore MOESA services across international sourcing, managed procurement, product development, market access, supply chain and digital commerce operations. | Услугите на MOESA: международен sourcing, управление на снабдяването, разработка на продукти, достъп до пазари, верига на доставки и дигитална търговия. |
 | `hero.title` | Connected services for international product businesses. | Свързани услуги за компании в международната търговия с продукти. |
 | `hero.body` | Use one service for a defined requirement or connect multiple services within a long-term operating partnership. | Използвайте една услуга за конкретна нужда или съчетайте няколко услуги в рамките на дългосрочно оперативно партньорство. |
-| `services[0].title` | Sourcing & Managed Procurement | Сорсинг и управление на снабдяването |
-| `services[0].summary` | International brand and product sourcing, manufacturer and supplier identification, commercial negotiation, purchasing and recurring procurement management. | Международен сорсинг на марки и продукти, намиране на производители и доставчици, търговски преговори, покупки и управление на текущото снабдяване. |
+| `services[0].title` | Sourcing & Managed Procurement | Sourcing и управление на снабдяването |
+| `services[0].summary` | International brand and product sourcing, manufacturer and supplier identification, commercial negotiation, purchasing and recurring procurement management. | Международен sourcing на марки и продукти, намиране на производители и доставчици, търговски преговори, покупки и управление на текущото снабдяване. |
 | `services[0].items[0]` | Specific brand or product sourcing | Намиране на конкретни марки или продукти |
 | `services[0].items[1]` | Alternative supplier development | Развитие на алтернативни доставчици |
 | `services[0].items[2]` | Outsourced procurement capacity | Външен капацитет за снабдяване |
 | `services[0].items[3]` | Supplier and purchase-order management | Управление на доставчици и поръчки за покупка |
 | `services[1].title` | Product & Private Label Development | Разработка на продукти и собствени марки |
-| `services[1].summary` | Product concepts, product-family architecture, specifications, variations, packaging, QA and compliance coordination, and production readiness. | Продуктови концепции, архитектура на продуктовите семейства, спецификации, варианти, опаковки, координация на качеството и съответствието с изискванията, готовност за производство. |
+| `services[1].summary` | Product concepts, product-family architecture, specifications, variations, packaging, QA and compliance coordination, and production readiness. | Продуктови концепции, архитектура на продуктовите семейства, спецификации, варианти, опаковки, координация на QA и съответствието с изискванията, готовност за производство. |
 | `services[1].items[0]` | Individual products | Отделни продукти |
 | `services[1].items[1]` | Private-label portfolios | Портфолиа от собствени марки |
 | `services[1].items[2]` | Existing-product adaptation | Адаптиране на съществуващи продукти |
@@ -98,7 +103,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `services[3].items[1]` | Recurring production and logistics | Текущо производство и логистика |
 | `services[3].items[2]` | Multi-supplier operations | Операции с множество доставчици |
 | `services[3].items[3]` | Inventory and replenishment coordination | Координация на наличностите и тяхното попълване |
-| `services[4].title` | Digital Commerce & Commercial Intelligence | Дигитална търговия и бизнес анализи |
+| `services[4].title` | Digital Commerce & Commercial Intelligence | Дигитална търговия и Commercial Intelligence |
 | `services[4].summary` | Product positioning, creative coordination, SEO, listings, catalog, marketplace and D2C operations, inventory planning, reporting and customer intelligence. | Продуктово позициониране, координация на визуалното съдържание, SEO, продуктови обяви, каталог, операции в маркетплейси и D2C, планиране на наличностите, отчети и анализ на клиентите. |
 | `services[4].items[0]` | Digital launch preparation | Подготовка за дигитално пускане на пазара |
 | `services[4].items[1]` | Catalog and content operations | Управление на каталога и съдържанието |
@@ -114,12 +119,12 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 
 | Path | EN | BG |
 | --- | --- | --- |
-| `meta.title` | Sourcing & Managed Procurement Services \| MOESA Ltd. | Сорсинг и управление на снабдяването \| MOESA Ltd. |
-| `meta.description` | MOESA manages international product and brand sourcing, supplier assessment, commercial negotiation, purchasing and ongoing procurement operations. | MOESA управлява международния сорсинг на продукти и марки, оценката на доставчици, търговските преговори, покупките и текущото снабдяване. |
-| `hero.title` | From sourcing mandate to managed procurement. | От задачата за сорсинг до управлението на снабдяването. |
+| `meta.title` | Sourcing & Managed Procurement Services \| MOESA Ltd. | Sourcing и управление на снабдяването \| MOESA Ltd. |
+| `meta.description` | MOESA manages international product and brand sourcing, supplier assessment, commercial negotiation, purchasing and ongoing procurement operations. | MOESA управлява международния sourcing на продукти и марки, оценката на доставчици, търговските преговори, покупките и текущото снабдяване. |
+| `hero.title` | From sourcing mandate to managed procurement. | От задачата за sourcing до управлението на снабдяването. |
 | `hero.body` | Whether you are looking for a specific international brand, a new supplier or an external team to manage recurring purchasing operations, MOESA turns the requirement into an executable procurement process. | Независимо дали търсите конкретна международна марка, нов доставчик или външен екип, който да управлява текущите покупки, MOESA превръща изискването в изпълним процес на снабдяване. |
 | `intro.title` | You define what the business needs. We manage how it gets sourced. | Вие определяте от какво се нуждае бизнесът. Ние управляваме как да бъде осигурено. |
-| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Проектът за сорсинг може да започне с конкретна марка, известен продукт, целева категория или бизнес цел. Клиентът запазва стратегическите решения и одобренията, а MOESA управлява проучването, комуникацията, преговорите и оперативното изпълнение. |
+| `intro.body` | A sourcing project may begin with a specific brand, a known product, a target category or a commercial objective. The client retains strategic decisions and approvals; MOESA manages research, communication, negotiation and operational follow-through. | Проектът за sourcing може да започне с конкретна марка, известен продукт, целева категория или бизнес цел. Клиентът запазва стратегическите решения и одобренията, а MOESA управлява проучването, комуникацията, преговорите и оперативното изпълнение. |
 | `typicalMandates.title` | Typical mandates | Типични задачи |
 | `typicalMandates.items[0]` | Source a specific international brand | Намиране на конкретна международна марка |
 | `typicalMandates.items[1]` | Find a product or manufacturer | Намиране на продукт или производител |
@@ -127,7 +132,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `typicalMandates.items[3]` | Outsource recurring procurement operations | Възлагане на текущото снабдяване на външен партньор |
 | `typicalMandates.items[4]` | Coordinate purchasing across multiple suppliers | Координиране на покупките от множество доставчици |
 | `manages.title` | What MOESA manages | Какво управлява MOESA |
-| `manages.items[0]` | Sourcing brief and requirement structure | Задание за сорсинг и структуриране на изискванията |
+| `manages.items[0]` | Sourcing brief and requirement structure | Задание за sourcing и структуриране на изискванията |
 | `manages.items[1]` | Brand, product, manufacturer and supplier research | Проучване на марки, продукти, производители и доставчици |
 | `manages.items[2]` | Supplier assessment | Оценка на доставчиците |
 | `manages.items[3]` | Commercial negotiation | Търговски преговори |
@@ -143,7 +148,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `managedModel.items[4]` | Documentation follow-up | Проследяване на документацията |
 | `managedModel.items[5]` | Reorder and continuity planning | Планиране на повторните поръчки и непрекъснатостта на доставките |
 | `models.title` | Engagement models | Модели на сътрудничество |
-| `models.items[0]` | Project-Based Sourcing | Сорсинг по проект |
+| `models.items[0]` | Project-Based Sourcing | Sourcing по проект |
 | `models.items[1]` | Managed Procurement Service | Услуга за управление на снабдяването |
 | `models.items[2]` | Trading Arrangement | Търговско споразумение |
 | `models.items[3]` | Commercial Representation | Търговско представителство |
@@ -156,7 +161,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `responsibilities.body` | Final business decisions, supplier approvals and purchasing authority remain with the client unless a separate trading arrangement has been agreed. Where technical or regulatory requirements apply, MOESA coordinates the workflow with the relevant parties. | Окончателните бизнес решения, одобряването на доставчици и правомощията за покупки остават у клиента, освен ако не е договорено отделно търговско споразумение. Когато се прилагат технически или регулаторни изисквания, MOESA координира работния процес със съответните страни. |
 | `finalCta.title` | What do you need to source? | Какво трябва да намерите? |
 | `finalCta.body` | Tell us the product, brand, category or procurement challenge. We will help structure the next steps. | Разкажете ни за продукта, марката, категорията или предизвикателството в снабдяването. Ще Ви помогнем да структурирате следващите стъпки. |
-| `finalCta.cta.label` | Discuss a Sourcing Project | Обсъдете проект за сорсинг |
+| `finalCta.cta.label` | Discuss a Sourcing Project | Обсъдете проект за sourcing |
 
 ### services/product-private-label-development (41)
 
@@ -181,7 +186,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `manages.items[3]` | Supplier and manufacturer selection | Избор на доставчици и производители |
 | `manages.items[4]` | Specification and technical preparation | Спецификация и техническа подготовка |
 | `manages.items[5]` | Samples and development rounds | Мостри и етапи на разработка |
-| `manages.items[6]` | QA and compliance coordination | Координация на контрола на качеството и съответствието с изискванията |
+| `manages.items[6]` | QA and compliance coordination | Координация на QA и съответствието с изискванията |
 | `manages.items[7]` | Packaging and product presentation | Опаковка и представяне на продукта |
 | `manages.items[8]` | Commercial feasibility | Икономическа целесъобразност |
 | `manages.items[9]` | Production readiness | Готовност за производство |
@@ -253,7 +258,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `meta.description` | MOESA coordinates purchasing, production follow-up, documentation, international logistics, import operations, warehousing, inventory and delivery. | MOESA координира покупките, проследяването на производството, документацията, международната логистика, вноса, складирането, наличностите и доставката. |
 | `hero.title` | From purchase order to destination. | От поръчката за покупка до местоназначението. |
 | `hero.body` | MOESA coordinates the operational process across purchasing, production, product documentation, international logistics, import, warehousing, inventory and delivery. | MOESA координира оперативния процес – покупки, производство, продуктова документация, международна логистика, внос, складиране, наличности и доставка. |
-| `intro.title` | A commercial agreement still requires operational execution. | Сключеното търговско споразумение трябва да бъде изпълнено и оперативно. |
+| `intro.title` | A commercial agreement still requires operational execution. | И договорената сделка трябва да бъде изпълнена оперативно. |
 | `intro.body` | After the product, supplier and purchasing conditions have been agreed, the project must move through production, documentation, shipment, import, storage and delivery. MOESA connects these stages in one operating view. | След като продуктът, доставчикът и условията за покупка бъдат договорени, проектът трябва да премине през производство, документация, експедиция, внос, съхранение и доставка. MOESA свързва тези етапи в единен оперативен поглед. |
 | `typicalMandates.title` | Typical mandates | Типични задачи |
 | `typicalMandates.items[0]` | Manage production after purchase | Управление на производството след покупката |
@@ -288,7 +293,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `visibility.items[1]` | Next milestone | Следващ етап |
 | `visibility.items[2]` | Open decisions | Открити решения |
 | `visibility.items[3]` | Required client action | Необходими действия от клиента |
-| `visibility.items[4]` | Supplier action | Действия от доставчика |
+| `visibility.items[4]` | Supplier action | Необходими действия от доставчика |
 | `visibility.items[5]` | Risk or delay | Риск или забавяне |
 | `visibility.items[6]` | Estimated completion | Очаквано приключване |
 | `visibility.items[7]` | Supporting documents | Придружаващи документи |
@@ -304,14 +309,14 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 
 | Path | EN | BG |
 | --- | --- | --- |
-| `meta.title` | Digital Commerce Operations & Commercial Intelligence \| MOESA Ltd. | Дигитална търговия и бизнес анализи \| MOESA Ltd. |
+| `meta.title` | Digital Commerce Operations & Commercial Intelligence \| MOESA Ltd. | Дигитална търговия и Commercial Intelligence \| MOESA Ltd. |
 | `meta.description` | MOESA supports marketplace and D2C operations across product positioning, content, SEO, listings, catalog, inventory, performance and customer intelligence. | MOESA подкрепя операциите в маркетплейси и D2C: позициониране, съдържание, SEO, продуктови обяви, каталог, наличности, резултати и анализ на клиентите. |
 | `hero.title` | Operate the product. Understand the market. Improve the business. | Управлявайте продукта. Разберете пазара. Развийте бизнеса. |
 | `hero.body` | MOESA supports ongoing commercial operations across marketplaces, direct-to-consumer websites and other digital sales channels, connecting product presentation, catalog, inventory, performance and customer intelligence. | MOESA подкрепя текущите търговски операции в маркетплейси, уебсайтове за директни продажби към потребители и други дигитални канали за продажба, като свързва представянето на продукта, каталога, наличностите, резултатите и анализа на клиентите. |
 | `intro.title` | The work does not end when the product goes live. | Работата не приключва, когато продуктът бъде публикуван. |
 | `intro.body` | Product information must remain accurate. Listings and catalogs must be maintained. Inventory must reflect sales demand. Pricing, promotions, customer feedback and channel performance must be reviewed. | Продуктовата информация трябва да остава точна. Продуктовите обяви и каталозите трябва да се поддържат. Наличностите трябва да отразяват търсенето. Цените, промоциите, обратната връзка от клиентите и резултатите по канали трябва да се преглеждат. |
 | `broader.title` | More than an e-commerce agency. | Повече от агенция за електронна търговия. |
-| `broader.body` | Digital commerce is one capability within MOESA’s broader product, procurement and commercial operations model. It can operate alone or connect with product development, sourcing, purchasing, supply chain, inventory and replenishment. | Дигиталната търговия е една от компетентностите в по-широкия модел на MOESA за продукти, снабдяване и търговски операции. Тя може да се използва самостоятелно или да се свърже с разработката на продукти, сорсинга, покупките, веригата на доставки, наличностите и попълването на запасите. |
+| `broader.body` | Digital commerce is one capability within MOESA’s broader product, procurement and commercial operations model. It can operate alone or connect with product development, sourcing, purchasing, supply chain, inventory and replenishment. | Дигиталната търговия е една от компетентностите в по-широкия модел на MOESA за продукти, снабдяване и търговски операции. Тя може да се използва самостоятелно или да се свърже с разработката на продукти, sourcing, покупките, веригата на доставки, наличностите и попълването на запасите. |
 | `typicalMandates.title` | Typical mandates | Типични задачи |
 | `typicalMandates.items[0]` | Prepare a product for digital sales | Подготовка на продукт за дигитални продажби |
 | `typicalMandates.items[1]` | Manage marketplace operations | Управление на операциите в маркетплейси |
@@ -329,9 +334,9 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `manages.items[7]` | D2C website operations | Управление на D2C уебсайт |
 | `manages.items[8]` | Pricing and promotion support | Подкрепа за ценообразуването и промоциите |
 | `manages.items[9]` | Inventory and replenishment | Наличности и попълване на запасите |
-| `manages.items[10]` | Performance and commercial intelligence | Анализ на резултатите и бизнес анализи |
+| `manages.items[10]` | Performance and commercial intelligence | Анализ на резултатите и Commercial Intelligence |
 | `manages.items[11]` | Voice of customer | Гласът на клиента |
-| `framework.title` | Commercial intelligence framework | Рамка за бизнес анализ |
+| `framework.title` | Commercial intelligence framework | Рамка за Commercial Intelligence |
 | `framework.steps[0]` | Measure | Измерване |
 | `framework.steps[1]` | Understand | Анализ |
 | `framework.steps[2]` | Recommend | Препоръка |
@@ -358,7 +363,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | Path | EN | BG |
 | --- | --- | --- |
 | `meta.title` | How We Work \| MOESA Ltd. | Как работим \| MOESA Ltd. |
-| `meta.description` | Learn how MOESA connects sourcing, product development, procurement, market access, supply chain and digital commerce from objective to execution. | Как MOESA свързва сорсинга, разработката на продукти, снабдяването, достъпа до пазари, веригата на доставки и дигиталната търговия – от целта до изпълнението. |
+| `meta.description` | Learn how MOESA connects sourcing, product development, procurement, market access, supply chain and digital commerce from objective to execution. | Как MOESA свързва sourcing, разработката на продукти, снабдяването, достъпа до пазари, веригата на доставки и дигиталната търговия – от целта до изпълнението. |
 | `hero.title` | You define the objective. We manage the execution. | Вие определяте целта. Ние управляваме изпълнението. |
 | `hero.body` | MOESA connects the commercial decision with the product, supplier, market, operational and delivery requirements needed to turn it into a controlled business project. | MOESA свързва търговското решение с изискванията към продукта, доставчиците, пазара, операциите и доставката, които са необходими, за да се превърне то в контролиран бизнес проект. |
 | `intro.title` | One operating model across different commercial needs. | Един оперативен модел за различни бизнес нужди. |
@@ -398,7 +403,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `visibility.items[1]` | Completed actions | Изпълнени действия |
 | `visibility.items[2]` | Open decisions | Открити решения |
 | `visibility.items[3]` | Required client action | Необходими действия от клиента |
-| `visibility.items[4]` | Supplier action | Действия от доставчика |
+| `visibility.items[4]` | Supplier action | Необходими действия от доставчика |
 | `visibility.items[5]` | Documents and samples | Документи и мостри |
 | `visibility.items[6]` | Production or shipment status | Състояние на производството или пратката |
 | `visibility.items[7]` | Risks and next milestone | Рискове и следващ етап |
@@ -426,13 +431,13 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | Path | EN | BG |
 | --- | --- | --- |
 | `meta.title` | Who We Work With \| MOESA Ltd. | С кого работим \| MOESA Ltd. |
-| `meta.description` | MOESA works with corporate buyers, retailers, wholesalers, distributors, brands, manufacturers and digital commerce businesses across sourcing, product development and operations. | MOESA работи с корпоративни купувачи, търговци, дистрибутори, марки, производители и компании в дигиталната търговия в сорсинга, продуктите и операциите. |
+| `meta.description` | MOESA works with corporate buyers, retailers, wholesalers, distributors, brands, manufacturers and digital commerce businesses across sourcing, product development and operations. | MOESA работи с корпоративни купувачи, търговци, дистрибутори, марки, производители и компании в дигиталната търговия – от sourcing до продукти и операции. |
 | `hero.title` | Different business models. One coordinated operating partner. | Различни бизнес модели. Един координиран оперативен партньор. |
 | `hero.body` | MOESA works with companies that need products, suppliers, procurement capacity, private-label development, market access or continuing commercial operations. | MOESA работи с компании, които се нуждаят от продукти, доставчици, капацитет за снабдяване, разработка на собствени марки, достъп до пазари или текущи търговски операции. |
 | `intro.title` | Start with the business need, not a predefined package. | Започнете от нуждата на бизнеса, а не от предварително зададен пакет. |
 | `intro.body` | A retail group, manufacturer, distributor and digital commerce business may require different commercial structures. MOESA begins with the client’s objective and structures the appropriate operating model around it. | Търговската верига, производителят, дистрибуторът и компанията в дигиталната търговия може да се нуждаят от различни търговски структури. MOESA започва от целта на клиента и изгражда подходящия оперативен модел според нея. |
 | `audiences[0].title` | Retail Groups & Corporate Buyers | Търговски вериги и корпоративни купувачи |
-| `audiences[0].body` | For retail groups, chain-store organisations, hospitality companies, healthcare and care organisations, facility-management companies, industrial buyers, service groups and procurement departments. | За търговски вериги, вериги магазини, компании в хотелиерството и ресторантьорството, здравни организации и организации за грижи, компании за фасилити мениджмънт, индустриални купувачи, групи за услуги и отдели за снабдяване. |
+| `audiences[0].body` | For retail groups, chain-store organisations, hospitality companies, healthcare and care organisations, facility-management companies, industrial buyers, service groups and procurement departments. | За групи в търговията на дребно, вериги магазини, компании в хотелиерството и ресторантьорството, здравни организации и организации за грижи, компании за фасилити мениджмънт, индустриални купувачи, групи за услуги и отдели за снабдяване. |
 | `audiences[0].items[0]` | Category and assortment development | Развитие на категории и асортимент |
 | `audiences[0].items[1]` | Private-label portfolios | Портфолиа от собствени марки |
 | `audiences[0].items[2]` | Managed procurement | Управление на снабдяването |
@@ -441,7 +446,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `audiences[0].items[5]` | International logistics and delivery | Международна логистика и доставка |
 | `audiences[1].title` | Wholesalers & Distributors | Търговци на едро и дистрибутори |
 | `audiences[1].body` | For national or regional distributors, category specialists, importers, B2B suppliers, cash-and-carry operators and multi-brand portfolio businesses. | За национални и регионални дистрибутори, специалисти в определени категории, вносители, B2B доставчици, оператори на магазини тип „cash & carry“ и компании с портфолио от много марки. |
-| `audiences[1].items[0]` | International brand sourcing | Международен сорсинг на марки |
+| `audiences[1].items[0]` | International brand sourcing | Международен sourcing на марки |
 | `audiences[1].items[1]` | Portfolio expansion | Разширяване на портфолиото |
 | `audiences[1].items[2]` | Commercial and territory agreements | Търговски и териториални споразумения |
 | `audiences[1].items[3]` | Exclusive or own-brand products | Ексклузивни продукти или продукти със собствена марка |
@@ -453,7 +458,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `audiences[2].items[1]` | Product-family architecture | Архитектура на продуктовите семейства |
 | `audiences[2].items[2]` | Supplier and manufacturer coordination | Координация с доставчици и производители |
 | `audiences[2].items[3]` | Packaging and positioning | Опаковка и позициониране |
-| `audiences[2].items[4]` | Commerce operations | Търговски операции |
+| `audiences[2].items[4]` | Commerce operations | Операции в електронната търговия |
 | `audiences[2].items[5]` | Customer-feedback and portfolio improvement | Обратна връзка от клиентите и подобряване на портфолиото |
 | `audiences[3].title` | Manufacturers | Производители |
 | `audiences[3].body` | For finished-goods manufacturers, OEM and private-label producers, component suppliers and export-focused manufacturers seeking European buyers or operations. | За производители на готови стоки, OEM производители и производители на собствени марки, доставчици на компоненти и експортно ориентирани производители, които търсят европейски купувачи или операции в Европа. |
@@ -464,18 +469,18 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `audiences[3].items[4]` | Import, warehousing and local operations | Внос, складиране и местни операции |
 | `audiences[4].title` | Digital Commerce Businesses | Компании в дигиталната търговия |
 | `audiences[4].body` | For Amazon operators, multi-marketplace businesses, D2C brands, online retailers, omnichannel companies and cross-border e-commerce operators. | За търговци в Amazon, компании, продаващи в множество маркетплейси, D2C марки, онлайн търговци, омниканални компании и оператори на трансгранична електронна търговия. |
-| `audiences[4].items[0]` | Product sourcing and private label | Сорсинг на продукти и собствени марки |
+| `audiences[4].items[0]` | Product sourcing and private label | Sourcing на продукти и собствени марки |
 | `audiences[4].items[1]` | Listing and catalog operations | Управление на продуктовите обяви и каталога |
 | `audiences[4].items[2]` | Marketplace and D2C management | Управление на маркетплейси и D2C |
 | `audiences[4].items[3]` | Inventory and replenishment | Наличности и попълване на запасите |
 | `audiences[4].items[4]` | Performance and customer intelligence | Анализ на резултатите и на клиентите |
 | `seekingBrands.title` | Buyers seeking international brands | Купувачи, които търсят международни марки |
-| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Клиентът може вече да знае марката или продукта, който иска да закупи. MOESA установява съответния търговски партньор, осъществява контакт и координира сорсинга, преговорите и покупките. |
+| `seekingBrands.body` | A client may already know the brand or product it wants to buy. MOESA identifies the relevant commercial party, initiates contact and coordinates sourcing, negotiation and purchasing. | Клиентът може вече да знае марката или продукта, който иска да закупи. MOESA установява съответния търговски партньор, осъществява контакт и координира sourcing, преговорите и покупките. |
 | `noInternalProcurement.title` | Businesses without a full internal procurement team | Компании без пълноценен вътрешен екип за снабдяване |
 | `noInternalProcurement.body` | MOESA can operate as an external procurement and product-operations function within a defined mandate while the client retains strategy, budget and approvals. | MOESA може да действа като външна функция за снабдяване и продуктови операции в рамките на определено възлагане, като клиентът запазва стратегията, бюджета и одобренията. |
 | `selectionGuide.title` | Engagement selection guide | Коя услуга е подходяща за Вас? |
 | `selectionGuide.rows[0].need` | Need a specific brand or supplier | Нужна Ви е конкретна марка или доставчик |
-| `selectionGuide.rows[0].target` | Sourcing & Managed Procurement | Сорсинг и управление на снабдяването |
+| `selectionGuide.rows[0].target` | Sourcing & Managed Procurement | Sourcing и управление на снабдяването |
 | `selectionGuide.rows[1].need` | Need a product or category under your own brand | Нужен Ви е продукт или категория под Вашата собствена марка |
 | `selectionGuide.rows[1].target` | Product & Private Label Development | Разработка на продукти и собствени марки |
 | `selectionGuide.rows[2].need` | Need European buyers or local representation | Нужни са Ви европейски купувачи или местно представителство |
@@ -483,7 +488,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `selectionGuide.rows[3].need` | Need production, logistics, inventory or delivery | Нужни са Ви производство, логистика, наличности или доставка |
 | `selectionGuide.rows[3].target` | Operations & Supply Chain | Операции и верига на доставки |
 | `selectionGuide.rows[4].need` | Need marketplace, D2C, catalog or performance management | Нужно Ви е управление на маркетплейси, D2C, каталог или резултати |
-| `selectionGuide.rows[4].target` | Digital Commerce & Commercial Intelligence | Дигитална търговия и бизнес анализи |
+| `selectionGuide.rows[4].target` | Digital Commerce & Commercial Intelligence | Дигитална търговия и Commercial Intelligence |
 | `selectionGuide.rows[5].need` | Need several connected functions | Нужни са Ви няколко свързани функции |
 | `selectionGuide.rows[5].target` | Integrated Operations Partnership | Партньорство за интегрирани операции |
 | `notSure.title` | Not sure yet? | Все още не сте сигурни? |
@@ -499,16 +504,16 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `meta.title` | About MOESA Ltd. \| International Procurement & Product Operations | За MOESA Ltd. \| Международно снабдяване и продукти |
 | `meta.description` | Learn about MOESA Ltd., a Bulgaria-based international procurement, product development and commercial operations partner serving international businesses. | MOESA Ltd. е българска компания – партньор за международно снабдяване, разработка на продукти и търговски операции на международни компании. |
 | `hero.title` | An external product, procurement and commercial operations team. | Външен екип за продукти, снабдяване и търговски операции. |
-| `hero.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, and works with international businesses across sourcing, product development, market access, supply chain and digital commerce. | MOESA Ltd. е със седалище в Пловдив, България, и работи с международни компании в областта на сорсинга, разработката на продукти, достъпа до пазари, веригата на доставки и дигиталната търговия. |
+| `hero.body` | MOESA Ltd. is based in Plovdiv, Bulgaria, and works with international businesses across sourcing, product development, market access, supply chain and digital commerce. | MOESA Ltd. е със седалище в Пловдив, България, и работи с международни компании в областта на sourcing, разработката на продукти, достъпа до пазари, веригата на доставки и дигиталната търговия. |
 | `whoWeAre.title` | Who we are | Кои сме ние |
 | `whoWeAre.body` | MOESA combines international trade, product development, procurement, operational execution and market experience within one coordinated company model. We support defined projects as well as long-term external operating functions. | MOESA съчетава опит в международната търговия, разработката на продукти, снабдяването, оперативното изпълнение и пазарите в един координиран модел на компанията. Подкрепяме както конкретни проекти, така и дългосрочни външни оперативни функции. |
 | `manages.title` | What we manage | Какво управляваме |
-| `manages.items[0]` | International brand and product sourcing | Международен сорсинг на марки и продукти |
+| `manages.items[0]` | International brand and product sourcing | Международен sourcing на марки и продукти |
 | `manages.items[1]` | Managed procurement | Управление на снабдяването |
 | `manages.items[2]` | Product and private-label development | Разработка на продукти и собствени марки |
 | `manages.items[3]` | Market access and commercial representation | Достъп до пазари и търговско представителство |
 | `manages.items[4]` | Operations and supply chain | Операции и верига на доставки |
-| `manages.items[5]` | Digital commerce and commercial intelligence | Дигитална търговия и бизнес анализи |
+| `manages.items[5]` | Digital commerce and commercial intelligence | Дигитална търговия и Commercial Intelligence |
 | `why.title` | Why MOESA | Защо MOESA |
 | `why.items[0]` | One coordinated view across product, supplier, market and operation | Единен координиран поглед върху продукта, доставчика, пазара и операциите |
 | `why.items[1]` | Flexible partnership models rather than one fixed service package | Гъвкави модели на партньорство вместо един фиксиран пакет услуги |
@@ -526,10 +531,10 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `experience.title` | Experience | Опит |
 | `experience.body` | Our team’s experience includes 15 years in digital commerce and 10 years in professional e-commerce operations, combined with warehousing, inventory, shipping and international trade experience. | Опитът на нашия екип включва 15 години в дигиталната търговия и 10 години в професионалните операции в електронната търговия, съчетани с опит в складирането, наличностите, транспорта и международната търговия. |
 | `europeanBase.title` | European base, international scope | Европейска база, международен обхват |
-| `europeanBase.body` | MOESA Ltd. is registered in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, market access and commercial operations. Work outside the EU is structured according to the project, market and responsible parties. | MOESA Ltd. е регистрирана в Пловдив, България, и предлага оперативна база в ЕС за международен сорсинг, достъп до пазари и търговски операции. Работата извън ЕС се структурира според проекта, пазара и отговорните страни. |
+| `europeanBase.body` | MOESA Ltd. is registered in Plovdiv, Bulgaria, providing an EU operating base for international sourcing, market access and commercial operations. Work outside the EU is structured according to the project, market and responsible parties. | MOESA Ltd. е регистрирана в Пловдив, България, и предлага оперативна база в ЕС за международен sourcing, достъп до пазари и търговски операции. Работата извън ЕС се структурира според проекта, пазара и отговорните страни. |
 | `isNot.title` | What MOESA is not | Какво не е MOESA |
 | `isNot.items[0]` | Not limited to e-commerce companies | Не се ограничава до компании за електронна търговия |
-| `isNot.items[1]` | Not only a sourcing agent | Не е само агент по сорсинг |
+| `isNot.items[1]` | Not only a sourcing agent | Не е само sourcing агент |
 | `isNot.items[2]` | Not only a trading company | Не е само търговска компания |
 | `isNot.items[3]` | Not a legal substitute for the economic operators assigned by law | Не е правен заместител на икономическите оператори, определени от закона |
 | `isNot.items[4]` | Not a software platform unless a separate technology service is confirmed | Не е софтуерна платформа, освен ако не е потвърдена отделна технологична услуга |
@@ -544,11 +549,11 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | Path | EN | BG |
 | --- | --- | --- |
 | `meta.title` | Contact MOESA Ltd. \| Discuss a Product, Procurement or Market Project | Свържете се с MOESA Ltd. \| Обсъдете Вашия проект |
-| `meta.description` | Contact MOESA Ltd. to discuss sourcing, procurement, private-label development, market access, supply chain or digital commerce operations. | Свържете се с MOESA Ltd., за да обсъдите сорсинг, снабдяване, собствени марки, достъп до пазари, верига на доставки или дигитална търговия. |
+| `meta.description` | Contact MOESA Ltd. to discuss sourcing, procurement, private-label development, market access, supply chain or digital commerce operations. | Свържете се с MOESA Ltd., за да обсъдите sourcing, снабдяване, собствени марки, достъп до пазари, верига на доставки или дигитална търговия. |
 | `hero.title` | Start with the objective. | Започнете от целта. |
 | `hero.body` | Tell us what the business needs, what is already confirmed and what remains open. We will help structure the next step. | Разкажете ни от какво се нуждае бизнесът, какво вече е потвърдено и какво остава открито. Ще Ви помогнем да структурирате следващата стъпка. |
 | `serviceOptions.title` | How can we support you? | Как можем да Ви помогнем? |
-| `serviceOptions.items[0]` | Brand or Product Sourcing | Сорсинг на марки или продукти |
+| `serviceOptions.items[0]` | Brand or Product Sourcing | Sourcing на марки или продукти |
 | `serviceOptions.items[1]` | Managed Procurement | Управление на снабдяването |
 | `serviceOptions.items[2]` | Product & Private Label Development | Разработка на продукти и собствени марки |
 | `serviceOptions.items[3]` | Market Access | Достъп до пазари |
@@ -603,7 +608,7 @@ DE and BG in `i18n/UNREVIEWED_LEGAL.md`, not here. The Bulgarian legal pages nee
 | `next.items[4]` | No engagement begins until scope and commercial terms are agreed | Работата не започва, преди да бъдат договорени обхватът и търговските условия |
 | `info.title` | Need to add information? | Искате да добавите информация? |
 | `info.body` | Email additional details to info@moesaltd.com and reference the company or project name used in the form. | Изпратете допълнителните подробности на info@moesaltd.com и посочете името на компанията или проекта, използвано във формуляра. |
-| `finalCta.title` | Continue exploring MOESA. | Разгледайте още за MOESA. |
+| `finalCta.title` | Continue exploring MOESA. | Научете повече за MOESA. |
 | `finalCta.body` | Review our services or return to the home page. | Прегледайте нашите услуги или се върнете на началната страница. |
 | `finalCta.cta.label` | Explore Services | Разгледайте услугите |
 
@@ -737,11 +742,11 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `nav.allServices` | All services | Всички услуги |
 | `nav.openMenu` | Open menu | Отваряне на менюто |
 | `nav.closeMenu` | Close menu | Затваряне на менюто |
-| `nav.serviceLinks.sourcing-managed-procurement` | Sourcing & Managed Procurement | Сорсинг и управление на снабдяването |
+| `nav.serviceLinks.sourcing-managed-procurement` | Sourcing & Managed Procurement | Sourcing и управление на снабдяването |
 | `nav.serviceLinks.product-private-label-development` | Product & Private Label Development | Разработка на продукти и собствени марки |
 | `nav.serviceLinks.market-access-commercial-representation` | Market Access & Commercial Representation | Достъп до пазари и търговско представителство |
 | `nav.serviceLinks.operations-supply-chain` | Operations & Supply Chain | Операции и верига на доставки |
-| `nav.serviceLinks.digital-commerce-commercial-intelligence` | Digital Commerce & Commercial Intelligence | Дигитална търговия и бизнес анализи |
+| `nav.serviceLinks.digital-commerce-commercial-intelligence` | Digital Commerce & Commercial Intelligence | Дигитална търговия и Commercial Intelligence |
 | `logo.homeLabel` | MOESA Ltd. home | MOESA Ltd. – начална страница |
 | `breadcrumbs.label` | Breadcrumb | Навигационна пътека |
 | `breadcrumbs.home` | Home | Начало |
@@ -786,7 +791,7 @@ keys are the labels of the desktop header bar; `{…}` are placeholders filled i
 | `form.disclaimer` | A submitted form does not create a contractual engagement. | Изпратеният формуляр не поражда договорни отношения. |
 | `form.sending` | Sending… | Изпращане… |
 | `form.honeypot` | Leave this field empty | Оставете това поле празно |
-| `form.serviceOptions.sourcing` | Brand or Product Sourcing | Сорсинг на марки или продукти |
+| `form.serviceOptions.sourcing` | Brand or Product Sourcing | Sourcing на марки или продукти |
 | `form.serviceOptions.procurement` | Managed Procurement | Управление на снабдяването |
 | `form.serviceOptions.productPrivateLabel` | Product & Private Label Development | Разработка на продукти и собствени марки |
 | `form.serviceOptions.marketAccess` | Market Access | Достъп до пазари |
