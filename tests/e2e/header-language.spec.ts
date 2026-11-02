@@ -8,30 +8,32 @@ import { openLanguageMenu } from './lang'
 const box = async (loc: import('@playwright/test').Locator) => (await loc.boundingBox())!
 
 test.describe('header language dropdown', () => {
-  test('SSR HTML: dropdown in the header, no language bar, no Home item, both hreflang links', async ({ request }) => {
+  test('SSR HTML: dropdown in the header, no language bar, no Home item, every hreflang link', async ({ request }) => {
     const html = await (await request.get('/services')).text()
     const header = /<header\b[\s\S]*?<\/header>/.exec(html)![0]
     expect(header).toContain('id="lang-button"')
     expect(header).toContain('aria-label="Language: English"')
     expect(header).toContain('hreflang="tr"')
     expect(header).toContain('hreflang="de"')
+    expect(header).toContain('hreflang="bg"')
     expect(html).not.toContain('role="group"')
     const nav = /<nav\b[^>]*data-nav="desktop"[\s\S]*?<\/nav>/.exec(header)![0]
     expect(nav).not.toContain('href="/"')
     expect(nav.match(/<li\b/g)!.length).toBe(5 + 6) // 5 items + 6 links in the Services menu
   })
 
-  test('opens, shows English / Türkçe / Deutsch with codes, closes on Escape with focus back, and on an outside click', async ({ page }) => {
+  test('opens, shows English / Türkçe / Deutsch / Български with codes, closes on Escape with focus back, and on an outside click', async ({ page }) => {
     await page.goto('/services')
     await openLanguageMenu(page)
     const menu = page.locator('#lang-menu')
-    await expect(menu.locator('a > span')).toHaveText(['English', 'EN', 'Türkçe', 'TR', 'Deutsch', 'DE'])
+    await expect(menu.locator('a > span')).toHaveText(['English', 'EN', 'Türkçe', 'TR', 'Deutsch', 'DE', 'Български', 'BG'])
     await expect(menu.locator('a[aria-current="true"] > span').first()).toHaveText('English')
     await page.keyboard.press('Escape')
     await expect(menu).toBeHidden()
     await expect(page.locator('#lang-button')).toBeFocused()
     await openLanguageMenu(page)
-    await page.locator('main h1').click()
+    // The left edge of the h1: with four entries the right-aligned menu covers the h1's centre on mobile.
+    await page.locator('main h1').click({ position: { x: 2, y: 2 } })
     await expect(menu).toBeHidden()
   })
 
@@ -57,6 +59,17 @@ test.describe('header language dropdown', () => {
     await expect(page.locator('#lang-button')).toHaveText('TR')
     await expect(page.locator('#lang-menu')).toBeHidden()
     await expect(page.locator('#lang-button')).toHaveAttribute('aria-label', 'Dil: Türkçe')
+  })
+
+  test('switches EN to BG through the dropdown, keeping the query', async ({ page }) => {
+    await page.goto('/services?ref=header')
+    await openLanguageMenu(page)
+    await expect(page.locator('#lang-menu a[hreflang="bg"]')).toHaveAttribute('href', '/bg/uslugi?ref=header')
+    await page.locator('#lang-menu a[hreflang="bg"]').click()
+    await expect(page).toHaveURL(/\/bg\/uslugi\?ref=header$/)
+    await expect(page.locator('#lang-button')).toHaveText('BG')
+    await expect(page.locator('#lang-menu')).toBeHidden()
+    await expect(page.locator('#lang-button')).toHaveAttribute('aria-label', 'Език: Български')
   })
 
   test('geometry: button vertically centred in the bar at the right end of the 1200px container, clear of the CTA / menu button', async ({ page }) => {
@@ -110,9 +123,9 @@ test.describe('header language dropdown', () => {
 
   // Measured: five items + logo + CTA + the 76px reserve need ~1125px (TR) / ~1148px (EN) on one line, so the
   // header switches to the mobile menu below 1160px (user ruling 2026-10-31). DE needs the short header labels
-  // (nav.header.*) to fit: see the DE fit measurement below (Task 12).
+  // (nav.header.*) to fit: see the DE fit measurement below (Task 12); BG uses the short "За нас" the same way.
   for (const width of [1440, 1200, 1160]) {
-    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE'], ['/bg/uslugi', 'BG']] as const) {
       test(`${locale} desktop nav is on one line at ${width}px: bar 76px, no overflow, CTA and dropdown clear`, async ({ page }) => {
         test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
         await page.setViewportSize({ width, height: 800 })
@@ -142,7 +155,7 @@ test.describe('header language dropdown', () => {
   }
 
   for (const width of [1159, 1024, 960]) {
-    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE'], ['/bg/uslugi', 'BG']] as const) {
       test(`${locale} shows the mobile menu at ${width}px: menu button visible, desktop nav and CTA hidden, bar 64px, no overflow`, async ({ page }) => {
         test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
         await page.setViewportSize({ width, height: 800 })
@@ -168,10 +181,11 @@ test.describe('header language dropdown', () => {
   // logo + gap + nav (natural, unwrapped width) + gap + CTA + the 76px dropdown reserve, plus the side padding.
   // With the full DE labels ("Für wen wir arbeiten", "Über MOESA") DE needed 1192px (EN 1148, TR 1125), so DE uses
   // short header-only labels ("Zielgruppen", "Über uns": 1110px), as TR does; the breakpoint stays at 1160px.
-  test('DE fit measurement: with the short header labels DE needs no more than the 1160px breakpoint', async ({ page }) => {
+  // BG: with the short header label "За нас" (instead of "За MOESA") the BG bar must also fit the 1160px breakpoint.
+  test('DE and BG fit measurement: with the short header labels DE and BG need no more than the 1160px breakpoint', async ({ page }) => {
     test.skip(page.viewportSize()!.width !== 1440, 'runs once, sets its own viewport')
     const need: Record<string, number> = {}
-    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE']] as const) {
+    for (const [route, locale] of [['/services', 'EN'], ['/tr/hizmetler', 'TR'], ['/de/leistungen', 'DE'], ['/bg/uslugi', 'BG']] as const) {
       await page.setViewportSize({ width: 1440, height: 800 })
       await page.goto(route)
       need[locale] = await page.evaluate(() => {
@@ -208,5 +222,6 @@ test.describe('header language dropdown', () => {
     test.info().annotations.push({ type: 'header-fit', description: JSON.stringify(need) })
     console.log('header one-line width needed (px):', JSON.stringify(need))
     expect(need.DE!).toBeLessThanOrEqual(1160)
+    expect(need.BG!).toBeLessThanOrEqual(1160)
   })
 })

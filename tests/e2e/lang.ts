@@ -11,7 +11,7 @@ export async function openLanguageMenu(page: Page) {
 }
 
 /** Switches the page language through the header dropdown (a real link click). */
-export async function switchLanguage(page: Page, to: 'en' | 'tr' | 'de') {
+export async function switchLanguage(page: Page, to: 'en' | 'tr' | 'de' | 'bg') {
   await openLanguageMenu(page)
   await page.locator(`#lang-menu a[hreflang="${to}"]`).click()
 }
