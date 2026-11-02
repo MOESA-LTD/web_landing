@@ -1,6 +1,6 @@
 /**
- * Shared content types. Every page module (content/{en,tr,de}/*.ts) is typed by an
- * interface declared next to the EN module; TR and DE modules reuse the EN interface.
+ * Shared content types. Every page module (content/{en,tr,de,bg}/*.ts) is typed by an
+ * interface declared next to the EN module; TR, DE and BG modules reuse the EN interface.
  *
  * Copy rule: strings in the page modules are transcribed verbatim from
  * MOESA_Website_Package_v1.0/content/<locale>/*.md. Never take copy from design-reference/.
@@ -8,10 +8,11 @@
  * one entry each, in content/tr/unreviewed.ts (rendered to i18n/UNREVIEWED_TR.md for review); and the whole
  * German site (content/de/*.ts), which has no approved source: it is our translation of the approved EN, with
  * every string listed in content/de/unreviewed.ts (rendered to i18n/UNREVIEWED_DE.md). DE modules have exactly
- * the EN shape (no `condensed`/TR-only fields).
+ * the EN shape (no `condensed`/TR-only fields). The Bulgarian site (content/bg/*.ts) is the same: our translation of
+ * the approved EN, every string listed in content/bg/unreviewed.ts (i18n/UNREVIEWED_BG.md), EN shape.
  */
 
-export type Locale = 'en' | 'tr' | 'de'
+export type Locale = 'en' | 'tr' | 'de' | 'bg'
 
 export interface Cta {
   label: string
