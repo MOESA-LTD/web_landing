@@ -25,7 +25,7 @@ cp .env.example .env   # optional, see below
 npm run dev            # http://localhost:3000
 ```
 
-Without `RESEND_API_KEY` the contact form prints the email to the terminal instead of sending it.
+Without an email API key the contact form prints the email to the terminal instead of sending it.
 `CONTACT_DEV_BYPASS_TURNSTILE=true` skips the Turnstile check in `nuxt dev` only.
 
 ## Tests
@@ -45,10 +45,10 @@ locally before merging.
 
 - Project `moesa-website`, connected to this repo. `main` deploys to production; every other branch gets a preview
   at `https://<branch>.moesa-website.pages.dev`. Build command `npm run build`, output `dist`.
-- **`wrangler.toml` is the source of truth** for runtime settings and non-secret variables (`[vars]` for production,
+- **`wrangler.toml` is the source of truth** for runtime settings and public variables (`[vars]` for production,
   `[env.preview.vars]` for previews). The Cloudflare dashboard shows them read-only — change them in the file and merge.
-- Secrets are set in the dashboard (*Settings → Variables and Secrets*, Production and Preview):
-  `RESEND_API_KEY`, `NUXT_TURNSTILE_SECRET_KEY`. `NODE_VERSION=22.22.3` is set there as a build variable.
+- API keys are kept in the Cloudflare dashboard, never in the repository. `NODE_VERSION=22.22.3` is set there as a build
+  variable.
 - DNS for `moesaltd.com` is on Cloudflare (registrar: Namecheap). The Namecheap Private Email records (MX, SPF,
   `default._domainkey`, `mail`/`autodiscover`/`autoconfig`) must stay **DNS only**. A zone Redirect Rule sends
   `moesaltd.com/*` to `https://www.moesaltd.com/`. Resend sends from the subdomain `notify.moesaltd.com`.
@@ -62,7 +62,6 @@ locally before merging.
 | `NUXT_SITE_INDEXABLE` | `wrangler.toml` (preview only) | `"false"` keeps previews out of search engines. |
 | `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | `wrangler.toml` | Turnstile site key (public). |
 | `CONTACT_TO` / `CONTACT_FROM` | `wrangler.toml` | Enquiry recipient and sender. |
-| `RESEND_API_KEY`, `NUXT_TURNSTILE_SECRET_KEY` | dashboard secrets | Email sending and spam check. |
 | `NUXT_PUBLIC_ANALYTICS_ID` | — | Leave unset: there is no analytics. Setting it would show a cookie banner. |
 
 Language flags and the site key are read at build time, so a change needs a new deployment (merging the change does
@@ -74,10 +73,3 @@ that). See `.env.example` for local values.
   PRs with a **merge commit, not squash**.
 - `pr-preview-link.yml` adds the Cloudflare preview links to the end of a PR's description after each successful
   preview deployment.
-
-## Open items
-
-- Owner facts for the legal pages: legal form and register entry, managing director, phone, retention periods
-  (missing facts are hidden on production; previews show them as open notes).
-- Lawyer review of `i18n/UNREVIEWED_LEGAL.md`; native-speaker review of the DE and BG copy.
-- An SVG logo (the site uses the PNG from the package).
